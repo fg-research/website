@@ -8,4 +8,4 @@ wget https://raw.githubusercontent.com/fg-research/inception-time-sagemaker/mast
 make html
 git add --all
 git commit -m "update website"
-git push origin main
+git push origin master
