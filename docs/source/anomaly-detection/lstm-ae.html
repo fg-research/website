@@ -173,9 +173,9 @@ The <code class="docutils literal notranslate"><span class="pre">training</span>
 <p>The training and validation datasets should be provided as CSV files and should only contain normal data (i.e. without anomalies).
 Each column of the CSV file represents a time series, while each row represents a time step.
 All the time series should have the same length and should not contain missing values.
-The CSV file should not contain any index column or column headers.</p>
-<p>See the sample input files <code class="docutils literal notranslate"><span class="pre">train.csv</span></code> and <code class="docutils literal notranslate"><span class="pre">valid.csv</span></code> in the <code class="docutils literal notranslate"><span class="pre">data/training/</span></code> folder.
-See <code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code> for an example of how to launch a training job.</p>
+The CSV file should not contain any index column or column headers.
+See the sample input files <a class="reference external" href="https://github.com/fg-research/lstm-ae-sagemaker/blob/master/data/training/train.csv"><code class="docutils literal notranslate"><span class="pre">train.csv</span></code></a> and <a class="reference external" href="https://github.com/fg-research/lstm-ae-sagemaker/blob/master/data/training/valid.csv"><code class="docutils literal notranslate"><span class="pre">valid.csv</span></code></a>.</p>
+<p>See <a class="reference external" href="https://github.com/fg-research/lstm-ae-sagemaker/blob/master/notebook.ipynb"><code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code></a> for an example of how to launch a training job.</p>
 <section id="distributed-training">
 <h4>Distributed Training<a class="headerlink" href="#distributed-training" title="Permalink to this heading">¶</a></h4>
 <p>The algorithm supports multi-GPU training on a single instance, which is implemented through <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.DataParallel.html">torch.nn.DataParallel</a>.
@@ -205,7 +205,7 @@ The algorithm does not support multi-node (or distributed) training across multi
 <li><p><code class="docutils literal notranslate"><span class="pre">valid_mse</span></code>: <code class="docutils literal notranslate"><span class="pre">float</span></code>. Validation mean squared error.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">valid_mae</span></code>: <code class="docutils literal notranslate"><span class="pre">float</span></code>. Validation mean absolute error.</p></li>
 </ul>
-<p>See <code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code> for an example of how to launch a hyperparameter tuning job.</p>
+<p>See <a class="reference external" href="https://github.com/fg-research/lstm-ae-sagemaker/blob/master/notebook.ipynb"><code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code></a> for an example of how to launch a hyperparameter tuning job.</p>
 </section>
 </section>
 <section id="inference">
@@ -214,16 +214,15 @@ The algorithm does not support multi-node (or distributed) training across multi
 Each column of the CSV file represents a time series, while each row represents a time step.
 The CSV file should not contain any index column or column headers.
 All the time series should have the same length and should not contain missing values.
-See the sample input file <code class="docutils literal notranslate"><span class="pre">test.csv</span></code> in the <code class="docutils literal notranslate"><span class="pre">data/inference/input</span></code> folder.</p>
+See the sample input file <a class="reference external" href="https://github.com/fg-research/lstm-ae-sagemaker/blob/master/data/inference/input/test.csv"><code class="docutils literal notranslate"><span class="pre">test.csv</span></code></a>.</p>
 <p>The inference algorithm outputs the anomaly scores and the reconstructed values of the time series.
-The anomaly scores are included in the first column, while the reconstructed values of the time series are included in the subsequent columns.</p>
-<p>See the sample output file <code class="docutils literal notranslate"><span class="pre">batch_predictions.csv</span></code> in the <code class="docutils literal notranslate"><span class="pre">data/inference/output/batch</span></code> folder.
-See <code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code> for an example of how to launch a batch transform job.</p>
+The anomaly scores are included in the first column, while the reconstructed values of the time series are included in the subsequent columns.
+See the sample output files <a class="reference external" href="https://github.com/fg-research/lstm-ae-sagemaker/blob/master/data/inference/output/batch/batch_predictions.csv"><code class="docutils literal notranslate"><span class="pre">batch_predictions.csv</span></code></a> and <a class="reference external" href="https://github.com/fg-research/lstm-ae-sagemaker/blob/master/data/inference/output/real-time/real_time_predictions.csv"><code class="docutils literal notranslate"><span class="pre">real_time_predictions.csv</span></code></a>.</p>
+<p>See <a class="reference external" href="https://github.com/fg-research/lstm-ae-sagemaker/blob/master/notebook.ipynb"><code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code></a> for an example of how to launch a batch transform job.</p>
 <section id="endpoints">
 <h4>Endpoints<a class="headerlink" href="#endpoints" title="Permalink to this heading">¶</a></h4>
 <p>The algorithm supports only real-time inference endpoints. The inference image is too large to be uploaded to a serverless inference endpoint.</p>
-<p>See <code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code> for an example of how to deploy the model to an endpoint, invoke the endpoint and process the response.
-See the sample output file <code class="docutils literal notranslate"><span class="pre">real_time_predictions.csv</span></code> in the <code class="docutils literal notranslate"><span class="pre">data/inference/output/real-time</span></code> folder.</p>
+<p>See <a class="reference external" href="https://github.com/fg-research/lstm-ae-sagemaker/blob/master/notebook.ipynb"><code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code></a> for an example of how to deploy the model to an endpoint, invoke the endpoint and process the response.</p>
 <p><strong>Additional Resources:</strong> <a class="reference external" href="https://github.com/fg-research/lstm-ae-sagemaker/blob/master/notebook.ipynb">[Sample Notebook]</a></p>
 </section>
 </section>

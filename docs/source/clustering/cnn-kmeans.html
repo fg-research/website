@@ -168,9 +168,9 @@ The <code class="docutils literal notranslate"><span class="pre">training</span>
 The CSV file should not contain any index column or column headers.
 Each row of the CSV file represents a time series, while each column represents a time step.
 The time series can have different lengths and can contain missing values.
-The time series are scaled internally by the algorithm, there is no need to scale the time series beforehand.</p>
-<p>See the sample input files <code class="docutils literal notranslate"><span class="pre">train.csv</span></code> and <code class="docutils literal notranslate"><span class="pre">valid.csv</span></code> in the <code class="docutils literal notranslate"><span class="pre">data/training/</span></code> folder.
-See <code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code> for an example of how to launch a training job.</p>
+The time series are scaled internally by the algorithm, there is no need to scale the time series beforehand.
+See the sample input files <a class="reference external" href="https://github.com/fg-research/cnn-kmeans-sagemaker/blob/master/data/training/train.csv"><code class="docutils literal notranslate"><span class="pre">train.csv</span></code></a> and <a class="reference external" href="https://github.com/fg-research/cnn-kmeans-sagemaker/blob/master/data/training/valid.csv"><code class="docutils literal notranslate"><span class="pre">valid.csv</span></code></a>.</p>
+<p>See <a class="reference external" href="https://github.com/fg-research/cnn-kmeans-sagemaker/blob/master/notebook.ipynb"><code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code></a> for an example of how to launch a training job.</p>
 <section id="hyperparameters">
 <h4>Hyperparameters<a class="headerlink" href="#hyperparameters" title="Permalink to this heading">¶</a></h4>
 <p>The training algorithm takes as input the following hyperparameters:</p>
@@ -200,7 +200,7 @@ See <code class="docutils literal notranslate"><span class="pre">notebook.ipynb<
 <li><p><code class="docutils literal notranslate"><span class="pre">valid_loss</span></code>: <code class="docutils literal notranslate"><span class="pre">float</span></code>. Validation loss.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">valid_score</span></code>: <code class="docutils literal notranslate"><span class="pre">float</span></code>. Validation Silhouette Coefficient.</p></li>
 </ul>
-<p>See <code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code> for an example of how to launch a hyperparameter tuning job.</p>
+<p>See <a class="reference external" href="https://github.com/fg-research/cnn-kmeans-sagemaker/blob/master/notebook.ipynb"><code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code></a> for an example of how to launch a hyperparameter tuning job.</p>
 </section>
 </section>
 <section id="inference">
@@ -210,16 +210,15 @@ The CSV file should not contain any index column or column headers.
 Each row of the CSV file represents a time series, while each column represents a time step.
 The time series can have different lengths and can contain missing values.
 The time series are scaled internally by the algorithm, there is no need to scale the time series beforehand.
-See the sample input file <code class="docutils literal notranslate"><span class="pre">test.csv</span></code> in the <code class="docutils literal notranslate"><span class="pre">data/inference/input</span></code> folder.</p>
+See the sample input file <a class="reference external" href="https://github.com/fg-research/cnn-kmeans-sagemaker/blob/master/data/inference/input/test.csv"><code class="docutils literal notranslate"><span class="pre">test.csv</span></code></a>.</p>
 <p>The inference algorithm outputs the predicted cluster labels and the extracted features, which are returned in CSV format.
 The predicted cluster labels are included in the first column, while the extracted features are included in the subsequent columns.
-See the sample output file <code class="docutils literal notranslate"><span class="pre">batch_predictions.csv</span></code> in the <code class="docutils literal notranslate"><span class="pre">data/inference/output/batch</span></code> folder.</p>
-<p>See <code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code> for an example of how to launch a batch transform job.</p>
+See the sample output files <a class="reference external" href="https://github.com/fg-research/cnn-kmeans-sagemaker/blob/master/data/inference/output/batch/batch_predictions.csv"><code class="docutils literal notranslate"><span class="pre">batch_predictions.csv</span></code></a> and <a class="reference external" href="https://github.com/fg-research/cnn-kmeans-sagemaker/blob/master/data/inference/output/real-time/real_time_predictions.csv"><code class="docutils literal notranslate"><span class="pre">real_time_predictions.csv</span></code></a>.</p>
+<p>See <a class="reference external" href="https://github.com/fg-research/cnn-kmeans-sagemaker/blob/master/notebook.ipynb"><code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code></a> for an example of how to launch a batch transform job.</p>
 <section id="endpoints">
 <h4>Endpoints<a class="headerlink" href="#endpoints" title="Permalink to this heading">¶</a></h4>
 <p>The algorithm supports only real-time inference endpoints. The inference image is too large to be uploaded to a serverless inference endpoint.</p>
-<p>See <code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code> for an example of how to deploy the model to an endpoint, invoke the endpoint and process the response.
-See the sample output file <code class="docutils literal notranslate"><span class="pre">real_time_predictions.csv</span></code> in the <code class="docutils literal notranslate"><span class="pre">data/inference/output/real-time</span></code> folder.</p>
+<p>See <a class="reference external" href="https://github.com/fg-research/cnn-kmeans-sagemaker/blob/master/notebook.ipynb"><code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code></a> for an example of how to deploy the model to an endpoint, invoke the endpoint and process the response.</p>
 <p><strong>Additional Resources:</strong> <a class="reference external" href="https://github.com/fg-research/cnn-kmeans-sagemaker/blob/master/notebook.ipynb">[Sample Notebook]</a> <a class="reference external" href="https://medium.com/@fg-research/time-series-clustering-with-the-cnn-kmeans-sagemaker-algorithm-from-aws-marketplace-47bb3acb23a6?source=friends_link&amp;amp;sk=34880ec7bbe1bdb522035b1c1f5479c2">[Blog Post]</a></p>
 </section>
 </section>

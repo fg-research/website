@@ -177,8 +177,8 @@ The column headers should be formatted as follows:</p>
 <p>If the features are not provided, the algorithm will only use the past values of the target time series as input.
 If the time spans are not provided, the algorithm will assume that the observations are equally spaced.
 The time series are scaled internally by the algorithm, there is no need to scale the time series beforehand.</p>
-<p>See the sample input files <code class="docutils literal notranslate"><span class="pre">train.csv</span></code> and <code class="docutils literal notranslate"><span class="pre">valid.csv</span></code> in the <code class="docutils literal notranslate"><span class="pre">data/training/</span></code> folder.
-See <code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code> for an example of how to launch a training job.</p>
+<p>See the sample input files <a class="reference external" href="https://github.com/fg-research/cfc-tsf-sagemaker/blob/master/data/training/train.csv"><code class="docutils literal notranslate"><span class="pre">train.csv</span></code></a> and <a class="reference external" href="https://github.com/fg-research/cfc-tsf-sagemaker/blob/master/data/training/valid.csv"><code class="docutils literal notranslate"><span class="pre">valid.csv</span></code></a>.
+See <a class="reference external" href="https://github.com/fg-research/cfc-tsf-sagemaker/blob/master/notebook.ipynb"><code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code></a> for an example of how to launch a training job.</p>
 <section id="distributed-training">
 <h4>Distributed Training<a class="headerlink" href="#distributed-training" title="Permalink to this heading">¶</a></h4>
 <p>The algorithm supports multi-GPU training on a single instance, which is implemented through <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.DataParallel.html">torch.nn.DataParallel</a>.
@@ -222,14 +222,14 @@ The algorithm does not support multi-node (or distributed) training across multi
 <li><p><code class="docutils literal notranslate"><span class="pre">valid_mse</span></code>: <code class="docutils literal notranslate"><span class="pre">float</span></code>. Validation mean squared error.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">valid_mae</span></code>: <code class="docutils literal notranslate"><span class="pre">float</span></code>. Validation mean absolute error.</p></li>
 </ul>
-<p>See <code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code> for an example of how to launch a hyperparameter tuning job.</p>
+<p>See <a class="reference external" href="https://github.com/fg-research/cfc-tsf-sagemaker/blob/master/notebook.ipynb"><code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code></a> for an example of how to launch a hyperparameter tuning job.</p>
 </section>
 </section>
 <section id="inference">
 <h3>Inference<a class="headerlink" href="#inference" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#inference'">¶</a></h3>
 <p>The inference algorithm takes as input a CSV file containing the time series.
 The CSV file should have the same format and columns as the one used for training.
-See the sample input file <code class="docutils literal notranslate"><span class="pre">test.csv</span></code> in the <code class="docutils literal notranslate"><span class="pre">data/inference/input</span></code> folder.</p>
+See the sample input file <a class="reference external" href="https://github.com/fg-research/cfc-tsf-sagemaker/blob/master/data/inference/input/test.csv"><code class="docutils literal notranslate"><span class="pre">test.csv</span></code></a>.</p>
 <p>The inference algorithm outputs the predicted values of the time series.</p>
 <p><strong>Notes:</strong></p>
 <p>a) The model predicts the time series sequence by sequence.
@@ -239,13 +239,12 @@ As a result, the algorithm does not return the predicted values of the first 200
 <p>b) The outputs include the out-of-sample forecasts beyond the last time step of the inputs.
 For instance, if the number of input samples is 500, and the <code class="docutils literal notranslate"><span class="pre">prediction-length</span></code> is 100,
 then the output CSV file will contain 600 samples, where the last 100 samples are the out-of-sample forecasts.</p>
-<p>See the sample output file <code class="docutils literal notranslate"><span class="pre">batch_predictions.csv</span></code> in the <code class="docutils literal notranslate"><span class="pre">data/inference/output/batch</span></code> folder.
-See <code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code> for an example of how to launch a batch transform job.</p>
+<p>See the sample output files <a class="reference external" href="https://github.com/fg-research/cfc-tsf-sagemaker/blob/master/data/inference/output/batch/batch_predictions.csv"><code class="docutils literal notranslate"><span class="pre">batch_predictions.csv</span></code></a> and <a class="reference external" href="https://github.com/fg-research/cfc-tsf-sagemaker/blob/master/data/inference/output/real-time/real_time_predictions.csv"><code class="docutils literal notranslate"><span class="pre">real_time_predictions.csv</span></code></a>.
+See <a class="reference external" href="https://github.com/fg-research/cfc-tsf-sagemaker/blob/master/notebook.ipynb"><code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code></a> for an example of how to launch a batch transform job.</p>
 <section id="endpoints">
 <h4>Endpoints<a class="headerlink" href="#endpoints" title="Permalink to this heading">¶</a></h4>
 <p>The algorithm supports only real-time inference endpoints. The inference image is too large to be uploaded to a serverless inference endpoint.</p>
-<p>See <code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code> for an example of how to deploy the model to an endpoint, invoke the endpoint and process the response.
-See the sample output file <code class="docutils literal notranslate"><span class="pre">real_time_predictions.csv</span></code> in the <code class="docutils literal notranslate"><span class="pre">data/inference/output/real-time</span></code> folder.</p>
+<p>See <a class="reference external" href="https://github.com/fg-research/cfc-tsf-sagemaker/blob/master/notebook.ipynb"><code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code></a> for an example of how to deploy the model to an endpoint, invoke the endpoint and process the response.</p>
 <p><strong>Additional Resources:</strong> <a class="reference external" href="https://github.com/fg-research/cfc-tsf-sagemaker/blob/master/notebook.ipynb">[Sample Notebook]</a> <a class="reference external" href="https://medium.com/@fg-research/time-series-forecasting-with-the-cfc-sagemaker-algorithm-from-aws-marketplace-eb89a53f11ec?source=friends_link&amp;amp;sk=3471cd2c8a6881f5cce1b2ce3bd46ffe">[Blog Post]</a></p>
 </section>
 </section>
