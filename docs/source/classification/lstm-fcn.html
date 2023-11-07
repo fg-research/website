@@ -132,8 +132,6 @@ It implements both training and inference from CSV data and supports both CPU an
 The training and inference Docker images were built by extending the PyTorch 2.0 Python 3.10 SageMaker containers.</p>
 <section id="model-description">
 <h2>Model Description<a class="headerlink" href="#model-description" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#model-description'">¶</a></h2>
-<section id="model-architecture">
-<h3>Model Architecture<a class="headerlink" href="#model-architecture" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#model-architecture'">¶</a></h3>
 <p>The LSTM-FCN model includes two blocks: a recurrent block and a convolutional block.
 The recurrent block consists of a single LSTM layer (either general or with attention) followed by a dropout layer.
 The convolutional block consists of three convolutional layers, each followed by batch normalization and ReLU activation, and of a global average pooling layer.</p>
@@ -144,7 +142,6 @@ The model parameters are learned by minimizing the cross-entropy loss.</p>
 <img src="https://fg-research-assets.s3.eu-west-1.amazonaws.com/lstm-fcn-diagram.png" style="width:80%;margin-top:30px;margin-bottom:20px"/>
 <p><em>LSTM-FCN architecture (source: <a class="reference external" href="https://doi.org/10.1109/ACCESS.2017.2779939">doi: 10.1109/ACCESS.2017.2779939</a>)</em></p>
 <p><strong>Model Resources:</strong> <a class="reference external" href="https://doi.org/10.1109/ACCESS.2017.2779939">[Paper]</a> <a class="reference external" href="https://github.com/titu1994/LSTM-FCN">[Code]</a></p>
-</section>
 </section>
 <section id="sagemaker-algorithm-description">
 <h2>SageMaker Algorithm Description<a class="headerlink" href="#sagemaker-algorithm-description" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#sagemaker-algorithm-description'">¶</a></h2>
@@ -235,10 +232,7 @@ See the sample output files <a class="reference external" href="https://github.c
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(var(--vh)-4rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
-<li><a :data-current="activeSection === '#model-description'" class="reference internal" href="#model-description">Model Description</a><ul>
-<li><a :data-current="activeSection === '#model-architecture'" class="reference internal" href="#model-architecture">Model Architecture</a></li>
-</ul>
-</li>
+<li><a :data-current="activeSection === '#model-description'" class="reference internal" href="#model-description">Model Description</a></li>
 <li><a :data-current="activeSection === '#sagemaker-algorithm-description'" class="reference internal" href="#sagemaker-algorithm-description">SageMaker Algorithm Description</a><ul>
 <li><a :data-current="activeSection === '#training'" class="reference internal" href="#training">Training</a><ul>
 <li><a :data-current="activeSection === '#distributed-training'" class="reference internal" href="#distributed-training">Distributed Training</a></li>

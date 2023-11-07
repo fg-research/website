@@ -134,8 +134,6 @@ It implements both training and inference from CSV data and supports both CPU an
 The training and inference Docker images were built by extending the PyTorch 2.0 Python 3.10 SageMaker containers.</p>
 <section id="model-description">
 <h2>Model Description<a class="headerlink" href="#model-description" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#model-description'">¶</a></h2>
-<section id="model-architecture">
-<h3>Model Architecture<a class="headerlink" href="#model-architecture" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#model-architecture'">¶</a></h3>
 <p>The LSTM-AE model reconstructs the time series with an LSTM autoencoder.
 The encoder and decoder consist of a single LSTM layer and have the same number of hidden units.
 The encoder takes as input the time series and returns the hidden states.
@@ -147,7 +145,6 @@ The computed squared Mahalanobis distance is then used as an anomaly score: the 
 <img src="https://fg-research-assets.s3.eu-west-1.amazonaws.com/lstm-ae-diagram.png" style="width:60%;margin-top:60px;margin-bottom:50px"/>
 <p><em>LSTM-AE architecture (source: <a class="reference external" href="https://doi.org/10.48550/arXiv.1607.00148">doi: 10.48550/arXiv.1607.00148</a>)</em></p>
 <p><strong>Model Resources:</strong> <a class="reference external" href="https://doi.org/10.48550/arXiv.1607.00148">[Paper]</a></p>
-</section>
 </section>
 <section id="sagemaker-algorithm-description">
 <h2>SageMaker Algorithm Description<a class="headerlink" href="#sagemaker-algorithm-description" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#sagemaker-algorithm-description'">¶</a></h2>
@@ -237,10 +234,7 @@ See the sample output files <a class="reference external" href="https://github.c
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(var(--vh)-4rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
-<li><a :data-current="activeSection === '#model-description'" class="reference internal" href="#model-description">Model Description</a><ul>
-<li><a :data-current="activeSection === '#model-architecture'" class="reference internal" href="#model-architecture">Model Architecture</a></li>
-</ul>
-</li>
+<li><a :data-current="activeSection === '#model-description'" class="reference internal" href="#model-description">Model Description</a></li>
 <li><a :data-current="activeSection === '#sagemaker-algorithm-description'" class="reference internal" href="#sagemaker-algorithm-description">SageMaker Algorithm Description</a><ul>
 <li><a :data-current="activeSection === '#training'" class="reference internal" href="#training">Training</a><ul>
 <li><a :data-current="activeSection === '#distributed-training'" class="reference internal" href="#distributed-training">Distributed Training</a></li>

@@ -136,8 +136,6 @@ The training and inference Docker images were built by extending the PyTorch 2.0
 The Docker images include modifications of software licensed under the Apache License 2.0, see the <a class="reference external" href="https://github.com/fg-research/cnn-kmeans-sagemaker/blob/master/LICENSE">LICENSE</a> and <a class="reference external" href="https://github.com/fg-research/cnn-kmeans-sagemaker/blob/master/NOTICE">NOTICE</a>.</p>
 <section id="model-description">
 <h2>Model Description<a class="headerlink" href="#model-description" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#model-description'">¶</a></h2>
-<section id="model-architecture">
-<h3>Model Architecture<a class="headerlink" href="#model-architecture" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#model-architecture'">¶</a></h3>
 <p>The model has two components: an encoder which extracts the relevant features,
 and a K-Means clusterer which takes as input the extracted features and predicts the cluster labels.</p>
 <p>The encoder includes a stack of exponentially dilated causal convolutional blocks, followed by an adaptive max pooling layer and a linear output layer.
@@ -155,7 +153,6 @@ All (sub)sequences are sampled randomly during each training iteration.</p>
 <p>The number of features extracted by the encoder is determined by the number of hidden units of the linear output layer.
 These features are used for training the K-Means clusterer.</p>
 <p><strong>Model Resources:</strong> <a class="reference external" href="https://doi.org/10.48550/arXiv.1901.10738">[Paper]</a> <a class="reference external" href="https://github.com/White-Link/UnsupervisedScalableRepresentationLearningTimeSeries">[Code]</a></p>
-</section>
 </section>
 <section id="sagemaker-algorithm-description">
 <h2>SageMaker Algorithm Description<a class="headerlink" href="#sagemaker-algorithm-description" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#sagemaker-algorithm-description'">¶</a></h2>
@@ -233,10 +230,7 @@ See the sample output files <a class="reference external" href="https://github.c
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(var(--vh)-4rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
-<li><a :data-current="activeSection === '#model-description'" class="reference internal" href="#model-description">Model Description</a><ul>
-<li><a :data-current="activeSection === '#model-architecture'" class="reference internal" href="#model-architecture">Model Architecture</a></li>
-</ul>
-</li>
+<li><a :data-current="activeSection === '#model-description'" class="reference internal" href="#model-description">Model Description</a></li>
 <li><a :data-current="activeSection === '#sagemaker-algorithm-description'" class="reference internal" href="#sagemaker-algorithm-description">SageMaker Algorithm Description</a><ul>
 <li><a :data-current="activeSection === '#training'" class="reference internal" href="#training">Training</a><ul>
 <li><a :data-current="activeSection === '#hyperparameters'" class="reference internal" href="#hyperparameters">Hyperparameters</a></li>

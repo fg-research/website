@@ -138,8 +138,6 @@ see the <a class="reference external" href="https://github.com/fg-research/cfc-t
 and <a class="reference external" href="https://github.com/fg-research/cfc-tsf-sagemaker/blob/master/NOTICE.txt">NOTICE</a>.</p>
 <section id="model-description">
 <h2>Model Description<a class="headerlink" href="#model-description" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#model-description'">¶</a></h2>
-<section id="model-architecture">
-<h3>Model Architecture<a class="headerlink" href="#model-architecture" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#model-architecture'">¶</a></h3>
 <p>The closed-form continuous-depth network (CfC) is a neural network architecture for sequential data.
 CfCs belong to the class of continuous-time recurrent neural networks (CT-RNN), where the evolution of the hidden state over time is described by an Ordinary Differential Equations (ODE).</p>
 <p>CfCs use the Liquid Time Constant (LTC) ODE, where both the derivative and the time constant of the hidden state are determined by a neural network.
@@ -156,7 +154,6 @@ while the intercept <span class="math notranslate nohighlight">\(b\)</span> and 
 <img src="https://fg-research-assets.s3.eu-west-1.amazonaws.com/cfc-diagram.png" style="width:100%;margin-top:60px;margin-bottom:50px"/>
 <p><em>CfC architecture (source: <a class="reference external" href="https://doi.org/10.1038/s42256-022-00556-7">doi:10.1038/s42256–022–00556–7</a>)</em></p>
 <p><strong>Model Resources:</strong> <a class="reference external" href="https://doi.org/10.1038/s42256-022-00556-7">[Paper]</a> <a class="reference external" href="https://github.com/raminmh/CfC">[Code]</a></p>
-</section>
 </section>
 <section id="sagemaker-algorithm-description">
 <h2>SageMaker Algorithm Description<a class="headerlink" href="#sagemaker-algorithm-description" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#sagemaker-algorithm-description'">¶</a></h2>
@@ -260,10 +257,7 @@ See <a class="reference external" href="https://github.com/fg-research/cfc-tsf-s
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(var(--vh)-4rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
-<li><a :data-current="activeSection === '#model-description'" class="reference internal" href="#model-description">Model Description</a><ul>
-<li><a :data-current="activeSection === '#model-architecture'" class="reference internal" href="#model-architecture">Model Architecture</a></li>
-</ul>
-</li>
+<li><a :data-current="activeSection === '#model-description'" class="reference internal" href="#model-description">Model Description</a></li>
 <li><a :data-current="activeSection === '#sagemaker-algorithm-description'" class="reference internal" href="#sagemaker-algorithm-description">SageMaker Algorithm Description</a><ul>
 <li><a :data-current="activeSection === '#training'" class="reference internal" href="#training">Training</a><ul>
 <li><a :data-current="activeSection === '#distributed-training'" class="reference internal" href="#distributed-training">Distributed Training</a></li>

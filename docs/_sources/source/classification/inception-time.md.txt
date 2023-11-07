@@ -4,7 +4,6 @@ It implements both training and inference from CSV data and supports both CPU an
 The training and inference Docker images were built by extending the PyTorch 2.0 Python 3.10 SageMaker containers. 
 
 ## Model Description
-### Model Architecture
 InceptionTime is an ensemble model. 
 Each model in the ensemble has the same architecture and uses the same hyperparameters.
 The only difference between the models is in the initial values of the parameters, which are generated from the Glorot uniform distribution.
