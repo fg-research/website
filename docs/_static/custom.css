@@ -10,7 +10,11 @@ h2 {
     font-size: 1.8rem !important;
 }
 
+span.caption-text{
+    font-size: 80% !important;
+}
+
 a.reference.internal{
     color: #64748b !important;
-    font-size: 90% !important;
+    font-size: 80% !important;
 }
