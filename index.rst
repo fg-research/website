@@ -1,9 +1,9 @@
 .. meta::
-   :description: Train, tune and deploy state-of-the-art machine learning models for time series in Amazon SageMaker.
+   :description: Time Series Analysis in Amazon SageMaker.
    :keywords: Amazon Web Services, AWS, Amazon SageMaker, Time Series
 
 ############################
-AWS Time Series Solutions
+Time Series Analysis in Amazon SageMaker
 ############################
 .. rst-class:: lead
 
