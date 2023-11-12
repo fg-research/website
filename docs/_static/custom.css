@@ -2,6 +2,10 @@
     display: none !important;
 }
 
+h1, h2, h3, h4, h5, h6{
+    font-size: 95% !important;
+}
+
 a.reference.internal{
     color: #64748b !important;
     font-size: 90% !important;
