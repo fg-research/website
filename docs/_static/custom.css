@@ -6,7 +6,15 @@ h1 {
     font-size: 2rem !important;
 }
 
+h2 {
+    font-size: 1.8rem !important;
+}
+
+#left-sidebar .caption {
+    font-size: 0.8rem !important;
+}
+
 a.reference.internal{
     color: #64748b !important;
-    font-size: 90% !important;
+    font-size: 0.7rem !important;
 }
