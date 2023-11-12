@@ -2,9 +2,9 @@
    :description: Time Series Analysis in Amazon SageMaker.
    :keywords: Amazon Web Services, AWS, Amazon SageMaker, Time Series
 
-############################
+########################################################
 Time Series Analysis in Amazon SageMaker
-############################
+########################################################
 .. rst-class:: lead
 
 Train, tune and deploy state-of-the-art machine learning models for time series in Amazon SageMaker.
