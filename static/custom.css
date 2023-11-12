@@ -2,11 +2,10 @@
     display: none !important;
 }
 
-/*
 h1 {
-    font-size: 95% !important;
+    font-size: 2rem !important;
 }
-*/
+
 a.reference.internal{
     color: #64748b !important;
     font-size: 90% !important;
