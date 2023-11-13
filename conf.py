@@ -10,7 +10,7 @@ project = 'fg-research'
 author = 'fg-research'
 release = '2023-11-06'
 copyright = '''
-2023 fg-research.  fg-research is an independent software vendor that provides machine learning solutions on the AWS Marketplace.
+2023 fg-research. fg-research is an independent software vendor that provides machine learning solutions on the AWS Marketplace.
 Amazon Web Services, AWS, Amazon SageMaker, AWS Marketplace and the AWS Marketplace logo are trademarks of Amazon.com, Inc. or its affiliates.
 '''
 
