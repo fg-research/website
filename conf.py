@@ -9,7 +9,10 @@
 project = 'fg-research'
 author = 'fg-research'
 release = '2023-11-06'
-copyright = '2023, fg-research. Amazon Web Services (AWS), AWS Marketplace and Amazon SageMaker are trademarks of Amazon.com, Inc. or its affiliates.'
+copyright = '''
+2023, fg-research. <br/> fg-research is an independent software vendor that provides machine learning solutions on the AWS Marketplace.
+Amazon Web Services, AWS, Amazon SageMaker, AWS Marketplace and the AWS Marketplace logo are trademarks of Amazon.com, Inc. or its affiliates.
+'''
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
