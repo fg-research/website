@@ -10,6 +10,14 @@ h2 {
     font-size: 1.6rem !important;
 }
 
+/*
+.mr-2{
+    height: 35px !important;
+    width: 35px !important;
+    padding: 1px 1px 1px 1px !important;
+}
+*/
+
 span.caption-text, p.font-medium{
     font-size: 90% !important;
 }
