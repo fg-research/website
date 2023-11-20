@@ -11,9 +11,15 @@ h2 {
 }
 
 .mr-2{
-    height: 30px !important;
-    width: 30px !important;
+    height: 36px !important;
+    width: 36px !important;
     padding: 1px 1px 1px 1px !important;
+    opacity: 100% !important;
+}
+
+.dark .dark\:invert {
+    --tw-invert: none !important;
+    filter: none !important;
 }
 
 span.caption-text, p.font-medium{
