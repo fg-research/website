@@ -25,6 +25,12 @@ span.caption-text, p.font-medium{
     font-size: 90% !important;
 }
 
+.leading-loose {
+    margin: 0% 14% 0% 14%;
+    font-size: 70% !important;
+    text-align: center !important;
+}
+
 a.reference.internal{
     color: #64748b !important;
     font-size: 80% !important;
