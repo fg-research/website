@@ -7,7 +7,7 @@ Time Series Analysis in Amazon SageMaker
 ########################################################
 .. rst-class:: lead
 
-Train, tune and deploy state-of-the-art machine learning models for time series in Amazon SageMaker.
+State-of-the-art machine learning models for time series in Amazon SageMaker.
 
 .. image:: static/background.png
   :width: 100%
