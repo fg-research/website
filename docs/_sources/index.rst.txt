@@ -16,7 +16,7 @@ Train, tune and deploy state-of-the-art machine learning models for time series 
 
 .. figure:: static/AWSMP_NewLogo_RGB_BLK.png
    :align: right
-   :width: 30%
+   :width: 33%
    :alt: AWS Marketplace Logo
 
 Overview
