@@ -12,6 +12,13 @@ Train, tune and deploy state-of-the-art machine learning models for time series 
 .. image:: static/background.png
   :width: 100%
 
+.. _aws_marketplace_logo:
+
+.. figure:: static/AWSMP_NewLogo_RGB_BLK.png
+   :align: right
+   :width: 30%
+   :alt: AWS Marketplace Logo
+
 Overview
 =============================================
 We provide Amazon SageMaker algorithms for multiple time series tasks, including forecasting, anomaly detection, clustering and classification.

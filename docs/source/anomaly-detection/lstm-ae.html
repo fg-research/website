@@ -132,7 +132,7 @@
 <p>The <a class="reference external" href="https://aws.amazon.com/marketplace/pp/prodview-up2haipz3j472">Time Series Anomaly Detection (LSTM-AE) Algorithm from AWS Marketplace</a>
 performs time series anomaly detection with a Long Short-Term Memory Network Autoencoder (LSTM-AE).
 It implements both training and inference from CSV data and supports both CPU and GPU instances.
-The training and inference Docker images were built by extending the PyTorch 2.0 Python 3.10 SageMaker containers.</p>
+The training and inference Docker images were built by extending the PyTorch 2.1.0 Python 3.10 SageMaker containers.</p>
 <section id="model-description">
 <h2>Model Description<a class="headerlink" href="#model-description" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#model-description'">¶</a></h2>
 <p>The LSTM-AE model reconstructs the time series with an LSTM autoencoder.
@@ -217,6 +217,7 @@ See the sample input file <a class="reference external" href="https://github.com
 The anomaly scores are included in the first column, while the reconstructed values of the time series are included in the subsequent columns.
 See the sample output files <a class="reference external" href="https://github.com/fg-research/lstm-ae-sagemaker/blob/master/data/inference/output/batch/batch_predictions.csv"><code class="docutils literal notranslate"><span class="pre">batch_predictions.csv</span></code></a> and <a class="reference external" href="https://github.com/fg-research/lstm-ae-sagemaker/blob/master/data/inference/output/real-time/real_time_predictions.csv"><code class="docutils literal notranslate"><span class="pre">real_time_predictions.csv</span></code></a>.</p>
 <p>See <a class="reference external" href="https://github.com/fg-research/lstm-ae-sagemaker/blob/master/notebook.ipynb"><code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code></a> for an example of how to launch a batch transform job.</p>
+<p><strong>Note:</strong> The algorithm does not support variable length sequences, and therefore the length of the input time series should be a multiple of the sequence length.</p>
 <section id="endpoints">
 <h4>Endpoints<a class="headerlink" href="#endpoints" title="Permalink to this heading">¶</a></h4>
 <p>The algorithm supports only real-time inference endpoints. The inference image is too large to be uploaded to a serverless inference endpoint.</p>
