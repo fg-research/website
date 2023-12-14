@@ -11,6 +11,7 @@ Train, tune and deploy state-of-the-art machine learning models for time series 
 
 .. image:: static/background.png
   :width: 100%
+  :alt: fg-research background image
 
 .. _aws_marketplace_logo:
 
