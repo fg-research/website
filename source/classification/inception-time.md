@@ -1,7 +1,7 @@
 # InceptionTime SageMaker Algorithm
 The [Time Series Classification (Inception) Algorithm from AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-omz7rumnllmla) performs time series classification with the InceptionTime model. 
 It implements both training and inference from CSV data and supports both CPU and GPU instances. 
-The training and inference Docker images were built by extending the PyTorch 2.0 Python 3.10 SageMaker containers. 
+The training and inference Docker images were built by extending the PyTorch 2.1.0 Python 3.10 SageMaker containers. 
 
 ## Model Description
 InceptionTime is an ensemble model. 
