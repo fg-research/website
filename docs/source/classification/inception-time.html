@@ -136,10 +136,10 @@ The training and inference Docker images were built by extending the PyTorch 2.1
 <h2>Model Description<a class="headerlink" href="#model-description" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#model-description'">¶</a></h2>
 <p>InceptionTime is an ensemble model.
 Each model in the ensemble has the same architecture and uses the same hyperparameters.
-The only difference between the models is in the initial values of the parameters, which are generated from the Glorot uniform distribution.</p>
+The only difference between the models is in the initial values of the weights, which are generated from the Glorot uniform distribution.</p>
 <p>Each model consists of a stack of blocks, where each block includes three convolutional layers with kernel sizes of 10, 20 and 40 and a max pooling layer.
 The block input is processed by the four layers in parallel, and the four outputs are concatenated before being passed to a batch normalization layer followed by a ReLU activation.</p>
-<p>A residual connection is applied between the input time series and the output of the second blocks, and after that between every three blocks.
+<p>A residual connection is applied between the input time series and the output of the second block, and after that between every three blocks.
 The residual connection processes the inputs using an additional convolutional layer with a kernel size of 1 followed by a batch normalization layer.
 The processed inputs are then added to the output, which is transformed by a ReLU activation.</p>
 <p>The output of each model is passed to an average pooling layer which removes the time dimension, and then to a final output layer with softmax activation.
@@ -216,7 +216,7 @@ See the sample output files <a class="reference external" href="https://github.c
 <h4>Endpoints<a class="headerlink" href="#endpoints" title="Permalink to this heading">¶</a></h4>
 <p>The algorithm supports only real-time inference endpoints. The inference image is too large to be uploaded to a serverless inference endpoint.</p>
 <p>See <a class="reference external" href="https://github.com/fg-research/inception-time-sagemaker/blob/master/notebook.ipynb"><code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code></a> for an example of how to deploy the model to an endpoint, invoke the endpoint and process the response.</p>
-<p><strong>Additional Resources:</strong> <a class="reference external" href="https://github.com/fg-research/inception-time-sagemaker/blob/master/notebook.ipynb">[Sample Notebook]</a></p>
+<p><strong>Additional Resources:</strong> <a class="reference external" href="https://github.com/fg-research/inception-time-sagemaker/blob/master/notebook.ipynb">[Sample Notebook]</a> <a class="reference external" href="https://medium.com/@fg-research/process-control-measurements-classification-with-the-inceptiontime-sagemaker-algorithm-from-aws-51af79398470?source=friends_link&amp;amp;sk=3b9042ab5a1add17d01c6be087589d3b">[Blog Post]</a></p>
 </section>
 </section>
 </section>
