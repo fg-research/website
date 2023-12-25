@@ -47,8 +47,9 @@ html_css_files = ['custom.css']
 html_js_files = ['custom.js']
 html_show_sourcelink = False
 html_theme = 'sphinxawesome_theme'
+
 html_sidebars = {
-  "**": ["sidebar_main_nav_links.html", "sidebar_toc.html"]
+    "blog": ["sidebar_main_nav_links.html"],
 }
 
 html_theme_options = dict(
