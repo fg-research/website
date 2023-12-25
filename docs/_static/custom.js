@@ -8,7 +8,7 @@ window.setInterval(function(){
     if(screen.width > 1440){
         f.childNodes[1].style.width = '35%'
     }else{
-        f.childNodes[1].style.width = '45%'
+        f.childNodes[1].style.width = '50%'
     };
 }, 1);
 

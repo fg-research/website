@@ -1,6 +1,6 @@
 .. meta::
    :description: Time Series Analysis in Amazon SageMaker.
-   :keywords: Amazon Web Services, AWS, Amazon SageMaker, Time Series
+   :keywords: Amazon Web Services, AWS, Amazon SageMaker, Time Series, Machine Learning
 
 ########################################################
 Time Series Analysis in Amazon SageMaker
@@ -54,15 +54,15 @@ For support, contact `support@fg-research.com <mailto:support@fg-research.com>`_
    source/anomaly-detection/*
 
 .. toctree::
-   :caption: Time Series Clustering
-   :glob:
-   :hidden:
-
-   source/clustering/*
-
-.. toctree::
    :caption: Time Series Classification
    :glob:
    :hidden:
 
    source/classification/*
+
+.. toctree::
+   :caption: Time Series Clustering
+   :glob:
+   :hidden:
+
+   source/clustering/*
