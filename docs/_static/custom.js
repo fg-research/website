@@ -6,9 +6,9 @@ window.setInterval(function(){
         f.childNodes[1].src = '_static/AWSMP_NewLogo_RGB_WHT.png'
     };
     if(screen.width > 1440){
-        f.childNodes[1].style.width = '30%'
+        f.childNodes[1].style.width = '35%'
     }else{
-        f.childNodes[1].style.width = '40%'
+        f.childNodes[1].style.width = '45%'
     };
 }, 1);
 
