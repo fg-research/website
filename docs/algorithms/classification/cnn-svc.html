@@ -7,19 +7,20 @@
 <meta content="white" media="(prefers-color-scheme: light)" name="theme-color"/>
 <meta content="black" metia="(prefers-color-scheme: dark)" name="theme-color"/>
 <meta content="Docutils 0.18.1: http://docutils.sourceforge.net/" name="generator"/>
-<title>CNN-KMeans SageMaker Algorithm | fg-research</title>
-<meta content="CNN-KMeans SageMaker Algorithm | fg-research" property="og:title"/>
-<meta content="CNN-KMeans SageMaker Algorithm | fg-research" name="twitter:title"/>
+<title>CNN-SVC SageMaker Algorithm | fg-research</title>
+<meta content="CNN-SVC SageMaker Algorithm | fg-research" property="og:title"/>
+<meta content="CNN-SVC SageMaker Algorithm | fg-research" name="twitter:title"/>
 <link href="../../_static/pygments.css" rel="stylesheet"/>
 <link href="../../_static/theme.47abdafeea10b5ccf58b.css" rel="stylesheet"/>
 <link href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" rel="stylesheet"/>
 <link href="../../_static/custom.css" rel="stylesheet"/>
 <link href="../../_static/awesome-sphinx-design.495717882cf46c002fb5.css" rel="stylesheet"/>
-<link href="https://fg-research.com/source/clustering/cnn-kmeans.html" rel="canonical"/>
+<link href="https://fg-research.com/algorithms/classification/cnn-svc.html" rel="canonical"/>
 <link href="../../_static/favicon.ico" rel="icon"/>
 <link href="../../search.html" rel="search" title="Search"/>
 <link href="../../genindex.html" rel="index" title="Index"/>
-<link href="../classification/lstm-fcn.html" rel="prev" title="LSTM-FCN SageMaker Algorithm"/>
+<link href="inception-time.html" rel="next" title="InceptionTime SageMaker Algorithm"/>
+<link href="../anomaly-detection/lstm-ae.html" rel="prev" title="LSTM-AE SageMaker Algorithm"/>
 <script>
     <!-- Prevent Flash of wrong theme -->
       const userPreference = localStorage.getItem('darkMode');
@@ -46,9 +47,7 @@
 <div class="hidden mr-4 md:flex">
 <a class="flex items-center mr-6" href="../../index.html">
 <img alt="Logo" class="mr-2 dark:invert" height="24" src="../../_static/logo.png" width="24"/><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">fg-research</span>
-</a><nav class="flex items-center space-x-6 text-sm font-medium">
-<a class="transition-colors hover:text-foreground/80 text-foreground/60" href="/blog.html">Blog</a>
-</nav></div><button @click="showSidebar = true" class="inline-flex items-center justify-center h-10 px-0 py-2 mr-2 text-base font-medium transition-colors rounded-md hover:text-accent-foreground hover:bg-transparent md:hidden" type="button">
+</a></div><button @click="showSidebar = true" class="inline-flex items-center justify-center h-10 px-0 py-2 mr-2 text-base font-medium transition-colors rounded-md hover:text-accent-foreground hover:bg-transparent md:hidden" type="button">
 <svg aria-hidden="true" fill="currentColor" height="24" viewbox="0 96 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
 <path d="M152.587 825.087q-19.152 0-32.326-13.174t-13.174-32.326q0-19.152 13.174-32.326t32.326-13.174h440q19.152 0 32.326 13.174t13.174 32.326q0 19.152-13.174 32.326t-32.326 13.174h-440Zm0-203.587q-19.152 0-32.326-13.174T107.087 576q0-19.152 13.174-32.326t32.326-13.174h320q19.152 0 32.326 13.174T518.087 576q0 19.152-13.174 32.326T472.587 621.5h-320Zm0-203.587q-19.152 0-32.326-13.174t-13.174-32.326q0-19.152 13.174-32.326t32.326-13.174h440q19.152 0 32.326 13.174t13.174 32.326q0 19.152-13.174 32.326t-32.326 13.174h-440ZM708.913 576l112.174 112.174q12.674 12.674 12.674 31.826t-12.674 31.826Q808.413 764.5 789.261 764.5t-31.826-12.674l-144-144Q600 594.391 600 576t13.435-31.826l144-144q12.674-12.674 31.826-12.674t31.826 12.674q12.674 12.674 12.674 31.826t-12.674 31.826L708.913 576Z"></path>
 </svg>
@@ -87,9 +86,7 @@
 <img alt="Logo" class="mr-2 dark:invert" height="16" src="../../_static/logo.png" width="16"/><span class="font-bold text-clip whitespace-nowrap">fg-research</span>
 </a>
 <div class="relative overflow-hidden md:overflow-auto my-4 md:my-0 h-[calc(100vh-8rem)] md:h-auto">
-<div class="overflow-y-auto h-full w-full relative pr-6"><nav class="flex md:hidden flex-col font-medium mt-4">
-<a href="/blog.html">Blog</a>
-</nav><nav class="table w-full min-w-full my-6 lg:my-8">
+<div class="overflow-y-auto h-full w-full relative pr-6"><nav class="table w-full min-w-full my-6 lg:my-8">
 <p class="caption" role="heading"><span class="caption-text">Time Series Forecasting</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../forecasting/cfc.html">CfC SageMaker Algorithm</a></li>
@@ -100,14 +97,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../anomaly-detection/lstm-ae.html">LSTM-AE SageMaker Algorithm</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Time Series Classification</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../classification/cnn-svc.html">CNN-SVC SageMaker Algorithm</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../classification/inception-time.html">InceptionTime SageMaker Algorithm</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../classification/lstm-fcn.html">LSTM-FCN SageMaker Algorithm</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">CNN-SVC SageMaker Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inception-time.html">InceptionTime SageMaker Algorithm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lstm-fcn.html">LSTM-FCN SageMaker Algorithm</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Time Series Clustering</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">CNN-KMeans SageMaker Algorithm</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../clustering/cnn-kmeans.html">CNN-KMeans SageMaker Algorithm</a></li>
 </ul>
 </nav>
 </div>
@@ -127,21 +124,21 @@
 <path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z"></path>
 </svg>
 </a>
-<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">CNN-KMeans SageMaker Algorithm</span>
+<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">CNN-SVC SageMaker Algorithm</span>
 </nav>
 <div id="content" role="main">
-<section class="tex2jax_ignore mathjax_ignore" id="cnn-kmeans-sagemaker-algorithm">
-<h1>CNN-KMeans SageMaker Algorithm<a class="headerlink" href="#cnn-kmeans-sagemaker-algorithm" title="Permalink to this heading">¶</a></h1>
-<p>The <a class="reference external" href="https://aws.amazon.com/marketplace/pp/prodview-3hdblqdz5nx4m">Time Series Clustering (CNN-KMeans) Algorithm from AWS Marketplace</a>
-performs time series clustering with an unsupervised convolutional neural network trained using contrastive learning
-followed by a K-Means clusterer.
+<section class="tex2jax_ignore mathjax_ignore" id="cnn-svc-sagemaker-algorithm">
+<h1>CNN-SVC SageMaker Algorithm<a class="headerlink" href="#cnn-svc-sagemaker-algorithm" title="Permalink to this heading">¶</a></h1>
+<p>The <a class="reference external" href="https://aws.amazon.com/marketplace/pp/prodview-mo7cf4nrgrbxk">Time Series Classification (CNN-SVC) Algorithm from AWS Marketplace</a>
+performs time series classification with an unsupervised convolutional neural network trained using contrastive learning
+followed by a support vector classifier.
 It implements both training and inference from CSV data and supports both CPU and GPU instances.
 The training and inference Docker images were built by extending the PyTorch 2.1.0 Python 3.10 SageMaker containers.
-The Docker images include modifications of software licensed under the Apache License 2.0, see the <a class="reference external" href="https://github.com/fg-research/cnn-kmeans-sagemaker/blob/master/LICENSE">LICENSE</a> and <a class="reference external" href="https://github.com/fg-research/cnn-kmeans-sagemaker/blob/master/NOTICE">NOTICE</a>.</p>
+The Docker images include modifications of software licensed under the Apache License 2.0, see the <a class="reference external" href="https://github.com/fg-research/cnn-svc-sagemaker/blob/master/LICENSE">LICENSE</a> and <a class="reference external" href="https://github.com/fg-research/cnn-svc-sagemaker/blob/master/NOTICE">NOTICE</a>.</p>
 <section id="model-description">
 <h2>Model Description<a class="headerlink" href="#model-description" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#model-description'">¶</a></h2>
 <p>The model has two components: an encoder which extracts the relevant features,
-and a K-Means clusterer which takes as input the extracted features and predicts the cluster labels.</p>
+and a support vector classifier which takes as input the extracted features and predicts the class labels.</p>
 <p>The encoder includes a stack of exponentially dilated causal convolutional blocks, followed by an adaptive max pooling layer and a linear output layer.
 Each block consists of two causal convolutional layers with the same dilation rate, each followed by weight normalization and Leaky ReLU activation.
 A residual connection is applied between the input and the output of each block, where the input is transformed by an additional convolutional layer with a kernel size of 1 when its length does not match the one of the output.</p>
@@ -155,7 +152,7 @@ All (sub)sequences are sampled randomly during each training iteration.</p>
 <img src="https://fg-research-assets.s3.eu-west-1.amazonaws.com/cnn-encoder-sampling-diagram.png" style="width:50%;margin-top:30px;margin-bottom:20px"/>
 <p><em>Contrastive learning (source: <a class="reference external" href="https://doi.org/10.48550/arXiv.1901.10738">doi.org/10.48550/arXiv.1901.10738</a>)</em></p>
 <p>The number of features extracted by the encoder is determined by the number of hidden units of the linear output layer.
-These features are used for training the K-Means clusterer.</p>
+These features are used together with the class labels for training the support vector classifier.</p>
 <p><strong>Model Resources:</strong> <a class="reference external" href="https://doi.org/10.48550/arXiv.1901.10738">[Paper]</a> <a class="reference external" href="https://github.com/White-Link/UnsupervisedScalableRepresentationLearningTimeSeries">[Code]</a></p>
 </section>
 <section id="sagemaker-algorithm-description">
@@ -165,19 +162,21 @@ These features are used for training the K-Means clusterer.</p>
 <h3>Training<a class="headerlink" href="#training" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#training'">¶</a></h3>
 <p>The training algorithm has two input data channels: <code class="docutils literal notranslate"><span class="pre">training</span></code> and <code class="docutils literal notranslate"><span class="pre">validation</span></code>.
 The <code class="docutils literal notranslate"><span class="pre">training</span></code> channel is mandatory, while the <code class="docutils literal notranslate"><span class="pre">validation</span></code> channel is optional.</p>
-<p>The training and validation datasets should be provided as CSV files.
+<p>The data should be provided in a CSV file containing the time series and their class labels.
 The CSV file should not contain any index column or column headers.
 Each row of the CSV file represents a time series, while each column represents a time step.
+The class labels should be stored in the first column, while the time series should be stored in the subsequent columns.
 The time series can have different lengths and can contain missing values.
+The class labels can also contain missing values.
 The time series are scaled internally by the algorithm, there is no need to scale the time series beforehand.
-See the sample input files <a class="reference external" href="https://github.com/fg-research/cnn-kmeans-sagemaker/blob/master/data/training/train.csv"><code class="docutils literal notranslate"><span class="pre">train.csv</span></code></a> and <a class="reference external" href="https://github.com/fg-research/cnn-kmeans-sagemaker/blob/master/data/training/valid.csv"><code class="docutils literal notranslate"><span class="pre">valid.csv</span></code></a>.</p>
-<p>See <a class="reference external" href="https://github.com/fg-research/cnn-kmeans-sagemaker/blob/master/notebook.ipynb"><code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code></a> for an example of how to launch a training job.</p>
+See the sample input files <a class="reference external" href="https://github.com/fg-research/cnn-svc-sagemaker/blob/master/data/training/train.csv"><code class="docutils literal notranslate"><span class="pre">train.csv</span></code></a> and <a class="reference external" href="https://github.com/fg-research/cnn-svc-sagemaker/blob/master/data/training/valid.csv"><code class="docutils literal notranslate"><span class="pre">valid.csv</span></code></a>.</p>
+<p>See <a class="reference external" href="https://github.com/fg-research/cnn-svc-sagemaker/blob/master/notebook.ipynb"><code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code></a> for an example of how to launch a training job.</p>
 <section id="hyperparameters">
 <h4>Hyperparameters<a class="headerlink" href="#hyperparameters" title="Permalink to this heading">¶</a></h4>
 <p>The training algorithm takes as input the following hyperparameters:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">clusters</span></code>: <code class="docutils literal notranslate"><span class="pre">int</span></code>. The number of clusters.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">algorithm</span></code>: <code class="docutils literal notranslate"><span class="pre">str</span></code>. The clustering algorithm.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">penalty</span></code>: <code class="docutils literal notranslate"><span class="pre">float</span></code>. The regularization parameter of the support vector classifier.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">kernel</span></code>: <code class="docutils literal notranslate"><span class="pre">str</span></code>. The kernel function of the support vector classifier.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">blocks</span></code>: <code class="docutils literal notranslate"><span class="pre">int</span></code>. The number of blocks of convolutional layers.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">filters</span></code>: <code class="docutils literal notranslate"><span class="pre">int</span></code>.	The number of filters of all but the last convolutional layers.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">kernel-size</span></code>: <code class="docutils literal notranslate"><span class="pre">int</span></code>.	The size of the kernel of all non-residual convolutional layers.</p></li>
@@ -194,14 +193,14 @@ See the sample input files <a class="reference external" href="https://github.co
 <p>The training algorithm logs the following metrics:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">train_loss</span></code>: <code class="docutils literal notranslate"><span class="pre">float</span></code>. Training loss.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">train_score</span></code>: <code class="docutils literal notranslate"><span class="pre">float</span></code>. Training Silhouette Coefficient.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">train_accuracy</span></code>: <code class="docutils literal notranslate"><span class="pre">float</span></code>. Training accuracy.</p></li>
 </ul>
 <p>If the <code class="docutils literal notranslate"><span class="pre">validation</span></code> channel is provided, the training algorithm also logs the following additional metrics:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">valid_loss</span></code>: <code class="docutils literal notranslate"><span class="pre">float</span></code>. Validation loss.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">valid_score</span></code>: <code class="docutils literal notranslate"><span class="pre">float</span></code>. Validation Silhouette Coefficient.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">valid_accuracy</span></code>: <code class="docutils literal notranslate"><span class="pre">float</span></code>. Validation accuracy.</p></li>
 </ul>
-<p>See <a class="reference external" href="https://github.com/fg-research/cnn-kmeans-sagemaker/blob/master/notebook.ipynb"><code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code></a> for an example of how to launch a hyperparameter tuning job.</p>
+<p>See <a class="reference external" href="https://github.com/fg-research/cnn-svc-sagemaker/blob/master/notebook.ipynb"><code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code></a> for an example of how to launch a hyperparameter tuning job.</p>
 </section>
 </section>
 <section id="inference">
@@ -211,16 +210,16 @@ The CSV file should not contain any index column or column headers.
 Each row of the CSV file represents a time series, while each column represents a time step.
 The time series can have different lengths and can contain missing values.
 The time series are scaled internally by the algorithm, there is no need to scale the time series beforehand.
-See the sample input file <a class="reference external" href="https://github.com/fg-research/cnn-kmeans-sagemaker/blob/master/data/inference/input/test.csv"><code class="docutils literal notranslate"><span class="pre">test.csv</span></code></a>.</p>
-<p>The inference algorithm outputs the predicted cluster labels and the extracted features, which are returned in CSV format.
-The predicted cluster labels are included in the first column, while the extracted features are included in the subsequent columns.
-See the sample output files <a class="reference external" href="https://github.com/fg-research/cnn-kmeans-sagemaker/blob/master/data/inference/output/batch/batch_predictions.csv"><code class="docutils literal notranslate"><span class="pre">batch_predictions.csv</span></code></a> and <a class="reference external" href="https://github.com/fg-research/cnn-kmeans-sagemaker/blob/master/data/inference/output/real-time/real_time_predictions.csv"><code class="docutils literal notranslate"><span class="pre">real_time_predictions.csv</span></code></a>.</p>
-<p>See <a class="reference external" href="https://github.com/fg-research/cnn-kmeans-sagemaker/blob/master/notebook.ipynb"><code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code></a> for an example of how to launch a batch transform job.</p>
+See the sample input file <a class="reference external" href="https://github.com/fg-research/cnn-svc-sagemaker/blob/master/data/inference/input/test_data.csv"><code class="docutils literal notranslate"><span class="pre">test_data.csv</span></code></a>.</p>
+<p>The inference algorithm outputs the predicted class labels and the extracted features, which are returned in CSV format.
+The predicted class labels are included in the first column, while the extracted features are included in the subsequent columns.
+See the sample output files <a class="reference external" href="https://github.com/fg-research/cnn-svc-sagemaker/blob/master/data/inference/output/batch/batch_predictions.csv"><code class="docutils literal notranslate"><span class="pre">batch_predictions.csv</span></code></a> and <a class="reference external" href="https://github.com/fg-research/cnn-svc-sagemaker/blob/master/data/inference/output/real-time/real_time_predictions.csv"><code class="docutils literal notranslate"><span class="pre">real_time_predictions.csv</span></code></a>.</p>
+<p>See <a class="reference external" href="https://github.com/fg-research/cnn-svc-sagemaker/blob/master/notebook.ipynb"><code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code></a> for an example of how to launch a batch transform job.</p>
 <section id="endpoints">
 <h4>Endpoints<a class="headerlink" href="#endpoints" title="Permalink to this heading">¶</a></h4>
 <p>The algorithm supports only real-time inference endpoints. The inference image is too large to be uploaded to a serverless inference endpoint.</p>
-<p>See <a class="reference external" href="https://github.com/fg-research/cnn-kmeans-sagemaker/blob/master/notebook.ipynb"><code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code></a> for an example of how to deploy the model to an endpoint, invoke the endpoint and process the response.</p>
-<p><strong>Additional Resources:</strong> <a class="reference external" href="https://github.com/fg-research/cnn-kmeans-sagemaker/blob/master/notebook.ipynb">[Sample Notebook]</a> <a class="reference external" href="https://medium.com/@fg-research/time-series-clustering-with-the-cnn-kmeans-sagemaker-algorithm-from-aws-marketplace-47bb3acb23a6?source=friends_link&amp;amp;sk=34880ec7bbe1bdb522035b1c1f5479c2">[Blog Post]</a></p>
+<p>See <a class="reference external" href="https://github.com/fg-research/cnn-svc-sagemaker/blob/master/notebook.ipynb"><code class="docutils literal notranslate"><span class="pre">notebook.ipynb</span></code></a> for an example of how to deploy the model to an endpoint, invoke the endpoint and process the response.</p>
+<p><strong>Additional Resources:</strong> <a class="reference external" href="https://github.com/fg-research/cnn-svc-sagemaker/blob/master/notebook.ipynb">[Sample Notebook]</a></p>
 </section>
 </section>
 </section>

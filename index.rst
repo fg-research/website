@@ -44,25 +44,25 @@ For support, contact `support@fg-research.com <mailto:support@fg-research.com>`_
    :glob:
    :hidden:
 
-   source/forecasting/*
+   algorithms/forecasting/*
 
 .. toctree::
    :caption: Time Series Anomaly Detection
    :glob:
    :hidden:
 
-   source/anomaly-detection/*
+   algorithms/anomaly-detection/*
 
 .. toctree::
    :caption: Time Series Classification
    :glob:
    :hidden:
 
-   source/classification/*
+   algorithms/classification/*
 
 .. toctree::
    :caption: Time Series Clustering
    :glob:
    :hidden:
 
-   source/clustering/*
+   algorithms/clustering/*

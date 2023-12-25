@@ -48,12 +48,7 @@ html_js_files = ['custom.js']
 html_show_sourcelink = False
 html_theme = 'sphinxawesome_theme'
 
-html_sidebars = {
-    "blog": ["sidebar_main_nav_links.html"],
-}
-
 html_theme_options = dict(
-    main_nav_links={"Blog": "/blog"},
     extra_header_link_icons={
         'GitHub': {
             'link': 'https://github.com/fg-research',
