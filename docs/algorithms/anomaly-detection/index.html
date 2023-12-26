@@ -128,7 +128,7 @@
 <h2>LSTM-AD SageMaker Algorithm<a class="headerlink" href="#lstm-ad-sagemaker-algorithm" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#lstm-ad-sagemaker-algorithm'">¶</a></h2>
 <p>The LSTM-AD SageMaker Algorithm performs time series anomaly detection with the <a class="reference external" href="https://www.esann.org/sites/default/files/proceedings/legacy/es2015-56.pdf" rel="nofollow noopener">Long Short-Term Memory Network for Anomaly Detection (LSTM-AD)<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>.
 The LSTM-AD model predicts the future values of the time series with a stacked LSTM network.
-The model fits a Gaussian distribution to the prediction errors obtained on normal data.
+After that it fits a Gaussian distribution to the prediction errors obtained on normal data.
 The Gaussian likelihood of the prediction errors is then used as a normality score.
 The lower the Gaussian likelihood at a given a time step, the more likely the time step is to be an anomaly.
 The algorithm supports both univariate and multivariate time series.
@@ -139,7 +139,7 @@ The algorithm supports both univariate and multivariate time series.
 <h2>LSTM-AE SageMaker Algorithm<a class="headerlink" href="#lstm-ae-sagemaker-algorithm" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#lstm-ae-sagemaker-algorithm'">¶</a></h2>
 <p>The LSTM-AE SageMaker Algorithm performs time series anomaly detection with the <a class="reference external" href="https://doi.org/10.48550/arXiv.1607.00148" rel="nofollow noopener">Long Short-Term Memory Network Autoencoder (LSTM-AE)<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>.
 The LSTM-AE model reconstructs the observed values of the time series with an encoder-decoder LSTM network.
-The model fits a Gaussian distribution to the reconstruction errors obtained on normal data.
+After that it fits a Gaussian distribution to the reconstruction errors obtained on normal data.
 The squared Mahalanobis distance between the reconstruction errors and the fitted Gaussian distribution is then used as an anomaly score.
 The larger the squared Mahalanobis distance at a given a time step, the more likely the time step is to be an anomaly.
 The algorithm supports both univariate and multivariate time series.

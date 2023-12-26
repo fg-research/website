@@ -141,6 +141,7 @@ Each block contains three convolutional layers and a max pooling layer.
 The four layers process the block input in parallel.
 After that their output representations are concatenated and passed to a batch normalization layer followed by a dense layer with ReLU activation.
 The output of the last block is passed to an average pooling layer, and then to a final output layer with softmax activation.
+The algorithm trains an ensemble of InceptionTime networks and derives the final predicted class labels by averaging the class probabilities predicted by the different networks in the ensemble.
 [<a class="reference external" href="https://aws.amazon.com/marketplace/pp/prodview-omz7rumnllmla" rel="nofollow noopener">AWS Marketplace<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>]
 [<a class="reference external" href="https://github.com/fg-research/inception-time-sagemaker" rel="nofollow noopener">GitHub<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>]</p>
 </section>
