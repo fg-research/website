@@ -15,8 +15,12 @@ a.reference.internal{
 }
 
 .mr-2{
-    height: 36px !important;
-    width: 51px !important;
+    height: 46px !important;
+    width: 65px !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
 }
 
 .dark .dark\:invert {
@@ -28,6 +32,7 @@ a.reference.internal{
     font-size: 70% !important;
     text-align: center !important;
     margin: auto !important;
+    max-width: 100% !important;
 }
 
 @media (min-width:1440px) {
