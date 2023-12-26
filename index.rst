@@ -9,9 +9,9 @@ Time Series Analysis in Amazon SageMaker
 
 Train, tune and deploy state-of-the-art machine learning models for time series in Amazon SageMaker.
 
-.. image:: static/background.png
-  :width: 100%
-  :alt: fg-research background image
+.. image:: static/logo.png
+  :width: 70%
+  :alt: fg-research logo
 
 .. _aws_marketplace_logo:
 
