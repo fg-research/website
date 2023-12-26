@@ -136,11 +136,11 @@ After that their output representations are concatenated and passed to a final o
 <section id="inceptiontime-sagemaker-algorithm">
 <h2>InceptionTime SageMaker Algorithm<a class="headerlink" href="#inceptiontime-sagemaker-algorithm" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#inceptiontime-sagemaker-algorithm'">¶</a></h2>
 <p>The InceptionTime SageMaker Algorithm performs time series classification with the <a class="reference external" href="https://doi.org/10.1007/s10618-020-00710-y" rel="nofollow noopener">InceptionTime Network<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>.
-The InceptionTime network consists of a stack of Inception blocks.
-Each block contains three convolutional layers and a max pooling layer.
+The InceptionTime network consists of a stack of Inception blocks linked by residual connections.
+Each Inception block contains three convolutional layers and a max pooling layer.
 The four layers process the block input in parallel.
 After that their output representations are concatenated and passed to a batch normalization layer followed by a dense layer with ReLU activation.
-The output of the last block is passed to an average pooling layer, and then to a final output layer with softmax activation.
+The output of the last Inception block is passed to an average pooling layer, and then to a final output layer with softmax activation.
 [<a class="reference external" href="https://aws.amazon.com/marketplace/pp/prodview-omz7rumnllmla" rel="nofollow noopener">AWS Marketplace<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>]
 [<a class="reference external" href="https://github.com/fg-research/inception-time-sagemaker" rel="nofollow noopener">GitHub<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>]</p>
 </section>
