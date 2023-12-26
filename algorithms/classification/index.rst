@@ -23,10 +23,10 @@ InceptionTime SageMaker Algorithm
 =============================================
 The InceptionTime SageMaker Algorithm performs time series classification with the `InceptionTime Network <https://doi.org/10.1007/s10618-020-00710-y>`_.
 The InceptionTime network consists of a stack of Inception blocks linked by residual connections.
-Each Inception block contains three convolutional layers and a max pooling layer.
+Each block contains three convolutional layers and a max pooling layer.
 The four layers process the block input in parallel.
 After that their output representations are concatenated and passed to a batch normalization layer followed by a dense layer with ReLU activation.
-The output of the last Inception block is passed to an average pooling layer, and then to a final output layer with softmax activation.
+The output of the last block is passed to an average pooling layer, and then to a final output layer with softmax activation.
 [`AWS Marketplace <https://aws.amazon.com/marketplace/pp/prodview-omz7rumnllmla>`_]
 [`GitHub <https://github.com/fg-research/inception-time-sagemaker>`_]
 
