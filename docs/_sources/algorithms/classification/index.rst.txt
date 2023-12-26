@@ -27,7 +27,7 @@ Each block contains three convolutional layers and a max pooling layer.
 The four layers process the block input in parallel.
 After that their output representations are concatenated and passed to a batch normalization layer followed by a dense layer with ReLU activation.
 The output of the last block is passed to an average pooling layer, and then to a final output layer with softmax activation.
-The algorithm trains an ensemble of InceptionTime networks and derives the class labels by averaging the class probabilities predicted by the different networks in the ensemble.
+The algorithm trains an ensemble of InceptionTime networks and generates the final predicted class labels by averaging the class probabilities predicted by the different networks in the ensemble.
 [`AWS Marketplace <https://aws.amazon.com/marketplace/pp/prodview-omz7rumnllmla>`_]
 [`GitHub <https://github.com/fg-research/inception-time-sagemaker>`_]
 
