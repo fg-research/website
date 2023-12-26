@@ -28,7 +28,7 @@ All the algorithms use the latest Amazon SageMaker deep learning containers and 
 Documentation
 =============================================
 Each algorithm has a dedicated `GitHub <https://github.com/fg-research>`_ repository with detailed documentation and step-by-step tutorials in Jupyter notebook format.
-Some algorithms are also briefly discussed on `Medium <https://medium.com/@fg-research>`_.
+Some algorithms are also discussed on `Medium <https://medium.com/@fg-research>`_.
 
 Pricing
 =============================================
@@ -40,29 +40,17 @@ Support
 For support, contact `support@fg-research.com <mailto:support@fg-research.com>`_.
 
 .. toctree::
-   :caption: Time Series Forecasting
-   :glob:
+   :caption: Algorithms
    :hidden:
 
-   algorithms/forecasting/*
+   algorithms/forecasting/index
+   algorithms/anomaly-detection/index
+   algorithms/clustering/index
+   algorithms/classification/index
 
 .. toctree::
-   :caption: Time Series Anomaly Detection
-   :glob:
+   :caption: Blog
    :hidden:
 
-   algorithms/anomaly-detection/*
-
-.. toctree::
-   :caption: Time Series Classification
-   :glob:
-   :hidden:
-
-   algorithms/classification/*
-
-.. toctree::
-   :caption: Time Series Clustering
-   :glob:
-   :hidden:
-
-   algorithms/clustering/*
+   blog/product/index
+   blog/general/index

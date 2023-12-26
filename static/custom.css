@@ -10,9 +10,13 @@ h2 {
     font-size: 1.6rem !important;
 }
 
+a.reference.internal{
+    font-size: 90% !important;
+}
+
 .mr-2{
     height: 36px !important;
-    width: 50px !important;
+    width: 51px !important;
 }
 
 .dark .dark\:invert {
@@ -20,16 +24,20 @@ h2 {
     filter: none !important;
 }
 
-span.caption-text, p.font-medium{
-    font-size: 90% !important;
-}
-
-.leading-loose {
+.leading-loose{
     font-size: 70% !important;
     text-align: center !important;
+    margin: auto !important;
 }
 
-a.reference.internal{
-    color: #64748b !important;
-    font-size: 80% !important;
+@media (min-width:1440px) {
+
+    .leading-loose{
+        font-size: 70% !important;
+        text-align: center !important;
+        margin: auto !important;
+        max-width: 70% !important;
+    }
+
 }
+

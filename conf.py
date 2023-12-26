@@ -49,6 +49,8 @@ html_show_sourcelink = False
 html_theme = 'sphinxawesome_theme'
 
 html_theme_options = dict(
+    show_prev_next=False,
+    awesome_external_links=True,
     extra_header_link_icons={
         'GitHub': {
             'link': 'https://github.com/fg-research',
