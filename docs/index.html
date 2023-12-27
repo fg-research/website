@@ -113,15 +113,27 @@
 <section id="time-series-analysis-in-amazon-sagemaker">
 <h1>Time Series Analysis in Amazon SageMaker<a class="headerlink" href="#time-series-analysis-in-amazon-sagemaker" title="Permalink to this heading">¶</a></h1>
 <p class="lead">Train, tune and deploy state-of-the-art machine learning models for time series in Amazon SageMaker.</p>
-<a class="reference internal image-reference" href="_images/logo.png"><img alt="fg-research logo" src="_images/logo.png" style="width: 70%;"/></a>
+<a class="reference internal image-reference" href="_images/logo.png" id="fg-research-logo"><img alt="fg-research logo" class="align-left" id="fg-research-logo" src="_images/logo.png" style="width: 70%;"/></a>
 <figure class="align-right" id="aws-marketplace-logo">
-<img alt="AWS Marketplace Logo" src="_images/AWSMP_NewLogo_RGB_BLK.png"/>
+<a class="reference internal image-reference" href="_images/AWSMP_NewLogo_RGB_BLK.png"><img alt="AWS Marketplace Logo" src="_images/AWSMP_NewLogo_RGB_BLK.png" style="width: 35%;"/></a>
 </figure>
-<section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#overview'">¶</a></h2>
+<section id="product">
+<h2>Product<a class="headerlink" href="#product" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#product'">¶</a></h2>
 <p>We provide Amazon SageMaker algorithms for multiple time series tasks, including forecasting, anomaly detection, clustering and classification.
-Each algorithm implements a research-based neural network designed specifically for time series.
-All the algorithms use the latest Amazon SageMaker deep learning containers and support both CPU and GPU training.</p>
+Each algorithm implements a state-of-the-art deep learning architecture designed specifically for time series.</p>
+</section>
+<section id="features">
+<h2>Features<a class="headerlink" href="#features" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#features'">¶</a></h2>
+<dl class="simple">
+<dt>Automated Data Handling</dt><dd><p>The algorithms work directly on raw time series data in CSV format. All the required data preprocessing and scaling is performed internally by our code.</p>
+</dd>
+<dt>Automatic Model Tuning</dt><dd><p>The algorithms support <a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/automatic-model-tuning.html" rel="nofollow noopener">automatic model tuning<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a> for optimizing the neural network hyperparameters in order to achieve the best possible performance on a given dataset.</p>
+</dd>
+<dt>Incremental Training</dt><dd><p>Most of the algorithms support <a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/incremental-training.html" rel="nofollow noopener">incremental training<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a> which can be used to continue training the model on the same dataset or to fine-tune the model on a different dataset.</p>
+</dd>
+<dt>Accelerated Training</dt><dd><p>The algorithms were built by extending the latest <a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/docker-containers-prebuilt.html" rel="nofollow noopener">deep learning containers<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a> and support both CPU and GPU training. Most of the algorithms also support multi-GPU training.</p>
+</dd>
+</dl>
 </section>
 <section id="documentation">
 <h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#documentation'">¶</a></h2>
@@ -143,7 +155,8 @@ on a usage-based pricing plan. Each algorithm offers a 5 days free trial.</p>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(var(--vh)-4rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
-<li><a :data-current="activeSection === '#overview'" class="reference internal" href="#overview">Overview</a></li>
+<li><a :data-current="activeSection === '#product'" class="reference internal" href="#product">Product</a></li>
+<li><a :data-current="activeSection === '#features'" class="reference internal" href="#features">Features</a></li>
 <li><a :data-current="activeSection === '#documentation'" class="reference internal" href="#documentation">Documentation</a></li>
 <li><a :data-current="activeSection === '#pricing'" class="reference internal" href="#pricing">Pricing</a></li>
 <li><a :data-current="activeSection === '#support'" class="reference internal" href="#support">Support</a><ul>

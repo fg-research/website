@@ -14,18 +14,17 @@ a.reference.internal{
     font-size: 90% !important;
 }
 
-.mr-2{
-    height: 41px !important;
-    width: 58px !important;
-    margin-top: 0 !important;
-    padding-top: 0 !important;
-    margin-bottom: 0 !important;
-    padding-bottom: 0 !important;
-}
-
 .dark .dark\:invert {
     --tw-invert: none !important;
     filter: none !important;
+}
+
+.check-icon{
+    color: #28A745 !important;
+}
+
+.x-icon{
+    color: #DC3545 !important;
 }
 
 .leading-loose{

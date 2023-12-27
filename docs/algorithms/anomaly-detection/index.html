@@ -122,9 +122,33 @@
 <section id="time-series-anomaly-detection">
 <h1>Time Series Anomaly Detection<a class="headerlink" href="#time-series-anomaly-detection" title="Permalink to this heading">¶</a></h1>
 <p class="lead">Perform time series anomaly detection in Amazon SageMaker.</p>
+<table class="docutils align-default" style="width: 100%">
+<thead>
+<tr class="row-odd"><th class="head"><p>SageMaker Algorithm</p></th>
+<th class="head"><p>CPU Training</p></th>
+<th class="head"><p>GPU Training</p></th>
+<th class="head"><p>Multi-GPU Training</p></th>
+<th class="head"><p>Incremental Training</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="#id1"><span class="std std-ref">LSTM-AD</span></a></p></td>
+<td><p><svg aria-hidden="true" class="sd-octicon sd-octicon-check check-icon" height="1.1em" version="1.1" viewbox="0 0 16 16" width="1.1em"><path d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z" fill-rule="evenodd"></path></svg></p></td>
+<td><p><svg aria-hidden="true" class="sd-octicon sd-octicon-check check-icon" height="1.1em" version="1.1" viewbox="0 0 16 16" width="1.1em"><path d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z" fill-rule="evenodd"></path></svg></p></td>
+<td><p><svg aria-hidden="true" class="sd-octicon sd-octicon-check check-icon" height="1.1em" version="1.1" viewbox="0 0 16 16" width="1.1em"><path d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z" fill-rule="evenodd"></path></svg></p></td>
+<td><p><svg aria-hidden="true" class="sd-octicon sd-octicon-x x-icon" height="1.1em" version="1.1" viewbox="0 0 16 16" width="1.1em"><path d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z" fill-rule="evenodd"></path></svg></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#id2"><span class="std std-ref">LSTM-AE</span></a></p></td>
+<td><p><svg aria-hidden="true" class="sd-octicon sd-octicon-check check-icon" height="1.1em" version="1.1" viewbox="0 0 16 16" width="1.1em"><path d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z" fill-rule="evenodd"></path></svg></p></td>
+<td><p><svg aria-hidden="true" class="sd-octicon sd-octicon-check check-icon" height="1.1em" version="1.1" viewbox="0 0 16 16" width="1.1em"><path d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z" fill-rule="evenodd"></path></svg></p></td>
+<td><p><svg aria-hidden="true" class="sd-octicon sd-octicon-check check-icon" height="1.1em" version="1.1" viewbox="0 0 16 16" width="1.1em"><path d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z" fill-rule="evenodd"></path></svg></p></td>
+<td><p><svg aria-hidden="true" class="sd-octicon sd-octicon-x x-icon" height="1.1em" version="1.1" viewbox="0 0 16 16" width="1.1em"><path d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z" fill-rule="evenodd"></path></svg></p></td>
+</tr>
+</tbody>
+</table>
 <section id="lstm-ad-sagemaker-algorithm">
 <h2>LSTM-AD SageMaker Algorithm<a class="headerlink" href="#lstm-ad-sagemaker-algorithm" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#lstm-ad-sagemaker-algorithm'">¶</a></h2>
-<p>The LSTM-AD SageMaker Algorithm performs time series anomaly detection with the <a class="reference external" href="https://www.esann.org/sites/default/files/proceedings/legacy/es2015-56.pdf" rel="nofollow noopener">Long Short-Term Memory Network for Anomaly Detection (LSTM-AD)<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>.
+<p id="id1">The LSTM-AD SageMaker Algorithm performs time series anomaly detection with the <a class="reference external" href="https://www.esann.org/sites/default/files/proceedings/legacy/es2015-56.pdf" rel="nofollow noopener">Long Short-Term Memory Network for Anomaly Detection (LSTM-AD)<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>.
 The LSTM-AD model predicts the future values of the time series with a stacked LSTM network.
 After that it fits a Gaussian distribution to the prediction errors obtained on normal data.
 The Gaussian likelihood of the prediction errors is then used as a normality score.
@@ -134,8 +158,8 @@ The lower the Gaussian likelihood at a given a time step, the more likely the ti
 </section>
 <section id="lstm-ae-sagemaker-algorithm">
 <h2>LSTM-AE SageMaker Algorithm<a class="headerlink" href="#lstm-ae-sagemaker-algorithm" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#lstm-ae-sagemaker-algorithm'">¶</a></h2>
-<p>The LSTM-AE SageMaker Algorithm performs time series anomaly detection with the <a class="reference external" href="https://doi.org/10.48550/arXiv.1607.00148" rel="nofollow noopener">Long Short-Term Memory Network Autoencoder (LSTM-AE)<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>.
-The LSTM-AE model reconstructs the observed values of the time series with an encoder-decoder LSTM network.
+<p id="id2">The LSTM-AE SageMaker Algorithm performs time series anomaly detection with the <a class="reference external" href="https://arxiv.org/pdf/1607.00148.pdf" rel="nofollow noopener">Long Short Term Memory Networks based Encoder-Decoder scheme for Anomaly Detection (LSTM-AE)<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>.
+The LSTM-AE model reconstructs the observed values of the time series with an LSTM autoencoder.
 After that it fits a Gaussian distribution to the reconstruction errors obtained on normal data.
 The squared Mahalanobis distance between the reconstruction errors and the fitted Gaussian distribution is then used as an anomaly score.
 The larger the squared Mahalanobis distance at a given a time step, the more likely the time step is to be an anomaly.
