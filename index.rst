@@ -11,14 +11,14 @@ Train, tune and deploy state-of-the-art machine learning models for time series 
 
 .. _fg_research_logo:
 
-.. image:: static/logo.png
+.. figure:: /static/logo.png
   :align: left
   :width: 70%
   :alt: fg-research logo
 
 .. _aws_marketplace_logo:
 
-.. figure:: static/AWSMP_NewLogo_RGB_BLK.png
+.. figure:: /static/AWSMP_NewLogo_RGB_BLK.png
    :align: right
    :width: 35%
    :alt: AWS Marketplace Logo

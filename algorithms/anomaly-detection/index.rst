@@ -29,8 +29,8 @@ The LSTM-AD model predicts the future values of the time series with a stacked L
 After that it fits a Gaussian distribution to the prediction errors obtained on normal data.
 The Gaussian likelihood of the prediction errors is then used as a normality score.
 The lower the Gaussian likelihood at a given a time step, the more likely the time step is to be an anomaly.
-[`AWS Marketplace <https://aws.amazon.com/marketplace/pp/prodview-4pbvedtnnlphw>`_]
-[`GitHub <https://github.com/fg-research/lstm-ad-sagemaker>`_]
+[`AWS Marketplace <https://aws.amazon.com/marketplace/pp/prodview-4pbvedtnnlphw>`__]
+[`GitHub <https://github.com/fg-research/lstm-ad-sagemaker>`__]
 
 ******************************************
 LSTM-AE SageMaker Algorithm
@@ -42,6 +42,6 @@ The LSTM-AE model reconstructs the observed values of the time series with an LS
 After that it fits a Gaussian distribution to the reconstruction errors obtained on normal data.
 The squared Mahalanobis distance between the reconstruction errors and the fitted Gaussian distribution is then used as an anomaly score.
 The larger the squared Mahalanobis distance at a given a time step, the more likely the time step is to be an anomaly.
-[`AWS Marketplace <https://aws.amazon.com/marketplace/pp/prodview-up2haipz3j472>`_]
-[`GitHub <https://github.com/fg-research/lstm-ae-sagemaker>`_]
+[`AWS Marketplace <https://aws.amazon.com/marketplace/pp/prodview-up2haipz3j472>`__]
+[`GitHub <https://github.com/fg-research/lstm-ae-sagemaker>`__]
 

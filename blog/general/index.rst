@@ -5,4 +5,8 @@
 General
 ########################################################
 
+.. rst-class:: lead
+
+   Learn about time series analysis.
+
 Coming soon.

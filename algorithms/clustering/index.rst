@@ -28,7 +28,7 @@ The CNN network encodes the input time series into a number of time-independent 
 The CNN network consists of a stack of exponentially dilated causal convolutional blocks with residual connections
 and is trained in an unsupervised manner using a contrastive learning procedure that minimizes the triplet loss.
 The algorithm can be used for time series with different lengths or with missing values.
-[`AWS Marketplace <https://aws.amazon.com/marketplace/pp/prodview-3hdblqdz5nx4m>`_]
-[`GitHub <https://github.com/fg-research/cnn-kmeans-sagemaker>`_]
+[`AWS Marketplace <https://aws.amazon.com/marketplace/pp/prodview-3hdblqdz5nx4m>`__]
+[`GitHub <https://github.com/fg-research/cnn-kmeans-sagemaker>`__]
 
 
