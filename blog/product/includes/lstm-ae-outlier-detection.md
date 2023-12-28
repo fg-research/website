@@ -2,10 +2,6 @@
 orphan: true
 ---
 
-# Outlier Detection with the LSTM-AE SageMaker Algorithm
+# Time series outlier detection with the LSTM-AE SageMaker Algorithm
 
-## Model
-
-## Data
-
-## Code
+Coming soon.

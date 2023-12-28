@@ -27,6 +27,14 @@ a.reference.internal{
     color: #DC3545 !important;
 }
 
+.sd-card-body{
+    padding: 0 !important;
+};
+
+.sd-card-text{
+    font-weight: 500 !important;
+}
+
 .leading-loose{
     font-size: 70% !important;
     text-align: center !important;

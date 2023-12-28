@@ -9,10 +9,104 @@ Product
 
    Learn about our time series algorithms.
 
-Coming soon.
 
-..
-   #. :doc:`Outlier Detection with the LSTM-AE SageMaker Algorithm </blog/product/includes/lstm-ae-outlier-detection>`
+.. card::
+    :width: 100%
+    :link: https://medium.com/@fg-research/process-control-measurements-classification-with-the-inceptiontime-sagemaker-algorithm-from-aws-51af79398470?source=friends_link&sk=3b9042ab5a1add17d01c6be087589d3b
+
+    .. grid:: 2
+
+       .. grid-item::
+          :columns: 5
+
+          .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-architecture.png
+
+
+       .. grid-item::
+          :columns: 7
+          :child-align: center
+
+          Time series classification with the InceptionTime SageMaker Algorithm
+
+
+.. card::
+    :width: 100%
+    :link: https://medium.com/@fg-research/time-series-clustering-with-the-cnn-kmeans-sagemaker-algorithm-from-aws-marketplace-47bb3acb23a6?source=friends_link&sk=34880ec7bbe1bdb522035b1c1f5479c2
+
+    .. grid:: 2
+
+       .. grid-item::
+          :columns: 5
+
+          .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/cnn-kmeans-architecture.png
+
+
+       .. grid-item::
+          :columns: 7
+          :child-align: center
+
+          Time series clustering with the CNN-KMeans SageMaker Algorithm
+
+
+.. card::
+    :width: 100%
+    :link: https://medium.com/@fg-research/time-series-forecasting-with-the-cfc-sagemaker-algorithm-from-aws-marketplace-eb89a53f11ec?source=friends_link&sk=3471cd2c8a6881f5cce1b2ce3bd46ffe
+
+    .. grid:: 2
+
+       .. grid-item::
+          :columns: 5
+
+          .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/cfc-architecture.png
+
+
+       .. grid-item::
+          :columns: 7
+          :child-align: center
+
+          Time series forecasting with the CfC SageMaker Algorithm
+
+
+.. card::
+    :width: 100%
+    :link: https://medium.com/@fg-research/time-series-anomaly-detection-with-the-lstm-ad-sagemaker-algorithm-from-aws-marketplace-1af1f9ad18a5?source=friends_link&sk=669bd9bd6f6abd57ad132e1bc89b52d7
+
+    .. grid:: 2
+
+       .. grid-item::
+          :columns: 5
+
+          .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/lstm-ad-architecture.png
+
+       .. grid-item::
+          :columns: 7
+          :child-align: center
+
+          Time series anomaly detection with the LSTM-AD SageMaker Algorithm
+
+
+.. card::
+    :width: 100%
+    :link: https://medium.com/@fg-research/time-series-classification-with-the-lstm-fcn-sagemaker-algorithm-from-aws-marketplace-a096ded9da1?source=friends_link&sk=e34cb9822f69f7c84de5959a39c8ee00
+
+    .. grid:: 2
+
+       .. grid-item::
+          :columns: 5
+
+          .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/lstm-fcn-architecture.png
+
+
+       .. grid-item::
+          :columns: 7
+          :child-align: center
+
+          Time series classification with the LSTM-FCN SageMaker Algorithm
+
+
+
+
+
 
 
 
