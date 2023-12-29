@@ -18,6 +18,7 @@ Product
 
        .. grid-item::
           :columns: 5
+          :child-align: center
 
           .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-architecture.png
 
@@ -37,6 +38,7 @@ Product
 
        .. grid-item::
           :columns: 5
+          :child-align: center
 
           .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/cnn-kmeans-architecture.png
 
@@ -56,6 +58,7 @@ Product
 
        .. grid-item::
           :columns: 5
+          :child-align: center
 
           .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/cfc-architecture.png
 
@@ -75,6 +78,7 @@ Product
 
        .. grid-item::
           :columns: 5
+          :child-align: center
 
           .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/lstm-ad-architecture.png
 
@@ -93,6 +97,7 @@ Product
 
        .. grid-item::
           :columns: 5
+          :child-align: center
 
           .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/lstm-fcn-architecture.png
 
@@ -102,14 +107,4 @@ Product
           :child-align: center
 
           Time series classification with the LSTM-FCN SageMaker Algorithm
-
-
-
-
-
-
-
-
-
-
 
