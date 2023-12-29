@@ -65,10 +65,10 @@ For support, contact `support@fg-research.com <mailto:support@fg-research.com>`_
    :caption: Algorithms
    :hidden:
 
-   algorithms/forecasting/index
-   algorithms/anomaly-detection/index
-   algorithms/clustering/index
-   algorithms/classification/index
+   algorithms/time-series-forecasting/index
+   algorithms/time-series-anomaly-detection/index
+   algorithms/time-series-clustering/index
+   algorithms/time-series-classification/index
 
 .. toctree::
    :caption: Blog

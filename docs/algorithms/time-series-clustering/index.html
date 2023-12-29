@@ -7,21 +7,21 @@
 <meta content="white" media="(prefers-color-scheme: light)" name="theme-color"/>
 <meta content="black" metia="(prefers-color-scheme: dark)" name="theme-color"/>
 <meta content="Docutils 0.18.1: http://docutils.sourceforge.net/" name="generator"/>
-<meta content="Time series classification in Amazon SageMaker." name="description"/>
-<title>Time Series Classification | fg-research</title>
-<meta content="Time Series Classification | fg-research" property="og:title"/>
-<meta content="Time Series Classification | fg-research" name="twitter:title"/>
+<meta content="Time series clustering in Amazon SageMaker." name="description"/>
+<title>Time Series Clustering | fg-research</title>
+<meta content="Time Series Clustering | fg-research" property="og:title"/>
+<meta content="Time Series Clustering | fg-research" name="twitter:title"/>
 <link href="../../_static/pygments.css" rel="stylesheet"/>
 <link href="../../_static/theme.47abdafeea10b5ccf58b.css" rel="stylesheet"/>
 <link href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" rel="stylesheet"/>
 <link href="../../_static/custom.css" rel="stylesheet"/>
 <link href="../../_static/awesome-sphinx-design.495717882cf46c002fb5.css" rel="stylesheet"/>
-<link href="https://fg-research.com/algorithms/classification/index.html" rel="canonical"/>
+<link href="https://fg-research.com/algorithms/time-series-clustering/index.html" rel="canonical"/>
 <link href="../../_static/favicon.ico" rel="icon"/>
 <link href="../../search.html" rel="search" title="Search"/>
 <link href="../../genindex.html" rel="index" title="Index"/>
-<link href="../../blog/product/index.html" rel="next" title="Product"/>
-<link href="../clustering/index.html" rel="prev" title="Time Series Clustering"/>
+<link href="../time-series-classification/index.html" rel="next" title="Time Series Classification"/>
+<link href="../time-series-anomaly-detection/index.html" rel="prev" title="Time Series Anomaly Detection"/>
 <script>
     <!-- Prevent Flash of wrong theme -->
       const userPreference = localStorage.getItem('darkMode');
@@ -88,10 +88,10 @@
 <div class="overflow-y-auto h-full w-full relative pr-6"><nav class="table w-full min-w-full my-6 lg:my-8">
 <p class="caption" role="heading"><span class="caption-text">Algorithms</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../forecasting/index.html">Time Series Forecasting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../anomaly-detection/index.html">Time Series Anomaly Detection</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../clustering/index.html">Time Series Clustering</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Time Series Classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../time-series-forecasting/index.html">Time Series Forecasting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../time-series-anomaly-detection/index.html">Time Series Anomaly Detection</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Time Series Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../time-series-classification/index.html">Time Series Classification</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Blog</span></p>
 <ul>
@@ -116,12 +116,12 @@
 <path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z"></path>
 </svg>
 </a>
-<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Time Series Classification</span>
+<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Time Series Clustering</span>
 </nav>
 <div id="content" role="main">
-<section id="time-series-classification">
-<h1>Time Series Classification<a class="headerlink" href="#time-series-classification" title="Permalink to this heading">¶</a></h1>
-<p class="lead">Perform time series classification in Amazon SageMaker.</p>
+<section id="time-series-clustering">
+<h1>Time Series Clustering<a class="headerlink" href="#time-series-clustering" title="Permalink to this heading">¶</a></h1>
+<p class="lead">Perform time series clustering in Amazon SageMaker.</p>
 <table class="docutils align-default" style="width: 100%">
 <thead>
 <tr class="row-odd"><th class="head"><p>SageMaker Algorithm</p></th>
@@ -132,19 +132,7 @@
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><a class="reference internal" href="#id1"><span class="std std-ref">LSTM-FCN</span></a></p></td>
-<td><p><svg aria-hidden="true" class="sd-octicon sd-octicon-check check-icon" height="1.1em" version="1.1" viewbox="0 0 16 16" width="1.1em"><path d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z" fill-rule="evenodd"></path></svg></p></td>
-<td><p><svg aria-hidden="true" class="sd-octicon sd-octicon-check check-icon" height="1.1em" version="1.1" viewbox="0 0 16 16" width="1.1em"><path d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z" fill-rule="evenodd"></path></svg></p></td>
-<td><p><svg aria-hidden="true" class="sd-octicon sd-octicon-check check-icon" height="1.1em" version="1.1" viewbox="0 0 16 16" width="1.1em"><path d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z" fill-rule="evenodd"></path></svg></p></td>
-<td><p><svg aria-hidden="true" class="sd-octicon sd-octicon-x check-icon" height="1.1em" version="1.1" viewbox="0 0 16 16" width="1.1em"><path d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z" fill-rule="evenodd"></path></svg></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#inception-time-sagemaker-algorithm"><span class="std std-ref">InceptionTime</span></a></p></td>
-<td><p><svg aria-hidden="true" class="sd-octicon sd-octicon-check check-icon" height="1.1em" version="1.1" viewbox="0 0 16 16" width="1.1em"><path d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z" fill-rule="evenodd"></path></svg></p></td>
-<td><p><svg aria-hidden="true" class="sd-octicon sd-octicon-check check-icon" height="1.1em" version="1.1" viewbox="0 0 16 16" width="1.1em"><path d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z" fill-rule="evenodd"></path></svg></p></td>
-<td><p><svg aria-hidden="true" class="sd-octicon sd-octicon-check check-icon" height="1.1em" version="1.1" viewbox="0 0 16 16" width="1.1em"><path d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z" fill-rule="evenodd"></path></svg></p></td>
-<td><p><svg aria-hidden="true" class="sd-octicon sd-octicon-x check-icon" height="1.1em" version="1.1" viewbox="0 0 16 16" width="1.1em"><path d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z" fill-rule="evenodd"></path></svg></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#id2"><span class="std std-ref">CNN-SVC</span></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#id1"><span class="std std-ref">CNN-KMeans</span></a></p></td>
 <td><p><svg aria-hidden="true" class="sd-octicon sd-octicon-check check-icon" height="1.1em" version="1.1" viewbox="0 0 16 16" width="1.1em"><path d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z" fill-rule="evenodd"></path></svg></p></td>
 <td><p><svg aria-hidden="true" class="sd-octicon sd-octicon-check check-icon" height="1.1em" version="1.1" viewbox="0 0 16 16" width="1.1em"><path d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z" fill-rule="evenodd"></path></svg></p></td>
 <td><p><svg aria-hidden="true" class="sd-octicon sd-octicon-x x-icon" height="1.1em" version="1.1" viewbox="0 0 16 16" width="1.1em"><path d="M3.72 3.72a.75.75 0 011.06 0L8 6.94l3.22-3.22a.75.75 0 111.06 1.06L9.06 8l3.22 3.22a.75.75 0 11-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 01-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 010-1.06z" fill-rule="evenodd"></path></svg></p></td>
@@ -152,45 +140,21 @@
 </tr>
 </tbody>
 </table>
-<section id="lstm-fcn-sagemaker-algorithm">
-<h2>LSTM-FCN SageMaker Algorithm<a class="headerlink" href="#lstm-fcn-sagemaker-algorithm" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#lstm-fcn-sagemaker-algorithm'">¶</a></h2>
-<p id="id1">The LSTM-FCN SageMaker Algorithm performs time series classification with the <a class="reference external" href="https://arxiv.org/pdf/1709.05206.pdf" rel="nofollow noopener">Long Short-Term Memory Fully Convolutional Network (LSTM-FCN)<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>.
-The LSTM-FCN model consists of two blocks: a recurrent block and a convolutional block.
-The two blocks process the input time series in parallel.
-After that their output representations are concatenated and passed to a final output layer with softmax activation.
-[<a class="reference external" href="https://aws.amazon.com/marketplace/pp/prodview-vzxmyw25oqtx6" rel="nofollow noopener">AWS Marketplace<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>]
-[<a class="reference external" href="https://github.com/fg-research/lstm-fcn-sagemaker" rel="nofollow noopener">GitHub<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>]</p>
-</section>
-<section id="inceptiontime-sagemaker-algorithm">
-<h2>InceptionTime SageMaker Algorithm<a class="headerlink" href="#inceptiontime-sagemaker-algorithm" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#inceptiontime-sagemaker-algorithm'">¶</a></h2>
-<p id="inception-time-sagemaker-algorithm">The InceptionTime SageMaker Algorithm performs time series classification with the <a class="reference external" href="https://arxiv.org/pdf/1909.04939.pdf" rel="nofollow noopener">InceptionTime Network<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>.
-The InceptionTime network consists of a stack of Inception blocks linked by residual connections.
-Each block contains three convolutional layers and a max pooling layer.
-The four layers process the block input in parallel.
-After that their output representations are concatenated and passed to a batch normalization layer followed by a dense layer with ReLU activation.
-The output of the last block is passed to an average pooling layer, and then to a final output layer with softmax activation.
-The algorithm trains an ensemble of InceptionTime networks and generates the final predicted class labels by averaging the class probabilities predicted by the different networks in the ensemble.
-[<a class="reference external" href="https://aws.amazon.com/marketplace/pp/prodview-omz7rumnllmla" rel="nofollow noopener">AWS Marketplace<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>]
-[<a class="reference external" href="https://github.com/fg-research/inception-time-sagemaker" rel="nofollow noopener">GitHub<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>]</p>
-</section>
-<section id="cnn-svc-sagemaker-algorithm">
-<h2>CNN-SVC SageMaker Algorithm<a class="headerlink" href="#cnn-svc-sagemaker-algorithm" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#cnn-svc-sagemaker-algorithm'">¶</a></h2>
-<p id="id2">The CNN-SVC SageMaker Algorithm performs time series classification with an <a class="reference external" href="https://arxiv.org/pdf/1901.10738.pdf" rel="nofollow noopener">unsupervised convolutional neural network (CNN)<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a> followed by a support vector classifier (SVC).
-The CNN network encodes the input time series into a number of time-independent features, which are then used as inputs by the SVC algorithm.
-The CNN network consists of a stack of exponentially dilated causal convolutional blocks with residual connections and
-is trained in an unsupervised manner using a contrastive learning procedure that minimizes the triplet loss.
+<section id="cnn-kmeans-sagemaker-algorithm">
+<h2>CNN-KMeans SageMaker Algorithm<a class="headerlink" href="#cnn-kmeans-sagemaker-algorithm" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#cnn-kmeans-sagemaker-algorithm'">¶</a></h2>
+<p id="id1">The CNN-KMeans SageMaker Algorithm performs time series clustering with an <a class="reference external" href="https://arxiv.org/pdf/1901.10738.pdf" rel="nofollow noopener">unsupervised convolutional neural network (CNN)<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a> followed by a K-Means clusterer.
+The CNN network encodes the input time series into a number of time-independent features, which are then used as input by the K-Means algorithm.
+The CNN network consists of a stack of exponentially dilated causal convolutional blocks with residual connections
+and is trained in an unsupervised manner using a contrastive learning procedure that minimizes the triplet loss.
 The algorithm can be used for time series with different lengths or with missing values.
-The algorithm also supports missing class labels.
-[<a class="reference external" href="https://aws.amazon.com/marketplace/pp/prodview-mo7cf4nrgrbxk" rel="nofollow noopener">AWS Marketplace<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>]
-[<a class="reference external" href="https://github.com/fg-research/cnn-svc-sagemaker" rel="nofollow noopener">GitHub<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>]</p>
+[<a class="reference external" href="https://aws.amazon.com/marketplace/pp/prodview-3hdblqdz5nx4m" rel="nofollow noopener">AWS Marketplace<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>]
+[<a class="reference external" href="https://github.com/fg-research/cnn-kmeans-sagemaker" rel="nofollow noopener">GitHub<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>]</p>
 </section>
 </section>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(var(--vh)-4rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
-<li><a :data-current="activeSection === '#lstm-fcn-sagemaker-algorithm'" class="reference internal" href="#lstm-fcn-sagemaker-algorithm">LSTM-FCN SageMaker Algorithm</a></li>
-<li><a :data-current="activeSection === '#inceptiontime-sagemaker-algorithm'" class="reference internal" href="#inceptiontime-sagemaker-algorithm">InceptionTime SageMaker Algorithm</a></li>
-<li><a :data-current="activeSection === '#cnn-svc-sagemaker-algorithm'" class="reference internal" href="#cnn-svc-sagemaker-algorithm">CNN-SVC SageMaker Algorithm</a></li>
+<li><a :data-current="activeSection === '#cnn-kmeans-sagemaker-algorithm'" class="reference internal" href="#cnn-kmeans-sagemaker-algorithm">CNN-KMeans SageMaker Algorithm</a></li>
 </ul>
 </div>
 </aside>
