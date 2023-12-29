@@ -60,7 +60,7 @@ Product
           :columns: 5
           :child-align: center
 
-          .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/cfc-architecture.png
+          .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/cfc-architecture@0.5x.png
 
 
        .. grid-item::
