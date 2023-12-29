@@ -15,8 +15,8 @@ Time Series Classification
    ===========================================================  ======================================== ======================================== ============================================ ================================================
    SageMaker Algorithm                                          CPU Training                             GPU Training                             Multi-GPU Training                           Incremental Training
    ===========================================================  ======================================== ======================================== ============================================ ================================================
-   :ref:`LSTM-FCN <lstm-fcn-sagemaker-algorithm>`               :octicon:`check;1.1em;check-icon`        :octicon:`check;1.1em;check-icon`        :octicon:`check;1.1em;check-icon`            :octicon:`x;1.1em;check-icon`
-   :ref:`InceptionTime <inception-time-sagemaker-algorithm>`    :octicon:`check;1.1em;check-icon`        :octicon:`check;1.1em;check-icon`        :octicon:`check;1.1em;check-icon`            :octicon:`x;1.1em;check-icon`
+   :ref:`LSTM-FCN <lstm-fcn-sagemaker-algorithm>`               :octicon:`check;1.1em;check-icon`        :octicon:`check;1.1em;check-icon`        :octicon:`check;1.1em;check-icon`            :octicon:`check;1.1em;check-icon`
+   :ref:`InceptionTime <inception-time-sagemaker-algorithm>`    :octicon:`check;1.1em;check-icon`        :octicon:`check;1.1em;check-icon`        :octicon:`check;1.1em;check-icon`            :octicon:`check;1.1em;check-icon`
    :ref:`CNN-SVC <cnn-svc-sagemaker-algorithm>`                 :octicon:`check;1.1em;check-icon`        :octicon:`check;1.1em;check-icon`        :octicon:`x;1.1em;x-icon`                    :octicon:`x;1.1em;x-icon`
    ===========================================================  ======================================== ======================================== ============================================ ================================================
 
