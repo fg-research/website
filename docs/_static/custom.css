@@ -32,8 +32,8 @@ a.reference.internal{
 }
 
 .sd-container-fluid {
-    padding: 0 !important;
-    margin: 0 !important;
+    padding: 0.5em !important;
+    margin: 0.5em !important;
 }
 
 .blog-card-image{
