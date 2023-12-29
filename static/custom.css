@@ -27,6 +27,10 @@ a.reference.internal{
     color: #DC3545 !important;
 }
 
+.sd-card-body{
+    padding: 0 !important;
+}
+
 .blog-card-image{
     margin: 0 !important;
     padding: 0 !important;
