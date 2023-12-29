@@ -17,7 +17,7 @@ Product
     .. grid:: 2
 
        .. grid-item::
-          :columns: 5
+          :columns: 3 4 5 5
           :child-align: center
 
           .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-architecture.png
@@ -25,7 +25,7 @@ Product
              :class: blog-card-image
 
        .. grid-item::
-          :columns: 7
+          :columns: 9 8 7 7
           :child-align: center
           :class: blog-card-text
 
@@ -39,7 +39,7 @@ Product
     .. grid:: 2
 
        .. grid-item::
-          :columns: 5
+          :columns: 3 4 5 5
           :child-align: center
 
           .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/cnn-kmeans-architecture.png
@@ -47,7 +47,7 @@ Product
              :class: blog-card-image
 
        .. grid-item::
-          :columns: 7
+          :columns: 9 8 7 7
           :child-align: center
           :class: blog-card-text
 
@@ -61,7 +61,7 @@ Product
     .. grid:: 2
 
        .. grid-item::
-          :columns: 5
+          :columns: 3 4 5 5
           :child-align: center
 
           .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/cfc-architecture.png
@@ -69,7 +69,7 @@ Product
              :class: blog-card-image
 
        .. grid-item::
-          :columns: 7
+          :columns: 9 8 7 7
           :child-align: center
           :class: blog-card-text
 
@@ -83,7 +83,7 @@ Product
     .. grid:: 2
 
        .. grid-item::
-          :columns: 5
+          :columns: 3 4 5 5
           :child-align: center
 
           .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/lstm-ad-architecture.png
@@ -91,7 +91,7 @@ Product
              :class: blog-card-image
 
        .. grid-item::
-          :columns: 7
+          :columns: 9 8 7 7
           :child-align: center
           :class: blog-card-text
 
@@ -105,7 +105,7 @@ Product
     .. grid:: 2
 
        .. grid-item::
-          :columns: 5
+          :columns: 3 4 5 5
           :child-align: center
 
           .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/lstm-fcn-architecture.png
@@ -113,7 +113,7 @@ Product
              :class: blog-card-image
 
        .. grid-item::
-          :columns: 7
+          :columns: 9 8 7 7
           :child-align: center
           :class: blog-card-text
 
