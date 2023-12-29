@@ -27,6 +27,15 @@ a.reference.internal{
     color: #DC3545 !important;
 }
 
+.blog-card-image{
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.blog-card-text{
+    font-weight: 500 !important;
+}
+
 .leading-loose{
     font-size: 70% !important;
     text-align: center !important;
@@ -44,4 +53,3 @@ a.reference.internal{
     }
 
 }
-

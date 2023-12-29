@@ -12,7 +12,7 @@ Product
 
 .. card::
     :width: 100%
-    :link: https://medium.com/@fg-research/process-control-measurements-classification-with-the-inceptiontime-sagemaker-algorithm-from-aws-51af79398470?source=friends_link&sk=3b9042ab5a1add17d01c6be087589d3b
+    :link: https://medium.com/@fg-research/time-series-classification-with-the-inceptiontime-sagemaker-algorithm-from-aws-marketplace-6bef9a205e9b?source=friends_link&sk=1b1722aad1ce73974298f01bf48b0833
 
     .. grid:: 2
 
@@ -21,11 +21,13 @@ Product
           :child-align: center
 
           .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-architecture.png
-
+             :alt: InceptionTime architecture
+             :class: blog-card-image
 
        .. grid-item::
           :columns: 7
           :child-align: center
+          :class: blog-card-text
 
           Time series classification with the InceptionTime SageMaker Algorithm
 
@@ -41,11 +43,13 @@ Product
           :child-align: center
 
           .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/cnn-kmeans-architecture.png
-
+             :alt: CNN-Kmeans architecture
+             :class: blog-card-image
 
        .. grid-item::
           :columns: 7
           :child-align: center
+          :class: blog-card-text
 
           Time series clustering with the CNN-KMeans SageMaker Algorithm
 
@@ -61,11 +65,13 @@ Product
           :child-align: center
 
           .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/cfc-architecture.png
-
+             :alt: CfC architecture
+             :class: blog-card-image
 
        .. grid-item::
           :columns: 7
           :child-align: center
+          :class: blog-card-text
 
           Time series forecasting with the CfC SageMaker Algorithm
 
@@ -81,10 +87,13 @@ Product
           :child-align: center
 
           .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/lstm-ad-architecture.png
+             :alt: LSTM-AD architecture
+             :class: blog-card-image
 
        .. grid-item::
           :columns: 7
           :child-align: center
+          :class: blog-card-text
 
           Time series anomaly detection with the LSTM-AD SageMaker Algorithm
 
@@ -100,11 +109,13 @@ Product
           :child-align: center
 
           .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/lstm-fcn-architecture.png
-
+             :alt: LSTM-FCN architecture
+             :class: blog-card-image
 
        .. grid-item::
           :columns: 7
           :child-align: center
+          :class: blog-card-text
 
           Time series classification with the LSTM-FCN SageMaker Algorithm
 
