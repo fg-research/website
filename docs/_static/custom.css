@@ -32,8 +32,8 @@ a.reference.internal{
 }
 
 .sd-container-fluid {
-    padding: 0.5em 0.75em 0.5em 0.75em !important;
-    margin: 0.5em 0.75em 0.5em 0.75em !important;
+    padding: 0.25em 0.75em 0.75em 0.75em !important;
+    margin: 0.25em 0.75em 0.75em 0.75em !important;
 }
 
 .blog-card-image{
