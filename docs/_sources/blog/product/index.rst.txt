@@ -20,7 +20,7 @@ Product
           :columns: 4 4 5 5
           :child-align: center
 
-          .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-architecture.png
+          .. image:: /static/diagrams/inception-time-architecture.png
              :alt: InceptionTime architecture
              :class: blog-card-image
 
@@ -42,7 +42,7 @@ Product
           :columns: 4 4 5 5
           :child-align: center
 
-          .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/cnn-kmeans-architecture.png
+          .. image:: /static/diagrams/cnn-kmeans-architecture.png
              :alt: CNN-Kmeans architecture
              :class: blog-card-image
 
@@ -64,7 +64,7 @@ Product
           :columns: 4 4 5 5
           :child-align: center
 
-          .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/cfc-architecture.png
+          .. image:: /static/diagrams/cfc-architecture.png
              :alt: CfC architecture
              :class: blog-card-image
 
@@ -86,7 +86,7 @@ Product
           :columns: 4 4 5 5
           :child-align: center
 
-          .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/lstm-ad-architecture.png
+          .. image:: /static/diagrams/lstm-ad-architecture.png
              :alt: LSTM-AD architecture
              :class: blog-card-image
 
@@ -108,7 +108,7 @@ Product
           :columns: 4 4 5 5
           :child-align: center
 
-          .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/lstm-fcn-architecture.png
+          .. image:: /static/diagrams/lstm-fcn-architecture.png
              :alt: LSTM-FCN architecture
              :class: blog-card-image
 
