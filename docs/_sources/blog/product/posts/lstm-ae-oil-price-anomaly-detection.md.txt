@@ -44,7 +44,7 @@ and calculates the squared Mahalanobis distance between the reconstruction error
 The computed squared Mahalanobis distance is then used as an anomaly score: the larger the squared Mahalanobis distance at a given a time step, the more likely the time step is to be an anomaly.
 
 :::{note}
-The LSTM-AE is a multivariate model and, therefore, generates only one anomaly score for all time series at each time step.
+The LSTM-AE is a multivariate time series anomaly detection model and, therefore, it generates only one anomaly score for all time series at each time step.
 :::
 
 ## Data
