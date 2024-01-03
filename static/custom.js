@@ -13,11 +13,13 @@ window.setInterval(function(){
 
     var f = document.getElementById('aws-marketplace-logo');
 
+    console.log(getPreferredColorScheme())
+
     if (f !== null) {
-        if(window.localStorage.getItem('darkMode') == 'light' || getPreferredColorScheme() == 'light'){
+        if(window.localStorage.getItem('darkMode') == 'light'){
             f.childNodes[1].childNodes[0].src = '_static/AWSMP_NewLogo_RGB_BLK.png'
             f.childNodes[1].href = '_static/AWSMP_NewLogo_RGB_BLK.png'
-        }else{
+        }else if(window.localStorage.getItem('darkMode') == 'dark' || getPreferredColorScheme() == 'dark'){
             f.childNodes[1].childNodes[0].src = '_static/AWSMP_NewLogo_RGB_WHT.png'
             f.childNodes[1].href = '_static/AWSMP_NewLogo_RGB_WHT.png'
         };
@@ -28,16 +30,15 @@ window.setInterval(function(){
         };
     };
 
-
     var folder = 'https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/'
     var files = ['prices', 'returns', 'results'];
 
     for (var i = 0; i < 3; i++) {
         var f = document.getElementById(files[i]);
         if (f !== null) {
-            if(window.localStorage.getItem('darkMode') == 'light' || getPreferredColorScheme() == 'light'){
+            if(window.localStorage.getItem('darkMode') == 'light'){
                 f.src = folder.concat(files[i], '_light.png')
-            }else{
+            }else if(window.localStorage.getItem('darkMode') == 'dark' || getPreferredColorScheme() == 'dark'){
                 f.src = folder.concat(files[i], '_dark.png')
             };
             if(screen.width > 1440){
