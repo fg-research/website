@@ -54,9 +54,9 @@ CNN-SVC SageMaker Algorithm
 
 The CNN-SVC SageMaker Algorithm performs time series classification with an `unsupervised convolutional neural network (CNN) <https://arxiv.org/pdf/1901.10738.pdf>`_ followed by a support vector classifier (SVC).
 The CNN network encodes the input time series into a number of time-independent features, which are then used as inputs by the SVC algorithm.
-The CNN network consists of a stack of exponentially dilated causal convolutional blocks with residual connections and
+The CNN network consists of a stack of exponentially dilated causal convolutional blocks with residual connections, and
 is trained in an unsupervised manner using a contrastive learning procedure that minimizes the triplet loss.
-The algorithm can be used for time series with different lengths or with missing values.
+The algorithm can be used for time series with different lengths and with missing values.
 The algorithm also supports missing class labels.
 [`AWS Marketplace <https://aws.amazon.com/marketplace/pp/prodview-mo7cf4nrgrbxk>`__]
 [`GitHub <https://github.com/fg-research/cnn-svc-sagemaker>`__]

@@ -12,6 +12,29 @@ Product
 
 .. card::
     :width: 100%
+    :link: posts/lstm-ae-oil-price-anomaly-detection
+    :link-type: doc
+
+    .. grid:: 2
+
+       .. grid-item::
+          :columns: 4 4 5 5
+          :child-align: center
+
+          .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/diagrams/lstm-ae-architecture.png
+             :alt: LSTM-AE architecture
+             :class: blog-card-image
+
+       .. grid-item::
+          :columns: 8 8 7 7
+          :child-align: center
+          :class: blog-card-text
+
+          Anomaly Detection in Financial Time Series with the LSTM-AE SageMaker Algorithm
+
+
+.. card::
+    :width: 100%
     :link: https://medium.com/@fg-research/time-series-classification-with-the-inceptiontime-sagemaker-algorithm-from-aws-marketplace-6bef9a205e9b?source=friends_link&sk=1b1722aad1ce73974298f01bf48b0833
 
     .. grid:: 2

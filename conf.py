@@ -47,6 +47,8 @@ html_css_files = ['custom.css']
 html_js_files = ['custom.js']
 html_show_sourcelink = False
 html_theme = 'sphinxawesome_theme'
+highlight_language = 'python3'
+myst_heading_anchors = 6
 
 html_theme_options = dict(
     show_prev_next=False,
@@ -86,4 +88,5 @@ html_theme_options = dict(
 # -- MyST settings ---------------------------------------------------
 myst_enable_extensions = [
     'dollarmath',
+    'colon_fence'
 ]

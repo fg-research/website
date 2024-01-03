@@ -17,6 +17,21 @@ window.setInterval(function(){
         };
     };
 
+
+    var folder = 'https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/'
+    var files = ['prices', 'returns', 'results'];
+
+    for (var i = 0; i < 3; i++) {
+        var f = document.getElementById(files[i]);
+        if (f !== null) {
+            if(window.localStorage.getItem('darkMode') == 'light'){
+                f.src = folder.concat(files[i], '_light.png')
+            }else{
+                f.src = folder.concat(files[i], '_dark.png')
+            };
+        };
+    }
+
     var a = document.getElementsByClassName('reference external');
     if (a !== null) {
         for(let i = 0; i < a.length; i++){
