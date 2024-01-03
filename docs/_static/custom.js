@@ -1,9 +1,20 @@
+function getPreferredColorScheme() {
+  if (window.matchMedia) {
+    if(window.matchMedia('(prefers-color-scheme: dark)').matches){
+      return 'dark';
+    } else {
+      return 'light';
+    }
+  }
+  return 'light';
+}
+
 window.setInterval(function(){
 
     var f = document.getElementById('aws-marketplace-logo');
 
     if (f !== null) {
-        if(window.localStorage.getItem('darkMode') == 'light'){
+        if(window.localStorage.getItem('darkMode') == 'light' || getPreferredColorScheme() == 'light'){
             f.childNodes[1].childNodes[0].src = '_static/AWSMP_NewLogo_RGB_BLK.png'
             f.childNodes[1].href = '_static/AWSMP_NewLogo_RGB_BLK.png'
         }else{
@@ -24,7 +35,7 @@ window.setInterval(function(){
     for (var i = 0; i < 3; i++) {
         var f = document.getElementById(files[i]);
         if (f !== null) {
-            if(window.localStorage.getItem('darkMode') == 'light'){
+            if(window.localStorage.getItem('darkMode') == 'light' || getPreferredColorScheme() == 'light'){
                 f.src = folder.concat(files[i], '_light.png')
             }else{
                 f.src = folder.concat(files[i], '_dark.png')
@@ -44,5 +55,5 @@ window.setInterval(function(){
         };
     };
 
-}, 1);
+}, 0.5);
 
