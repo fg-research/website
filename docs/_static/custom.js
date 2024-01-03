@@ -13,8 +13,6 @@ window.setInterval(function(){
 
     var f = document.getElementById('aws-marketplace-logo');
 
-    console.log(getPreferredColorScheme())
-
     if (f !== null) {
         if(window.localStorage.getItem('darkMode') == 'light'){
             f.childNodes[1].childNodes[0].src = '_static/AWSMP_NewLogo_RGB_BLK.png'
