@@ -2,7 +2,7 @@
 orphan: true
 ----
 
-# Anomaly Detection in Financial Time Series with the LSTM-AE SageMaker Algorithm 
+# Detecting Anomalies in Oil Price Time Series with the LSTM-AE SageMaker Algorithm 
 Anomaly detection in financial time series plays a crucial role in identifying unusual market conditions 
 that could affect trading strategies and pose risks to investors.
 Anomaly detection can help identify abnormal price movements or trading volumes associated with specific events, 
