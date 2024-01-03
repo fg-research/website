@@ -30,7 +30,7 @@ Product
           :child-align: center
           :class: blog-card-text
 
-          Detecting Anomalies in Oil Price Time Series with the LSTM-AE SageMaker Algorithm
+          Detecting Anomalies in Financial Time Series with the LSTM-AE SageMaker Algorithm
 
 
 .. card::
