@@ -29,6 +29,11 @@ window.setInterval(function(){
             }else{
                 f.src = folder.concat(files[i], '_dark.png')
             };
+            if(screen.width > 1440){
+                f.style.width = '90%'
+            }else{
+                f.style.width = '100%'
+            };
         };
     }
 
