@@ -54,5 +54,5 @@ window.setInterval(function(){
         };
     };
 
-}, 0.5);
+}, 1);
 
