@@ -215,7 +215,7 @@ reconstructions = pd.read_csv(io.StringIO(reconstructions), header=None, dtype=f
 
 After loading the anomaly scores and the reconstructions from S3, we can visualize the results.
 
-<img id="results" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/results_light.png style="width:90%"/>
+<img id="results" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/results_light.png style="width:100%"/>
 
 *WTI and Brent daily returns and LSTM-AE reconstructions from 2019-08-02 to 2020-12-31.*
 
