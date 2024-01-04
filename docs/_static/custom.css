@@ -49,9 +49,22 @@ a.reference.internal{
     width: 100%;
 }
 
+@media (min-width:1440px) {
+    .blog-image{
+        width: 90%;
+    }
+}
+
 .blog-caption{
     width: 100%;
     font-style: italic;
+}
+
+@media (min-width:1440px) {
+    .blog-caption{
+        width: 90%;
+        font-style: italic;
+    }
 }
 
 .leading-loose{
