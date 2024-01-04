@@ -50,6 +50,7 @@ If you don't have an API key, you can request one at [this link](http://api.stlo
 ```python
 from fredapi import Fred
 
+# set up the FRED API
 fred = Fred(api_key_file="api_key.txt")
 ```
 
@@ -59,6 +60,7 @@ The downloaded dataset contains 8,772 daily price observations.
 ```python
 import pandas as pd
 
+# get the prices from the FRED API
 dataset = pd.DataFrame({
     "WTI": fred.get_series("DCOILWTICO", observation_start="1987-05-20", observation_end="2020-12-31"),
     "BRENT": fred.get_series("DCOILBRENTEU", observation_start="1987-05-20", observation_end="2020-12-31")
@@ -75,6 +77,7 @@ while on the next day the 21<sup>st</sup> of April 2020, the Brent price decreas
 We use the percentage changes in the daily prices (or daily returns) for training the LSTM-AE model.
 
 ```python
+# calculate the returns
 dataset = dataset.pct_change().fillna(value=0)
 ```
 
@@ -222,6 +225,15 @@ After loading the anomaly scores and the reconstructions from S3, we can visuali
 
 We find that, as expected, the anomaly score exhibits the largest upward spikes on the 20<sup>th</sup> (anomaly score = 810,274),
 21<sup>st</sup> (anomaly score = 64,522) and 22<sup>nd</sup> (anomaly score = 15,533) of April 2020.
+
+```python
+# extract the largest anomaly scores
+reconstructions.iloc[:, 0].nlargest(3)
+```
+
+<img class="blog-image" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/anomalies.png />
+
+<p class="blog-caption"> LSTM-AE largest anomaly scores from 2019-08-02 to 2020-12-31.</p>
 
 You can download the [notebook](https://github.com/fg-research/lstm-ae-sagemaker/blob/master/example/oil_price_anomaly_detection.ipynb) 
 with the full code from our [GitHub](https://github.com/fg-research/lstm-ae-sagemaker) repository.

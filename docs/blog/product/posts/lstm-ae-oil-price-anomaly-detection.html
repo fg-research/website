@@ -157,17 +157,19 @@ The computed squared Mahalanobis distance is then used as an anomaly score: the 
 If you don’t have an API key, you can request one at <a class="reference external" href="http://api.stlouisfed.org/api_key.html" rel="nofollow noopener">this link<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">from</span> <span class="nn">fredapi</span> <span class="kn">import</span> <span class="n">Fred</span>
 </span><span id="line-2">
-</span><span id="line-3"><span class="n">fred</span> <span class="o">=</span> <span class="n">Fred</span><span class="p">(</span><span class="n">api_key_file</span><span class="o">=</span><span class="s2">"api_key.txt"</span><span class="p">)</span>
+</span><span id="line-3"><span class="c1"># set up the FRED API</span>
+</span><span id="line-4"><span class="n">fred</span> <span class="o">=</span> <span class="n">Fred</span><span class="p">(</span><span class="n">api_key_file</span><span class="o">=</span><span class="s2">"api_key.txt"</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
 <p>We download the data from the 20<sup>th</sup> of May 1987, which is the start date of the Brent time series, to the 31<sup>st</sup> of December 2020.
 The downloaded dataset contains 8,772 daily price observations.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 </span><span id="line-2">
-</span><span id="line-3"><span class="n">dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-</span><span id="line-4">    <span class="s2">"WTI"</span><span class="p">:</span> <span class="n">fred</span><span class="o">.</span><span class="n">get_series</span><span class="p">(</span><span class="s2">"DCOILWTICO"</span><span class="p">,</span> <span class="n">observation_start</span><span class="o">=</span><span class="s2">"1987-05-20"</span><span class="p">,</span> <span class="n">observation_end</span><span class="o">=</span><span class="s2">"2020-12-31"</span><span class="p">),</span>
-</span><span id="line-5">    <span class="s2">"BRENT"</span><span class="p">:</span> <span class="n">fred</span><span class="o">.</span><span class="n">get_series</span><span class="p">(</span><span class="s2">"DCOILBRENTEU"</span><span class="p">,</span> <span class="n">observation_start</span><span class="o">=</span><span class="s2">"1987-05-20"</span><span class="p">,</span> <span class="n">observation_end</span><span class="o">=</span><span class="s2">"2020-12-31"</span><span class="p">)</span>
-</span><span id="line-6"><span class="p">})</span>
+</span><span id="line-3"><span class="c1"># get the prices from the FRED API</span>
+</span><span id="line-4"><span class="n">dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+</span><span id="line-5">    <span class="s2">"WTI"</span><span class="p">:</span> <span class="n">fred</span><span class="o">.</span><span class="n">get_series</span><span class="p">(</span><span class="s2">"DCOILWTICO"</span><span class="p">,</span> <span class="n">observation_start</span><span class="o">=</span><span class="s2">"1987-05-20"</span><span class="p">,</span> <span class="n">observation_end</span><span class="o">=</span><span class="s2">"2020-12-31"</span><span class="p">),</span>
+</span><span id="line-6">    <span class="s2">"BRENT"</span><span class="p">:</span> <span class="n">fred</span><span class="o">.</span><span class="n">get_series</span><span class="p">(</span><span class="s2">"DCOILBRENTEU"</span><span class="p">,</span> <span class="n">observation_start</span><span class="o">=</span><span class="s2">"1987-05-20"</span><span class="p">,</span> <span class="n">observation_end</span><span class="o">=</span><span class="s2">"2020-12-31"</span><span class="p">)</span>
+</span><span id="line-7"><span class="p">})</span>
 </span></code></pre></div>
 </div>
 <p>On the 20<sup>th</sup> of April 2020, the WTI price decreased from $18.31 to -$36.98, going negative for the first time in its history,
@@ -175,7 +177,8 @@ while on the next day the 21<sup>st</sup> of April 2020, the Brent price decreas
 <img class="blog-image" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/prices.png"/>
 <p class="blog-caption">WTI and Brent daily prices from 1987-05-20 to 2020-12-31.</p>
 <p>We use the percentage changes in the daily prices (or daily returns) for training the LSTM-AE model.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">pct_change</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># calculate the returns</span>
+</span><span id="line-2"><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">pct_change</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
 <p>The percentage change in WTI price on the 20<sup>th</sup> of April 2020 was -302%,
@@ -314,6 +317,12 @@ The output file contains the anomaly scores in the first column, and the reconst
 <p class="blog-caption"> LSTM-AE reconstructions and anomaly score for WTI and Brent daily returns from 2019-08-02 to 2020-12-31.</p>
 <p>We find that, as expected, the anomaly score exhibits the largest upward spikes on the 20<sup>th</sup> (anomaly score = 810,274),
 21<sup>st</sup> (anomaly score = 64,522) and 22<sup>nd</sup> (anomaly score = 15,533) of April 2020.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># extract the largest anomaly scores</span>
+</span><span id="line-2"><span class="n">reconstructions</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<img class="blog-image" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/anomalies.png"/>
+<p class="blog-caption"> LSTM-AE largest anomaly scores from 2019-08-02 to 2020-12-31.</p>
 <p>You can download the <a class="reference external" href="https://github.com/fg-research/lstm-ae-sagemaker/blob/master/example/oil_price_anomaly_detection.ipynb" rel="nofollow noopener">notebook<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>
 with the full code from our <a class="reference external" href="https://github.com/fg-research/lstm-ae-sagemaker" rel="nofollow noopener">GitHub<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a> repository.</p>
 </section>
