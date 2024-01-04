@@ -68,7 +68,7 @@ dataset = pd.DataFrame({
 On the 20<sup>th</sup> of April 2020, the WTI price decreased from \$18.31 to -\$36.98, going negative for the first time in its history,
 while on the next day the 21<sup>st</sup> of April 2020, the Brent price decreased from \$17.36 to \$9.12.
 
-<img id="prices" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/prices_light.png />
+<img id="prices" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/prices.png />
 
 *WTI and Brent daily prices from 1987-05-20 to 2020-12-31.*
 
@@ -85,7 +85,7 @@ The percentage change in Brent price on the 20<sup>th</sup> of April 2020 was -1
 followed by a -47% decrease on the 21<sup>st</sup> of April 2020 and 
 a 51% increase on the 22<sup>nd</sup> of April 2020.
 
-<img id="returns" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/returns_light.png />
+<img id="returns" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/returns.png />
 
 *WTI and Brent daily returns from 1987-05-20 to 2020-12-31.*
 
@@ -216,9 +216,9 @@ reconstructions = pd.read_csv(io.StringIO(reconstructions), header=None, dtype=f
 
 After loading the anomaly scores and the reconstructions from S3, we can visualize the results.
 
-<img id="results" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/results_light.png />
+<img id="results" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/results.png />
 
-*WTI and Brent daily returns and LSTM-AE reconstructions from 2019-08-02 to 2020-12-31.*
+*LSTM-AE reconstructions and anomaly score for WTI and Brent daily returns from 2019-08-02 to 2020-12-31.*
 
 We find that, as expected, the anomaly score exhibits the largest upward spikes on the 20<sup>th</sup> (anomaly score = 810,274),
 21<sup>st</sup> (anomaly score = 64,522) and 22<sup>nd</sup> (anomaly score = 15,533) of April 2020.

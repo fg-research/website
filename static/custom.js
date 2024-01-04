@@ -28,25 +28,6 @@ window.setInterval(function(){
         };
     };
 
-    var folder = 'https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/'
-    var files = ['prices', 'returns', 'results'];
-
-    for (var i = 0; i < 3; i++) {
-        var f = document.getElementById(files[i]);
-        if (f !== null) {
-            if(window.localStorage.getItem('darkMode') == 'light'){
-                f.src = folder.concat(files[i], '_light.png')
-            }else if(window.localStorage.getItem('darkMode') == 'dark' || getPreferredColorScheme() == 'dark'){
-                f.src = folder.concat(files[i], '_dark.png')
-            };
-            if(screen.width > 1440){
-                f.style.width = '90%'
-            }else{
-                f.style.width = '100%'
-            };
-        };
-    }
-
     var a = document.getElementsByClassName('reference external');
     if (a !== null) {
         for(let i = 0; i < a.length; i++){
