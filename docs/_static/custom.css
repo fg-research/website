@@ -59,13 +59,14 @@ a.reference.internal{
 .blog-caption{
     width: 100%;
     font-style: italic;
+    text-align: center;
 }
 
 @media (min-width:1440px) {
     .blog-caption{
         width: 85%;
         font-style: italic;
-        margin: auto;
+        text-align: center;
     }
 }
 
