@@ -52,23 +52,18 @@ a.reference.internal{
 @media (min-width:1440px) {
     .blog-image{
         width: 85%;
-        margin: auto;
     }
 }
 
 .blog-caption{
     width: 100%;
     font-style: italic;
-    text-align: center;
-    margin: auto;
 }
 
 @media (min-width:1440px) {
     .blog-caption{
         width: 85%;
         font-style: italic;
-        text-align: center;
-        margin: auto;
     }
 }
 
