@@ -70,7 +70,7 @@ while on the next day the 21<sup>st</sup> of April 2020, the Brent price decreas
 
 <img class="blog-image" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/prices.png />
 
-*WTI and Brent daily prices from 1987-05-20 to 2020-12-31.*
+<p class="blog-caption">WTI and Brent daily prices from 1987-05-20 to 2020-12-31.</p>
 
 We use the percentage changes in the daily prices (or daily returns) for training the LSTM-AE model.
 
@@ -87,7 +87,7 @@ a 51% increase on the 22<sup>nd</sup> of April 2020.
 
 <img class="blog-image" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/returns.png />
 
-*WTI and Brent daily returns from 1987-05-20 to 2020-12-31.*
+<p class="blog-caption">WTI and Brent daily returns from 1987-05-20 to 2020-12-31.</p>
 
 ## Code
 
@@ -218,7 +218,7 @@ After loading the anomaly scores and the reconstructions from S3, we can visuali
 
 <img class="blog-image" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/results.png />
 
-*LSTM-AE reconstructions and anomaly score for WTI and Brent daily returns from 2019-08-02 to 2020-12-31.*
+<p class="blog-caption"> LSTM-AE reconstructions and anomaly score for WTI and Brent daily returns from 2019-08-02 to 2020-12-31.</p>
 
 We find that, as expected, the anomaly score exhibits the largest upward spikes on the 20<sup>th</sup> (anomaly score = 810,274),
 21<sup>st</sup> (anomaly score = 64,522) and 22<sup>nd</sup> (anomaly score = 15,533) of April 2020.

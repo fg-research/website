@@ -46,22 +46,25 @@ a.reference.internal{
 }
 
 .blog-image{
-    width: 100%
+    width: 100%;
+
 }
 
 @media (min-width:1440px) {
     .blog-image{
-        width: 80%
+        width: 80%;
     }
 }
 
 .blog-caption{
-    width: 100%
+    width: 100%;
+    font-style: italic;
 }
 
 @media (min-width:1440px) {
     .blog-caption{
-        width: 80%
+        width: 80%;
+        font-style: italic;
     }
 }
 
