@@ -18,7 +18,7 @@ the observed data deviates significantly from the autoencoder's reconstruction.
 
 Different autoencoder architectures have been proposed in the literature on time series anomaly detection [[2]](#references).
 In this post, we will focus on the [Long Short Term Memory Networks based Encoder-Decoder scheme for Anomaly Detection](https://doi.org/10.48550/arXiv.1607.00148) [[3]](#references), 
-which we will refer to as the LSTM-AE model. We will demonstrate how to use our SageMaker implementation of the LSTM-AE model, 
+which we will refer to as the LSTM-AE model. We will demonstrate how to use our [Amazon SageMaker](https://aws.amazon.com/sagemaker/) implementation of the LSTM-AE model, 
 the [LSTM-AE SageMaker algorithm](https://aws.amazon.com/marketplace/pp/prodview-up2haipz3j472), 
 for detecting anomalies in oil price time series. 
 
