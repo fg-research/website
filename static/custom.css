@@ -45,6 +45,26 @@ a.reference.internal{
     font-weight: 500 !important;
 }
 
+.blog-image{
+    width: 100%
+}
+
+@media (min-width:1440px) {
+    .blog-image{
+        width: 80%
+    }
+}
+
+.blog-caption{
+    width: 100%
+}
+
+@media (min-width:1440px) {
+    .blog-caption{
+        width: 80%
+    }
+}
+
 .leading-loose{
     font-size: 70% !important;
     text-align: center !important;
@@ -53,12 +73,10 @@ a.reference.internal{
 }
 
 @media (min-width:1440px) {
-
     .leading-loose{
         font-size: 70% !important;
         text-align: center !important;
         margin: auto !important;
         max-width: 70% !important;
     }
-
 }
