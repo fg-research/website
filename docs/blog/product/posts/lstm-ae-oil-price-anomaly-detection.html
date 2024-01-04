@@ -150,10 +150,6 @@ After the model has been trained, a Gaussian distribution is fitted to the model
 <p>At inference time, the model reconstructs the values of all the time series (which can now include anomalies)
 and calculates the squared Mahalanobis distance between the reconstruction errors and the Gaussian distribution previously estimated on normal data.
 The computed squared Mahalanobis distance is then used as an anomaly score: the larger the squared Mahalanobis distance at a given a time step, the more likely the time step is to be an anomaly.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The LSTM-AE is a multivariate time series anomaly detection model and, therefore, it generates only one anomaly score for all time series at each time step.</p>
-</div>
 </section>
 <section id="data">
 <h2>Data<a class="headerlink" href="#data" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data'">¶</a></h2>
@@ -299,6 +295,10 @@ and the remaining 20% of the training dataset for estimating the Gaussian distri
 </div>
 <p>The results of the batch transform job are saved in an output file in S3 with the same name as the input file and with the <code class="docutils literal notranslate"><span class="pre">".out"</span></code> file extension.
 The output file contains the anomaly scores in the first column, and the reconstructed values of the time series in the subsequent columns.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The LSTM-AE is a multivariate time series anomaly detection model and, therefore, it generates only one anomaly score for all time series at each time step.</p>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># load the model outputs from S3</span>
 </span><span id="line-2"><span class="n">reconstructions</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">read_s3_file</span><span class="p">(</span>
 </span><span id="line-3">    <span class="n">bucket</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span>

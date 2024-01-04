@@ -43,10 +43,6 @@ At inference time, the model reconstructs the values of all the time series (whi
 and calculates the squared Mahalanobis distance between the reconstruction errors and the Gaussian distribution previously estimated on normal data. 
 The computed squared Mahalanobis distance is then used as an anomaly score: the larger the squared Mahalanobis distance at a given a time step, the more likely the time step is to be an anomaly.
 
-:::{note}
-The LSTM-AE is a multivariate time series anomaly detection model and, therefore, it generates only one anomaly score for all time series at each time step.
-:::
-
 ## Data
 We use the [Python API for FRED](https://github.com/mortada/fredapi) for downloading the data.
 If you don't have an API key, you can request one at [this link](http://api.stlouisfed.org/api_key.html).
@@ -202,6 +198,10 @@ transformer.transform(
 
 The results of the batch transform job are saved in an output file in S3 with the same name as the input file and with the `".out"` file extension.
 The output file contains the anomaly scores in the first column, and the reconstructed values of the time series in the subsequent columns.
+
+:::{note}
+The LSTM-AE is a multivariate time series anomaly detection model and, therefore, it generates only one anomaly score for all time series at each time step.
+:::
 
 ```python
 # load the model outputs from S3
