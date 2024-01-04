@@ -47,12 +47,12 @@ a.reference.internal{
 
 .blog-image{
     width: 100%;
-
 }
 
 @media (min-width:1440px) {
     .blog-image{
         width: 85%;
+        margin: auto;
     }
 }
 
@@ -65,6 +65,7 @@ a.reference.internal{
     .blog-caption{
         width: 85%;
         font-style: italic;
+        margin: auto;
     }
 }
 
