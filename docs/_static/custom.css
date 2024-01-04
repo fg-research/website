@@ -60,6 +60,7 @@ a.reference.internal{
     width: 100%;
     font-style: italic;
     text-align: center;
+    margin: auto;
 }
 
 @media (min-width:1440px) {
@@ -67,6 +68,7 @@ a.reference.internal{
         width: 85%;
         font-style: italic;
         text-align: center;
+        margin: auto;
     }
 }
 
