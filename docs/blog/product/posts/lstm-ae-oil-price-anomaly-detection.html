@@ -193,14 +193,14 @@ a 51% increase on the 22<sup>nd</sup> of April 2020.</p>
 </section>
 <section id="code">
 <h2>Code<a class="headerlink" href="#code" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#code'">¶</a></h2>
+<section id="environment-set-up">
+<h3>Environment Set-Up<a class="headerlink" href="#environment-set-up" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#environment-set-up'">¶</a></h3>
+<p>We start by setting up the SageMaker environment.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>To be able to run the code below, you need to have an active subscription to the algorithm.
 You can subscribe to a free trial from the <a class="reference external" href="https://aws.amazon.com/marketplace/pp/prodview-up2haipz3j472" rel="nofollow noopener">AWS Marketplace<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a> in order to get your Amazon Resource Name (ARN).</p>
 </div>
-<section id="environment-set-up">
-<h3>Environment Set-Up<a class="headerlink" href="#environment-set-up" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#environment-set-up'">¶</a></h3>
-<p>We start by setting up the SageMaker environment.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span> <span class="nn">sagemaker</span>
 </span><span id="line-2">
 </span><span id="line-3"><span class="c1"># SageMaker algorithm ARN from AWS Marketplace</span>
@@ -312,8 +312,8 @@ The output file contains the anomaly scores in the first column, and the reconst
 <p>After loading the anomaly scores and the reconstructions from S3, we can visualize the results.</p>
 <img id="results" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/results_light.png"/>
 <p><em>WTI and Brent daily returns and LSTM-AE reconstructions from 2019-08-02 to 2020-12-31.</em></p>
-<p>We find that, as expected, the anomaly score exhibits the largest upward spike of 810,274 on the 20<sup>th</sup> of April 2020,
-the second-largest spike of 64,522 on the 21<sup>st</sup> of April 2020, and the third-largest spike of 15,533 on the 22<sup>nd</sup> of April 2020.</p>
+<p>We find that, as expected, the anomaly score exhibits the largest upward spikes on the 20<sup>th</sup> (anomaly score = 810,274),
+21<sup>st</sup> (anomaly score = 64,522) and 22<sup>nd</sup> (anomaly score = 15,533) of April 2020.</p>
 <p>You can download the <a class="reference external" href="https://github.com/fg-research/lstm-ae-sagemaker/blob/master/example/oil_price_anomaly_detection.ipynb" rel="nofollow noopener">notebook<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>
 with the full code from our <a class="reference external" href="https://github.com/fg-research/lstm-ae-sagemaker" rel="nofollow noopener">GitHub<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a> repository.</p>
 </section>

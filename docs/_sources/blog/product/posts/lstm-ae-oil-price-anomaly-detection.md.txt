@@ -94,13 +94,14 @@ a 51% increase on the 22<sup>nd</sup> of April 2020.
 *WTI and Brent daily returns from 1987-05-20 to 2020-12-31.*
 
 ## Code
+
+### Environment Set-Up
+We start by setting up the SageMaker environment.
+
 :::{note}
 To be able to run the code below, you need to have an active subscription to the algorithm.
 You can subscribe to a free trial from the [AWS Marketplace](https://aws.amazon.com/marketplace/pp/prodview-up2haipz3j472) in order to get your Amazon Resource Name (ARN).
 :::
-
-### Environment Set-Up
-We start by setting up the SageMaker environment.
 
 ```python
 import sagemaker
@@ -219,8 +220,8 @@ After loading the anomaly scores and the reconstructions from S3, we can visuali
 
 *WTI and Brent daily returns and LSTM-AE reconstructions from 2019-08-02 to 2020-12-31.*
 
-We find that, as expected, the anomaly score exhibits the largest upward spike of 810,274 on the 20<sup>th</sup> of April 2020, 
-the second-largest spike of 64,522 on the 21<sup>st</sup> of April 2020, and the third-largest spike of 15,533 on the 22<sup>nd</sup> of April 2020.
+We find that, as expected, the anomaly score exhibits the largest upward spikes on the 20<sup>th</sup> (anomaly score = 810,274),
+21<sup>st</sup> (anomaly score = 64,522) and 22<sup>nd</sup> (anomaly score = 15,533) of April 2020.
 
 You can download the [notebook](https://github.com/fg-research/lstm-ae-sagemaker/blob/master/example/oil_price_anomaly_detection.ipynb) 
 with the full code from our [GitHub](https://github.com/fg-research/lstm-ae-sagemaker) repository.
