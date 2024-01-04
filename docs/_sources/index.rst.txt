@@ -48,7 +48,6 @@ Accelerated Training
 Documentation
 *****************************************
 Each algorithm has a dedicated `GitHub <https://github.com/fg-research>`_ repository with detailed documentation and step-by-step tutorials in Jupyter notebook format.
-Some algorithms are also discussed on `Medium <https://medium.com/@fg-research>`_.
 
 ******************************************
 Pricing
