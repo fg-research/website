@@ -62,10 +62,7 @@ Support
 ******************************************
 For support, contact `support@fg-research.com <mailto:support@fg-research.com>`_.
 
-.. raw:: html
-
-    </br>
-
+.. _links:
 
 .. grid:: 3
 
