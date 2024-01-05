@@ -62,11 +62,10 @@ h6 {
 
 .blog-card-image{
     margin: 1.5rem 0 0 0 !important;
-
 }
 
 @media (min-width:1440px) {
-    .blog-post-image{
+    .blog-card-image{
         padding: 0 0 0 2rem !important;
     }
 }
