@@ -28,7 +28,7 @@ The encoder and decoder of the LSTM-AE model consist of a single LSTM layer and 
 The encoder takes as input the time series and returns the hidden states.
 The hidden states of the encoder are used for initializing the hidden states of the decoder, which reconstructs the time series in reversed order. 
 
-<img class="blog-post-image" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/diagrams/lstm-ae-architecture.png/>
+<img class="blog-post-image" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/diagrams/lstm-ae-architecture.png />
 
 <p class="blog-post-image-caption">LSTM-AE architecture (source: <a class="reference external" href="https://doi.org/10.48550/arXiv.1607.00148">doi: 10.48550/arXiv.1607.00148</a>)</p>
 
