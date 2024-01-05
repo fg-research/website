@@ -6,11 +6,7 @@ Time Series Analysis in Amazon SageMaker
 ########################################################
 .. raw:: html
 
-    <p class="lead">Train, tune and deploy state-of-the-art deep learning models for time series<br/>in Amazon SageMaker.</p>
-
-.. raw:: html
-
-    <br/>
+    <p class="lead" style="margin-bottom: 3rem">Train, tune and deploy state-of-the-art deep learning models for time series<br/>in Amazon SageMaker.</p>
 
 .. _fg_research_logo:
 
@@ -62,7 +58,11 @@ Support
 ******************************************
 For support, contact `support@fg-research.com <mailto:support@fg-research.com>`_.
 
-.. _links:
+.. raw:: html
+
+    <p style="margin-bottom: 1rem"> <br/> </p>
+
+------
 
 .. grid:: 3
 
