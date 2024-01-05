@@ -217,7 +217,7 @@ After loading the anomaly scores and the reconstructions from S3, we can visuali
 
 <img class="blog-post-image" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/results.png />
 
-<p class="blog-post-image-caption"> LSTM-AE reconstructions and anomaly score for WTI and Brent daily returns from 2019-08-02 to 2020-12-31.</p>
+<p class="blog-post-image-caption"> LSTM-AE reconstructions and anomaly score from 2019-08-02 to 2020-12-31.</p>
 
 We find that, as expected, the anomaly score exhibits the largest upward spikes on the 20<sup>th</sup> (anomaly score = 810,274),
 21<sup>st</sup> (anomaly score = 64,522) and 22<sup>nd</sup> (anomaly score = 15,533) of April 2020.
