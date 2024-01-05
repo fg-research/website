@@ -48,8 +48,8 @@ h6 {
 }
 
 .sd-container-fluid{
-    margin-top: 2rem !important;
-    margin-bottom: 2rem !important;
+    margin-top: 2.5rem !important;
+    margin-bottom: 2.5rem !important;
 }
 
 @media (min-width:1440px) {
