@@ -1,5 +1,4 @@
-.. meta::
-   :description: Time series clustering in Amazon SageMaker.
+.. _time-series-clustering-algorithms:
 
 ########################################################
 Time Series Clustering
@@ -15,14 +14,14 @@ Time Series Clustering
    ===================================================  ======================================== ======================================== ============================================ ================================================
    SageMaker Algorithm                                  CPU Training                             GPU Training                             Multi-GPU Training                           Incremental Training
    ===================================================  ======================================== ======================================== ============================================ ================================================
-   :ref:`CNN-KMeans <cnn-kmeans-sagemaker-algorithm>`   :octicon:`check;1.1em;check-icon`        :octicon:`check;1.1em;check-icon`        :octicon:`x;1.1em;x-icon`                    :octicon:`x;1.1em;x-icon`
+   :ref:`CNN-KMeans <cnn-kmeans-sagemaker-algorithm>`   :octicon:`check;1rem;check-icon`         :octicon:`check;1rem;check-icon`         :octicon:`x;1rem;x-icon`                     :octicon:`x;1rem;x-icon`
    ===================================================  ======================================== ======================================== ============================================ ================================================
+
+.. _cnn-kmeans-sagemaker-algorithm:
 
 ******************************************
 CNN-KMeans SageMaker Algorithm
 ******************************************
-.. _cnn-kmeans-sagemaker-algorithm:
-
 The CNN-KMeans SageMaker Algorithm performs time series clustering with an `unsupervised convolutional neural network (CNN) <https://arxiv.org/pdf/1901.10738.pdf>`_ followed by a K-Means clusterer.
 The CNN network encodes the input time series into a number of time-independent features, which are then used as input by the K-Means algorithm.
 The CNN network consists of a stack of exponentially dilated causal convolutional blocks with residual connections,

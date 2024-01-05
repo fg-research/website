@@ -1,5 +1,4 @@
-.. meta::
-   :description: fg-research general blog.
+.. _general-blog:
 
 ########################################################
 General

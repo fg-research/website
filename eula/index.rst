@@ -1,11 +1,11 @@
-.. _general-blog:
+.. _eula:
 
 ########################################################
-General
+End-User License Agreement
 ########################################################
 
 .. rst-class:: lead
 
-   Learn about time series analysis.
+   EULA
 
 Coming soon.

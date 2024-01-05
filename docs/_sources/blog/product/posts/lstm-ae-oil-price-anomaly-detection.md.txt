@@ -1,7 +1,3 @@
-----
-orphan: true
-----
-
 # Detecting Anomalies in Financial Time Series with the LSTM-AE SageMaker Algorithm 
 Anomaly detection in financial time series plays a crucial role in identifying unusual market conditions 
 that could affect trading strategies and pose risks to investors.
@@ -34,7 +30,7 @@ The hidden states of the encoder are used for initializing the hidden states of 
 
 <img src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/diagrams/lstm-ae-architecture.png style="width:80%"/>
 
-*LSTM-AE architecture (source: [doi: 10.48550/arXiv.1607.00148](https://doi.org/10.48550/arXiv.1607.00148))*
+<p class="blog-post-image-caption">LSTM-AE architecture (source: <a class="reference external" href="https://doi.org/10.48550/arXiv.1607.00148">doi: 10.48550/arXiv.1607.00148</a>)</p>
 
 The autoencoder parameters are learned on a training set containing only normal data (i.e. without anomalies) by minimizing the mean squared error (MSE) between the actual and reconstructed values of the time series.
 After the model has been trained, a Gaussian distribution is fitted to the model's reconstruction errors on an independent validation set (also without anomalies) using Maximum Likelihood Estimation (MLE). 
@@ -70,9 +66,9 @@ dataset = pd.DataFrame({
 On the 20<sup>th</sup> of April 2020, the WTI price decreased from \$18.31 to -\$36.98, going negative for the first time in its history,
 while on the next day the 21<sup>st</sup> of April 2020, the Brent price decreased from \$17.36 to \$9.12.
 
-<img class="blog-image" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/prices.png />
+<img class="blog-post-image" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/prices.png />
 
-<p class="blog-caption">WTI and Brent daily prices from 1987-05-20 to 2020-12-31.</p>
+<p class="blog-post-image-caption">WTI and Brent daily prices from 1987-05-20 to 2020-12-31.</p>
 
 We use the percentage changes in the daily prices (or daily returns) for training the LSTM-AE model.
 
@@ -88,9 +84,9 @@ The percentage change in Brent price on the 20<sup>th</sup> of April 2020 was -1
 followed by a -47% decrease on the 21<sup>st</sup> of April 2020 and 
 a 51% increase on the 22<sup>nd</sup> of April 2020.
 
-<img class="blog-image" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/returns.png />
+<img class="blog-post-image" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/returns.png />
 
-<p class="blog-caption">WTI and Brent daily returns from 1987-05-20 to 2020-12-31.</p>
+<p class="blog-post-image-caption">WTI and Brent daily returns from 1987-05-20 to 2020-12-31.</p>
 
 ## Code
 
@@ -219,9 +215,9 @@ reconstructions = pd.read_csv(io.StringIO(reconstructions), header=None, dtype=f
 
 After loading the anomaly scores and the reconstructions from S3, we can visualize the results.
 
-<img class="blog-image" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/results.png />
+<img class="blog-post-image" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/results.png />
 
-<p class="blog-caption"> LSTM-AE reconstructions and anomaly score for WTI and Brent daily returns from 2019-08-02 to 2020-12-31.</p>
+<p class="blog-post-image-caption"> LSTM-AE reconstructions and anomaly score for WTI and Brent daily returns from 2019-08-02 to 2020-12-31.</p>
 
 We find that, as expected, the anomaly score exhibits the largest upward spikes on the 20<sup>th</sup> (anomaly score = 810,274),
 21<sup>st</sup> (anomaly score = 64,522) and 22<sup>nd</sup> (anomaly score = 15,533) of April 2020.
@@ -231,9 +227,9 @@ We find that, as expected, the anomaly score exhibits the largest upward spikes 
 reconstructions.iloc[:, 0].nlargest(3)
 ```
 
-<img class="blog-image" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/anomalies.png />
+<img class="blog-post-image-image" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/anomalies.png />
 
-<p class="blog-caption"> LSTM-AE largest anomaly scores from 2019-08-02 to 2020-12-31.</p>
+<p class="blog-post-image-caption"> LSTM-AE largest anomaly scores from 2019-08-02 to 2020-12-31.</p>
 
 You can download the [notebook](https://github.com/fg-research/lstm-ae-sagemaker/blob/master/example/oil_price_anomaly_detection.ipynb) 
 with the full code from our [GitHub](https://github.com/fg-research/lstm-ae-sagemaker) repository.

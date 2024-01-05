@@ -10,7 +10,27 @@ h2 {
     font-size: 1.6rem !important;
 }
 
-a.reference.internal{
+h3 {
+    font-size: 1.4rem !important;
+}
+
+h4 {
+    font-size: 1.3rem !important;
+}
+
+h5 {
+    font-size: 1.2rem !important;
+}
+
+h6 {
+    font-size: 1.1rem !important;
+}
+
+#right-sidebar a {
+    font-size: 90% !important;
+}
+
+#left-sidebar a {
     font-size: 90% !important;
 }
 
@@ -27,41 +47,41 @@ a.reference.internal{
     color: #DC3545 !important;
 }
 
+.sd-container-fluid{
+    margin-top: 0.1rem !important;
+    margin-bottom: 0.1rem !important;
+}
+
 .sd-card-body{
     padding: 0 !important;
 }
 
-.sd-container-fluid {
-    padding: 0.75em 0.75em 0.75em 0.25em !important;
-    margin: 0.75em 0.75em 0.75em 0.25em !important;
+.sd-row{
+    margin-top: -1.5rem !important;
 }
 
 .blog-card-image{
-    margin: 0 !important;
+    margin: 1.5rem 0 0 0 !important;
     padding: 0 !important;
 }
 
-.blog-card-text{
-    font-weight: 500 !important;
-}
-
-.blog-image{
+.blog-post-image{
     width: 100%;
 }
 
 @media (min-width:1440px) {
-    .blog-image{
+    .blog-post-image{
         width: 85%;
     }
 }
 
-.blog-caption{
+.blog-post-image-caption{
     width: 100%;
     font-style: italic;
 }
 
 @media (min-width:1440px) {
-    .blog-caption{
+    .blog-post-image-caption{
         width: 85%;
         font-style: italic;
     }
@@ -80,5 +100,15 @@ a.reference.internal{
         text-align: center !important;
         margin: auto !important;
         max-width: 70% !important;
+    }
+}
+
+#aws-marketplace-logo{
+    width: 55%;
+}
+
+@media (min-width:1440px) {
+    #aws-marketplace-logo{
+        width: 35%;
     }
 }

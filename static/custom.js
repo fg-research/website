@@ -15,16 +15,9 @@ window.setInterval(function(){
 
     if (f !== null) {
         if(window.localStorage.getItem('darkMode') == 'light'){
-            f.childNodes[1].childNodes[0].src = '_static/AWSMP_NewLogo_RGB_BLK.png'
-            f.childNodes[1].href = '_static/AWSMP_NewLogo_RGB_BLK.png'
+            f.src = '_static/AWSMP_NewLogo_RGB_BLK.png'
         }else if(window.localStorage.getItem('darkMode') == 'dark' || getPreferredColorScheme() == 'dark'){
-            f.childNodes[1].childNodes[0].src = '_static/AWSMP_NewLogo_RGB_WHT.png'
-            f.childNodes[1].href = '_static/AWSMP_NewLogo_RGB_WHT.png'
-        };
-        if(screen.width > 1440){
-            f.childNodes[1].childNodes[0].style.width = '35%'
-        }else{
-            f.childNodes[1].childNodes[0].style.width = '55%'
+            f.src = '_static/AWSMP_NewLogo_RGB_WHT.png'
         };
     };
 

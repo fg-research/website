@@ -7,8 +7,7 @@
 <meta content="white" media="(prefers-color-scheme: light)" name="theme-color"/>
 <meta content="black" metia="(prefers-color-scheme: dark)" name="theme-color"/>
 <meta content="Docutils 0.18.1: http://docutils.sourceforge.net/" name="generator"/>
-<meta content="Time Series Analysis in Amazon SageMaker." name="description"/>
-<meta content="Amazon Web Services, AWS, Amazon SageMaker, Time Series, Machine Learning" name="keywords"/>
+<meta content="Amazon SageMaker, Time Series, Deep Learning, Forecasting, Anomaly Detection" name="keywords"/>
 <title>Time Series Analysis in Amazon SageMaker | fg-research</title>
 <meta content="Time Series Analysis in Amazon SageMaker | fg-research" property="og:title"/>
 <meta content="Time Series Analysis in Amazon SageMaker | fg-research" name="twitter:title"/>
@@ -98,6 +97,10 @@
 <li class="toctree-l1"><a class="reference internal" href="blog/product/index.html">Product</a></li>
 <li class="toctree-l1"><a class="reference internal" href="blog/general/index.html">General</a></li>
 </ul>
+<p class="caption" role="heading"><span class="caption-text">Terms of Use</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="eula/index.html">End-User License Agreement</a></li>
+</ul>
 </nav>
 </div>
 </div>
@@ -112,13 +115,8 @@
 <div id="content" role="main">
 <section id="time-series-analysis-in-amazon-sagemaker">
 <h1>Time Series Analysis in Amazon SageMaker<a class="headerlink" href="#time-series-analysis-in-amazon-sagemaker" title="Permalink to this heading">¶</a></h1>
-<p class="lead">Train, tune and deploy state-of-the-art deep learning models for time series in Amazon SageMaker.</p>
-<figure class="align-left" id="fg-research-logo">
-<a class="reference internal image-reference" href="_images/logo.png"><img alt="fg-research logo" src="_images/logo.png" style="width: 70%;"/></a>
-</figure>
-<figure class="align-right" id="aws-marketplace-logo">
-<a class="reference internal image-reference" href="_images/AWSMP_NewLogo_RGB_BLK.png"><img alt="AWS Marketplace Logo" src="_images/AWSMP_NewLogo_RGB_BLK.png" style="width: 35%;"/></a>
-</figure>
+<p class="lead">Train, tune and deploy state-of-the-art deep learning models for time series<br/>in Amazon SageMaker.</p><br/><a class="reference internal image-reference" href="_images/logo.png" id="fg-research-logo"><img alt="fg-research logo" class="align-left" id="fg-research-logo" src="_images/logo.png" style="width: 70%;"/></a>
+<img alt="AWS Marketplace Logo" class="align-right" id="aws-marketplace-logo" src="_images/AWSMP_NewLogo_RGB_BLK.png"/>
 <section id="product">
 <h2>Product<a class="headerlink" href="#product" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#product'">¶</a></h2>
 <p>We provide Amazon SageMaker algorithms for multiple time series tasks, including forecasting, anomaly detection, clustering and classification.
@@ -129,7 +127,7 @@ Each algorithm implements a state-of-the-art deep learning architecture designed
 <dl class="simple">
 <dt>Automated Data Handling</dt><dd><p>The algorithms work directly on raw time series data in CSV format. All the required data preprocessing and scaling is performed internally by our code.</p>
 </dd>
-<dt>Automatic Model Tuning</dt><dd><p>The algorithms support <a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/automatic-model-tuning.html" rel="nofollow noopener">automatic model tuning<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a> for optimizing the neural network hyperparameters in order to achieve the best possible performance on a given dataset.</p>
+<dt>Automatic Model Tuning</dt><dd><p>The algorithms support <a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/automatic-model-tuning.html" rel="nofollow noopener">automatic model tuning<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a> for optimizing the neural network hyperparameters in order to find the best model configuration for a given dataset.</p>
 </dd>
 <dt>Incremental Training</dt><dd><p>Most of the algorithms support <a class="reference external" href="https://docs.aws.amazon.com/sagemaker/latest/dg/incremental-training.html" rel="nofollow noopener">incremental training<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a> which can be used to continue training the model on the same dataset or to fine-tune the model on a different dataset.</p>
 </dd>
@@ -149,8 +147,38 @@ on a usage-based pricing plan. Each algorithm offers a 5 days free trial.</p>
 <section id="support">
 <h2>Support<a class="headerlink" href="#support" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#support'">¶</a></h2>
 <p>For support, contact <a class="reference external" href="mailto:support%40fg-research.com" rel="nofollow noopener">support<span>@</span>fg-research<span>.</span>com<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>.</p>
-
-
+<br/><div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-3 sd-row-cols-xs-3 sd-row-cols-sm-3 sd-row-cols-md-3 sd-row-cols-lg-3 docutils">
+<div class="sd-col sd-d-flex-column sd-col-5 sd-col-xs-5 sd-col-sm-5 sd-col-md-5 sd-col-lg-5 docutils">
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Algorithms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="algorithms/time-series-forecasting/index.html">Time Series Forecasting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algorithms/time-series-anomaly-detection/index.html">Time Series Anomaly Detection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algorithms/time-series-clustering/index.html">Time Series Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algorithms/time-series-classification/index.html">Time Series Classification</a></li>
+</ul>
+</div>
+</div>
+<div class="sd-col sd-d-flex-column sd-col-3 sd-col-xs-3 sd-col-sm-3 sd-col-md-3 sd-col-lg-3 docutils">
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Blog</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="blog/product/index.html">Product</a></li>
+<li class="toctree-l1"><a class="reference internal" href="blog/general/index.html">General</a></li>
+</ul>
+</div>
+</div>
+<div class="sd-col sd-d-flex-column sd-col-4 sd-col-xs-4 sd-col-sm-4 sd-col-md-4 sd-col-lg-4 docutils">
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Terms of Use</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="eula/index.html">End-User License Agreement</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
 </section>
 </section>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
