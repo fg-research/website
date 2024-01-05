@@ -24,7 +24,7 @@ Product
                 :class: blog-card-image
 
         .. grid-item::
-            :columns: 7 7 6 6
+            :columns: 8 8 6 6
             :child-align: center
 
             .. toctree::
@@ -47,7 +47,7 @@ Product
                 :class: blog-card-image
 
         .. grid-item::
-            :columns: 7 7 6 6
+            :columns: 8 8 6 6
             :child-align: center
 
             .. toctree::
@@ -70,7 +70,7 @@ Product
                 :class: blog-card-image
 
         .. grid-item::
-            :columns: 7 7 6 6
+            :columns: 8 8 6 6
             :child-align: center
 
             .. toctree::
@@ -93,7 +93,7 @@ Product
                 :class: blog-card-image
 
         .. grid-item::
-            :columns: 7 7 6 6
+            :columns: 8 8 6 6
             :child-align: center
 
             .. toctree::
@@ -116,7 +116,7 @@ Product
                 :class: blog-card-image
 
         .. grid-item::
-            :columns: 7 7 6 6
+            :columns: 8 8 6 6
             :child-align: center
 
             .. toctree::
@@ -139,7 +139,7 @@ Product
                 :class: blog-card-image
 
         .. grid-item::
-            :columns: 7 7 6 6
+            :columns: 8 8 6 6
             :child-align: center
 
             .. toctree::
