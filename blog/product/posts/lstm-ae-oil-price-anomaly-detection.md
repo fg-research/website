@@ -227,7 +227,7 @@ We find that, as expected, the anomaly score exhibits the largest upward spikes 
 reconstructions.iloc[:, 0].nlargest(3)
 ```
 
-<img class="blog-post-image-image" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/anomalies.png />
+<img class="blog-post-image" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/anomalies.png />
 
 <p class="blog-post-image-caption"> LSTM-AE largest anomaly scores from 2019-08-02 to 2020-12-31.</p>
 
