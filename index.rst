@@ -64,8 +64,7 @@ For support, contact `support@fg-research.com <mailto:support@fg-research.com>`_
 
 .. raw:: html
 
-    <br/>
-    <br/>
+    <div style="margin-top:1vw"> </div>
 
 
 .. grid:: 3
