@@ -116,7 +116,7 @@ Product
                 :class: blog-card-image
 
         .. grid-item::
-            :columns: 8 8 7 7
+            :columns: 7 7 6 6
             :child-align: center
 
             .. toctree::
