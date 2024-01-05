@@ -64,9 +64,13 @@ h6 {
     margin: 1.5rem 0 0 0 !important;
 }
 
-@media (max-width:750px) {
+table {
+    font-size: .775rem !important;
+}
+
+@media (min-width:1440px) {
     table {
-        font-size: 90% !important;
+        font-size: .875rem !important;
     }
 }
 
