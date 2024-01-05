@@ -4,9 +4,9 @@
 ########################################################
 Time Series Analysis in Amazon SageMaker
 ########################################################
-.. raw:: html
+.. rst-class:: lead
 
-    <p class="lead" style="margin-bottom: 3rem">Train, tune and deploy state-of-the-art deep learning models for time series<br/>in Amazon SageMaker.</p>
+    Train, tune and deploy state-of-the-art deep learning models for time series in Amazon SageMaker
 
 .. _fg_research_logo:
 
