@@ -7,6 +7,9 @@
 <meta content="white" media="(prefers-color-scheme: light)" name="theme-color"/>
 <meta content="black" metia="(prefers-color-scheme: dark)" name="theme-color"/>
 <meta content="Docutils 0.18.1: http://docutils.sourceforge.net/" name="generator"/>
+<meta content="Anomaly detection with the LSTM-AE SageMaker Algorithm" name="title"/>
+<meta content="Detecting anomalies in financial time series with the LSTM-AE SageMaker Algorithm" name="description"/>
+<meta content="Financial Time Series, Anomaly Detection, Recurrent Autoencoders, LSTM, Amazon SageMaker" name="keywords"/>
 <title>Detecting anomalies in financial time series with the LSTM-AE SageMaker Algorithm | fg-research</title>
 <meta content="Detecting anomalies in financial time series with the LSTM-AE SageMaker Algorithm | fg-research" property="og:title"/>
 <meta content="Detecting anomalies in financial time series with the LSTM-AE SageMaker Algorithm | fg-research" name="twitter:title"/>
@@ -123,53 +126,76 @@
 <div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Detecting anomalies in financial time series with the LSTM-AE SageMaker Algorithm</span>
 </nav>
 <div id="content" role="main">
-<section class="tex2jax_ignore mathjax_ignore" id="detecting-anomalies-in-financial-time-series-with-the-lstm-ae-sagemaker-algorithm">
+<section id="detecting-anomalies-in-financial-time-series-with-the-lstm-ae-sagemaker-algorithm">
 <h1>Detecting anomalies in financial time series with the LSTM-AE SageMaker Algorithm<a class="headerlink" href="#detecting-anomalies-in-financial-time-series-with-the-lstm-ae-sagemaker-algorithm" title="Permalink to this heading">¶</a></h1>
-<p>Anomaly detection in financial time series plays a crucial role in identifying unusual market conditions
-that could affect trading strategies and pose risks to investors.
-Anomaly detection can help identify abnormal price movements or trading volumes associated with specific events,
-such as earnings announcements, release of economic indicators, or geopolitical tensions.
-Anomaly detection algorithms are also useful for automatically detecting and correcting data quality issues in
-the market data time series used for calculating portfolio risk measures <a class="reference internal" href="#references">[1]</a>.</p>
-<p>Recurrent autoencoders are standard deep learning architectures for detecting anomalies in sequential data.
-The autoencoder is trained in an unsupervised manner to learn a low-dimensional latent representation of the data (through the encoder),
-and to reconstruct the normal behavior of the data from this latent representation (through the decoder).
-The trained autoencoder is then applied to new unseen data, and an anomaly is detected whenever
-the observed data deviates significantly from the autoencoder’s reconstruction.</p>
-<p>Different autoencoder architectures have been proposed in the literature on time series anomaly detection <a class="reference internal" href="#references">[2]</a>.
-In this post, we will focus on the <a class="reference external" href="https://doi.org/10.48550/arXiv.1607.00148" rel="nofollow noopener">Long Short Term Memory Networks based Encoder-Decoder scheme for Anomaly Detection<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a> <a class="reference internal" href="#references">[3]</a>,
-which we will refer to as the LSTM-AE model. We will demonstrate how to use our <a class="reference external" href="https://aws.amazon.com/sagemaker/" rel="nofollow noopener">Amazon SageMaker<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a> implementation of the LSTM-AE model,
-the <a class="reference external" href="https://aws.amazon.com/marketplace/pp/prodview-up2haipz3j472" rel="nofollow noopener">LSTM-AE SageMaker algorithm<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>,
+<p>Anomaly detection in financial time series plays a crucial role in
+identifying unusual market conditions that could affect trading
+strategies and pose risks to investors. Anomaly detection can help
+identify abnormal price movements or trading volumes associated with
+specific events, such as earnings announcements, release of economic
+indicators, or geopolitical tensions. Anomaly detection algorithms are
+also useful for automatically detecting and correcting data quality
+issues in the market data time series used for calculating portfolio
+risk measures [1].</p>
+<p>Recurrent autoencoders are standard deep learning architectures for
+detecting anomalies in sequential data. The autoencoder is trained in an
+unsupervised manner to learn a low-dimensional latent representation of
+the data (through the encoder), and to reconstruct the normal behavior
+of the data from this latent representation (through the decoder). The
+trained autoencoder is then applied to new unseen data, and an anomaly
+is detected whenever the observed data deviates significantly from the
+autoencoder’s reconstruction.</p>
+<p>Different autoencoder architectures have been proposed in the literature
+on time series anomaly detection [2]. In this post, we
+will focus on the <a class="reference external" href="https://doi.org/10.48550/arXiv.1607.00148" rel="nofollow noopener">Long Short Term Memory Networks based Encoder-Decoder
+scheme for Anomaly Detection<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a> [3],
+which we will refer to as the LSTM-AE model. We will demonstrate how to use our
+<a class="reference external" href="https://aws.amazon.com/sagemaker/" rel="nofollow noopener">Amazon SageMaker<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a> implementation of the
+LSTM-AE model, the <a class="reference external" href="https://aws.amazon.com/marketplace/pp/prodview-up2haipz3j472" rel="nofollow noopener">LSTM-AE SageMaker algorithm<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>,
 for detecting anomalies in oil price time series.</p>
-<p>We will download the West Texas Intermediate (WTI) and Brent daily price time series from the <a class="reference external" href="https://fred.stlouisfed.org/" rel="nofollow noopener">Federal Reserve Economic Data (FRED) database<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>.
-After that we will train the LSTM-AE model on the data up to the 1<sup>st</sup> of August 2019,
-and use the trained model to reconstruct the subsequent data up to the 31<sup>st</sup> of December 2020.
-We will then show how the LSTM-AE model detects the abnormal oil prices observed at the end of April 2020 during the COVID-19 pandemic.</p>
+<p>We will download the West Texas Intermediate (WTI) and Brent daily price
+time series from the <a class="reference external" href="https://fred.stlouisfed.org/" rel="nofollow noopener">Federal Reserve Economic Data (FRED)
+database<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>. After that we will train the
+LSTM-AE model on the data up to the 1<sup>st</sup> of August 2019, and use the
+trained model to reconstruct the subsequent data up to the 31<sup>st</sup> of
+December 2020. We will then show how the LSTM-AE model detects the
+abnormal oil prices observed at the end of April 2020 during the
+COVID-19 pandemic.</p>
 <section id="model">
 <h2>Model<a class="headerlink" href="#model" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#model'">¶</a></h2>
-<p>The encoder and decoder of the LSTM-AE model consist of a single LSTM layer and have the same number of hidden units.
-The encoder takes as input the time series and returns the hidden states.
-The hidden states of the encoder are used for initializing the hidden states of the decoder, which reconstructs the time series in reversed order.</p>
-<img alt="LSTM-AE architecture" class="blog-post-image" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/diagrams/lstm-ae-architecture.png"/>
-<p class="blog-post-image-caption">LSTM-AE architecture (source: <a class="reference external" href="https://doi.org/10.48550/arXiv.1607.00148" rel="nofollow noopener">doi: 10.48550/arXiv.1607.00148<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>)</p>
-<p>The autoencoder parameters are learned on a training set containing only normal data (i.e. without anomalies) by minimizing the mean squared error (MSE) between the actual and reconstructed values of the time series.
-After the model has been trained, a Gaussian distribution is fitted to the model’s reconstruction errors on an independent validation set (also without anomalies) using Maximum Likelihood Estimation (MLE).</p>
-<p>At inference time, the model reconstructs the values of all the time series (which can now include anomalies)
-and calculates the squared Mahalanobis distance between the reconstruction errors and the Gaussian distribution previously estimated on normal data.
-The computed squared Mahalanobis distance is then used as an anomaly score: the larger the squared Mahalanobis distance at a given a time step, the more likely the time step is to be an anomaly.</p>
+<p>The encoder and decoder of the LSTM-AE model consist of a single LSTM
+layer and have the same number of hidden units. The encoder takes as
+input the time series and returns the hidden states. The hidden states
+of the encoder are used for initializing the hidden states of the
+decoder, which reconstructs the time series in reversed order.</p>
+<img alt="LSTM-AE architecture" class="blog-post-image" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/diagrams/lstm-ae-architecture.png"/><p class="blog-post-image-caption">LSTM-AE architecture (source: <a class="reference external" href="https://doi.org/10.48550/arXiv.1607.00148" rel="nofollow noopener">doi: 10.48550/arXiv.1607.00148<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>)</p><p>The autoencoder parameters are learned on a training set containing only
+normal data (i.e. without anomalies) by minimizing the mean squared
+error (MSE) between the actual and reconstructed values of the time
+series. After the model has been trained, a Gaussian distribution is
+fitted to the model’s reconstruction errors on an independent validation
+set (also without anomalies) using Maximum Likelihood Estimation (MLE).</p>
+<p>At inference time, the model reconstructs the values of all the time
+series (which can now include anomalies) and calculates the squared
+Mahalanobis distance between the reconstruction errors and the Gaussian
+distribution previously estimated on normal data. The computed squared
+Mahalanobis distance is then used as an anomaly score: the larger the
+squared Mahalanobis distance at a given a time step, the more likely the
+time step is to be an anomaly.</p>
 </section>
 <section id="data">
 <h2>Data<a class="headerlink" href="#data" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data'">¶</a></h2>
-<p>We use the <a class="reference external" href="https://github.com/mortada/fredapi" rel="nofollow noopener">Python API for FRED<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a> for downloading the data.
-If you don’t have an API key, you can request one at <a class="reference external" href="http://api.stlouisfed.org/api_key.html" rel="nofollow noopener">this link<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>.</p>
+<p>We use the <a class="reference external" href="https://github.com/mortada/fredapi" rel="nofollow noopener">Python API for FRED<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>
+for downloading the data. If you don’t have an API key, you can request
+one at <a class="reference external" href="http://api.stlouisfed.org/api_key.html" rel="nofollow noopener">this link<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">from</span> <span class="nn">fredapi</span> <span class="kn">import</span> <span class="n">Fred</span>
 </span><span id="line-2">
 </span><span id="line-3"><span class="c1"># set up the FRED API</span>
 </span><span id="line-4"><span class="n">fred</span> <span class="o">=</span> <span class="n">Fred</span><span class="p">(</span><span class="n">api_key_file</span><span class="o">=</span><span class="s2">"api_key.txt"</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
-<p>We download the data from the 20<sup>th</sup> of May 1987, which is the start date of the Brent time series, to the 31<sup>st</sup> of December 2020.
-The downloaded dataset contains 8,772 daily price observations.</p>
+<p>We download the data from the 20<sup>th</sup> of May 1987, which is the start date
+of the Brent time series, to the 31<sup>st</sup> of December 2020. The downloaded
+dataset contains 8,772 daily price observations.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 </span><span id="line-2">
 </span><span id="line-3"><span class="c1"># get the prices from the FRED API</span>
@@ -179,24 +205,22 @@ The downloaded dataset contains 8,772 daily price observations.</p>
 </span><span id="line-7"><span class="p">})</span>
 </span></code></pre></div>
 </div>
-<p>On the 20<sup>th</sup> of April 2020, the WTI price decreased from $18.31 to -$36.98, going negative for the first time in its history,
-while on the next day the 21<sup>st</sup> of April 2020, the Brent price decreased from $17.36 to $9.12.</p>
-<img alt="WTI and Brent daily prices from 1987-05-20 to 2020-12-31" class="blog-post-image" id="lstm-ae-oil-price-anomaly-detection-prices" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/prices_light.png"/>
-<p class="blog-post-image-caption">WTI and Brent daily prices from 1987-05-20 to 2020-12-31.</p>
-<p>We use the percentage changes in the daily prices (or daily returns) for training the LSTM-AE model.</p>
+<p>On the 20<sup>th</sup> of April 2020, the WTI price decreased from $18.31 to
+-$36.98, going negative for the first time in its history, while on the
+next day the 21<sup>st</sup> of April 2020, the Brent price decreased from $17.36
+to $9.12.</p>
+<img alt="WTI and Brent daily prices from 1987-05-20 to 2020-12-31" class="blog-post-image" id="lstm-ae-oil-price-anomaly-detection-prices" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/prices_light.png"/><p class="blog-post-image-caption">WTI and Brent daily prices from 1987-05-20 to 2020-12-31.</p><p>We use the percentage changes in the daily prices (or daily returns) for
+training the LSTM-AE model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># calculate the returns</span>
 </span><span id="line-2"><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">pct_change</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
 <p>The percentage change in WTI price on the 20<sup>th</sup> of April 2020 was -302%,
-followed by a -124% decrease on the 21<sup>st</sup> of April 2020 and
-a 53% increase on the 22<sup>nd</sup> of April 2020.
-The percentage change in Brent price on the 20<sup>th</sup> of April 2020 was -12%,
-followed by a -47% decrease on the 21<sup>st</sup> of April 2020 and
-a 51% increase on the 22<sup>nd</sup> of April 2020.</p>
-<img alt="WTI and Brent daily returns from 1987-05-20 to 2020-12-31" class="blog-post-image" id="lstm-ae-oil-price-anomaly-detection-returns" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/returns_light.png"/>
-<p class="blog-post-image-caption">WTI and Brent daily returns from 1987-05-20 to 2020-12-31.</p>
-</section>
+followed by a -124% decrease on the 21<sup>st</sup> of April 2020 and a 53%
+increase on the 22<sup>nd</sup> of April 2020. The percentage change in Brent price
+on the 20<sup>th</sup> of April 2020 was -12%, followed by a -47% decrease on the
+21<sup>st</sup> of April 2020 and a 51% increase on the 22<sup>nd</sup> of April 2020.</p>
+<img alt="WTI and Brent daily returns from 1987-05-20 to 2020-12-31" class="blog-post-image" id="lstm-ae-oil-price-anomaly-detection-returns" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/returns_light.png"/><p class="blog-post-image-caption">WTI and Brent daily returns from 1987-05-20 to 2020-12-31.</p></section>
 <section id="code">
 <h2>Code<a class="headerlink" href="#code" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#code'">¶</a></h2>
 <section id="environment-set-up">
@@ -204,8 +228,10 @@ a 51% increase on the 22<sup>nd</sup> of April 2020.</p>
 <p>We start by setting up the SageMaker environment.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>To be able to run the code below, you need to have an active subscription to the algorithm.
-You can subscribe to a free trial from the <a class="reference external" href="https://aws.amazon.com/marketplace/pp/prodview-up2haipz3j472" rel="nofollow noopener">AWS Marketplace<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a> in order to get your Amazon Resource Name (ARN).</p>
+<p>To be able to run the code below, you need to have an active
+subscription to the algorithm. You can subscribe to a free trial from
+the <a class="reference external" href="https://aws.amazon.com/marketplace/pp/prodview-up2haipz3j472" rel="nofollow noopener">AWS Marketplace<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>
+in order to get your Amazon Resource Name (ARN).</p>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span> <span class="nn">sagemaker</span>
 </span><span id="line-2">
@@ -228,10 +254,12 @@ You can subscribe to a free trial from the <a class="reference external" href="h
 </section>
 <section id="data-preparation">
 <h3>Data Preparation<a class="headerlink" href="#data-preparation" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data-preparation'">¶</a></h3>
-<p>After that we split the data into training and test sets, which we save to S3 in CSV format.
-We use the first 8,402 observations for training, and the remaining 370 observations for testing.
-The training set covers the time window from 20<sup>th</sup> of May 1987 to the 1<sup>st</sup> of August 2019,
-while the test set covers the time window from the 2<sup>nd</sup> of August 2019 to the 31<sup>st</sup> of December 2020.</p>
+<p>After that we split the data into training and test sets, which we save
+to S3 in CSV format. We use the first 8,402 observations for training,
+and the remaining 370 observations for testing. The training set covers
+the time window from 20<sup>th</sup> of May 1987 to the 1<sup>st</sup> of August 2019, while
+the test set covers the time window from the 2<sup>nd</sup> of August 2019 to the
+31<sup>st</sup> of December 2020.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># define the train-test split cutoff</span>
 </span><span id="line-2"><span class="n">cutoff</span> <span class="o">=</span> <span class="mi">8402</span>
 </span><span id="line-3">
@@ -260,8 +288,9 @@ while the test set covers the time window from the 2<sup>nd</sup> of August 2019
 <p>We can now run a training job on the training dataset.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The algorithm uses the first 80% of the training dataset for learning the LSTM parameters,
-and the remaining 20% of the training dataset for estimating the Gaussian distribution parameters.</p>
+<p>The algorithm uses the first 80% of the training dataset for learning
+the LSTM parameters, and the remaining 20% of the training dataset
+for estimating the Gaussian distribution parameters.</p>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># create the estimator</span>
 </span><span id="line-2"><span class="n">estimator</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">AlgorithmEstimator</span><span class="p">(</span>
@@ -288,7 +317,8 @@ and the remaining 20% of the training dataset for estimating the Gaussian distri
 </section>
 <section id="inference">
 <h3>Inference<a class="headerlink" href="#inference" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#inference'">¶</a></h3>
-<p>Once the training job has completed, we can run a batch transform job on the test dataset.</p>
+<p>Once the training job has completed, we can run a batch transform job on
+the test dataset.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># create the transformer</span>
 </span><span id="line-2"><span class="n">transformer</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">transformer</span><span class="p">(</span>
 </span><span id="line-3">    <span class="n">instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
@@ -303,11 +333,16 @@ and the remaining 20% of the training dataset for estimating the Gaussian distri
 </span><span id="line-12"><span class="p">)</span>
 </span></code></pre></div>
 </div>
-<p>The results of the batch transform job are saved in an output file in S3 with the same name as the input file and with the <code class="docutils literal notranslate"><span class="pre">".out"</span></code> file extension.
-The output file contains the anomaly scores in the first column, and the reconstructed values of the time series in the subsequent columns.</p>
+<p>The results of the batch transform job are saved in an output file in S3
+with the same name as the input file and with the <code class="docutils literal notranslate"><span class="pre">".out"</span></code> file
+extension. The output file contains the anomaly scores in the first
+column, and the reconstructed values of the time series in the
+subsequent columns.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The LSTM-AE is a multivariate time series anomaly detection model and, therefore, it generates only one anomaly score for all time series at each time step.</p>
+<p>The LSTM-AE is a multivariate time series anomaly detection model
+and, therefore, it generates only one anomaly score for all time
+series at each time step.</p>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span> <span class="nn">io</span>
 </span><span id="line-2">
@@ -321,26 +356,36 @@ The output file contains the anomaly scores in the first column, and the reconst
 </span><span id="line-10"><span class="n">reconstructions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">reconstructions</span><span class="p">),</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
-<p>After loading the anomaly scores and the reconstructions from S3, we can visualize the results.</p>
-<img alt="LSTM-AE reconstructions and anomaly score from 2019-08-02 to 2020-12-31" class="blog-post-image" id="lstm-ae-oil-price-anomaly-detection-results-plot" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/results_light.png"/>
-<p class="blog-post-image-caption"> LSTM-AE reconstructions and anomaly score from 2019-08-02 to 2020-12-31.</p>
-<p>We find that, as expected, the anomaly score exhibits the largest upward spikes on the 20<sup>th</sup> (anomaly score = 810,274),
-21<sup>st</sup> (anomaly score = 64,522) and 22<sup>nd</sup> (anomaly score = 15,533) of April 2020.</p>
+<p>After loading the anomaly scores and the reconstructions from S3, we can
+visualize the results.</p>
+<img alt="LSTM-AE reconstructions and anomaly score from 2019-08-02 to 2020-12-31" class="blog-post-image" id="lstm-ae-oil-price-anomaly-detection-results-plot" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/results_light.png"/><p class="blog-post-image-caption"> LSTM-AE reconstructions and anomaly score from 2019-08-02 to 2020-12-31.</p><p>We find that, as expected, the anomaly score exhibits the largest upward
+spikes on the 20<sup>th</sup> (anomaly score = 810,274), 21<sup>st</sup> (anomaly score =
+64,522) and 22<sup>nd</sup> (anomaly score = 15,533) of April 2020.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># extract the largest anomaly scores</span>
 </span><span id="line-2"><span class="n">reconstructions</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
-<img alt="LSTM-AE largest anomaly scores from 2019-08-02 to 2020-12-31" class="blog-post-image" id="lstm-ae-oil-price-anomaly-detection-results-table" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/anomalies_light.png"/>
-<p class="blog-post-image-caption"> LSTM-AE largest anomaly scores from 2019-08-02 to 2020-12-31.</p>
-<p>You can download the <a class="reference external" href="https://github.com/fg-research/lstm-ae-sagemaker/blob/master/examples/oil_price_anomaly_detection.ipynb" rel="nofollow noopener">notebook<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>
-with the full code from our <a class="reference external" href="https://github.com/fg-research/lstm-ae-sagemaker" rel="nofollow noopener">GitHub<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a> repository.</p>
+<img alt="LSTM-AE largest anomaly scores from 2019-08-02 to 2020-12-31" class="blog-post-image" id="lstm-ae-oil-price-anomaly-detection-results-table" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/anomalies_light.png"/><p class="blog-post-image-caption"> LSTM-AE largest anomaly scores from 2019-08-02 to 2020-12-31.</p><p>You can download the
+<a class="reference external" href="https://github.com/fg-research/lstm-ae-sagemaker/blob/master/examples/oil_price_anomaly_detection.ipynb" rel="nofollow noopener">notebook<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>
+with the full code from our
+<a class="reference external" href="https://github.com/fg-research/lstm-ae-sagemaker" rel="nofollow noopener">GitHub<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>
+repository.</p>
 </section>
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#references'">¶</a></h2>
-<p>[1] Crépey, S., Lehdili, N., Madhar, N., &amp; Thomas, M. (2022). Anomaly Detection in Financial Time Series by Principal Component Analysis and Neural Networks. <em>Algorithms</em>, 15(10), 385, <a class="reference external" href="https://doi.org/10.3390/a15100385" rel="nofollow noopener">doi: 10.3390/a15100385<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>.</p>
-<p>[2] Darban, Z. Z., Webb, G. I., Pan, S., Aggarwal, C. C., &amp; Salehi, M. (2022). Deep learning for time series anomaly detection: A survey. <em>arXiv preprint</em>, <a class="reference external" href="https://doi.org/10.48550/arXiv.2211.05244" rel="nofollow noopener">doi: 10.48550/arXiv.2211.05244<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>.</p>
-<p>[3] Malhotra, P., Ramakrishnan, A., Anand, G., Vig, L., Agarwal, P., &amp; Shroff, G. (2016). LSTM-based encoder-decoder for multi-sensor anomaly detection. <em>arXiv preprint</em>, <a class="reference external" href="https://doi.org/10.48550/arXiv.1607.00148" rel="nofollow noopener">doi: 10.48550/arXiv.1607.00148<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>.</p>
+<p>[1] Crépey, S., Lehdili, N., Madhar, N., &amp; Thomas, M. (2022). Anomaly
+Detection in Financial Time Series by Principal Component Analysis and
+Neural Networks. <em>Algorithms</em>, 15(10), 385, <a class="reference external" href="https://doi.org/10.3390/a15100385" rel="nofollow noopener">doi:
+10.3390/a15100385<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>.</p>
+<p>[2] Darban, Z. Z., Webb, G. I., Pan, S., Aggarwal, C. C., &amp; Salehi, M.
+(2022). Deep learning for time series anomaly detection: A survey.
+<em>arXiv preprint</em>, <a class="reference external" href="https://doi.org/10.48550/arXiv.2211.05244" rel="nofollow noopener">doi:
+10.48550/arXiv.2211.05244<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>.</p>
+<p>[3] Malhotra, P., Ramakrishnan, A., Anand, G., Vig, L., Agarwal, P., &amp;
+Shroff, G. (2016). LSTM-based encoder-decoder for multi-sensor anomaly
+detection. <em>arXiv preprint</em>, <a class="reference external" href="https://doi.org/10.48550/arXiv.1607.00148" rel="nofollow noopener">doi:
+10.48550/arXiv.1607.00148<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>.</p>
 </section>
 </section>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">

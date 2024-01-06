@@ -21,10 +21,10 @@ Product
 
         posts/lstm-ae-oil-price-anomaly-detection
 
-    .. include:: posts/lstm-ae-oil-price-anomaly-detection.md
-        :parser: myst_parser.sphinx_
-        :start-line: 1
-        :end-line: 5
+    .. include:: posts/lstm-ae-oil-price-anomaly-detection.rst
+        :parser: rst
+        :start-line: 7
+        :end-line: 13
 
     .. grid:: 2
         :margin: 0 3 auto auto
