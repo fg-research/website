@@ -64,7 +64,7 @@ h6 {
 
 .sd-card-text{
     margin: 0.75rem 0 0.75rem 0 !important;
-    font-size: 0.875rem !important;
+    font-size: 0.775rem !important;
     line-height: 1.25rem !important;
     font-weight: 300 !important;
     display: -webkit-box;
@@ -72,6 +72,20 @@ h6 {
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis !important;
+}
+
+@media (min-width:1440px) {
+    .sd-card-text{
+        margin: 0.75rem 0 0.75rem 0 !important;
+        font-size: 0.875rem !important;
+        line-height: 1.25rem !important;
+        font-weight: 300 !important;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis !important;
+    }
 }
 
 .sd-card-body .toctree-wrapper ul li a.reference{
