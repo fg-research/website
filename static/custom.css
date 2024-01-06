@@ -61,12 +61,12 @@ h6 {
 }
 
 .blog-card-image{
-    margin: 1.5rem 0 0 0 !important;
+    margin: 3.5rem 0 2rem 0 !important;
 }
 
 @media (min-width:1440px) {
     .blog-card-image{
-        margin: 3.5rem 0 2rem 0 !important;
+        margin: 1.5rem 0 0 0 !important;
         padding: 0 0 0 2rem !important;
     }
 }
