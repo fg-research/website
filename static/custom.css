@@ -47,28 +47,36 @@ h6 {
     color: #DC3545 !important;
 }
 
-.sd-container-fluid{
-    margin-top: 1.25rem !important;
-    margin-bottom: 1.25rem !important;
+.calendar-icon{
+    margin-top: -0.2rem !important;
+    margin-right: 0.2rem !important;
+}
+
+.graph-icon{
+    margin-top: -0.1rem !important;
+    margin-right: 0.2rem !important;
 }
 
 .sd-card-body{
+    margin: 0rem 1.5rem 0 1.5rem !important;
     padding: 0 !important;
 }
 
-.sd-row{
-    margin-top: -1.5rem !important;
+.sd-card-text{
+    margin: 0.75rem 0 0.75rem 0 !important;
+    font-size: 0.875rem !important;
+    line-height: 1.25rem !important;
+    font-weight: 300 !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis !important;
 }
 
-.blog-card-image{
-    margin: 3.5rem 0 2rem 0 !important;
-}
-
-@media (min-width:1440px) {
-    .blog-card-image{
-        margin: 1.5rem 0 0 0 !important;
-        padding: 0 0 0 2rem !important;
-    }
+.sd-card-body .toctree-wrapper ul li a.reference{
+    font-weight: 500 !important;
+    font-size: 1rem !important;
 }
 
 .blog-post-image{

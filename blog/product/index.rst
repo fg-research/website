@@ -1,4 +1,4 @@
-.. _product-blog:
+
 
 ########################################################
 Product
@@ -13,136 +13,26 @@ Product
     :link: posts/lstm-ae-oil-price-anomaly-detection
     :link-type: doc
 
-    .. grid:: 2
+    .. _lstm-ae-oil-price-anomaly-detection-toctree:
 
-        .. grid-item::
-            :columns: 4 4 5 5
-            :child-align: center
+    .. toctree::
+        :titlesonly:
 
-            .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/diagrams/lstm-ae-architecture.png
-                :alt: LSTM-AE architecture
-                :class: blog-card-image
+        posts/lstm-ae-oil-price-anomaly-detection
 
-        .. grid-item::
-            :columns: 8 8 6 6
-            :child-align: center
-
-            .. toctree::
-                :titlesonly:
-
-                posts/lstm-ae-oil-price-anomaly-detection
-
-.. card::
-    :width: 100%
-    :link: https://medium.com/@fg-research/time-series-classification-with-the-inceptiontime-sagemaker-algorithm-from-aws-marketplace-6bef9a205e9b?source=friends_link&sk=1b1722aad1ce73974298f01bf48b0833
+    .. include:: posts/lstm-ae-oil-price-anomaly-detection.md
+        :parser: myst_parser.sphinx_
+        :start-line: 1
+        :end-line: 5
 
     .. grid:: 2
+        :margin: 0 3 auto auto
 
         .. grid-item::
-            :columns: 4 4 5 5
-            :child-align: center
 
-            .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/diagrams/inception-time-architecture.png
-                :alt: InceptionTime architecture
-                :class: blog-card-image
+            :octicon:`graph;1rem;graph-icon` Time Series Anomaly Detection
 
         .. grid-item::
-            :columns: 8 8 6 6
-            :child-align: center
 
-            .. toctree::
-                :titlesonly:
+            :octicon:`calendar;1rem;calendar-icon` January 2, 2024
 
-                Time series classification with the InceptionTime SageMaker Algorithm <https://medium.com/@fg-research/time-series-classification-with-the-inceptiontime-sagemaker-algorithm-from-aws-marketplace-6bef9a205e9b?source=friends_link&sk=1b1722aad1ce73974298f01bf48b0833>
-
-.. card::
-    :width: 100%
-    :link: https://medium.com/@fg-research/time-series-clustering-with-the-cnn-kmeans-sagemaker-algorithm-from-aws-marketplace-47bb3acb23a6?source=friends_link&sk=34880ec7bbe1bdb522035b1c1f5479c2
-
-    .. grid:: 2
-
-        .. grid-item::
-            :columns: 4 4 5 5
-            :child-align: center
-
-            .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/diagrams/cnn-kmeans-architecture.png
-                :alt: CNN-Kmeans architecture
-                :class: blog-card-image
-
-        .. grid-item::
-            :columns: 8 8 6 6
-            :child-align: center
-
-            .. toctree::
-                :titlesonly:
-
-                    Time series clustering with the CNN-KMeans SageMaker Algorithm <https://medium.com/@fg-research/time-series-clustering-with-the-cnn-kmeans-sagemaker-algorithm-from-aws-marketplace-47bb3acb23a6?source=friends_link&sk=34880ec7bbe1bdb522035b1c1f5479c2>
-
-.. card::
-    :width: 100%
-    :link: https://medium.com/@fg-research/time-series-forecasting-with-the-cfc-sagemaker-algorithm-from-aws-marketplace-eb89a53f11ec?source=friends_link&sk=3471cd2c8a6881f5cce1b2ce3bd46ffe
-
-    .. grid:: 2
-
-        .. grid-item::
-            :columns: 4 4 5 5
-            :child-align: center
-
-            .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/diagrams/cfc-architecture.png
-                :alt: CfC architecture
-                :class: blog-card-image
-
-        .. grid-item::
-            :columns: 8 8 6 6
-            :child-align: center
-
-            .. toctree::
-                :titlesonly:
-
-                    Time series forecasting with the CfC SageMaker Algorithm <https://medium.com/@fg-research/time-series-forecasting-with-the-cfc-sagemaker-algorithm-from-aws-marketplace-eb89a53f11ec?source=friends_link&sk=3471cd2c8a6881f5cce1b2ce3bd46ffe>
-
-.. card::
-    :width: 100%
-    :link: https://medium.com/@fg-research/time-series-anomaly-detection-with-the-lstm-ad-sagemaker-algorithm-from-aws-marketplace-1af1f9ad18a5?source=friends_link&sk=669bd9bd6f6abd57ad132e1bc89b52d7
-
-    .. grid:: 2
-
-        .. grid-item::
-            :columns: 4 4 5 5
-            :child-align: center
-
-            .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/diagrams/lstm-ad-architecture.png
-                :alt: LSTM-AD architecture
-                :class: blog-card-image
-
-        .. grid-item::
-            :columns: 8 8 6 6
-            :child-align: center
-
-            .. toctree::
-                :titlesonly:
-
-                    Time series anomaly detection with the LSTM-AD SageMaker Algorithm <https://medium.com/@fg-research/time-series-anomaly-detection-with-the-lstm-ad-sagemaker-algorithm-from-aws-marketplace-1af1f9ad18a5?source=friends_link&sk=669bd9bd6f6abd57ad132e1bc89b52d7>
-
-.. card::
-    :width: 100%
-    :link: https://medium.com/@fg-research/time-series-classification-with-the-lstm-fcn-sagemaker-algorithm-from-aws-marketplace-a096ded9da1?source=friends_link&sk=e34cb9822f69f7c84de5959a39c8ee00
-
-    .. grid:: 2
-
-        .. grid-item::
-            :columns: 4 4 5 5
-            :child-align: center
-
-            .. image:: https://fg-research-blog.s3.eu-west-1.amazonaws.com/diagrams/lstm-fcn-architecture.png
-                :alt: LSTM-FCN architecture
-                :class: blog-card-image
-
-        .. grid-item::
-            :columns: 8 8 6 6
-            :child-align: center
-
-            .. toctree::
-                :titlesonly:
-
-                    Time series classification with the LSTM-FCN SageMaker Algorithm <https://medium.com/@fg-research/time-series-classification-with-the-lstm-fcn-sagemaker-algorithm-from-aws-marketplace-a096ded9da1?source=friends_link&sk=e34cb9822f69f7c84de5959a39c8ee00>
