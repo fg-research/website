@@ -1,7 +1,3 @@
----
-description: Detecting anomalies in financial time series with the LSTM-AE SageMaker Algorithm 
----
-
 # Detecting anomalies in financial time series with the LSTM-AE SageMaker Algorithm 
 Anomaly detection in financial time series plays a crucial role in identifying unusual market conditions 
 that could affect trading strategies and pose risks to investors.
