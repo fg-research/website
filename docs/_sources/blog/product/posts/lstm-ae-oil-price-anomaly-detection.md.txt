@@ -203,6 +203,8 @@ The LSTM-AE is a multivariate time series anomaly detection model and, therefore
 :::
 
 ```python
+import io
+
 # load the model outputs from S3
 reconstructions = sagemaker_session.read_s3_file(
     bucket=bucket,

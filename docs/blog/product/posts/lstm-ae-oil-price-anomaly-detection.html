@@ -309,14 +309,16 @@ The output file contains the anomaly scores in the first column, and the reconst
 <p class="admonition-title">Note</p>
 <p>The LSTM-AE is a multivariate time series anomaly detection model and, therefore, it generates only one anomaly score for all time series at each time step.</p>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># load the model outputs from S3</span>
-</span><span id="line-2"><span class="n">reconstructions</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">read_s3_file</span><span class="p">(</span>
-</span><span id="line-3">    <span class="n">bucket</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span>
-</span><span id="line-4">    <span class="n">key_prefix</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">transformer</span><span class="o">.</span><span class="n">latest_transform_job</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">/oil_price_test.csv.out"</span>
-</span><span id="line-5"><span class="p">)</span>
-</span><span id="line-6">
-</span><span id="line-7"><span class="c1"># convert the model outputs to data frame</span>
-</span><span id="line-8"><span class="n">reconstructions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">reconstructions</span><span class="p">),</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span> <span class="nn">io</span>
+</span><span id="line-2">
+</span><span id="line-3"><span class="c1"># load the model outputs from S3</span>
+</span><span id="line-4"><span class="n">reconstructions</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">read_s3_file</span><span class="p">(</span>
+</span><span id="line-5">    <span class="n">bucket</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span>
+</span><span id="line-6">    <span class="n">key_prefix</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">transformer</span><span class="o">.</span><span class="n">latest_transform_job</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">/oil_price_test.csv.out"</span>
+</span><span id="line-7"><span class="p">)</span>
+</span><span id="line-8">
+</span><span id="line-9"><span class="c1"># convert the model outputs to data frame</span>
+</span><span id="line-10"><span class="n">reconstructions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">reconstructions</span><span class="p">),</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
 <p>After loading the anomaly scores and the reconstructions from S3, we can visualize the results.</p>
