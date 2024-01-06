@@ -48,15 +48,8 @@ h6 {
 }
 
 .sd-container-fluid{
-    margin-top: 2.5rem !important;
-    margin-bottom: 2.5rem !important;
-}
-
-@media (min-width:1440px) {
-    .sd-container-fluid{
-        margin-top: 1.25rem !important;
-        margin-bottom: 1.25rem !important;
-    }
+    margin-top: 1.25rem !important;
+    margin-bottom: 1.25rem !important;
 }
 
 .sd-card-body{
@@ -73,6 +66,7 @@ h6 {
 
 @media (min-width:1440px) {
     .blog-card-image{
+        margin: 3.5rem 0 2rem 0 !important;
         padding: 0 0 0 2rem !important;
     }
 }
