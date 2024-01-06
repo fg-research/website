@@ -12,7 +12,6 @@ function getPreferredColorScheme() {
 window.setInterval(function(){
 
     var f = document.getElementById('aws-marketplace-logo');
-
     if (f !== null) {
         if(window.localStorage.getItem('darkMode') == 'light'){
             f.src = '_static/AWSMP_NewLogo_RGB_BLK.png'
