@@ -30,6 +30,8 @@ Product
 
         .. grid-item::
 
+            .. _lstm-ae-oil-price-anomaly-detection-grid-item:
+
             :octicon:`graph;1rem;graph-icon` Time Series Anomaly Detection
 
         .. grid-item::
