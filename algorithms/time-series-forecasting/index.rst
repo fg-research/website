@@ -9,7 +9,7 @@ Time Series Forecasting
 
 .. rst-class:: lead
 
-   Perform time series forecasting in Amazon SageMaker.
+   Perform time series forecasting in Amazon SageMaker
 
 .. table::
    :width: 100%
