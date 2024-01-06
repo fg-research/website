@@ -99,7 +99,7 @@ h6 {
 
 @media (min-width:1440px) {
     .blog-post-image{
-        width: 85%;
+        width: 80%;
     }
 }
 
@@ -110,7 +110,7 @@ h6 {
 
 @media (min-width:1440px) {
     .blog-post-image-caption{
-        width: 85%;
+        width: 80%;
         font-style: italic;
     }
 }
