@@ -34,5 +34,5 @@ Product
 
         .. grid-item::
 
-            :octicon:`calendar;1rem;calendar-icon` November 2, 2024
+            :octicon:`calendar;1rem;calendar-icon` January 2, 2024
 
