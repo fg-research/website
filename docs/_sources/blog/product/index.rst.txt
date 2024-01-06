@@ -23,8 +23,8 @@ Product
 
     .. include:: posts/lstm-ae-oil-price-anomaly-detection.rst
         :parser: rst
-        :start-line: 6
-        :end-line: 10
+        :start-line: 8
+        :end-line: 16
 
     .. grid:: 2
         :margin: 0 3 auto auto
