@@ -30,7 +30,7 @@ Product
 
         .. grid-item::
 
-            :octicon:`graph;1rem;graph-icon` Time Series Anomaly Detection
+            :octicon:`graph;1rem;graph-icon` Anomaly Detection
 
         .. grid-item::
 

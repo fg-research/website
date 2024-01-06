@@ -64,7 +64,7 @@ h6 {
 
 .sd-card-text{
     margin: 0.75rem 0 0.75rem 0 !important;
-    font-size: 0.775rem !important;
+    font-size: 0.77rem !important;
     line-height: 1.25rem !important;
     font-weight: 300 !important;
     display: -webkit-box;
@@ -77,7 +77,7 @@ h6 {
 @media (min-width:1440px) {
     .sd-card-text{
         margin: 0.75rem 0 0.75rem 0 !important;
-        font-size: 0.875rem !important;
+        font-size: 0.87rem !important;
         line-height: 1.25rem !important;
         font-weight: 300 !important;
         display: -webkit-box;
