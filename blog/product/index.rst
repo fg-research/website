@@ -35,6 +35,7 @@ Product
             :octicon:`graph;1rem;graph-icon` Anomaly Detection
 
         .. grid-item::
+            :class: sd-text-secondary
 
             :octicon:`calendar;1rem;calendar-icon` January 2, 2024
 
