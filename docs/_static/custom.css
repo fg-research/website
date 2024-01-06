@@ -66,7 +66,7 @@ h6 {
     margin: 0.75rem 0 0.75rem 0 !important;
     font-size: 0.675rem !important;
     line-height: 1.25rem !important;
-    font-weight: 500 !important;
+    font-weight: 300 !important;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
@@ -79,7 +79,7 @@ h6 {
         margin: 0.75rem 0 0.75rem 0 !important;
         font-size: 0.875rem !important;
         line-height: 1.25rem !important;
-        font-weight: 500 !important;
+        font-weight: 300 !important;
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;

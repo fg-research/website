@@ -23,14 +23,13 @@ Product
 
     .. include:: posts/lstm-ae-oil-price-anomaly-detection.rst
         :parser: rst
-        :start-line: 6
-        :end-line: 11
+        :start-line: 5
+        :end-line: 10
 
     .. grid:: 2
         :margin: 0 3 auto auto
 
         .. grid-item::
-            :class: sd-text-danger
 
             :octicon:`graph;1rem;graph-icon` Anomaly Detection
 
