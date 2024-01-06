@@ -21,14 +21,17 @@ window.setInterval(function(){
         };
     };
 
-    var f = document.getElementById('lstm-ae-oil-price-anomaly-detection-toctree');
-    if (f !== null) {
-        if(window.localStorage.getItem('darkMode') == 'light'){
-            f.childNodes[1].childNodes[1].childNodes[0].style = 'color: #0f172a !important'
-        }else if(window.localStorage.getItem('darkMode') == 'dark' || getPreferredColorScheme() == 'dark'){
-            f.childNodes[1].childNodes[1].childNodes[0].style = 'color: #e1e7ef !important'
+    var elements = ['lstm-ae-oil-price-anomaly-detection-toctree'];
+    for (var i = 0; i < elements.length; i++) {
+        var f = document.getElementById(elements[i]);
+        if (f !== null) {
+            if(window.localStorage.getItem('darkMode') == 'light'){
+                f.childNodes[1].childNodes[1].childNodes[0].style = 'color: #0f172a !important'
+            }else if(window.localStorage.getItem('darkMode') == 'dark' || getPreferredColorScheme() == 'dark'){
+                f.childNodes[1].childNodes[1].childNodes[0].style = 'color: #e1e7ef !important'
+            };
         };
-    };
+    }
 
     var a = document.getElementsByClassName('reference external');
     if (a !== null) {
