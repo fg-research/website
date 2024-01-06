@@ -148,7 +148,7 @@ Environment Set-Up
 
 We start by setting up the SageMaker environment.
 
-.. note::
+.. important::
 
    To be able to run the code below, you need to have an active
    subscription to the algorithm. You can subscribe to a free trial from
