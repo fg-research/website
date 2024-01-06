@@ -1,5 +1,4 @@
 .. meta::
-   :title: Anomaly detection with the LSTM-AE SageMaker Algorithm
    :description: Detecting anomalies in financial time series with the LSTM-AE SageMaker Algorithm
    :keywords: Financial Time Series, Anomaly Detection, Recurrent Autoencoders, LSTM, Amazon SageMaker
 
