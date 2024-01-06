@@ -66,7 +66,7 @@ dataset = pd.DataFrame({
 On the 20<sup>th</sup> of April 2020, the WTI price decreased from \$18.31 to -\$36.98, going negative for the first time in its history,
 while on the next day the 21<sup>st</sup> of April 2020, the Brent price decreased from \$17.36 to \$9.12.
 
-<img class="blog-post-image" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/prices.png />
+<img id="lstm-ae-oil-price-anomaly-detection-prices" class="blog-post-image" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/prices_light.png />
 
 <p class="blog-post-image-caption">WTI and Brent daily prices from 1987-05-20 to 2020-12-31.</p>
 
@@ -84,7 +84,7 @@ The percentage change in Brent price on the 20<sup>th</sup> of April 2020 was -1
 followed by a -47% decrease on the 21<sup>st</sup> of April 2020 and 
 a 51% increase on the 22<sup>nd</sup> of April 2020.
 
-<img class="blog-post-image" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/returns.png />
+<img id="lstm-ae-oil-price-anomaly-detection-returns" class="blog-post-image" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/returns_light.png />
 
 <p class="blog-post-image-caption">WTI and Brent daily returns from 1987-05-20 to 2020-12-31.</p>
 
@@ -215,7 +215,7 @@ reconstructions = pd.read_csv(io.StringIO(reconstructions), header=None, dtype=f
 
 After loading the anomaly scores and the reconstructions from S3, we can visualize the results.
 
-<img class="blog-post-image" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/results.png />
+<img id="lstm-ae-oil-price-anomaly-detection-results-plot" class="blog-post-image" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/results_light.png />
 
 <p class="blog-post-image-caption"> LSTM-AE reconstructions and anomaly score from 2019-08-02 to 2020-12-31.</p>
 
@@ -227,7 +227,7 @@ We find that, as expected, the anomaly score exhibits the largest upward spikes 
 reconstructions.iloc[:, 0].nlargest(3)
 ```
 
-<img class="blog-post-image" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/anomalies.png />
+<img id="lstm-ae-oil-price-anomaly-detection-results-table" class="blog-post-image" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/anomalies_light.png />
 
 <p class="blog-post-image-caption"> LSTM-AE largest anomaly scores from 2019-08-02 to 2020-12-31.</p>
 

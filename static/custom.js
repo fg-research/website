@@ -20,7 +20,9 @@ window.setInterval(function(){
         };
     };
 
-    var elements = ['lstm-ae-oil-price-anomaly-detection-toctree'];
+    var elements = [
+        'lstm-ae-oil-price-anomaly-detection-toctree'
+    ];
     for (var i = 0; i < elements.length; i++) {
         var f = document.getElementById(elements[i]);
         if (f !== null) {
@@ -28,6 +30,23 @@ window.setInterval(function(){
                 f.childNodes[1].childNodes[1].childNodes[0].style = 'color: #0f172a !important'
             }else if(window.localStorage.getItem('darkMode') == 'dark' || getPreferredColorScheme() == 'dark'){
                 f.childNodes[1].childNodes[1].childNodes[0].style = 'color: #e1e7ef !important'
+            };
+        };
+    }
+
+    var elements = [
+        'lstm-ae-oil-price-anomaly-detection-prices',
+        'lstm-ae-oil-price-anomaly-detection-returns',
+        'lstm-ae-oil-price-anomaly-detection-results-plot',
+        'lstm-ae-oil-price-anomaly-detection-results-table'
+    ];
+    for (var i = 0; i < elements.length; i++) {
+        var f = document.getElementById(elements[i]);
+        if (f !== null) {
+            if(window.localStorage.getItem('darkMode') == 'light'){
+                f.src = f.src.replace('dark', 'light')
+            }else if(window.localStorage.getItem('darkMode') == 'dark' || getPreferredColorScheme() == 'dark'){
+                f.src = f.src.replace('light', 'dark')
             };
         };
     }
