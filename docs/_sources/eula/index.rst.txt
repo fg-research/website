@@ -1,11 +1,11 @@
 .. _eula:
 
 ########################################################
-End-User License Agreement
+EULA
 ########################################################
 
 .. rst-class:: lead
 
-   EULA
+   End-User License Agreement
 
 Coming soon.

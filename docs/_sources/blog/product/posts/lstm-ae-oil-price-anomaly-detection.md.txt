@@ -231,7 +231,7 @@ reconstructions.iloc[:, 0].nlargest(3)
 
 <p class="blog-post-image-caption"> LSTM-AE largest anomaly scores from 2019-08-02 to 2020-12-31.</p>
 
-You can download the [notebook](https://github.com/fg-research/lstm-ae-sagemaker/blob/master/example/oil_price_anomaly_detection.ipynb) 
+You can download the [notebook](https://github.com/fg-research/lstm-ae-sagemaker/blob/master/examples/oil_price_anomaly_detection.ipynb) 
 with the full code from our [GitHub](https://github.com/fg-research/lstm-ae-sagemaker) repository.
 
 ## References
