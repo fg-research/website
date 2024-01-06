@@ -21,6 +21,8 @@ Product
 
         posts/lstm-ae-oil-price-anomaly-detection
 
+    .. _lstm-ae-oil-price-anomaly-detection-include:
+
     .. include:: posts/lstm-ae-oil-price-anomaly-detection.rst
         :parser: rst
         :start-line: 8
