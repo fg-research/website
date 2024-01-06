@@ -1,4 +1,4 @@
-----
+---
 description: Detecting anomalies in financial time series with the LSTM-AE SageMaker Algorithm 
 ---
 
