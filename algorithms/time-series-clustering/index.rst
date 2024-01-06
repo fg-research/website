@@ -1,3 +1,6 @@
+.. meta::
+   :description: Perform time series clustering in Amazon SageMaker
+
 .. _time-series-clustering-algorithms:
 
 ########################################################
@@ -6,7 +9,7 @@ Time Series Clustering
 
 .. rst-class:: lead
 
-   Perform time series clustering in Amazon SageMaker.
+   Perform time series clustering in Amazon SageMaker
 
 .. table::
    :width: 100%

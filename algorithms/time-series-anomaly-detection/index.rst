@@ -1,3 +1,6 @@
+.. meta::
+   :description: Perform time series anomaly detection in Amazon SageMaker
+
 .. _time-series-anomaly-detection-algorithms:
 
 ########################################################
@@ -6,7 +9,7 @@ Time Series Anomaly Detection
 
 .. rst-class:: lead
 
-   Perform time series anomaly detection in Amazon SageMaker.
+   Perform time series anomaly detection in Amazon SageMaker
 
 .. table::
    :width: 100%

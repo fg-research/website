@@ -1,4 +1,5 @@
 .. meta::
+   :description: Train, tune and deploy state-of-the-art deep learning models for time series in Amazon SageMaker
    :keywords: Amazon SageMaker, Time Series, Deep Learning, Forecasting, Anomaly Detection
 
 ########################################################

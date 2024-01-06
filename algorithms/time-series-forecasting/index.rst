@@ -1,3 +1,6 @@
+.. meta::
+   :description: Perform time series forecasting in Amazon SageMaker
+
 .. _time-series-forecasting-algorithms:
 
 ########################################################

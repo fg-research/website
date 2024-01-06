@@ -1,4 +1,5 @@
-
+.. meta::
+   :description: fg-research product blog
 
 ########################################################
 Product
@@ -6,7 +7,7 @@ Product
 
 .. rst-class:: lead
 
-   Learn about our time series algorithms.
+   Learn about our time series algorithms
 
 .. card::
     :width: 100%

@@ -1,3 +1,6 @@
+.. meta::
+   :description: Perform time series classification in Amazon SageMaker
+
 .. _time-series-classification-algorithms:
 
 ########################################################
@@ -6,7 +9,7 @@ Time Series Classification
 
 .. rst-class:: lead
 
-   Perform time series classification in Amazon SageMaker.
+   Perform time series classification in Amazon SageMaker
 
 .. table::
    :width: 100%
