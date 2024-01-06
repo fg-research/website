@@ -151,7 +151,7 @@ We start by setting up the SageMaker environment.
 .. important::
 
    To be able to run the code below, you need to have an active
-   subscription to the algorithm. You can subscribe to a free trial from
+   subscription to the LSTM-AE SageMaker algorithm. You can subscribe to a free trial from
    the `AWS Marketplace <https://aws.amazon.com/marketplace/pp/prodview-up2haipz3j472>`__
    in order to get your Amazon Resource Name (ARN).
 
