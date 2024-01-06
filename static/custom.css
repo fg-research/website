@@ -79,6 +79,18 @@ h6 {
     font-size: 1rem !important;
 }
 
+@media (min-width:1440px) {
+    #lstm-ae-oil-price-anomaly-detection-grid-item-1,
+    #lstm-ae-oil-price-anomaly-detection-grid-item-2{
+        font-size: 1rem;
+    }
+}
+
+#lstm-ae-oil-price-anomaly-detection-grid-item-1,
+#lstm-ae-oil-price-anomaly-detection-grid-item-2{
+    font-size: 0.8rem;
+}
+
 .blog-post-image{
     width: 100%;
 }
