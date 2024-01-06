@@ -30,11 +30,13 @@ Product
 
         .. grid-item::
 
-            .. _lstm-ae-oil-price-anomaly-detection-grid-item:
+            .. _lstm-ae-oil-price-anomaly-detection-grid-item-1:
 
             :octicon:`graph;1rem;graph-icon` Time Series Anomaly Detection
 
         .. grid-item::
+
+            .. _lstm-ae-oil-price-anomaly-detection-grid-item-2:
 
             :octicon:`calendar;1rem;calendar-icon` January 2, 2024
 
