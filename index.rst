@@ -35,29 +35,29 @@ Automated Data Handling
    The algorithms work directly on raw time series data in CSV format. All the required data preprocessing and scaling is performed internally by our code.
 
 Automatic Model Tuning
-   The algorithms support `automatic model tuning <https://docs.aws.amazon.com/sagemaker/latest/dg/automatic-model-tuning.html>`_ for optimizing the neural network hyperparameters in order to find the best model configuration for a given dataset.
+   The algorithms support `automatic model tuning <https://docs.aws.amazon.com/sagemaker/latest/dg/automatic-model-tuning.html>`__ for optimizing the neural network hyperparameters in order to find the best model configuration for a given dataset.
 
 Incremental Training
-    Most of the algorithms support `incremental training <https://docs.aws.amazon.com/sagemaker/latest/dg/incremental-training.html>`_ which can be used to continue training the model on the same dataset or to fine-tune the model on a different dataset.
+    Most of the algorithms support `incremental training <https://docs.aws.amazon.com/sagemaker/latest/dg/incremental-training.html>`__ which can be used to continue training the model on the same dataset or to fine-tune the model on a different dataset.
 
 Accelerated Training
-   The algorithms were built by extending the latest `deep learning containers <https://docs.aws.amazon.com/sagemaker/latest/dg/docker-containers-prebuilt.html>`_ and support both CPU and GPU training. Most of the algorithms also support multi-GPU training.
+   The algorithms were built by extending the latest `deep learning containers <https://docs.aws.amazon.com/sagemaker/latest/dg/docker-containers-prebuilt.html>`__ and support both CPU and GPU training. Most of the algorithms also support multi-GPU training.
 
 *****************************************
 Documentation
 *****************************************
-Each algorithm has a dedicated `GitHub <https://github.com/fg-research>`_ repository with detailed documentation and step-by-step tutorials in Jupyter notebook format.
+Each algorithm has a dedicated `GitHub <https://github.com/fg-research>`__ repository with detailed documentation and step-by-step tutorials in Jupyter notebook format.
 
 ******************************************
 Pricing
 ******************************************
-The algorithms are available on the `AWS Marketplace <https://aws.amazon.com/marketplace/seller-profile?id=seller-nkd47o2qbdvb2>`_
+The algorithms are available on the `AWS Marketplace <https://aws.amazon.com/marketplace/seller-profile?id=seller-nkd47o2qbdvb2>`__
 on a usage-based pricing plan. Each algorithm offers a 5 days free trial.
 
 ******************************************
 Support
 ******************************************
-For support, contact `support@fg-research.com <mailto:support@fg-research.com>`_.
+For support, contact `support@fg-research.com <mailto:support@fg-research.com>`__.
 
 .. raw:: html
 
@@ -80,7 +80,7 @@ For support, contact `support@fg-research.com <mailto:support@fg-research.com>`_
            algorithms/time-series-classification/index
 
     .. grid-item::
-        :columns: 3
+        :columns: 2
 
         .. toctree::
            :caption: Blog
@@ -90,10 +90,11 @@ For support, contact `support@fg-research.com <mailto:support@fg-research.com>`_
            blog/general/index
 
     .. grid-item::
-        :columns: 4
+        :columns: 5
 
         .. toctree::
-           :caption: Terms of Use
+           :caption: Terms and Conditions
            :maxdepth: 1
 
-           eula/index
+           terms/disclaimer/index
+           terms/eula/index

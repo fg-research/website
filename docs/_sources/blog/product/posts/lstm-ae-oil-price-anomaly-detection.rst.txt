@@ -79,8 +79,11 @@ time step is to be an anomaly.
 Data
 ******************************************
 We use the `Python API for FRED <https://github.com/mortada/fredapi>`__
-for downloading the data. If you don’t have an API key, you can request
-one at `this link <http://api.stlouisfed.org/api_key.html>`__.
+for downloading the data.
+
+.. tip::
+    If you don’t have a FRED API key, you can request
+    one for free at `this link <http://api.stlouisfed.org/api_key.html>`__.
 
 .. code:: python
 
@@ -148,7 +151,7 @@ Environment Set-Up
 
 We start by setting up the SageMaker environment.
 
-.. important::
+.. warning::
 
    To be able to run the code below, you need to have an active
    subscription to the LSTM-AE SageMaker algorithm. You can subscribe to a free trial from
@@ -320,6 +323,11 @@ You can download the
 with the full code from our
 `GitHub <https://github.com/fg-research/lstm-ae-sagemaker>`__
 repository.
+
+.. warning::
+    * This post used version 1.4 of the LSTM-AE SageMaker algorithm. The results may not be reproducible with a different version of the algorithm.
+
+    * The data in the FRED database is subject to changes and revisions. The results may not be reproducible if the data has changed.
 
 ******************************************
 References

@@ -99,9 +99,10 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Product</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Terms of Use</span></p>
+<p class="caption" role="heading"><span class="caption-text">Terms and Conditions</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../eula/index.html">EULA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../terms/disclaimer/index.html">Disclaimer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../terms/eula/index.html">EULA</a></li>
 </ul>
 </nav>
 </div>
@@ -184,8 +185,12 @@ time step is to be an anomaly.</p>
 <section id="data">
 <h2>Data<a class="headerlink" href="#data" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data'">¶</a></h2>
 <p>We use the <a class="reference external" href="https://github.com/mortada/fredapi" rel="nofollow noopener">Python API for FRED<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>
-for downloading the data. If you don’t have an API key, you can request
-one at <a class="reference external" href="http://api.stlouisfed.org/api_key.html" rel="nofollow noopener">this link<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>.</p>
+for downloading the data.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you don’t have a FRED API key, you can request
+one for free at <a class="reference external" href="http://api.stlouisfed.org/api_key.html" rel="nofollow noopener">this link<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>.</p>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">from</span> <span class="nn">fredapi</span> <span class="kn">import</span> <span class="n">Fred</span>
 </span><span id="line-2">
 </span><span id="line-3"><span class="c1"># set up the FRED API</span>
@@ -225,8 +230,8 @@ on the 20<sup>th</sup> of April 2020 was -12%, followed by a -47% decrease on th
 <section id="environment-set-up">
 <h3>Environment Set-Up<a class="headerlink" href="#environment-set-up" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#environment-set-up'">¶</a></h3>
 <p>We start by setting up the SageMaker environment.</p>
-<div class="admonition important">
-<p class="admonition-title">Important</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
 <p>To be able to run the code below, you need to have an active
 subscription to the LSTM-AE SageMaker algorithm. You can subscribe to a free trial from
 the <a class="reference external" href="https://aws.amazon.com/marketplace/pp/prodview-up2haipz3j472" rel="nofollow noopener">AWS Marketplace<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>
@@ -369,6 +374,13 @@ spikes on the 20<sup>th</sup> (anomaly score = 810,274), 21<sup>st</sup> (anomal
 with the full code from our
 <a class="reference external" href="https://github.com/fg-research/lstm-ae-sagemaker" rel="nofollow noopener">GitHub<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>
 repository.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<ul class="simple">
+<li><p>This post used version 1.4 of the LSTM-AE SageMaker algorithm. The results may not be reproducible with a different version of the algorithm.</p></li>
+<li><p>The data in the FRED database is subject to changes and revisions. The results may not be reproducible if the data has changed.</p></li>
+</ul>
+</div>
 </section>
 </section>
 <section id="references">
