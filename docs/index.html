@@ -21,6 +21,7 @@
 <link href="_static/favicon.ico" rel="icon"/>
 <link href="search.html" rel="search" title="Search"/>
 <link href="genindex.html" rel="index" title="Index"/>
+<link href="algorithms/time-series-forecasting/index.html" rel="next" title="Time Series Forecasting"/>
 <script>
     <!-- Prevent Flash of wrong theme -->
       const userPreference = localStorage.getItem('darkMode');
@@ -85,6 +86,20 @@
 </a>
 <div class="relative overflow-hidden md:overflow-auto my-4 md:my-0 h-[calc(100vh-8rem)] md:h-auto">
 <div class="overflow-y-auto h-full w-full relative pr-6"><nav class="table w-full min-w-full my-6 lg:my-8">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="algorithms/time-series-forecasting/index.html">Time Series Forecasting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algorithms/time-series-anomaly-detection/index.html">Time Series Anomaly Detection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algorithms/time-series-clustering/index.html">Time Series Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algorithms/time-series-classification/index.html">Time Series Classification</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="blog/product/index.html">Product</a></li>
+<li class="toctree-l1"><a class="reference internal" href="blog/general/index.html">General</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="terms/disclaimer/index.html">Disclaimer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms/eula/index.html">EULA</a></li>
+</ul>
 </nav>
 </div>
 </div>
@@ -134,6 +149,38 @@ on a usage-based pricing plan. Each algorithm offers a 5 days free trial.</p>
 <p>For support, contact <a class="reference external" href="mailto:support%40fg-research.com" rel="nofollow noopener">support<span>@</span>fg-research<span>.</span>com<svg fill="currentColor" height="1em" stroke="none" viewbox="0 96 960 960" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M188 868q-11-11-11-28t11-28l436-436H400q-17 0-28.5-11.5T360 336q0-17 11.5-28.5T400 296h320q17 0 28.5 11.5T760 336v320q0 17-11.5 28.5T720 696q-17 0-28.5-11.5T680 656V432L244 868q-11 11-28 11t-28-11Z"></path></svg></a>.</p>
 <p style="margin-bottom: 1rem"> <br/> </p><hr class="docutils"/>
 <div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio"/>
+<label class="sd-tab-label" for="sd-tab-item-0">
+Algorithms</label><div class="sd-tab-content docutils">
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="algorithms/time-series-forecasting/index.html">Time Series Forecasting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algorithms/time-series-anomaly-detection/index.html">Time Series Anomaly Detection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algorithms/time-series-clustering/index.html">Time Series Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algorithms/time-series-classification/index.html">Time Series Classification</a></li>
+</ul>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio"/>
+<label class="sd-tab-label" for="sd-tab-item-1">
+Blog</label><div class="sd-tab-content docutils">
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="blog/product/index.html">Product</a></li>
+<li class="toctree-l1"><a class="reference internal" href="blog/general/index.html">General</a></li>
+</ul>
+</div>
+</div>
+<input id="sd-tab-item-2" name="sd-tab-set-0" type="radio"/>
+<label class="sd-tab-label" for="sd-tab-item-2">
+Terms and Conditions</label><div class="sd-tab-content docutils">
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="terms/disclaimer/index.html">Disclaimer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="terms/eula/index.html">EULA</a></li>
+</ul>
+</div>
+</div>
 </div>
 </section>
 </section>
@@ -144,7 +191,9 @@ on a usage-based pricing plan. Each algorithm offers a 5 days free trial.</p>
 <li><a :data-current="activeSection === '#features'" class="reference internal" href="#features">Features</a></li>
 <li><a :data-current="activeSection === '#documentation'" class="reference internal" href="#documentation">Documentation</a></li>
 <li><a :data-current="activeSection === '#pricing'" class="reference internal" href="#pricing">Pricing</a></li>
-<li><a :data-current="activeSection === '#support'" class="reference internal" href="#support">Support</a></li>
+<li><a :data-current="activeSection === '#support'" class="reference internal" href="#support">Support</a><ul>
+</ul>
+</li>
 </ul>
 </div>
 </aside>
