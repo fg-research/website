@@ -104,6 +104,9 @@ h6 {
     .sd-col .toctree-wrapper ul li a.reference{
         font-size: 70% !important;
     }
+    #content ul:not(.search) p, #content ul:not(.search)>li {
+        margin-top: 0.75rem;
+    }
 }
 
 .sd-card-body .toctree-wrapper ul li a.reference{
