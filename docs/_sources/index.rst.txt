@@ -65,11 +65,13 @@ For support, contact `support@fg-research.com <mailto:support@fg-research.com>`_
 
 ------
 
-.. tab-set::
+.. grid:: 3
 
-    .. tab-item:: Algorithms
+    .. grid-item::
+        :columns: 5
 
         .. toctree::
+           :caption: Algorithms
            :maxdepth: 1
 
            algorithms/time-series-forecasting/index
@@ -77,17 +79,21 @@ For support, contact `support@fg-research.com <mailto:support@fg-research.com>`_
            algorithms/time-series-clustering/index
            algorithms/time-series-classification/index
 
-    .. tab-item:: Blog
+    .. grid-item::
+        :columns: 3
 
         .. toctree::
+           :caption: Blog
            :maxdepth: 1
 
            blog/product/index
            blog/general/index
 
-    .. tab-item:: Terms and Conditions
+    .. grid-item::
+        :columns: 4
 
         .. toctree::
+           :caption: Terms and Conditions
            :maxdepth: 1
 
            terms/disclaimer/index
