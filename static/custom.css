@@ -99,10 +99,10 @@ h6 {
 
 @media (max-width:750px) {
     .sd-col .toctree-wrapper .caption .caption-text{
-        font-size: 55% !important;
+        font-size: 50% !important;
     }
     .sd-col .toctree-wrapper ul li a.reference{
-        font-size: 55% !important;
+        font-size: 50% !important;
     }
 }
 
