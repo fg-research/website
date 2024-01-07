@@ -10,7 +10,7 @@ More in-depth technical documentation is available on
 our `GitHub <https://github.com/fg-research>`__ page and on each individual product listing
 page on the `AWS Marketplace <https://aws.amazon.com/marketplace/seller-profile?id=seller-nkd47o2qbdvb2>`__.
 
-This website includes a blog with product tutorials and demonstrations.
+This website includes a :ref:`blog<product-blog>`, with product tutorials and demonstrations.
 While we make any effort to keep the blog up to date,
 the results presented in the blog might not always be reproducible due
 to releases of new product versions (such as upgrades to the latest Amazon SageMaker deep learning containers)

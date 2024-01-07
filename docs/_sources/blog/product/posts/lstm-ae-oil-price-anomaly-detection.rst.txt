@@ -31,7 +31,7 @@ will focus on the `Long Short Term Memory Networks based Encoder-Decoder
 scheme for Anomaly Detection <https://doi.org/10.48550/arXiv.1607.00148>`__ [3],
 which we will refer to as the LSTM-AE model. We will demonstrate how to use our
 `Amazon SageMaker <https://aws.amazon.com/sagemaker/>`__ implementation of the
-LSTM-AE model, the `LSTM-AE SageMaker algorithm <https://aws.amazon.com/marketplace/pp/prodview-up2haipz3j472>`__,
+LSTM-AE model, the :ref:`LSTM-AE SageMaker algorithm<lstm-ae-sagemaker-algorithm>`,
 for detecting anomalies in oil price time series.
 
 We will download the West Texas Intermediate (WTI) and Brent daily price
