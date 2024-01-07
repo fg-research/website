@@ -92,7 +92,8 @@ h6 {
     font-weight: 300 !important;
 }
 
-.sd-container, .sd-container-fluid, .sd-container-lg, .sd-container-md, .sd-container-sm, .sd-container-xl {
+.sd-container, .sd-container-fluid, .sd-container-lg,
+.sd-container-md, .sd-container-sm, .sd-container-xl {
     padding: 0 !important;
 }
 
