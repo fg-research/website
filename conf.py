@@ -49,6 +49,7 @@ html_js_files = ['custom.js']
 html_show_sourcelink = False
 html_theme = 'sphinxawesome_theme'
 highlight_language = 'python3'
+sitemap_url_scheme = "{link}"
 myst_heading_anchors = 6
 
 html_theme_options = dict(
