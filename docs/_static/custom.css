@@ -108,7 +108,7 @@ h6 {
     width: 35%;
 }
 
-@media (max-width:750px) {
+@media (max-width:7500px) {
 
     .sd-card-text{
         margin: 0.75rem 0 0.75rem 0 !important;
@@ -131,7 +131,9 @@ h6 {
         line-height: 0.75rem !important;
     }
 
-    .sd-col .toctree-wrapper #content ul:not(.search) p, #content ul:not(.search)>li {
+    .sd-col .toctree-wrapper #content ul:not(.search) p, #content ul:not(.search)>li,
+    .sd-col .toctree-wrapper .contents .caption, .contents .topic-title {
+        padding-top: 0 !important;
         margin-top: 0 !important;
     }
 
