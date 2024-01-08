@@ -64,7 +64,7 @@ h6 {
 
 .sd-card-text{
     margin: 0.75rem 0 0.75rem 0 !important;
-    font-size: 0.675rem !important;
+    font-size: 0.875rem !important;
     line-height: 1.25rem !important;
     font-weight: 500 !important;
     display: -webkit-box;
@@ -72,20 +72,6 @@ h6 {
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis !important;
-}
-
-@media (min-width:1440px) {
-    .sd-card-text{
-        margin: 0.75rem 0 0.75rem 0 !important;
-        font-size: 0.875rem !important;
-        line-height: 1.25rem !important;
-        font-weight: 500 !important;
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        text-overflow: ellipsis !important;
-    }
 }
 
 #lstm-ae-oil-price-anomaly-detection-include{
@@ -97,64 +83,88 @@ h6 {
     padding: 0 !important;
 }
 
-@media (max-width:750px) {
-    .sd-col .toctree-wrapper .caption .caption-text{
-        font-size: 50% !important;
-    }
-    .sd-col .toctree-wrapper ul li a.reference{
-        font-size: 50% !important;
-    }
-}
-
 .sd-card-body .toctree-wrapper ul li a.reference{
     font-weight: 500 !important;
     font-size: 1rem !important;
 }
 
 .blog-post-image{
-    width: 100%;
-}
-
-@media (min-width:1440px) {
-    .blog-post-image{
-        width: 80%;
-    }
+    width: 80%;
 }
 
 .blog-post-image-caption{
-    width: 100%;
+    width: 80%;
     font-style: italic;
-}
-
-@media (min-width:1440px) {
-    .blog-post-image-caption{
-        width: 80%;
-        font-style: italic;
-    }
 }
 
 .leading-loose{
     font-size: 70% !important;
     text-align: center !important;
     margin: auto !important;
-    max-width: 100% !important;
+    max-width: 70% !important;
 }
 
-@media (min-width:1440px) {
+#aws-marketplace-logo{
+    width: 35%;
+}
+
+@media (max-width:750px) {
+
+    .sd-card-text{
+        margin: 0.75rem 0 0.75rem 0 !important;
+        font-size: 0.675rem !important;
+        line-height: 1.25rem !important;
+        font-weight: 500 !important;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis !important;
+    }
+
+    .sd-col .toctree-wrapper .caption .caption-text{
+        font-size: 50% !important;
+    }
+
+    .sd-col .toctree-wrapper ul li a.reference{
+        font-size: 50% !important;
+    }
+
+    .sd-col .toctree-wrapper{
+        line-height: 0.75rem !important;
+    }
+
+    .sd-col .toctree-wrapper #content ul:not(.search) p, #content ul:not(.search)>li {
+        margin-top: 0 !important;
+    }
+
+    .sd-col .toctree-wrapper .contents .caption, .contents .topic-title, .toctree-wrapper .caption, .toctree-wrapper .topic-title {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+    }
+
+    table th, table tr {
+        font-size: 90% !important;
+    }
+
+    .blog-post-image{
+        width: 100%;
+    }
+
+    .blog-post-image-caption{
+        width: 100%;
+        font-style: italic;
+    }
+
     .leading-loose{
         font-size: 70% !important;
         text-align: center !important;
         margin: auto !important;
-        max-width: 70% !important;
+        max-width: 100% !important;
     }
-}
 
-#aws-marketplace-logo{
-    width: 55%;
-}
-
-@media (min-width:1440px) {
     #aws-marketplace-logo{
-        width: 35%;
+        width: 55%;
     }
+
 }
