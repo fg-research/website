@@ -122,12 +122,9 @@ h6 {
         text-overflow: ellipsis !important;
     }
 
-    .sd-col .toctree-wrapper .caption .caption-text{
-        font-size: 50% !important;
-    }
-
+    .sd-col .toctree-wrapper .caption .caption-text,
     .sd-col .toctree-wrapper ul li a.reference{
-        font-size: 50% !important;
+        font-size: 52% !important;
     }
 
     .sd-col .toctree-wrapper{
