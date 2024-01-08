@@ -108,7 +108,7 @@ h6 {
     width: 35%;
 }
 
-@media (max-width:7500px) {
+@media (max-width:750px) {
 
     .sd-card-text{
         margin: 0.75rem 0 0.75rem 0 !important;
@@ -122,17 +122,17 @@ h6 {
         text-overflow: ellipsis !important;
     }
 
-    .sd-col .toctree-wrapper .caption .caption-text,
-    .sd-col .toctree-wrapper ul li a.reference{
+    .sd-row .sd-col .toctree-wrapper .caption .caption-text,
+    .sd-row .sd-col .toctree-wrapper ul li a.reference{
         font-size: 52.5% !important;
     }
 
-    .sd-col .toctree-wrapper{
+    .sd-row .sd-col .toctree-wrapper{
         line-height: 0.75rem !important;
     }
 
-    .sd-col .toctree-wrapper #content ul:not(.search) p, #content ul:not(.search)>li,
-    .sd-col .toctree-wrapper .contents .caption, .contents .topic-title {
+    .sd-row .sd-col ul > li,
+    .sd-row .sd-col .toctree-wrapper .caption{
         padding-top: 0 !important;
         margin-top: 0 !important;
     }
