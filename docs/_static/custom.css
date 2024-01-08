@@ -135,7 +135,7 @@ h6 {
         margin-top: 0 !important;
     }
 
-    .sd-col .toctree-wrapper .contents .caption, .contents .topic-title, .toctree-wrapper .caption, .toctree-wrapper .topic-title {
+    .sd-col .toctree-wrapper .contents .caption, .contents .topic-title{
         padding-top: 0 !important;
         margin-top: 0 !important;
     }
