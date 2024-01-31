@@ -237,11 +237,11 @@ T10YFFM              10-Year Treasury C Minus FEDFUNDS
 GS10                 10-Year Treasury Rate
 CP3MX                3-Month AA Financial Commercial Paper Rate
 COMPAPFFX            3-Month Commercial Paper Minus FEDFUNDS
-TB3MS                3-Month Treasury Bill:
+TB3MS                3-Month Treasury Bill
 TB3SMFFM             3-Month Treasury C Minus FEDFUNDS
 T5YFFM               5-Year Treasury C Minus FEDFUNDS
 GS5                  5-Year Treasury Rate
-TB6MS                6-Month Treasury Bill:
+TB6MS                6-Month Treasury Bill
 TB6SMFFM             6-Month Treasury C Minus FEDFUNDS
 EXCAUSX              Canada / U.S. Foreign Exchange Rate
 FEDFUNDS             Effective Federal Funds Rate
