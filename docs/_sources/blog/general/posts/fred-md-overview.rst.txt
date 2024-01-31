@@ -278,7 +278,7 @@ WPSID62              PPI: Crude Materials
 WPSFD49502           PPI: Finished Consumer Goods
 WPSFD49207           PPI: Finished Goods
 WPSID61              PPI: Intermediate Materials
-PPICMM               PPI: Metals and metal products:
+PPICMM               PPI: Metals and metal products
 DDURRG3M086SBEA      Personal Cons. Exp: Durable goods
 DNDGRG3M086SBEA      Personal Cons. Exp: Nondurable goods
 DSERRG3M086SBEA      Personal Cons. Exp: Services
