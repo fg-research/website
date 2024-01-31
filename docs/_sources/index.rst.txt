@@ -24,7 +24,7 @@ Time Series Analysis in Amazon SageMaker
    :alt: AWS Marketplace Logo
 
 ******************************************
-Product
+Overview
 ******************************************
 We provide Amazon SageMaker algorithms for multiple time series tasks, including forecasting, anomaly detection, clustering and classification.
 Each algorithm implements a state-of-the-art deep learning architecture designed specifically for time series.
@@ -49,7 +49,7 @@ Documentation
 *****************************************
 .. raw:: html
 
-    <p>Each algorithm has a dedicated <a href="https://github.com/fg-research" target="_blank">GitHub</a> repository with detailed documentation and step-by-step tutorials in Jupyter notebook format.</p>
+    <p>Each algorithm has a dedicated <a href="https://github.com/fg-research" target="_blank">GitHub</a> repository with detailed documentation and step-by-step tutorials in Jupyter notebook format. Some algorithms are also discussed in our <a href="blog/product/index.html#product" target="_blank">blog</a>.</p>
 
 ******************************************
 Pricing
