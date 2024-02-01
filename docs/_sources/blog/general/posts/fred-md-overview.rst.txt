@@ -86,6 +86,7 @@ codes are defined as follows:
     repository.
 
 .. raw:: html
+
     <p>
     The FRED-MD dataset has been used extensively for forecasting US CPI inflation with machine learning methods.
     In <a href="#references">[2]</a> it is shown that a random forest model trained on the FRED-MD dataset outperforms several standard benchmark models at different forecasting horizons.
