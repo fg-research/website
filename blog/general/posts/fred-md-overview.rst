@@ -85,11 +85,25 @@ codes are defined as follows:
     `GitHub <https://github.com/fg-research/blog/blob/master/general/fred-md-overview/fred_md_overview.ipynb>`__
     repository.
 
+The FRED-MD dataset has been used extensively for forecasting US CPI inflation with machine learning methods.
+In [2] it is shown that a random forest model trained on the FRED-MD dataset outperforms several standard benchmark models at different forecasting horizons.
+[3] expanded the analysis in [2] to include an LSTM model and found that it did not significantly outperform the random forest model.
+In [4] the FRED-MD dataset is used for forecasting the US CPI by applying different dimension reduction techniques
+and it is shown that autoencoders provide the best performance.
+
 ******************************************
 References
 ******************************************
 
 [1] McCracken, M. W., & Ng, S. (2016). FRED-MD: A monthly database for macroeconomic research. *Journal of Business & Economic Statistics*, 34(4), 574-589. `doi: 10.1080/07350015.2015.1086655 <https://doi.org/10.1080/07350015.2015.1086655>`__.
+
+[2] Medeiros, M. C., Vasconcelos, G. F., Veiga, Á., & Zilberman, E. (2021). Forecasting inflation in a data-rich environment: the benefits of machine learning methods. *Journal of Business & Economic Statistics*, 39(1), 98-119. `doi: 10.1080/07350015.2019.1637745 <https://doi.org/10.1080/07350015.2019.1637745>`__.
+
+[3] Paranhos, L (2023). Predicting Inflation with Recurrent Neural Networks. *Working Paper*.
+
+[4] Hauzenberger, N., Huber, F., & Klieber, K. (2023). Real-time inflation forecasting using non-linear dimension reduction techniques. *International Journal of Forecasting*, 39(2), 901-921. `doi: 10.1016/j.ijforecast.2022.03.002 <https://doi.org/10.1016/j.ijforecast.2022.03.002>`__.
+
+
 
 ******************************************
 Appendix
