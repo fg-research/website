@@ -89,11 +89,10 @@ codes are defined as follows:
 
     <p>
     The FRED-MD dataset has been used extensively for forecasting US CPI inflation with machine learning methods.
-    In <a href="#references">[2]</a> it is shown that a random forest model trained on the FRED-MD dataset outperforms several standard benchmark models at different forecasting horizons.
+    In <a href="#references">[2]</a> it is shown that a random forest model trained on the FRED-MD dataset outperforms several standard inflation forecasting models at different forecasting horizons.
     <a href="#references">[3]</a> expanded the analysis in <a href="#references">[2]</a> to include an LSTM model and found that it did not significantly outperform the random forest model.
-    In <a href="#references">[4]</a> the FRED-MD dataset was used for forecasting the US CPI by applying different dimension reduction techniques
-    and it was found that autoencoders provide the best performance. In <a href="#references">[5]</a> the FRED-MD dataset was used for forecasting the US annual inflation rate
-    and it was found that machine learning models outperform the standard linear regression model in all considered forecasting periods.
+    <a href="#references">[4]</a> applied different dimension reduction techniques to the FRED-MD dataset and found that autoencoders provide the best forecasting performance.
+    In <a href="#references">[5]</a> the FRED-MD dataset was used for forecasting the US annual inflation rate and it was found that machine learning models outperform the standard linear regression model in all considered forecasting periods.
     </p>
 
 ******************************************
