@@ -86,7 +86,7 @@ codes are defined as follows:
     repository.
 
 The FRED-MD dataset has been used extensively for forecasting US CPI inflation with machine learning methods.
-In [2] it is shown that a random forest model trained on the FRED-MD dataset outperforms several standard benchmark models at different forecasting horizons.
+In `[2]] <references>` it is shown that a random forest model trained on the FRED-MD dataset outperforms several standard benchmark models at different forecasting horizons.
 [3] expanded the analysis in [2] to include an LSTM model and found that it did not significantly outperform the random forest model.
 In [4] the FRED-MD dataset is used for forecasting the US CPI by applying different dimension reduction techniques
 and it is shown that autoencoders provide the best performance.
@@ -102,8 +102,6 @@ References
 [3] Paranhos, L (2023). Predicting Inflation with Recurrent Neural Networks. *Working Paper*.
 
 [4] Hauzenberger, N., Huber, F., & Klieber, K. (2023). Real-time inflation forecasting using non-linear dimension reduction techniques. *International Journal of Forecasting*, 39(2), 901-921. `doi: 10.1016/j.ijforecast.2022.03.002 <https://doi.org/10.1016/j.ijforecast.2022.03.002>`__.
-
-
 
 ******************************************
 Appendix
