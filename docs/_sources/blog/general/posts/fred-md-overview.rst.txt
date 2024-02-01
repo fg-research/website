@@ -85,11 +85,14 @@ codes are defined as follows:
     `GitHub <https://github.com/fg-research/blog/blob/master/general/fred-md-overview/fred_md_overview.ipynb>`__
     repository.
 
-The FRED-MD dataset has been used extensively for forecasting US CPI inflation with machine learning methods.
-In `[2]] <References>` it is shown that a random forest model trained on the FRED-MD dataset outperforms several standard benchmark models at different forecasting horizons.
-[3] expanded the analysis in [2] to include an LSTM model and found that it did not significantly outperform the random forest model.
-In [4] the FRED-MD dataset is used for forecasting the US CPI by applying different dimension reduction techniques
-and it is shown that autoencoders provide the best performance.
+.. raw:: html
+    <p>
+    The FRED-MD dataset has been used extensively for forecasting US CPI inflation with machine learning methods.
+    In <a href="#references">[2]</a> it is shown that a random forest model trained on the FRED-MD dataset outperforms several standard benchmark models at different forecasting horizons.
+    <a href="#references">[3]</a> expanded the analysis in <a href="#references">[2]</a> to include an LSTM model and found that it did not significantly outperform the random forest model.
+    In <a href="#references">[4]</a> the FRED-MD dataset is used for forecasting the US CPI by applying different dimension reduction techniques
+    and it is shown that autoencoders provide the best performance.
+    </p>
 
 ******************************************
 References
