@@ -31,9 +31,9 @@ CfC SageMaker Algorithm
 
     <p>
         The CfC SageMaker Algorithm performs time series forecasting with the <a href="https://doi.org/10.1038/s42256-022-00556-7" target="_blank">Closed-Form Continuous-Depth (CfC) network</a>.
-        CfCs are continuous-time recurrent neural networks implementing an approximate closed-form solution of the <a href="https://doi.org/10.1609/aaai.v35i9.16936" target="_blank">Liquid Time Constant (LTC)</a> ordinary differential equation.
+        CfCs are continuous-time recurrent neural networks which implement an approximate closed-form solution of the <a href="https://doi.org/10.1609/aaai.v35i9.16936" target="_blank">Liquid Time Constant (LTC)</a> ordinary differential equation.
         CfCs are also referred to as <a href="https://news.mit.edu/2021/machine-learning-adapts-0128" target="_blank">Liquid Neural Networks</a>.
-        The algorithm can be used for irregularly-sampled time series, that is for time series whose values are not observed at a constant frequency.
+        The algorithm can be used for both univariate and multivariate time series and supports the inclusion of external features.
         For additional information, see the algorithm's
         <a href="https://aws.amazon.com/marketplace/pp/prodview-7s4giphluwgta" target="_blank">AWS Marketplace</a>
         listing page and
