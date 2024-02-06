@@ -91,7 +91,7 @@ codes are defined as follows:
     The FRED-MD dataset has been used extensively for forecasting US inflation.
     In <a href="#references">[2]</a> it was shown that a random forest model trained on the FRED-MD dataset outperforms several standard inflation forecasting models at different forecasting horizons.
     <a href="#references">[3]</a> expanded the analysis in <a href="#references">[2]</a> to include an LSTM model and found that it did not significantly outperform the random forest model.
-    <a href="#references">[4]</a> applied different dimension reduction techniques to the FRED-MD dataset and found that autoencoders provide the best forecasting performance.
+    <a href="#references">[4]</a> applied different dimension reduction techniques to the FRED-MD dataset in order to forecast US inflation and found that autoencoders provide the best performance.
     In <a href="#references">[5]</a> it was shown that machine learning models trained on the FRED-MD dataset outperform the standard linear regression model in all considered forecasting periods.
     </p>
 
