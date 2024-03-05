@@ -113,6 +113,9 @@ We start by installing and importing all the requirements and setting up the Sag
     from imblearn.under_sampling import RandomUnderSampler
     from sklearn.metrics import accuracy_score, confusion_matrix
 
+    # SageMaker algorithm ARN from AWS Marketplace
+    algo_arn = "arn:aws:sagemaker:<...>"
+
     # SageMaker session
     sagemaker_session = sagemaker.Session()
 
@@ -128,20 +131,92 @@ We start by installing and importing all the requirements and setting up the Sag
 ==========================================
 Data Preparation
 ==========================================
-
-After that we load the training and test datasets from the CSV files. To speed up the training process,
-we undersample the training data using `imbalanced-learn <https://imbalanced-learn.org/stable/references/generated/imblearn.under_sampling.RandomUnderSampler.html>`__.
-
-.. code:: python
-
-
-
-
+After that we load the training data from the CSV file.
 
 .. warning::
     To be able to run the code below, you need to download the datasets (`mitbih_train.csv` and `mitbih_test.csv`)
     from `Kaggle <https://www.kaggle.com/datasets/shayanfazeli/heartbeat>`__ and store them in the SageMaker notebook
     instance.
+
+.. code:: python
+
+    # load the training data
+    training_dataset = pd.read_csv("mitbih_train.csv", header=None)
+
+To speed up the training process, we undersample the training data using `imbalanced-learn <https://imbalanced-learn.org/stable/references/generated/imblearn.under_sampling.RandomUnderSampler.html>`__.
+After resampling, the training data contains 641 instances of each class.
+
+.. code:: python
+
+    # resample the training data
+    sampler = RandomUnderSampler(random_state=42)
+    training_dataset = pd.concat(sampler.fit_resample(X=training_dataset.iloc[:, :-1], y=training_dataset.iloc[:, -1:]), axis=1)
+
+We then proceed to moving the class labels from the last column to the first column, as required by the LSTM-FCN SageMaker algorithm.
+
+.. code:: python
+
+    # move the class labels to the first column
+    training_dataset = pd.concat([training_dataset.iloc[:, -1:], training_dataset.iloc[:, 1:]], axis=1)
+
+Once this is done, we can save the training data to S3.
+
+.. code:: python
+
+    training_data = sagemaker_session.upload_string_as_file_body(
+        body=training_dataset.to_csv(index=False, header=False),
+        bucket=bucket,
+        key="MITBIH_train.csv"
+    )
+
+==========================================
+Training
+==========================================
+We can now run a training job on the training dataset.
+
+.. code:: python
+
+    estimator = sagemaker.algorithm.AlgorithmEstimator(
+        algorithm_arn=algo_arn,
+        role=role,
+        instance_count=1,
+        instance_type=instance_type,
+        input_mode="File",
+        sagemaker_session=sagemaker_session,
+        hyperparameters={
+            "num-layers": 1,
+            "hidden-size": 128,
+            "dropout": 0.8,
+            "filters-1": 128,
+            "filters-2": 256,
+            "filters-3": 128,
+            "kernel-size-1": 8,
+            "kernel-size-2": 5,
+            "kernel-size-3": 3,
+            "batch-size": 256,
+            "lr": 0.001,
+            "epochs": 100,
+        },
+    )
+
+    estimator.fit({"training": training_data})
+
+==========================================
+Inference
+==========================================
+Once the training job has completed, we can deploy the model to a real-time endpoint.
+
+.. code:: python
+
+    serializer = sagemaker.serializers.CSVSerializer(content_type="text/csv")
+    deserializer = sagemaker.deserializers.CSVDeserializer(accept="text/csv")
+
+    predictor = estimator.deploy(
+        initial_instance_count=1,
+        instance_type=instance_type,
+        serializer=serializer,
+        deserializer=deserializer,
+    )
 
 .. tip::
 

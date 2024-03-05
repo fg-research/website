@@ -205,29 +205,100 @@ which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.</p>
 </span><span id="line-6"><span class="kn">from</span> <span class="nn">imblearn.under_sampling</span> <span class="kn">import</span> <span class="n">RandomUnderSampler</span>
 </span><span id="line-7"><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">confusion_matrix</span>
 </span><span id="line-8">
-</span><span id="line-9"><span class="c1"># SageMaker session</span>
-</span><span id="line-10"><span class="n">sagemaker_session</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+</span><span id="line-9"><span class="c1"># SageMaker algorithm ARN from AWS Marketplace</span>
+</span><span id="line-10"><span class="n">algo_arn</span> <span class="o">=</span> <span class="s2">"arn:aws:sagemaker:&lt;...&gt;"</span>
 </span><span id="line-11">
-</span><span id="line-12"><span class="c1"># SageMaker role</span>
-</span><span id="line-13"><span class="n">role</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">get_execution_role</span><span class="p">()</span>
+</span><span id="line-12"><span class="c1"># SageMaker session</span>
+</span><span id="line-13"><span class="n">sagemaker_session</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
 </span><span id="line-14">
-</span><span id="line-15"><span class="c1"># S3 bucket</span>
-</span><span id="line-16"><span class="n">bucket</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">default_bucket</span><span class="p">()</span>
+</span><span id="line-15"><span class="c1"># SageMaker role</span>
+</span><span id="line-16"><span class="n">role</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">get_execution_role</span><span class="p">()</span>
 </span><span id="line-17">
-</span><span id="line-18"><span class="c1"># EC2 instance</span>
-</span><span id="line-19"><span class="n">instance_type</span> <span class="o">=</span> <span class="s2">"ml.m5.2xlarge"</span>
+</span><span id="line-18"><span class="c1"># S3 bucket</span>
+</span><span id="line-19"><span class="n">bucket</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">default_bucket</span><span class="p">()</span>
+</span><span id="line-20">
+</span><span id="line-21"><span class="c1"># EC2 instance</span>
+</span><span id="line-22"><span class="n">instance_type</span> <span class="o">=</span> <span class="s2">"ml.m5.2xlarge"</span>
 </span></code></pre></div>
 </div>
 </section>
 <section id="data-preparation">
 <h3>Data Preparation<a class="headerlink" href="#data-preparation" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data-preparation'">¶</a></h3>
-<p>After that we load the training and test datasets from the CSV files. To speed up the training process,
-we undersample the training data using <a class="reference external" href="https://imbalanced-learn.org/stable/references/generated/imblearn.under_sampling.RandomUnderSampler.html">imbalanced-learn</a>.</p>
+<p>After that we load the training data from the CSV file.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>To be able to run the code below, you need to download the datasets (<cite>mitbih_train.csv</cite> and <cite>mitbih_test.csv</cite>)
 from <a class="reference external" href="https://www.kaggle.com/datasets/shayanfazeli/heartbeat">Kaggle</a> and store them in the SageMaker notebook
 instance.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># load the training data</span>
+</span><span id="line-2"><span class="n">training_dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"mitbih_train.csv"</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>To speed up the training process, we undersample the training data using <a class="reference external" href="https://imbalanced-learn.org/stable/references/generated/imblearn.under_sampling.RandomUnderSampler.html">imbalanced-learn</a>.
+After resampling, the training data contains 641 instances of each class.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># resample the training data</span>
+</span><span id="line-2"><span class="n">sampler</span> <span class="o">=</span> <span class="n">RandomUnderSampler</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</span><span id="line-3"><span class="n">training_dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">sampler</span><span class="o">.</span><span class="n">fit_resample</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">training_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">training_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>We then proceed to moving the class labels from the last column to the first column, as required by the LSTM-FCN SageMaker algorithm.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># move the class labels to the first column</span>
+</span><span id="line-2"><span class="n">training_dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">training_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:],</span> <span class="n">training_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>Once this is done, we can save the training data to S3.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">training_data</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">upload_string_as_file_body</span><span class="p">(</span>
+</span><span id="line-2">    <span class="n">body</span><span class="o">=</span><span class="n">training_dataset</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+</span><span id="line-3">    <span class="n">bucket</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span>
+</span><span id="line-4">    <span class="n">key</span><span class="o">=</span><span class="s2">"MITBIH_train.csv"</span>
+</span><span id="line-5"><span class="p">)</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="training">
+<h3>Training<a class="headerlink" href="#training" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#training'">¶</a></h3>
+<p>We can now run a training job on the training dataset.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">estimator</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">AlgorithmEstimator</span><span class="p">(</span>
+</span><span id="line-2">    <span class="n">algorithm_arn</span><span class="o">=</span><span class="n">algo_arn</span><span class="p">,</span>
+</span><span id="line-3">    <span class="n">role</span><span class="o">=</span><span class="n">role</span><span class="p">,</span>
+</span><span id="line-4">    <span class="n">instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+</span><span id="line-5">    <span class="n">instance_type</span><span class="o">=</span><span class="n">instance_type</span><span class="p">,</span>
+</span><span id="line-6">    <span class="n">input_mode</span><span class="o">=</span><span class="s2">"File"</span><span class="p">,</span>
+</span><span id="line-7">    <span class="n">sagemaker_session</span><span class="o">=</span><span class="n">sagemaker_session</span><span class="p">,</span>
+</span><span id="line-8">    <span class="n">hyperparameters</span><span class="o">=</span><span class="p">{</span>
+</span><span id="line-9">        <span class="s2">"num-layers"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+</span><span id="line-10">        <span class="s2">"hidden-size"</span><span class="p">:</span> <span class="mi">128</span><span class="p">,</span>
+</span><span id="line-11">        <span class="s2">"dropout"</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+</span><span id="line-12">        <span class="s2">"filters-1"</span><span class="p">:</span> <span class="mi">128</span><span class="p">,</span>
+</span><span id="line-13">        <span class="s2">"filters-2"</span><span class="p">:</span> <span class="mi">256</span><span class="p">,</span>
+</span><span id="line-14">        <span class="s2">"filters-3"</span><span class="p">:</span> <span class="mi">128</span><span class="p">,</span>
+</span><span id="line-15">        <span class="s2">"kernel-size-1"</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+</span><span id="line-16">        <span class="s2">"kernel-size-2"</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+</span><span id="line-17">        <span class="s2">"kernel-size-3"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+</span><span id="line-18">        <span class="s2">"batch-size"</span><span class="p">:</span> <span class="mi">256</span><span class="p">,</span>
+</span><span id="line-19">        <span class="s2">"lr"</span><span class="p">:</span> <span class="mf">0.001</span><span class="p">,</span>
+</span><span id="line-20">        <span class="s2">"epochs"</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+</span><span id="line-21">    <span class="p">},</span>
+</span><span id="line-22"><span class="p">)</span>
+</span><span id="line-23">
+</span><span id="line-24"><span class="n">estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">({</span><span class="s2">"training"</span><span class="p">:</span> <span class="n">training_data</span><span class="p">})</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="inference">
+<h3>Inference<a class="headerlink" href="#inference" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#inference'">¶</a></h3>
+<p>Once the training job has completed, we can deploy the model to a real-time endpoint.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">serializer</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">serializers</span><span class="o">.</span><span class="n">CSVSerializer</span><span class="p">(</span><span class="n">content_type</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">)</span>
+</span><span id="line-2"><span class="n">deserializer</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">deserializers</span><span class="o">.</span><span class="n">CSVDeserializer</span><span class="p">(</span><span class="n">accept</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">)</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="n">predictor</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">deploy</span><span class="p">(</span>
+</span><span id="line-5">    <span class="n">initial_instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+</span><span id="line-6">    <span class="n">instance_type</span><span class="o">=</span><span class="n">instance_type</span><span class="p">,</span>
+</span><span id="line-7">    <span class="n">serializer</span><span class="o">=</span><span class="n">serializer</span><span class="p">,</span>
+</span><span id="line-8">    <span class="n">deserializer</span><span class="o">=</span><span class="n">deserializer</span><span class="p">,</span>
+</span><span id="line-9"><span class="p">)</span>
+</span></code></pre></div>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -267,6 +338,8 @@ ECG heartbeat classification: A deep transferable representation.
 <li><a :data-current="activeSection === '#code'" class="reference internal" href="#code">Code</a><ul>
 <li><a :data-current="activeSection === '#environment-set-up'" class="reference internal" href="#environment-set-up">Environment Set-Up</a></li>
 <li><a :data-current="activeSection === '#data-preparation'" class="reference internal" href="#data-preparation">Data Preparation</a></li>
+<li><a :data-current="activeSection === '#training'" class="reference internal" href="#training">Training</a></li>
+<li><a :data-current="activeSection === '#inference'" class="reference internal" href="#inference">Inference</a></li>
 </ul>
 </li>
 <li><a :data-current="activeSection === '#references'" class="reference internal" href="#references">References</a></li>
