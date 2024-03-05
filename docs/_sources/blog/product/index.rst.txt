@@ -35,7 +35,7 @@ Product
         :margin: 0 3 auto auto
 
         .. grid-item::
-            :class: sd-text-muted
+            :class: sd-text-primary
 
             :octicon:`graph;1rem;graph-icon` Classification
 
@@ -67,7 +67,7 @@ Product
         :margin: 0 3 auto auto
 
         .. grid-item::
-            :class: sd-text-muted
+            :class: sd-text-primary
 
             :octicon:`graph;1rem;graph-icon` Anomaly Detection
 
