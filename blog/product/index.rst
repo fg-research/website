@@ -35,7 +35,7 @@ Product
         :margin: 0 3 auto auto
 
         .. grid-item::
-            :class: sd-text-warning
+            :class: sd-text-success
 
             :octicon:`graph;1rem;graph-icon` Classification
 
