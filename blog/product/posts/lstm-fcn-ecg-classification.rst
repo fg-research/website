@@ -16,8 +16,8 @@ Arrhythmia classification with the LSTM-FCN SageMaker Algorithm
     risk of adverse cardiovascular events and guiding appropriate treatment strategies.
     Machine learning algorithms can automate the process of ECG interpretation, reducing the
     reliance on manual analysis by healthcare professionals, a task that is both time-consuming
-    and prone to errors. This automation offers the potential fast, accurate and cost-effective
-    diagnosis.
+    and prone to errors. The automation provided by machine learning algorithm offers the potential
+    fast, accurate and cost-effective diagnosis.
     <p>
 
     <p>
