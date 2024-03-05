@@ -79,8 +79,7 @@ Data
 
    <img id="lstm-fcn-ecg-classification-class-distribution" class="blog-post-image" alt="MIT-BIH Dataset Class Distribution" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/ecg-classification/mit_bih_dataset_light.png />
 
-   <p class="blog-post-image-caption"> MIT-BIH Dataset Class Distribution.</p>
-
+   <p class="blog-post-image-caption"> MIT-BIH dataset class distribution.</p>
 
 ******************************************
 Code
@@ -237,7 +236,6 @@ Given that the test dataset is relatively large, we invoke the endpoint with bat
 .. code:: python
 
     batch_size = 100
-
     predictions = pd.DataFrame()
 
     for i in range(0, len(test_dataset), batch_size):
@@ -267,6 +265,10 @@ After generating the model predictions, we can calculate the classification metr
     confusion_matrix(y_true=test_dataset.iloc[:, 0], y_pred=predictions.iloc[:, 0])
 
 We find that the model achieves 99.79% accuracy on the test data.
+
+   <img id="lstm-fcn-ecg-classification-confusion-matrix" class="blog-post-image" alt="LSTM-FCN confusion matrix on MIT-BIH test dataset" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/ecg-classification/confusion_matrix_light.png />
+
+   <p class="blog-post-image-caption"> LSTM-FCN confusion matrix on MIT-BIH test dataset.</p>
 
 .. tip::
 

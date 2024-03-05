@@ -181,7 +181,7 @@ concatenated and passed to a final output layer with softmax activation.
  series represent normal heartbeats.
  </p>
 <img alt="MIT-BIH Dataset Class Distribution" class="blog-post-image" id="lstm-fcn-ecg-classification-class-distribution" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/ecg-classification/mit_bih_dataset_light.png"/>
-<p class="blog-post-image-caption"> MIT-BIH Dataset Class Distribution.</p></section>
+<p class="blog-post-image-caption"> MIT-BIH dataset class distribution.</p></section>
 <section id="code">
 <h2>Code<a class="headerlink" href="#code" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#code'">¶</a></h2>
 <section id="environment-set-up">
@@ -312,24 +312,23 @@ After resampling, the training data contains 641 instances of each class.</p>
 </div>
 <p>Given that the test dataset is relatively large, we invoke the endpoint with batches of time series as opposed to using the entire test dataset as a single payload.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">100</span>
-</span><span id="line-2">
-</span><span id="line-3"><span class="n">predictions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
-</span><span id="line-4">
-</span><span id="line-5"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_dataset</span><span class="p">),</span> <span class="n">batch_size</span><span class="p">):</span>
-</span><span id="line-6">
-</span><span id="line-7">    <span class="n">response</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">sagemaker_runtime_client</span><span class="o">.</span><span class="n">invoke_endpoint</span><span class="p">(</span>
-</span><span id="line-8">        <span class="n">EndpointName</span><span class="o">=</span><span class="n">predictor</span><span class="o">.</span><span class="n">endpoint_name</span><span class="p">,</span>
-</span><span id="line-9">        <span class="n">ContentType</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">,</span>
-</span><span id="line-10">        <span class="n">Body</span><span class="o">=</span><span class="n">serializer</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">test_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">batch_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">:])</span>
-</span><span id="line-11">    <span class="p">)</span>
-</span><span id="line-12">
-</span><span id="line-13">    <span class="n">predictions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span>
-</span><span id="line-14">        <span class="n">predictions</span><span class="p">,</span>
-</span><span id="line-15">        <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-</span><span id="line-16">            <span class="n">data</span><span class="o">=</span><span class="n">deserializer</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s2">"Body"</span><span class="p">],</span> <span class="n">content_type</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">),</span>
-</span><span id="line-17">            <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span>
-</span><span id="line-18">        <span class="p">)</span>
-</span><span id="line-19">    <span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="line-2"><span class="n">predictions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_dataset</span><span class="p">),</span> <span class="n">batch_size</span><span class="p">):</span>
+</span><span id="line-5">
+</span><span id="line-6">    <span class="n">response</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">sagemaker_runtime_client</span><span class="o">.</span><span class="n">invoke_endpoint</span><span class="p">(</span>
+</span><span id="line-7">        <span class="n">EndpointName</span><span class="o">=</span><span class="n">predictor</span><span class="o">.</span><span class="n">endpoint_name</span><span class="p">,</span>
+</span><span id="line-8">        <span class="n">ContentType</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">,</span>
+</span><span id="line-9">        <span class="n">Body</span><span class="o">=</span><span class="n">serializer</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">test_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">batch_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">:])</span>
+</span><span id="line-10">    <span class="p">)</span>
+</span><span id="line-11">
+</span><span id="line-12">    <span class="n">predictions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span>
+</span><span id="line-13">        <span class="n">predictions</span><span class="p">,</span>
+</span><span id="line-14">        <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+</span><span id="line-15">            <span class="n">data</span><span class="o">=</span><span class="n">deserializer</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s2">"Body"</span><span class="p">],</span> <span class="n">content_type</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">),</span>
+</span><span id="line-16">            <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span>
+</span><span id="line-17">        <span class="p">)</span>
+</span><span id="line-18">    <span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
 <p>After generating the model predictions, we can calculate the classification metrics.</p>
@@ -341,6 +340,10 @@ After resampling, the training data contains 641 instances of each class.</p>
 </span></code></pre></div>
 </div>
 <p>We find that the model achieves 99.79% accuracy on the test data.</p>
+<blockquote>
+<div><p>&lt;img id=”lstm-fcn-ecg-classification-confusion-matrix” class=”blog-post-image” alt=”LSTM-FCN confusion matrix on MIT-BIH test dataset” src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/ecg-classification/confusion_matrix_light.png /&gt;</p>
+<p>&lt;p class=”blog-post-image-caption”&gt; LSTM-FCN confusion matrix on MIT-BIH test dataset.&lt;/p&gt;</p>
+</div></blockquote>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>You can download the
