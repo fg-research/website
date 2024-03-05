@@ -134,13 +134,13 @@ Arrhythmia classification based on electrocardiogram (ECG) data involves identif
 categorizing abnormal patterns of cardiac electrical activity detected in the ECG signal.
 Arrhythmia classification is important for diagnosing cardiac abnormalities, assessing the
 risk of adverse cardiovascular events and guiding appropriate treatment strategies.
-<p>
+</p>
 <p>
 Machine learning algorithms can automate the process of ECG interpretation, reducing the
 reliance on manual analysis by healthcare professionals, a task that is both time-consuming
 and prone to errors. The automation provided by machine learning algorithms offers the
 potential for fast, accurate and cost-effective diagnosis.
-<p>
+</p>
 <p>
 In this post, we use our Amazon SageMaker implementation of the Long Short-Term Memory
 Fully Convolutional Network (LSTM-FCN) <a href="#references">[1]</a>, the
@@ -152,7 +152,7 @@ where the ECG recordings are split into individual heartbeats and then downsampl
 with zeroes to the fixed length of 187. The dataset contains 5 different categories
 of heartbeats where class 0 indicates a normal heartbeat while classes 1, 2, 3, and 4 correspond
 to different types of arrhythmia.
-<p><section id="model">
+</p><section id="model">
 <h2>Model<a class="headerlink" href="#model" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#model'">¶</a></h2>
 <p>
 The LSTM-FCN model includes two blocks: a recurrent block and a convolutional block.
@@ -160,17 +160,17 @@ The recurrent block consists of a single LSTM layer (either general or with atte
 followed by a dropout layer. The convolutional block consists of three convolutional
 layers, each followed by batch normalization and ReLU activation, and of a global
 average pooling layer.
-<p>
+</p>
 <p>
 The input time series are passed to both blocks. The convolutional block processes each
 time series as a single feature observed across multiple time steps, while the recurrent
 block processes each time series as multiple features observed at a single time step
 (referred to as dimension shuffling). The outputs of the two blocks are concatenated and
 passed to a final output layer with softmax activation.
-<p>
+</p>
 <p>
 The model parameters are learned by minimizing the cross-entropy loss.
-<p></p></p></p></p></p></p></section>
+</p></section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#references'">¶</a></h2>
 <p>[1] Karim, F., Majumdar, S., Darabi, H., &amp; Chen, S. (2018). LSTM fully convolutional networks for time series classification.
@@ -183,7 +183,7 @@ The model parameters are learned by minimizing the cross-entropy loss.
 <em>2018 IEEE international conference on healthcare informatics (ICHI)</em>, pp. 443-444,
 <a class="reference external" href="https://doi.org/10.1109/ICHI.2018.00092">doi: 10.1109/ICHI.2018.00092</a>.</p>
 </section>
-</p></p></p></p></p></p></section>
+</section>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(var(--vh)-4rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>

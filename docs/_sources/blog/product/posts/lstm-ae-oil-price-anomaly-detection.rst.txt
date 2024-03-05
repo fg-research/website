@@ -55,34 +55,34 @@ Detecting anomalies in financial time series with the LSTM-AE SageMaker Algorith
 ******************************************
 Model
 ******************************************
-The encoder and decoder of the LSTM-AE model consist of a single LSTM
-layer and have the same number of hidden units. The encoder takes as
-input the time series and returns the hidden states. The hidden states
-of the encoder are used for initializing the hidden states of the
-decoder, which reconstructs the time series in reversed order.
-
 .. raw:: html
 
-    <img class="blog-post-image" alt="LSTM-AE architecture" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/diagrams/lstm-ae-architecture.png />
+    <p>
+    The encoder and decoder of the LSTM-AE model consist of a single LSTM
+    layer and have the same number of hidden units. The encoder takes as
+    input the time series and returns the hidden states. The hidden states
+    of the encoder are used for initializing the hidden states of the
+    decoder, which reconstructs the time series in reversed order.
+    </p>
 
-.. raw:: html
+    <p>
+    The autoencoder parameters are learned on a training set containing only
+    normal data (i.e. without anomalies) by minimizing the mean squared
+    error (MSE) between the actual and reconstructed values of the time
+    series. After the model has been trained, a Gaussian distribution is
+    fitted to the model’s reconstruction errors on an independent validation
+    set (also without anomalies) using Maximum Likelihood Estimation (MLE).
+    </p>
 
-    <p class="blog-post-image-caption">LSTM-AE architecture (source: <a class="reference external" href="https://doi.org/10.48550/arXiv.1607.00148">doi: 10.48550/arXiv.1607.00148</a>)</p>
-
-The autoencoder parameters are learned on a training set containing only
-normal data (i.e. without anomalies) by minimizing the mean squared
-error (MSE) between the actual and reconstructed values of the time
-series. After the model has been trained, a Gaussian distribution is
-fitted to the model’s reconstruction errors on an independent validation
-set (also without anomalies) using Maximum Likelihood Estimation (MLE).
-
-At inference time, the model reconstructs the values of all the time
-series (which can now include anomalies) and calculates the squared
-Mahalanobis distance between the reconstruction errors and the Gaussian
-distribution previously estimated on normal data. The computed squared
-Mahalanobis distance is then used as an anomaly score: the larger the
-squared Mahalanobis distance at a given a time step, the more likely the
-time step is to be an anomaly.
+    <p>
+    At inference time, the model reconstructs the values of all the time
+    series (which can now include anomalies) and calculates the squared
+    Mahalanobis distance between the reconstruction errors and the Gaussian
+    distribution previously estimated on normal data. The computed squared
+    Mahalanobis distance is then used as an anomaly score: the larger the
+    squared Mahalanobis distance at a given a time step, the more likely the
+    time step is to be an anomaly.
+    </p>
 
 ******************************************
 Data
