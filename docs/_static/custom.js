@@ -22,7 +22,7 @@ window.setInterval(function(){
 
     var elements = [
         'lstm-ae-oil-price-anomaly-detection-toctree',
-        'liquid-neural-networks-overview-toctree',
+        'lstm-fcn-ecg-classification-toctree',
         'fred-md-overview-toctree',
     ];
     for (var i = 0; i < elements.length; i++) {
