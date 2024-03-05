@@ -1,14 +1,14 @@
 .. meta::
    :thumbnail: https://fg-research.com/_static/thumbnail.png
-   :description: Train, tune and deploy state-of-the-art deep learning models for time series in Amazon SageMaker
-   :keywords: Amazon SageMaker, Time Series, Deep Learning, Forecasting, Anomaly Detection
+   :description: Train, tune and deploy state-of-the-art machine learning models for time series in Amazon SageMaker
+   :keywords: Amazon SageMaker, Time Series, Machine Learning, Forecasting, Anomaly Detection
 
 ########################################################
 Time Series Analysis in Amazon SageMaker
 ########################################################
 .. rst-class:: lead
 
-    Train, tune and deploy state-of-the-art deep learning models for time series in Amazon SageMaker
+    Train, tune and deploy state-of-the-art machine learning models for time series in Amazon SageMaker
 
 .. _fg_research_logo:
 
@@ -27,7 +27,7 @@ Time Series Analysis in Amazon SageMaker
 Overview
 ******************************************
 We provide Amazon SageMaker algorithms for multiple time series tasks, including forecasting, anomaly detection, clustering and classification.
-Each algorithm implements a state-of-the-art deep learning architecture designed specifically for time series.
+Each algorithm implements a state-of-the-art machine learning model designed specifically for time series.
 
 ******************************************
 Features
