@@ -99,7 +99,7 @@ We start by installing and importing all the requirements and setting up the Sag
     in order to get your Amazon Resource Name (ARN). In this post we use version 1.14 of the LSTM-FCN SageMaker algorithm,
     which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.
 
-    `pip install imbalanced-learn`
+`pip install imbalanced-learn`
 
 .. code:: python
 
