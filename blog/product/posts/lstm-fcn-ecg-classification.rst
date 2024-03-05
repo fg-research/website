@@ -28,12 +28,7 @@ Arrhythmia classification with the LSTM-FCN SageMaker Algorithm
     Fully Convolutional Network (LSTM-FCN) <a href="#references">[1]</a>, the
     <a href="https://fg-research.com/algorithms/time-series-classification/index.html#lstm-fcn-sagemaker-algorithm" target="_blank">LSTM-FCN SageMaker algorithm</a>,
     for classifying the ECG traces in the <a href="https://physionet.org/content/mitdb/1.0.0" target="_blank">PhysioNet MIT-BIH Arrhythmia Database</a>
-    <a href="#references">[2]</a>. We use the <a href="https://www.kaggle.com/datasets/shayanfazeli/heartbeat" target="_blank">
-    pre-processed version of the PhysioNet MIT-BIH Arrhythmia Database</a> made available in <a href="#references">[3]</a>
-    where the ECG recordings are split into individual heartbeats and then downsampled and padded
-    with zeroes to the fixed length of 187. The dataset contains 5 different categories
-    of heartbeats where class 0 indicates a normal heartbeat while classes 1, 2, 3, and 4 correspond
-    to different types of arrhythmia.
+    <a href="#references">[2]</a>.
     </p>
 
 ******************************************
@@ -60,6 +55,20 @@ Model
     <p>
     The outputs of the two blocks are concatenated and passed to a final output layer with softmax activation.
     The model parameters are learned by minimizing the cross-entropy loss.
+    </p>
+
+******************************************
+Data
+******************************************
+.. raw:: html
+
+    <p>
+    We use the <a href="https://www.kaggle.com/datasets/shayanfazeli/heartbeat" target="_blank">
+    pre-processed version of the PhysioNet MIT-BIH Arrhythmia Database</a> made available in <a href="#references">[3]</a>
+    where the ECG recordings are split into individual heartbeats and then downsampled and padded
+    with zeroes to the fixed length of 187. The dataset contains 5 different categories of heartbeats
+    where class 0 indicates a normal heartbeat while classes 1, 2, 3, and 4 correspond to different
+    types of arrhythmia.
     </p>
 
 ******************************************

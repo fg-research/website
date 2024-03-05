@@ -146,12 +146,7 @@ In this post, we use our Amazon SageMaker implementation of the Long Short-Term 
 Fully Convolutional Network (LSTM-FCN) <a href="#references">[1]</a>, the
 <a href="https://fg-research.com/algorithms/time-series-classification/index.html#lstm-fcn-sagemaker-algorithm" target="_blank">LSTM-FCN SageMaker algorithm</a>,
 for classifying the ECG traces in the <a href="https://physionet.org/content/mitdb/1.0.0" target="_blank">PhysioNet MIT-BIH Arrhythmia Database</a>
-<a href="#references">[2]</a>. We use the <a href="https://www.kaggle.com/datasets/shayanfazeli/heartbeat" target="_blank">
-pre-processed version of the PhysioNet MIT-BIH Arrhythmia Database</a> made available in <a href="#references">[3]</a>
-where the ECG recordings are split into individual heartbeats and then downsampled and padded
-with zeroes to the fixed length of 187. The dataset contains 5 different categories
-of heartbeats where class 0 indicates a normal heartbeat while classes 1, 2, 3, and 4 correspond
-to different types of arrhythmia.
+<a href="#references">[2]</a>.
 </p><section id="model">
 <h2>Model<a class="headerlink" href="#model" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#model'">¶</a></h2>
 <p>
@@ -171,6 +166,16 @@ block processes each time series as multiple features observed at a single time 
 The outputs of the two blocks are concatenated and passed to a final output layer with softmax activation.
 The model parameters are learned by minimizing the cross-entropy loss.
 </p></section>
+<section id="data">
+<h2>Data<a class="headerlink" href="#data" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data'">¶</a></h2>
+<p>
+We use the <a href="https://www.kaggle.com/datasets/shayanfazeli/heartbeat" target="_blank">
+pre-processed version of the PhysioNet MIT-BIH Arrhythmia Database</a> made available in <a href="#references">[3]</a>
+where the ECG recordings are split into individual heartbeats and then downsampled and padded
+with zeroes to the fixed length of 187. The dataset contains 5 different categories of heartbeats
+where class 0 indicates a normal heartbeat while classes 1, 2, 3, and 4 correspond to different
+types of arrhythmia.
+</p></section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#references'">¶</a></h2>
 <p>[1] Karim, F., Majumdar, S., Darabi, H., &amp; Chen, S. (2018). LSTM fully convolutional networks for time series classification.
@@ -188,6 +193,7 @@ The model parameters are learned by minimizing the cross-entropy loss.
 <div class="sticky top-16 -mt-10 max-h-[calc(var(--vh)-4rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
 <li><a :data-current="activeSection === '#model'" class="reference internal" href="#model">Model</a></li>
+<li><a :data-current="activeSection === '#data'" class="reference internal" href="#data">Data</a></li>
 <li><a :data-current="activeSection === '#references'" class="reference internal" href="#references">References</a></li>
 </ul>
 </div>
