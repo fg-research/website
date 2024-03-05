@@ -27,7 +27,7 @@ Arrhythmia classification with the LSTM-FCN SageMaker Algorithm
     In this post, we use our Amazon SageMaker implementation of the Long Short-Term Memory
     Fully Convolutional Network (LSTM-FCN) <a href="#references">[1]</a>, the
     <a href="https://fg-research.com/algorithms/time-series-classification/index.html#lstm-fcn-sagemaker-algorithm" target="_blank">LSTM-FCN SageMaker algorithm</a>,
-    for classifying the ECG traces in the <a href="https://physionet.org/content/mitdb/1.0.0" target="_blank">PhysioNet MIT-BIH Arrhythmia Database</a>
+    for categorizing the ECG traces in the <a href="https://physionet.org/content/mitdb/1.0.0" target="_blank">PhysioNet MIT-BIH Arrhythmia Database</a>
     <a href="#references">[2]</a>.
     </p>
 
@@ -36,6 +36,13 @@ Model
 ******************************************
 
 .. raw:: html
+
+    <p>
+    The LSTM-FCN is a widely used deep learning model for time series classification.
+    The model requires minimal preprocessing of the input time series and achieves
+    higher accuracy than traditional machine learning algorithms on several time
+    series classification benchmark datasets <a href="#references">[1]</a>.
+    </p>
 
     <p>
     The LSTM-FCN model includes two blocks: a recurrent block and a convolutional block.
