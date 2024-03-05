@@ -159,7 +159,7 @@ We then proceed to moving the class labels from the last column to the first col
     # move the class labels to the first column
     training_dataset = pd.concat([training_dataset.iloc[:, -1:], training_dataset.iloc[:, 1:]], axis=1)
 
-Once this is done, we can save the training data to S3.
+Once this is done, we can save the training data to S3 in CSV format.
 
 .. code:: python
 
@@ -172,7 +172,7 @@ Once this is done, we can save the training data to S3.
 ==========================================
 Training
 ==========================================
-We can now run a training job on the training dataset.
+We can now run the training job.
 
 .. code:: python
 
@@ -217,6 +217,56 @@ Once the training job has completed, we can deploy the model to a real-time endp
         serializer=serializer,
         deserializer=deserializer,
     )
+
+After that we load the test data from the CSV file.
+
+.. code:: python
+
+    # load the test data
+    test_dataset = pd.read_csv("mitbih_test.csv", header=None)
+
+To avoid confusion, we move the class labels from the last column to the first column, even though these are obviously not used for inference.
+
+.. code:: python
+
+    # move the class labels to the first column
+    test_dataset = pd.concat([test_dataset.iloc[:, -1:], test_dataset.iloc[:, 1:]], axis=1)
+
+Given that the test dataset is relatively large, we invoke the endpoint with batches of time series as opposed to using the entire test dataset as a single payload.
+
+.. code:: python
+
+    batch_size = 100
+
+    predictions = pd.DataFrame()
+
+    for i in range(0, len(test_dataset), batch_size):
+
+        response = sagemaker_session.sagemaker_runtime_client.invoke_endpoint(
+            EndpointName=predictor.endpoint_name,
+            ContentType="text/csv",
+            Body=serializer.serialize(test_dataset.iloc[i:i + batch_size, 1:])
+        )
+
+        predictions = pd.concat([
+            predictions,
+            pd.DataFrame(
+                data=deserializer.deserialize(response["Body"], content_type="text/csv"),
+                dtype=float
+            )
+        ], axis=0)
+
+After generating the model predictions, we can calculate the classification metrics.
+
+.. code:: python
+
+    # calculate the accuracy
+    accuracy_score(y_true=test_dataset.iloc[:, 0], y_pred=predictions.iloc[:, 0])
+
+    # calculate the confusion matrix
+    confusion_matrix(y_true=test_dataset.iloc[:, 0], y_pred=predictions.iloc[:, 0])
+
+We find that the model achieves 99.79% accuracy on the test data.
 
 .. tip::
 
