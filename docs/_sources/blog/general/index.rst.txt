@@ -35,7 +35,7 @@ General
         :margin: 0 3 auto auto
 
         .. grid-item::
-            :class: sd-text-info
+            :class: sd-text-muted
 
             :octicon:`graph;1rem;graph-icon` Datasets
 
