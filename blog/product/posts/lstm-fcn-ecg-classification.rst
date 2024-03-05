@@ -24,25 +24,22 @@ Arrhythmia classification with the LSTM-FCN SageMaker Algorithm
     </p>
 
     <p>
-    In this post, we use our Amazon SageMaker implementation of the Long Short-Term Memory
-    Fully Convolutional Network (LSTM-FCN) <a href="#references">[1]</a>, the
-    <a href="https://fg-research.com/algorithms/time-series-classification/index.html#lstm-fcn-sagemaker-algorithm" target="_blank">LSTM-FCN SageMaker algorithm</a>,
-    for categorizing the ECG traces in the <a href="https://physionet.org/content/mitdb/1.0.0" target="_blank">PhysioNet MIT-BIH Arrhythmia Database</a>
-    <a href="#references">[2]</a>.
-    </p>
+    Different neural network architectures have been proposed in the literature
+    on ECG arrhythmia classification <a href="#references">[1]</a>. In this post,
+    we will focus on the <a href="https://doi.org/10.1109/ACCESS.2017.2779939"
+    target="_blank"> Long Short-Term Memory Fully Convolutional Network</a>
+    <a href="#references">[2]</a>, which we will refer to as the LSTM-FCN model.
+    We will demonstrate how to use our Amazon SageMaker implementation of the LSTM-FCN model,
+    the <a href="https://fg-research.com/algorithms/time-series-classification/index.html#lstm-fcn-sagemaker-algorithm"
+    target="_blank">LSTM-FCN SageMaker algorithm</a>, for categorizing the ECG traces in the
+    <a href="https://physionet.org/content/mitdb/1.0.0" target="_blank">PhysioNet MIT-BIH Arrhythmia Database</a>
+    <a href="#references">[3]</a>.
 
 ******************************************
 Model
 ******************************************
 
 .. raw:: html
-
-    <p>
-    The LSTM-FCN is a widely used deep learning model for time series classification.
-    The model requires minimal preprocessing of the input time series and achieves
-    higher accuracy than traditional machine learning algorithms on several time
-    series classification benchmark datasets <a href="#references">[1]</a>.
-    </p>
 
     <p>
     The LSTM-FCN model includes two blocks: a recurrent block and a convolutional block.
@@ -71,7 +68,7 @@ Data
 
     <p>
     We use the <a href="https://www.kaggle.com/datasets/shayanfazeli/heartbeat" target="_blank">
-    pre-processed version of the PhysioNet MIT-BIH Arrhythmia Database</a> made available in <a href="#references">[3]</a>
+    pre-processed version of the PhysioNet MIT-BIH Arrhythmia Database</a> made available in <a href="#references">[4]</a>
     where the ECG recordings are split into individual heartbeats and then downsampled and padded
     with zeroes to the fixed length of 187. The dataset contains 5 different categories of heartbeats
     where class 0 indicates a normal heartbeat while classes 1, 2, 3, and 4 correspond to different
@@ -82,15 +79,20 @@ Data
 References
 ******************************************
 
-[1] Karim, F., Majumdar, S., Darabi, H., & Chen, S. (2018). LSTM fully convolutional networks for time series classification.
+[1] Ebrahimi, Z., Loni, M., Daneshtalab, M., & Gharehbaghi, A. (2020).
+A review on deep learning methods for ECG arrhythmia classification.
+*Expert Systems with Applications: X*, vol. 7, 100033.
+`doi: 10.1016/j.eswax.2020.100033 <https://doi.org/10.1016/j.eswax.2020.100033>`__.
+
+[2] Karim, F., Majumdar, S., Darabi, H., & Chen, S. (2018). LSTM fully convolutional networks for time series classification.
 *IEEE Access*, vol. 6, pp. 1662-1669,
 `doi: 10.1109/ACCESS.2017.2779939 <https://doi.org/10.1109/ACCESS.2017.2779939>`__.
 
-[2] Moody, G. B., & Mark, R. G. (2001). The impact of the MIT-BIH arrhythmia database.
+[3] Moody, G. B., & Mark, R. G. (2001). The impact of the MIT-BIH arrhythmia database.
 *IEEE engineering in medicine and biology magazine*, vol. 20, no. 3, pp. 45-50,
 `doi: 10.1109/51.932724 <https://doi.org/10.1109/51.932724>`__.
 
-[3] Kachuee, M., Fazeli, S., & Sarrafzadeh, M. (2018). ECG heartbeat classification: A deep transferable representation.
+[4] Kachuee, M., Fazeli, S., & Sarrafzadeh, M. (2018). ECG heartbeat classification: A deep transferable representation.
 *2018 IEEE international conference on healthcare informatics (ICHI)*, pp. 443-444,
 `doi: 10.1109/ICHI.2018.00092 <https://doi.org/10.1109/ICHI.2018.00092>`__.
 

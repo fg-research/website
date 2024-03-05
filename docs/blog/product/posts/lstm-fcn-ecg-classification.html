@@ -142,19 +142,15 @@ and prone to errors. The automation provided by machine learning algorithms offe
 potential for fast, accurate and cost-effective diagnosis.
 </p>
 <p>
-In this post, we use our Amazon SageMaker implementation of the Long Short-Term Memory
-Fully Convolutional Network (LSTM-FCN) <a href="#references">[1]</a>, the
-<a href="https://fg-research.com/algorithms/time-series-classification/index.html#lstm-fcn-sagemaker-algorithm" target="_blank">LSTM-FCN SageMaker algorithm</a>,
-for categorizing the ECG traces in the <a href="https://physionet.org/content/mitdb/1.0.0" target="_blank">PhysioNet MIT-BIH Arrhythmia Database</a>
-<a href="#references">[2]</a>.
-</p><section id="model">
+Different neural network architectures have been proposed in the literature
+on ECG arrhythmia classification <a href="#references">[1]</a>. In this post,
+we will focus on the <a href="https://doi.org/10.1109/ACCESS.2017.2779939" target="_blank"> Long Short-Term Memory Fully Convolutional Network</a>
+<a href="#references">[2]</a>, which we will refer to as the LSTM-FCN model.
+We will demonstrate how to use our Amazon SageMaker implementation of the LSTM-FCN model,
+the <a href="https://fg-research.com/algorithms/time-series-classification/index.html#lstm-fcn-sagemaker-algorithm" target="_blank">LSTM-FCN SageMaker algorithm</a>, for categorizing the ECG traces in the
+<a href="https://physionet.org/content/mitdb/1.0.0" target="_blank">PhysioNet MIT-BIH Arrhythmia Database</a>
+<a href="#references">[3]</a>.<section id="model">
 <h2>Model<a class="headerlink" href="#model" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#model'">¶</a></h2>
-<p>
-The LSTM-FCN is a widely used deep learning model for time series classification.
-The model requires minimal preprocessing of the input time series and achieves
-higher accuracy than traditional machine learning algorithms on several time
-series classification benchmark datasets <a href="#references">[1]</a>.
-</p>
 <p>
 The LSTM-FCN model includes two blocks: a recurrent block and a convolutional block.
 The recurrent block consists of a single LSTM layer (either general or with attention)
@@ -176,7 +172,7 @@ The model parameters are learned by minimizing the cross-entropy loss.
 <h2>Data<a class="headerlink" href="#data" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data'">¶</a></h2>
 <p>
 We use the <a href="https://www.kaggle.com/datasets/shayanfazeli/heartbeat" target="_blank">
-pre-processed version of the PhysioNet MIT-BIH Arrhythmia Database</a> made available in <a href="#references">[3]</a>
+pre-processed version of the PhysioNet MIT-BIH Arrhythmia Database</a> made available in <a href="#references">[4]</a>
 where the ECG recordings are split into individual heartbeats and then downsampled and padded
 with zeroes to the fixed length of 187. The dataset contains 5 different categories of heartbeats
 where class 0 indicates a normal heartbeat while classes 1, 2, 3, and 4 correspond to different
@@ -184,17 +180,21 @@ types of arrhythmia.
 </p></section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#references'">¶</a></h2>
-<p>[1] Karim, F., Majumdar, S., Darabi, H., &amp; Chen, S. (2018). LSTM fully convolutional networks for time series classification.
+<p>[1] Ebrahimi, Z., Loni, M., Daneshtalab, M., &amp; Gharehbaghi, A. (2020).
+A review on deep learning methods for ECG arrhythmia classification.
+<em>Expert Systems with Applications: X</em>, vol. 7, 100033.
+<a class="reference external" href="https://doi.org/10.1016/j.eswax.2020.100033">doi: 10.1016/j.eswax.2020.100033</a>.</p>
+<p>[2] Karim, F., Majumdar, S., Darabi, H., &amp; Chen, S. (2018). LSTM fully convolutional networks for time series classification.
 <em>IEEE Access</em>, vol. 6, pp. 1662-1669,
 <a class="reference external" href="https://doi.org/10.1109/ACCESS.2017.2779939">doi: 10.1109/ACCESS.2017.2779939</a>.</p>
-<p>[2] Moody, G. B., &amp; Mark, R. G. (2001). The impact of the MIT-BIH arrhythmia database.
+<p>[3] Moody, G. B., &amp; Mark, R. G. (2001). The impact of the MIT-BIH arrhythmia database.
 <em>IEEE engineering in medicine and biology magazine</em>, vol. 20, no. 3, pp. 45-50,
 <a class="reference external" href="https://doi.org/10.1109/51.932724">doi: 10.1109/51.932724</a>.</p>
-<p>[3] Kachuee, M., Fazeli, S., &amp; Sarrafzadeh, M. (2018). ECG heartbeat classification: A deep transferable representation.
+<p>[4] Kachuee, M., Fazeli, S., &amp; Sarrafzadeh, M. (2018). ECG heartbeat classification: A deep transferable representation.
 <em>2018 IEEE international conference on healthcare informatics (ICHI)</em>, pp. 443-444,
 <a class="reference external" href="https://doi.org/10.1109/ICHI.2018.00092">doi: 10.1109/ICHI.2018.00092</a>.</p>
 </section>
-</section>
+</p></section>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(var(--vh)-4rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
