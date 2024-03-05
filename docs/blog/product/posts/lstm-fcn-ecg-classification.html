@@ -189,15 +189,11 @@ concatenated and passed to a final output layer with softmax activation.
 <p>We start by installing and importing all the requirements and setting up the SageMaker environment.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>To be able to run the code below, you need to have an active
-subscription to the LSTM-FCN SageMaker algorithm. You can subscribe to a free trial from
-the <a class="reference external" href="https://aws.amazon.com/marketplace/pp/prodview-vzxmyw25oqtx6">AWS Marketplace</a>
-in order to get your Amazon Resource Name (ARN).
-In this post we use version 1.14 of the LSTM-FCN SageMaker algorithm, which runs in the
-PyTorch 2.1.0 Python 3.10 deep learning container.</p>
-</div>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><code><span id="line-1">pip<span class="w"> </span>install<span class="w"> </span>imbalanced-learn
-</span></code></pre></div>
+<p>To be able to run the code below, you need to have an active subscription to the LSTM-FCN SageMaker algorithm.
+You can subscribe to a free trial from the <a class="reference external" href="https://aws.amazon.com/marketplace/pp/prodview-vzxmyw25oqtx6">AWS Marketplace</a>
+in order to get your Amazon Resource Name (ARN). In this post we use version 1.14 of the LSTM-FCN SageMaker algorithm,
+which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.</p>
+<p><cite>pip install imbalanced-learn</cite></p>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span> <span class="nn">io</span>
 </span><span id="line-2"><span class="kn">import</span> <span class="nn">sagemaker</span>
@@ -205,7 +201,7 @@ PyTorch 2.1.0 Python 3.10 deep learning container.</p>
 </span><span id="line-4"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 </span><span id="line-5"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 </span><span id="line-6"><span class="kn">from</span> <span class="nn">imblearn.under_sampling</span> <span class="kn">import</span> <span class="n">RandomUnderSampler</span>
-</span><span id="line-7"><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">recall_score</span><span class="p">,</span> <span class="n">f1_score</span><span class="p">,</span> <span class="n">confusion_matrix</span>
+</span><span id="line-7"><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">confusion_matrix</span>
 </span><span id="line-8">
 </span><span id="line-9"><span class="c1"># SageMaker session</span>
 </span><span id="line-10"><span class="n">sagemaker_session</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
@@ -223,6 +219,14 @@ PyTorch 2.1.0 Python 3.10 deep learning container.</p>
 </section>
 <section id="data-preparation">
 <h3>Data Preparation<a class="headerlink" href="#data-preparation" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data-preparation'">¶</a></h3>
+<p>After that we load the training and test datasets from the CSV files. To speed up the training process,
+we undersample the training data using <a class="reference external" href="https://imbalanced-learn.org/stable/references/generated/imblearn.under_sampling.RandomUnderSampler.html">imbalanced-learn</a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>To be able to run the code below, you need to download the datasets (<cite>mitbih_train.csv</cite> and <cite>mitbih_test.csv</cite>)
+from <a class="reference external" href="https://www.kaggle.com/datasets/shayanfazeli/heartbeat">Kaggle</a> and store them in the SageMaker notebook
+instance.</p>
+</div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>You can download the

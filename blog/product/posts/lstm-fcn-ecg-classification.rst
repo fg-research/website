@@ -94,16 +94,12 @@ We start by installing and importing all the requirements and setting up the Sag
 
 .. warning::
 
-   To be able to run the code below, you need to have an active
-   subscription to the LSTM-FCN SageMaker algorithm. You can subscribe to a free trial from
-   the `AWS Marketplace <https://aws.amazon.com/marketplace/pp/prodview-vzxmyw25oqtx6>`__
-   in order to get your Amazon Resource Name (ARN).
-   In this post we use version 1.14 of the LSTM-FCN SageMaker algorithm, which runs in the
-   PyTorch 2.1.0 Python 3.10 deep learning container.
+    To be able to run the code below, you need to have an active subscription to the LSTM-FCN SageMaker algorithm.
+    You can subscribe to a free trial from the `AWS Marketplace <https://aws.amazon.com/marketplace/pp/prodview-vzxmyw25oqtx6>`__
+    in order to get your Amazon Resource Name (ARN). In this post we use version 1.14 of the LSTM-FCN SageMaker algorithm,
+    which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.
 
-.. code:: shell
-
-    pip install imbalanced-learn
+    `pip install imbalanced-learn`
 
 .. code:: python
 
@@ -113,7 +109,7 @@ We start by installing and importing all the requirements and setting up the Sag
     import numpy as np
     import matplotlib.pyplot as plt
     from imblearn.under_sampling import RandomUnderSampler
-    from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
+    from sklearn.metrics import accuracy_score, confusion_matrix
 
     # SageMaker session
     sagemaker_session = sagemaker.Session()
@@ -131,7 +127,19 @@ We start by installing and importing all the requirements and setting up the Sag
 Data Preparation
 ==========================================
 
+After that we load the training and test datasets from the CSV files. To speed up the training process,
+we undersample the training data using `imbalanced-learn <https://imbalanced-learn.org/stable/references/generated/imblearn.under_sampling.RandomUnderSampler.html>`__.
 
+.. code:: python
+
+
+
+
+
+.. warning::
+    To be able to run the code below, you need to download the datasets (`mitbih_train.csv` and `mitbih_test.csv`)
+    from `Kaggle <https://www.kaggle.com/datasets/shayanfazeli/heartbeat>`__ and store them in the SageMaker notebook
+    instance.
 
 .. tip::
 
