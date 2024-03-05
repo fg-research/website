@@ -83,6 +83,65 @@ Data
 
 
 ******************************************
+Code
+******************************************
+
+==========================================
+Environment Set-Up
+==========================================
+
+We start by installing and importing all the requirements and setting up the SageMaker environment.
+
+.. warning::
+
+   To be able to run the code below, you need to have an active
+   subscription to the LSTM-FCN SageMaker algorithm. You can subscribe to a free trial from
+   the `AWS Marketplace <https://aws.amazon.com/marketplace/pp/prodview-vzxmyw25oqtx6>`__
+   in order to get your Amazon Resource Name (ARN).
+   In this post we use version 1.14 of the LSTM-FCN SageMaker algorithm, which runs in the
+   PyTorch 2.1.0 Python 3.10 deep learning container.
+
+.. code:: shell
+
+    pip install imbalanced-learn
+
+.. code:: python
+
+    import io
+    import sagemaker
+    import pandas as pd
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from imblearn.under_sampling import RandomUnderSampler
+    from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
+
+    # SageMaker session
+    sagemaker_session = sagemaker.Session()
+
+    # SageMaker role
+    role = sagemaker.get_execution_role()
+
+    # S3 bucket
+    bucket = sagemaker_session.default_bucket()
+
+    # EC2 instance
+    instance_type = "ml.m5.2xlarge"
+
+==========================================
+Data Preparation
+==========================================
+
+
+
+.. tip::
+
+    You can download the
+    `notebook <https://github.com/fg-research/lstm-fcn-sagemaker/blob/master/examples/MIT-BIH.ipynb>`__
+    with the full code from our
+    `GitHub <https://github.com/fg-research/lstm-fcn-sagemaker>`__
+    repository.
+
+******************************************
 References
 ******************************************
 
