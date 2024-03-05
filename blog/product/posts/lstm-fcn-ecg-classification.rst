@@ -70,10 +70,11 @@ Data
     types of arrhythmia.
     </p>
 
-    <p>The dataset is split into a training set and a test set. The train-test split is provided
+    <p>
+    The dataset is split into a training set and a test set. The train-test split is provided
     directly by the authors. The training set contains 87,554 time series while the test set
     contains 21,892 time series. Both the training and test sets are imbalanced, as most time
-    series belong to the normal class (class 0).
+    series represent normal heartbeats.
     </p>
 
 ******************************************
