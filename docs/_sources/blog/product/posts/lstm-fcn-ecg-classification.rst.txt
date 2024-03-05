@@ -53,7 +53,7 @@ Model
     The input time series are passed to both blocks. The convolutional block processes each
     time series as a single feature observed across multiple time steps, while the recurrent
     block processes each time series as multiple features observed at a single time step
-    (referred to as dimension shuffling).
+    (referred to as <i>dimension shuffling</i>).
     </p>
 
     <p>
