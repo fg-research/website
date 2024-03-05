@@ -133,7 +133,7 @@ Data Preparation
 After that we load the training data from the CSV file.
 
 .. warning::
-    To be able to run the code below, you need to download the datasets (`mitbih_train.csv` and `mitbih_test.csv`)
+    To be able to run the code below, you need to download the datasets (`"mitbih_train.csv"` and `"mitbih_test.csv"`)
     from `Kaggle <https://www.kaggle.com/datasets/shayanfazeli/heartbeat>`__ and store them in the SageMaker notebook
     instance.
 
@@ -158,10 +158,11 @@ We then proceed to moving the class labels from the last column to the first col
     # move the class labels to the first column
     training_dataset = pd.concat([training_dataset.iloc[:, -1:], training_dataset.iloc[:, 1:]], axis=1)
 
-Once this is done, we can save the training data to S3 in CSV format.
+Once this is done, we can save the training data in the S3 bucket in CSV format.
 
 .. code:: python
 
+    # save the training data in S3
     training_data = sagemaker_session.upload_string_as_file_body(
         body=training_dataset.to_csv(index=False, header=False),
         bucket=bucket,
@@ -175,6 +176,7 @@ We can now run the training job.
 
 .. code:: python
 
+    # create the estimator
     estimator = sagemaker.algorithm.AlgorithmEstimator(
         algorithm_arn=algo_arn,
         role=role,
@@ -198,6 +200,7 @@ We can now run the training job.
         },
     )
 
+    # run the training job
     estimator.fit({"training": training_data})
 
 ==========================================
@@ -207,9 +210,13 @@ Once the training job has completed, we can deploy the model to a real-time endp
 
 .. code:: python
 
+    # define the endpoint inputs serializer
     serializer = sagemaker.serializers.CSVSerializer(content_type="text/csv")
+
+    # define the endpoint outputs deserializer
     deserializer = sagemaker.deserializers.CSVDeserializer(accept="text/csv")
 
+    # create the endpoint
     predictor = estimator.deploy(
         initial_instance_count=1,
         instance_type=instance_type,
@@ -224,7 +231,7 @@ After that we load the test data from the CSV file.
     # load the test data
     test_dataset = pd.read_csv("mitbih_test.csv", header=None)
 
-To avoid confusion, we move the class labels from the last column to the first column, even though these are obviously not used for inference.
+To avoid confusion, we move the class labels from the last column to the first column, even though they are obviously not used for inference.
 
 .. code:: python
 
@@ -235,17 +242,23 @@ Given that the test dataset is relatively large, we invoke the endpoint with bat
 
 .. code:: python
 
+    # define the batch size
     batch_size = 100
+
+    # create a data frame for storing the model predictions
     predictions = pd.DataFrame()
 
+    # loop across the test dataset
     for i in range(0, len(test_dataset), batch_size):
 
+        # invoke the endpoint with a batch of time series, make sure to drop the first column with the class labels
         response = sagemaker_session.sagemaker_runtime_client.invoke_endpoint(
             EndpointName=predictor.endpoint_name,
             ContentType="text/csv",
             Body=serializer.serialize(test_dataset.iloc[i:i + batch_size, 1:])
         )
 
+        # save the predicted class labels in the data frame
         predictions = pd.concat([
             predictions,
             pd.DataFrame(
@@ -272,7 +285,7 @@ We find that the model achieves 99.79% accuracy on the test data.
 
     <p class="blog-post-image-caption"> LSTM-FCN confusion matrix on MIT-BIH test dataset.</p>
 
-Once the analysis has been completed, we can delete the model and the endpoint.
+After the analysis has been completed, we can delete the model and the endpoint.
 
 .. code:: python
 

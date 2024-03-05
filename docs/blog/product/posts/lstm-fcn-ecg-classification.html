@@ -227,7 +227,7 @@ which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.</p>
 <p>After that we load the training data from the CSV file.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>To be able to run the code below, you need to download the datasets (<cite>mitbih_train.csv</cite> and <cite>mitbih_test.csv</cite>)
+<p>To be able to run the code below, you need to download the datasets (<cite>“mitbih_train.csv”</cite> and <cite>“mitbih_test.csv”</cite>)
 from <a class="reference external" href="https://www.kaggle.com/datasets/shayanfazeli/heartbeat">Kaggle</a> and store them in the SageMaker notebook
 instance.</p>
 </div>
@@ -247,57 +247,64 @@ After resampling, the training data contains 641 instances of each class.</p>
 </span><span id="line-2"><span class="n">training_dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">training_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:],</span> <span class="n">training_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
-<p>Once this is done, we can save the training data to S3 in CSV format.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">training_data</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">upload_string_as_file_body</span><span class="p">(</span>
-</span><span id="line-2">    <span class="n">body</span><span class="o">=</span><span class="n">training_dataset</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
-</span><span id="line-3">    <span class="n">bucket</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span>
-</span><span id="line-4">    <span class="n">key</span><span class="o">=</span><span class="s2">"MITBIH_train.csv"</span>
-</span><span id="line-5"><span class="p">)</span>
+<p>Once this is done, we can save the training data in the S3 bucket in CSV format.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># save the training data in S3</span>
+</span><span id="line-2"><span class="n">training_data</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">upload_string_as_file_body</span><span class="p">(</span>
+</span><span id="line-3">    <span class="n">body</span><span class="o">=</span><span class="n">training_dataset</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+</span><span id="line-4">    <span class="n">bucket</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span>
+</span><span id="line-5">    <span class="n">key</span><span class="o">=</span><span class="s2">"MITBIH_train.csv"</span>
+</span><span id="line-6"><span class="p">)</span>
 </span></code></pre></div>
 </div>
 </section>
 <section id="training">
 <h3>Training<a class="headerlink" href="#training" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#training'">¶</a></h3>
 <p>We can now run the training job.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">estimator</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">AlgorithmEstimator</span><span class="p">(</span>
-</span><span id="line-2">    <span class="n">algorithm_arn</span><span class="o">=</span><span class="n">algo_arn</span><span class="p">,</span>
-</span><span id="line-3">    <span class="n">role</span><span class="o">=</span><span class="n">role</span><span class="p">,</span>
-</span><span id="line-4">    <span class="n">instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-</span><span id="line-5">    <span class="n">instance_type</span><span class="o">=</span><span class="n">instance_type</span><span class="p">,</span>
-</span><span id="line-6">    <span class="n">input_mode</span><span class="o">=</span><span class="s2">"File"</span><span class="p">,</span>
-</span><span id="line-7">    <span class="n">sagemaker_session</span><span class="o">=</span><span class="n">sagemaker_session</span><span class="p">,</span>
-</span><span id="line-8">    <span class="n">hyperparameters</span><span class="o">=</span><span class="p">{</span>
-</span><span id="line-9">        <span class="s2">"num-layers"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-</span><span id="line-10">        <span class="s2">"hidden-size"</span><span class="p">:</span> <span class="mi">128</span><span class="p">,</span>
-</span><span id="line-11">        <span class="s2">"dropout"</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
-</span><span id="line-12">        <span class="s2">"filters-1"</span><span class="p">:</span> <span class="mi">128</span><span class="p">,</span>
-</span><span id="line-13">        <span class="s2">"filters-2"</span><span class="p">:</span> <span class="mi">256</span><span class="p">,</span>
-</span><span id="line-14">        <span class="s2">"filters-3"</span><span class="p">:</span> <span class="mi">128</span><span class="p">,</span>
-</span><span id="line-15">        <span class="s2">"kernel-size-1"</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
-</span><span id="line-16">        <span class="s2">"kernel-size-2"</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
-</span><span id="line-17">        <span class="s2">"kernel-size-3"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
-</span><span id="line-18">        <span class="s2">"batch-size"</span><span class="p">:</span> <span class="mi">256</span><span class="p">,</span>
-</span><span id="line-19">        <span class="s2">"lr"</span><span class="p">:</span> <span class="mf">0.001</span><span class="p">,</span>
-</span><span id="line-20">        <span class="s2">"epochs"</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
-</span><span id="line-21">    <span class="p">},</span>
-</span><span id="line-22"><span class="p">)</span>
-</span><span id="line-23">
-</span><span id="line-24"><span class="n">estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">({</span><span class="s2">"training"</span><span class="p">:</span> <span class="n">training_data</span><span class="p">})</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># create the estimator</span>
+</span><span id="line-2"><span class="n">estimator</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">AlgorithmEstimator</span><span class="p">(</span>
+</span><span id="line-3">    <span class="n">algorithm_arn</span><span class="o">=</span><span class="n">algo_arn</span><span class="p">,</span>
+</span><span id="line-4">    <span class="n">role</span><span class="o">=</span><span class="n">role</span><span class="p">,</span>
+</span><span id="line-5">    <span class="n">instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+</span><span id="line-6">    <span class="n">instance_type</span><span class="o">=</span><span class="n">instance_type</span><span class="p">,</span>
+</span><span id="line-7">    <span class="n">input_mode</span><span class="o">=</span><span class="s2">"File"</span><span class="p">,</span>
+</span><span id="line-8">    <span class="n">sagemaker_session</span><span class="o">=</span><span class="n">sagemaker_session</span><span class="p">,</span>
+</span><span id="line-9">    <span class="n">hyperparameters</span><span class="o">=</span><span class="p">{</span>
+</span><span id="line-10">        <span class="s2">"num-layers"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+</span><span id="line-11">        <span class="s2">"hidden-size"</span><span class="p">:</span> <span class="mi">128</span><span class="p">,</span>
+</span><span id="line-12">        <span class="s2">"dropout"</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+</span><span id="line-13">        <span class="s2">"filters-1"</span><span class="p">:</span> <span class="mi">128</span><span class="p">,</span>
+</span><span id="line-14">        <span class="s2">"filters-2"</span><span class="p">:</span> <span class="mi">256</span><span class="p">,</span>
+</span><span id="line-15">        <span class="s2">"filters-3"</span><span class="p">:</span> <span class="mi">128</span><span class="p">,</span>
+</span><span id="line-16">        <span class="s2">"kernel-size-1"</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+</span><span id="line-17">        <span class="s2">"kernel-size-2"</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+</span><span id="line-18">        <span class="s2">"kernel-size-3"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+</span><span id="line-19">        <span class="s2">"batch-size"</span><span class="p">:</span> <span class="mi">256</span><span class="p">,</span>
+</span><span id="line-20">        <span class="s2">"lr"</span><span class="p">:</span> <span class="mf">0.001</span><span class="p">,</span>
+</span><span id="line-21">        <span class="s2">"epochs"</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+</span><span id="line-22">    <span class="p">},</span>
+</span><span id="line-23"><span class="p">)</span>
+</span><span id="line-24">
+</span><span id="line-25"><span class="c1"># run the training job</span>
+</span><span id="line-26"><span class="n">estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">({</span><span class="s2">"training"</span><span class="p">:</span> <span class="n">training_data</span><span class="p">})</span>
 </span></code></pre></div>
 </div>
 </section>
 <section id="inference">
 <h3>Inference<a class="headerlink" href="#inference" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#inference'">¶</a></h3>
 <p>Once the training job has completed, we can deploy the model to a real-time endpoint.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">serializer</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">serializers</span><span class="o">.</span><span class="n">CSVSerializer</span><span class="p">(</span><span class="n">content_type</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">)</span>
-</span><span id="line-2"><span class="n">deserializer</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">deserializers</span><span class="o">.</span><span class="n">CSVDeserializer</span><span class="p">(</span><span class="n">accept</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># define the endpoint inputs serializer</span>
+</span><span id="line-2"><span class="n">serializer</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">serializers</span><span class="o">.</span><span class="n">CSVSerializer</span><span class="p">(</span><span class="n">content_type</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">)</span>
 </span><span id="line-3">
-</span><span id="line-4"><span class="n">predictor</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">deploy</span><span class="p">(</span>
-</span><span id="line-5">    <span class="n">initial_instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-</span><span id="line-6">    <span class="n">instance_type</span><span class="o">=</span><span class="n">instance_type</span><span class="p">,</span>
-</span><span id="line-7">    <span class="n">serializer</span><span class="o">=</span><span class="n">serializer</span><span class="p">,</span>
-</span><span id="line-8">    <span class="n">deserializer</span><span class="o">=</span><span class="n">deserializer</span><span class="p">,</span>
-</span><span id="line-9"><span class="p">)</span>
+</span><span id="line-4"><span class="c1"># define the endpoint outputs deserializer</span>
+</span><span id="line-5"><span class="n">deserializer</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">deserializers</span><span class="o">.</span><span class="n">CSVDeserializer</span><span class="p">(</span><span class="n">accept</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">)</span>
+</span><span id="line-6">
+</span><span id="line-7"><span class="c1"># create the endpoint</span>
+</span><span id="line-8"><span class="n">predictor</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">deploy</span><span class="p">(</span>
+</span><span id="line-9">    <span class="n">initial_instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+</span><span id="line-10">    <span class="n">instance_type</span><span class="o">=</span><span class="n">instance_type</span><span class="p">,</span>
+</span><span id="line-11">    <span class="n">serializer</span><span class="o">=</span><span class="n">serializer</span><span class="p">,</span>
+</span><span id="line-12">    <span class="n">deserializer</span><span class="o">=</span><span class="n">deserializer</span><span class="p">,</span>
+</span><span id="line-13"><span class="p">)</span>
 </span></code></pre></div>
 </div>
 <p>After that we load the test data from the CSV file.</p>
@@ -305,30 +312,36 @@ After resampling, the training data contains 641 instances of each class.</p>
 </span><span id="line-2"><span class="n">test_dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"mitbih_test.csv"</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
-<p>To avoid confusion, we move the class labels from the last column to the first column, even though these are obviously not used for inference.</p>
+<p>To avoid confusion, we move the class labels from the last column to the first column, even though they are obviously not used for inference.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># move the class labels to the first column</span>
 </span><span id="line-2"><span class="n">test_dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">test_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:],</span> <span class="n">test_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
 <p>Given that the test dataset is relatively large, we invoke the endpoint with batches of time series as opposed to using the entire test dataset as a single payload.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">100</span>
-</span><span id="line-2"><span class="n">predictions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># define the batch size</span>
+</span><span id="line-2"><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">100</span>
 </span><span id="line-3">
-</span><span id="line-4"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_dataset</span><span class="p">),</span> <span class="n">batch_size</span><span class="p">):</span>
-</span><span id="line-5">
-</span><span id="line-6">    <span class="n">response</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">sagemaker_runtime_client</span><span class="o">.</span><span class="n">invoke_endpoint</span><span class="p">(</span>
-</span><span id="line-7">        <span class="n">EndpointName</span><span class="o">=</span><span class="n">predictor</span><span class="o">.</span><span class="n">endpoint_name</span><span class="p">,</span>
-</span><span id="line-8">        <span class="n">ContentType</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">,</span>
-</span><span id="line-9">        <span class="n">Body</span><span class="o">=</span><span class="n">serializer</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">test_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">batch_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">:])</span>
-</span><span id="line-10">    <span class="p">)</span>
-</span><span id="line-11">
-</span><span id="line-12">    <span class="n">predictions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span>
-</span><span id="line-13">        <span class="n">predictions</span><span class="p">,</span>
-</span><span id="line-14">        <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-</span><span id="line-15">            <span class="n">data</span><span class="o">=</span><span class="n">deserializer</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s2">"Body"</span><span class="p">],</span> <span class="n">content_type</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">),</span>
-</span><span id="line-16">            <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span>
-</span><span id="line-17">        <span class="p">)</span>
-</span><span id="line-18">    <span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="line-4"><span class="c1"># create a data frame for storing the model predictions</span>
+</span><span id="line-5"><span class="n">predictions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+</span><span id="line-6">
+</span><span id="line-7"><span class="c1"># loop across the test dataset</span>
+</span><span id="line-8"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_dataset</span><span class="p">),</span> <span class="n">batch_size</span><span class="p">):</span>
+</span><span id="line-9">
+</span><span id="line-10">    <span class="c1"># invoke the endpoint with a batch of time series, make sure to drop the first column with the class labels</span>
+</span><span id="line-11">    <span class="n">response</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">sagemaker_runtime_client</span><span class="o">.</span><span class="n">invoke_endpoint</span><span class="p">(</span>
+</span><span id="line-12">        <span class="n">EndpointName</span><span class="o">=</span><span class="n">predictor</span><span class="o">.</span><span class="n">endpoint_name</span><span class="p">,</span>
+</span><span id="line-13">        <span class="n">ContentType</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">,</span>
+</span><span id="line-14">        <span class="n">Body</span><span class="o">=</span><span class="n">serializer</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">test_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">batch_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">:])</span>
+</span><span id="line-15">    <span class="p">)</span>
+</span><span id="line-16">
+</span><span id="line-17">    <span class="c1"># save the predicted class labels in the data frame</span>
+</span><span id="line-18">    <span class="n">predictions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span>
+</span><span id="line-19">        <span class="n">predictions</span><span class="p">,</span>
+</span><span id="line-20">        <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+</span><span id="line-21">            <span class="n">data</span><span class="o">=</span><span class="n">deserializer</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s2">"Body"</span><span class="p">],</span> <span class="n">content_type</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">),</span>
+</span><span id="line-22">            <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span>
+</span><span id="line-23">        <span class="p">)</span>
+</span><span id="line-24">    <span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
 <p>After generating the model predictions, we can calculate the classification metrics.</p>
@@ -341,7 +354,7 @@ After resampling, the training data contains 641 instances of each class.</p>
 </div>
 <p>We find that the model achieves 99.79% accuracy on the test data.</p>
 <img alt="LSTM-FCN confusion matrix on MIT-BIH test dataset" class="blog-post-image" id="lstm-fcn-ecg-classification-confusion-matrix" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/ecg-classification/confusion_matrix_light.png"/>
-<p class="blog-post-image-caption"> LSTM-FCN confusion matrix on MIT-BIH test dataset.</p><p>Once the analysis has been completed, we can delete the model and the endpoint.</p>
+<p class="blog-post-image-caption"> LSTM-FCN confusion matrix on MIT-BIH test dataset.</p><p>After the analysis has been completed, we can delete the model and the endpoint.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># delete the model</span>
 </span><span id="line-2"><span class="n">predictor</span><span class="o">.</span><span class="n">delete_model</span><span class="p">()</span>
 </span><span id="line-3">
