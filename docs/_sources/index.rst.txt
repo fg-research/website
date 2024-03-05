@@ -36,7 +36,7 @@ Automated Data Handling
    The algorithms work directly on raw time series data in CSV format. All the required data preprocessing and scaling is performed internally by our code.
 
 Automatic Model Tuning
-   The algorithms support `automatic model tuning <https://docs.aws.amazon.com/sagemaker/latest/dg/automatic-model-tuning.html>`__ for optimizing the neural network hyperparameters in order to achieve the best possible performance on a given dataset.
+   The algorithms support `automatic model tuning <https://docs.aws.amazon.com/sagemaker/latest/dg/automatic-model-tuning.html>`__ for optimizing the model hyperparameters in order to achieve the best possible performance on a given dataset.
 
 Incremental Training
     Most of the algorithms support `incremental training <https://docs.aws.amazon.com/sagemaker/latest/dg/incremental-training.html>`__ to continue training the model on the same dataset or to fine-tune the model on a different dataset.
