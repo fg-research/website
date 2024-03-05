@@ -154,7 +154,21 @@ of heartbeats where class 0 indicates a normal heartbeat while classes 1, 2, 3, 
 to different types of arrhythmia.
 <p><section id="model">
 <h2>Model<a class="headerlink" href="#model" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#model'">¶</a></h2>
-</section>
+<p>
+The LSTM-FCN model includes two blocks: a recurrent block and a convolutional block.
+The recurrent block consists of a single LSTM layer (either general or with attention)
+followed by a dropout layer. The convolutional block consists of three convolutional
+layers, each followed by batch normalization and ReLU activation, and of a global
+average pooling layer.
+<p>
+<p>
+The input time series are passed to both blocks. The convolutional block processes each
+time series as a single feature observed across multiple time steps, while the recurrent
+block processes each time series as multiple features observed at a single time step
+(referred to as dimension shuffling). The outputs of the two blocks are concatenated and
+passed to a final output layer with softmax activation. The model parameters are learned
+by minimizing the cross-entropy loss.
+<p><img alt="LSTM-FCN architecture" class="blog-post-image" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/diagrams/lstm-fcn-architecture.png"/><p class="blog-post-image-caption">LSTM-FCN architecture (source: <a class="reference external" href="https://doi.org/10.1109/ACCESS.2017.2779939">doi: 10.1109/ACCESS.2017.2779939</a>)</p></p></p></p></p></section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#references'">¶</a></h2>
 <p>[1] Karim, F., Majumdar, S., Darabi, H., &amp; Chen, S. (2018). LSTM fully convolutional networks for time series classification.

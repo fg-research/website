@@ -40,6 +40,32 @@ Arrhythmia classification with the LSTM-FCN SageMaker Algorithm
 Model
 ******************************************
 
+.. raw:: html
+
+    <p>
+    The LSTM-FCN model includes two blocks: a recurrent block and a convolutional block.
+    The recurrent block consists of a single LSTM layer (either general or with attention)
+    followed by a dropout layer. The convolutional block consists of three convolutional
+    layers, each followed by batch normalization and ReLU activation, and of a global
+    average pooling layer.
+    <p>
+
+    <p>
+    The input time series are passed to both blocks. The convolutional block processes each
+    time series as a single feature observed across multiple time steps, while the recurrent
+    block processes each time series as multiple features observed at a single time step
+    (referred to as dimension shuffling). The outputs of the two blocks are concatenated and
+    passed to a final output layer with softmax activation. The model parameters are learned
+    by minimizing the cross-entropy loss.
+    <p>
+
+.. raw:: html
+
+    <img class="blog-post-image" alt="LSTM-FCN architecture" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/diagrams/lstm-fcn-architecture.png />
+
+.. raw:: html
+
+    <p class="blog-post-image-caption">LSTM-FCN architecture (source: <a class="reference external" href="https://doi.org/10.1109/ACCESS.2017.2779939">doi: 10.1109/ACCESS.2017.2779939</a>)</p>
 
 
 
