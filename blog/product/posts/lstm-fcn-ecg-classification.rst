@@ -23,6 +23,7 @@ Arrhythmia classification with the LSTM-FCN SageMaker Algorithm
     <p>
     In this post, we use the Long Short-Term Memory Fully Convolutional Network (LSTM-FCN)
     <a href="#references">[1]</a> for classifying the ECG traces in the
+    `doi: 10.1109/ACCESS.2017.2779939 <https://doi.org/10.1109/ACCESS.2017.2779939>`__
     `PhysioNet MIT-BIH Arrhythmia Database <https://physionet.org/content/mitdb/1.0.0>`__
     <a href="#references">[2]</a>. We use the
     `pre-processed version of the dataset <https://www.kaggle.com/datasets/shayanfazeli/heartbeat>`__
