@@ -43,22 +43,17 @@ Model
 
     <p>
     The LSTM-FCN model includes two blocks: a recurrent block and a convolutional block.
-    The recurrent block consists of a single LSTM layer (either general or with attention)
-    followed by a dropout layer. The convolutional block consists of three convolutional
-    layers, each followed by batch normalization and ReLU activation, and of a global
-    average pooling layer.
+    The recurrent block consists of a single LSTM layer followed by a dropout layer.
+    The convolutional block consists of three convolutional layers, each followed by
+    batch normalization and ReLU activation, and of a global average pooling layer.
     </p>
 
     <p>
     The input time series are passed to both blocks. The convolutional block processes each
     time series as a single feature observed across multiple time steps, while the recurrent
     block processes each time series as multiple features observed at a single time step
-    (referred to as <i>dimension shuffling</i>).
-    </p>
-
-    <p>
-    The outputs of the two blocks are concatenated and passed to a final output layer with softmax activation.
-    The model parameters are learned by minimizing the cross-entropy loss.
+    (referred to as <i>dimension shuffling</i>). The outputs of the two blocks are
+    concatenated and passed to a final output layer with softmax activation.
     </p>
 
 ******************************************
@@ -73,6 +68,12 @@ Data
     with zeroes to the fixed length of 187. The dataset contains 5 different categories of heartbeats
     where class 0 indicates a normal heartbeat while classes 1, 2, 3, and 4 correspond to different
     types of arrhythmia.
+    </p>
+
+    <p>The dataset is split into a training set and a test set. The train-test split is provided
+    directly by the authors. The training set contains 87,554 time series while the test set
+    contains 21,892 time series. Both the training and test sets are imbalanced, as most time
+    series belong to the normal class (class 0).
     </p>
 
 ******************************************
