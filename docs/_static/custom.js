@@ -40,7 +40,8 @@ window.setInterval(function(){
         'lstm-ae-oil-price-anomaly-detection-prices',
         'lstm-ae-oil-price-anomaly-detection-returns',
         'lstm-ae-oil-price-anomaly-detection-results-plot',
-        'lstm-ae-oil-price-anomaly-detection-results-table'
+        'lstm-ae-oil-price-anomaly-detection-results-table',
+        'lstm-fcn-ecg-classification-class-distribution'
     ];
     for (var i = 0; i < elements.length; i++) {
         var f = document.getElementById(elements[i]);

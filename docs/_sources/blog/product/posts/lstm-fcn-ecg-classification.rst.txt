@@ -77,6 +77,11 @@ Data
     series represent normal heartbeats.
     </p>
 
+   <img id="lstm-fcn-ecg-classification-class-distribution" class="blog-post-image" alt="MIT-BIH Dataset Class Distribution" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/ecg-classification/mit_bih_dataset_light.png />
+
+   <p class="blog-post-image-caption"> MIT-BIH Dataset Class Distribution.</p>
+
+
 ******************************************
 References
 ******************************************

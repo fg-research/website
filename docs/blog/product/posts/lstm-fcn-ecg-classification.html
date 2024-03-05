@@ -167,19 +167,21 @@ concatenated and passed to a final output layer with softmax activation.
 <section id="data">
 <h2>Data<a class="headerlink" href="#data" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data'">¶</a></h2>
 <p>
-We use the <a href="https://www.kaggle.com/datasets/shayanfazeli/heartbeat" target="_blank">
-pre-processed version of the PhysioNet MIT-BIH Arrhythmia Database</a> made available in <a href="#references">[4]</a>
-where the ECG recordings are split into individual heartbeats and then downsampled and padded
-with zeroes to the fixed length of 187. The dataset contains 5 different categories of heartbeats
-where class 0 indicates a normal heartbeat while classes 1, 2, 3, and 4 correspond to different
-types of arrhythmia.
-</p>
+ We use the <a href="https://www.kaggle.com/datasets/shayanfazeli/heartbeat" target="_blank">
+ pre-processed version of the PhysioNet MIT-BIH Arrhythmia Database</a> made available in <a href="#references">[4]</a>
+ where the ECG recordings are split into individual heartbeats and then downsampled and padded
+ with zeroes to the fixed length of 187. The dataset contains 5 different categories of heartbeats
+ where class 0 indicates a normal heartbeat while classes 1, 2, 3, and 4 correspond to different
+ types of arrhythmia.
+ </p>
 <p>
-The dataset is split into a training set and a test set. The train-test split is provided
-directly by the authors. The training set contains 87,554 time series while the test set
-contains 21,892 time series. Both the training and test sets are imbalanced, as most time
-series represent normal heartbeats.
-</p></section>
+ The dataset is split into a training set and a test set. The train-test split is provided
+ directly by the authors. The training set contains 87,554 time series while the test set
+ contains 21,892 time series. Both the training and test sets are imbalanced, as most time
+ series represent normal heartbeats.
+ </p>
+<img alt="MIT-BIH Dataset Class Distribution" class="blog-post-image" id="lstm-fcn-ecg-classification-class-distribution" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/ecg-classification/mit_bih_dataset_light.png"/>
+<p class="blog-post-image-caption"> MIT-BIH Dataset Class Distribution.</p></section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#references'">¶</a></h2>
 <p>[1] Ebrahimi, Z., Loni, M., Daneshtalab, M., &amp; Gharehbaghi, A. (2020).
