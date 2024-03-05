@@ -84,23 +84,17 @@ A review on deep learning methods for ECG arrhythmia classification.
 *Expert Systems with Applications: X*, vol. 7, 100033.
 `doi: 10.1016/j.eswax.2020.100033 <https://doi.org/10.1016/j.eswax.2020.100033>`__.
 
-[2] Karim, F., Majumdar, S., Darabi, H., & Chen, S. (2018). LSTM fully convolutional networks for time series classification.
+[2] Karim, F., Majumdar, S., Darabi, H., & Chen, S. (2018).
+LSTM fully convolutional networks for time series classification.
 *IEEE Access*, vol. 6, pp. 1662-1669,
 `doi: 10.1109/ACCESS.2017.2779939 <https://doi.org/10.1109/ACCESS.2017.2779939>`__.
 
-[3] Moody, G. B., & Mark, R. G. (2001). The impact of the MIT-BIH arrhythmia database.
+[3] Moody, G. B., & Mark, R. G. (2001).
+The impact of the MIT-BIH arrhythmia database.
 *IEEE engineering in medicine and biology magazine*, vol. 20, no. 3, pp. 45-50,
 `doi: 10.1109/51.932724 <https://doi.org/10.1109/51.932724>`__.
 
-[4] Kachuee, M., Fazeli, S., & Sarrafzadeh, M. (2018). ECG heartbeat classification: A deep transferable representation.
+[4] Kachuee, M., Fazeli, S., & Sarrafzadeh, M. (2018).
+ECG heartbeat classification: A deep transferable representation.
 *2018 IEEE international conference on healthcare informatics (ICHI)*, pp. 443-444,
 `doi: 10.1109/ICHI.2018.00092 <https://doi.org/10.1109/ICHI.2018.00092>`__.
-
-
-
-
-
-
-
-
-
