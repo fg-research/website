@@ -267,6 +267,7 @@ After generating the model predictions, we can calculate the classification metr
 We find that the model achieves 99.79% accuracy on the test data.
 
 .. raw:: html
+
     <img id="lstm-fcn-ecg-classification-confusion-matrix" class="blog-post-image" alt="LSTM-FCN confusion matrix on MIT-BIH test dataset" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/ecg-classification/confusion_matrix_light.png />
 
     <p class="blog-post-image-caption"> LSTM-FCN confusion matrix on MIT-BIH test dataset.</p>

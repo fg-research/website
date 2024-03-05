@@ -340,6 +340,7 @@ After resampling, the training data contains 641 instances of each class.</p>
 </span></code></pre></div>
 </div>
 <p>We find that the model achieves 99.79% accuracy on the test data.</p>
+<img alt="LSTM-FCN confusion matrix on MIT-BIH test dataset" class="blog-post-image" id="lstm-fcn-ecg-classification-confusion-matrix" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/ecg-classification/confusion_matrix_light.png"/>
 <p class="blog-post-image-caption"> LSTM-FCN confusion matrix on MIT-BIH test dataset.</p><p>Once the analysis has been completed, we can delete the model and the endpoint.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># delete the model</span>
 </span><span id="line-2"><span class="n">predictor</span><span class="o">.</span><span class="n">delete_model</span><span class="p">()</span>
