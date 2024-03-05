@@ -27,9 +27,9 @@ Arrhythmia classification with the LSTM-FCN SageMaker Algorithm
     <a href="#references">[2]</a>. We use the <a href="https://www.kaggle.com/datasets/shayanfazeli/heartbeat">
     pre-processed version of the dataset</a> made available in <a href="#references">[3]</a>
     where the ECG recordings are split into individual heartbeats and then downsampled and padded
-    with zeroes to the fixed length of 187. The dataset contains 5 different categories of heartbeats
-    where class 0 indicates a normal heartbeat while classes 1, 2, 3, and 4 correspond to different
-    types of arrhythmia.
+    with zeroes to the fixed length of 187. This version of the dataset contains 5 different categories
+    of heartbeats where class 0 indicates a normal heartbeat while classes 1, 2, 3, and 4 correspond
+    to different types of arrhythmia.
     <p>
 
 
