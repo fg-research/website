@@ -14,6 +14,9 @@ Arrhythmia classification with the LSTM-FCN SageMaker Algorithm
     categorizing abnormal patterns of cardiac electrical activity detected in the ECG signal.
     Arrhythmia classification is important for diagnosing cardiac abnormalities, assessing the
     risk of adverse cardiovascular events and guiding appropriate treatment strategies.
+    <p>
+
+    <p>
     Machine learning algorithms can automate the process of ECG interpretation, reducing the
     reliance on manual analysis by healthcare professionals, a task that is both time-consuming
     and prone to errors. The automation provided by machine learning algorithms offers the
