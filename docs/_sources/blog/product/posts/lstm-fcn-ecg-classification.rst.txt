@@ -266,9 +266,20 @@ After generating the model predictions, we can calculate the classification metr
 
 We find that the model achieves 99.79% accuracy on the test data.
 
-   <img id="lstm-fcn-ecg-classification-confusion-matrix" class="blog-post-image" alt="LSTM-FCN confusion matrix on MIT-BIH test dataset" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/ecg-classification/confusion_matrix_light.png />
+.. raw:: html
+    <img id="lstm-fcn-ecg-classification-confusion-matrix" class="blog-post-image" alt="LSTM-FCN confusion matrix on MIT-BIH test dataset" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/ecg-classification/confusion_matrix_light.png />
 
-   <p class="blog-post-image-caption"> LSTM-FCN confusion matrix on MIT-BIH test dataset.</p>
+    <p class="blog-post-image-caption"> LSTM-FCN confusion matrix on MIT-BIH test dataset.</p>
+
+Once the analysis has been completed, we can delete the model and the endpoint.
+
+.. code:: python
+
+    # delete the model
+    predictor.delete_model()
+
+    # delete the endpoint
+    predictor.delete_endpoint()
 
 .. tip::
 
