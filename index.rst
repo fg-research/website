@@ -26,14 +26,14 @@ Time Series Analysis in Amazon SageMaker
 ******************************************
 Overview
 ******************************************
-We provide Amazon SageMaker algorithms for multiple time series tasks, including forecasting, anomaly detection, clustering and classification.
+fg-research provides Amazon SageMaker algorithms for multiple time series tasks, including forecasting, anomaly detection, clustering and classification.
 Each algorithm implements a state-of-the-art machine learning model designed specifically for time series.
 
 ******************************************
 Features
 ******************************************
 Automated Data Handling
-   The algorithms work directly on raw time series data in CSV format. All the required data preprocessing and scaling is performed internally by our code.
+   The algorithms work directly on raw time series data in CSV format. All the required data preprocessing and scaling is performed internally by the algorithm's code.
 
 Automatic Model Tuning
    The algorithms support `automatic model tuning <https://docs.aws.amazon.com/sagemaker/latest/dg/automatic-model-tuning.html>`__ for optimizing the model hyperparameters in order to achieve the best possible performance on a given dataset.
@@ -49,7 +49,7 @@ Documentation
 *****************************************
 .. raw:: html
 
-    <p>Each algorithm has a dedicated <a href="https://github.com/fg-research" target="_blank">GitHub</a> repository with detailed documentation and step-by-step tutorials in Jupyter notebook format. Some algorithms are also discussed in our <a href="blog/product/index.html#product" target="_blank">blog</a>.</p>
+    <p>Each algorithm has a dedicated <a href="https://github.com/fg-research" target="_blank">GitHub</a> repository with detailed documentation and step-by-step tutorials in Jupyter notebook format. Several use cases are also discussed in our <a href="blog/product/index.html#product" target="_blank">blog</a>.</p>
 
 ******************************************
 Pricing
