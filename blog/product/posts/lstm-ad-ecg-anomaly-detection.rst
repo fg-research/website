@@ -19,8 +19,8 @@ ECG anomaly detection with the LSTM-AD SageMaker Algorithm
     </p>
 
     <p>
-    Different supervised <a href="#references">[1]</a> and unsupervised <a href="#references">[2]</a>
-    machine learning algorithms have been studied in the literature on ECG anomaly detection.
+    Different supervised and unsupervised machine learning algorithms have been studied
+    in the literature on ECG anomaly detection <a href="#references">[1]</a>, <a href="#references">[2]</a>.
     In this post, we will focus on the
     <a href="https://www.esann.org/sites/default/files/proceedings/legacy/es2015-56.pdf" target="_blank">
     Long Short-Term Memory Network for Anomaly Detection</a> <a href="#references">[3]</a>,
