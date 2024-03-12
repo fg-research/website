@@ -120,16 +120,16 @@ References
 
 [1] Kontaki, M., Papadopoulos, A. N., & Manolopoulos, Y. (2005).
 Similarity search in time series databases.
-In *Encyclopedia of Database Technologies and Applications* (pp. 646-651).
+In *Encyclopedia of Database Technologies and Applications*, pp. 646-651.
 `doi: 10.4018/978-1-59140-560-3.ch106 <https://doi.org/10.4018/978-1-59140-560-3.ch106>`__.
 
 [2] Alcock, R. J., & Manolopoulos, Y. (1999).
 Time-series similarity queries employing a feature-based approach.
-In *7th Hellenic conference on informatics* (pp. 27-29).
+In *7th Hellenic conference on informatics*, pp. 27-29.
 
 [3] Lafabregue, B., Weber, J., Gançarski, P., & Forestier, G. (2022).
 End-to-end deep representation learning for time series clustering: a comparative study.
-*Data mining and knowledge discovery*, 36(1), 29-81.
+*Data mining and knowledge discovery*, vol. 36, pp. 29-81.
 `doi: 10.1007/s10618-021-00796-y <https://doi.org/10.1007/s10618-021-00796-y>`__.
 
 [4] Meng, Q., Qian, H., Liu, Y., Xu, Y., Shen, Z., & Cui, L. (2023).
@@ -139,9 +139,9 @@ Unsupervised representation learning for time series: A review.
 
 [5] Franceschi, J. Y., Dieuleveut, A., & Jaggi, M. (2019).
 Unsupervised scalable representation learning for multivariate time series.
-*Advances in neural information processing systems*, 32.
+*Advances in neural information processing systems*, vol. 32.
 
 [6] Dau, H. A., Bagnall, A., Kamgar, K., Yeh, C. C. M., Zhu, Y., Gharghabi, S., Ratanamahatana, C. A., & Keogh, E. (2019).
 The UCR time series archive.
-*IEEE/CAA Journal of Automatica Sinica*, 6(6), 1293-1305.
+*IEEE/CAA Journal of Automatica Sinica*, vol. 6, no. 6, pp. 1293-1305.
 `10.1109/JAS.2019.1911747 <https://doi.org/10.1109/JAS.2019.1911747>`__.
