@@ -87,11 +87,11 @@ Data
     The time series represent 6 different control chart patterns:
     <ul>
     <li>Class 1: Normal</li>
-    - Class 2: Cyclic,
-    - Class 3: Increasing trend,
-    - Class 4: Decreasing trend,
-    - Class 5: Upward shift,
-    - Class 6: Downward shift.
+    <li>Class 2: Cyclic</li>
+    <li>Class 3: Increasing trend</li>
+    <li>Class 4: Decreasing trend</li>
+    <li>Class 5: Upward shift</li>
+    <li>Class 6: Downward shift</li>
     </ul>
     </p>
 
