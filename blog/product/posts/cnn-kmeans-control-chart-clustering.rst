@@ -21,17 +21,16 @@ Control chart pattern clustering with the CNN-KMeans SageMaker Algorithm
     A possible solution to this problem is to encode the time series into a number of time-independent features,
     and to use these derived features as inputs in a standard clustering algorithm based on the Euclidean distance
     <a href="#references">[3]</a>. The task of extracting the time-independent features of a set of unlabelled time
-    series is referred to as time series representation learning.
+    series is referred to as <i>time series representation learning</i>.
     </p>
 
     <p>
     Several unsupervised and self-supervised deep learning architectures have been proposed in the literature on
     time series representation learning <a href="#references">[4]</a>. One of the most general frameworks is
-    introduced in <a href="#references">[5]</a>, where a convolutional encoder is trained in an unsupervised
-    manner by minimizing the triplet loss in order to extract a fixed-length feature vector from a set of
-    possibly varying-length time series. The feature vectors produced by the convolutional encoder can then be used
-    in both unsupervised and supervised downstream tasks, such as time series clustering, time series classification
-    and time series regression.
+    introduced in <a href="#references">[5]</a>, where an unsupervised convolutional encoder is used to
+    transform each time series into a fixed-length feature vector. The feature vectors produced by the convolutional
+    encoder can then be used in both unsupervised and supervised downstream tasks, such as time series clustering,
+    time series classification and time series regression.
     </p>
 
     <p>
@@ -63,10 +62,10 @@ Model
     </p>
 
     <p>
-    The encoder parameters are learned in an unsupervised manner by minimizing the triplet loss. The contrastive learning procedure
-    makes the extracted features of a given sequence (anchor or reference) as close as possible to the extracted features of this
-    same sequence's subsequences (positive samples) and as distant as possible from the extracted features of other sequences
-    (negative samples). All (sub)sequences are sampled randomly during each training iteration.
+    The encoder parameters are learned in an unsupervised manner by minimizing the <i>triplet loss</i>. The contrastive learning
+    procedure makes the extracted features of a given sequence (<i>anchor</i> or <i>reference</i>) as close as possible to the
+    extracted features of this same sequence's subsequences (<i>positive samples</i>) and as distant as possible from the extracted
+    features of other sequences (<i>negative samples</i>). All (sub)sequences are sampled randomly during each training iteration.
     </p>
 
     <p>
@@ -84,9 +83,9 @@ Data
     We use the <a href="http://www.timeseriesclassification.com/description.php?Dataset=SyntheticControl" target="_blank">
     Synthetic Control dataset</a> introduced in <a href="#references">[2]</a> and available in the <a href="http://www.timeseriesclassification.com/dataset.php"
     target="_blank"> UCR Time Series Classification Archive <a href="#references">[6]</a>.
-    The dataset contains 600 synthetically generated time series representing 6 different control chart patterns:
-    normal (class 1), cyclic (class 2), increasing trend (class 3), decreasing trend (class 4), upward shift (class 5)
-    and downward shift (class 6). The time series are equally split into a training set and a test set.
+    The dataset contains 600 synthetically generated time series, which are equally split into a training set and a test set.
+    The time series represent 6 different control chart patterns: normal (class 1), cyclic (class 2), increasing trend (class 3),
+    decreasing trend (class 4), upward shift (class 5) and downward shift (class 6).
     </p>
 
     <img
@@ -247,7 +246,8 @@ which are stored in the subsequent columns.
     # convert the model outputs to data frame
     predictions = pd.read_csv(io.StringIO(predictions), header=None, dtype=float)
 
-After loading the model outputs from S3, we can calculate the clustering metrics.
+After loading the model outputs from S3, we can calculate the <i>Silhouette coefficient</i>.
+The Silhouette coefficient ranges from -1 to 1, with higher values indicating better clustering.
 
 .. code:: python
 
