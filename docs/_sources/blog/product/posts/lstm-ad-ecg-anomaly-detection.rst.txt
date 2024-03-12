@@ -27,7 +27,7 @@ ECG anomaly detection with the LSTM-AD SageMaker Algorithm
     <p>
     We will demonstrate how to use our Amazon SageMaker implementation of the LSTM-AD model,
     the <a href="https://fg-research.com/algorithms/time-series-anomaly-detection/index.html#lstm-ad-sagemaker-algorithm"
-    target="_blank">LSTM-AD SageMaker algorithm</a>, for detecting anomalies in ECG data.
+    target="_blank">LSTM-AD SageMaker algorithm</a>, for detecting anomalies in an ECG trace.
     </p>
 
 ******************************************
