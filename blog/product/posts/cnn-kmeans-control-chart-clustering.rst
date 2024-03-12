@@ -255,7 +255,7 @@ We find that the model achieves a Silhouette coefficient of 0.33 on the test set
 
 .. raw:: html
 
-   <img id="cnn-kmeans-control-chart-clustering-clusters" class="blog-post-image" alt="Results on Synthetic Control UCR dataset (test set)" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/control-chart-clustering/clusters_light.png />
+   <img id="cnn-kmeans-control-chart-clustering-results" class="blog-post-image" alt="Results on Synthetic Control UCR dataset (test set)" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/control-chart-clustering/results_light.png />
 
    <p class="blog-post-image-caption"> Results on Synthetic Control UCR dataset (test set).</p>
 
