@@ -21,22 +21,22 @@ Control chart pattern clustering with the CNN-KMeans SageMaker Algorithm
     A possible solution to this problem is to encode the time series into a number of time-independent features,
     and to use these derived features as inputs in a standard clustering algorithm <a href="#references">[3]</a>.
     The task of extracting the time-independent features of a set of unlabelled time series is referred to as
-    time series representation learning.
+    <i>time series representation learning<i/>.
     </p>
 
     <p>
     Several unsupervised and self-supervised deep learning architectures have been proposed in the literature on
     time series representation learning <a href="#references">[4]</a>. One of the most general frameworks is
     introduced in <a href="#references">[5]</a>, where a convolutional encoder is trained in an unsupervised
-    manner by minimizing the triplet loss in order to extract a fixed-length feature vector from a set of possibly
+    manner by minimizing the <i>triplet loss<i/> in order to extract a fixed-length feature vector from a set of possibly
     varying-length time series. The feature vectors produced by the encoder can then be used in both unsupervised and
     supervised downstream tasks, such as time series clustering, time series classification and time series regression.
     </p>
 
     <p>
-    In the rest of this post will demonstrate how to use this framework for control chart pattern recognition. We will
-    use our Amazon SageMaker implementation of the time series clustering version of this framework, the
-    <a href="https://fg-research.com/algorithms/time-series-clustering/index.html#cnn-kmeans-sagemaker-algorithm"
+    In the rest of this post, we will demonstrate how to use the framework introduced in <a href="#references">[5]</a>
+    for control chart pattern recognition. We will use our Amazon SageMaker implementation of the clustering version
+    of this framework, the <a href="https://fg-research.com/algorithms/time-series-clustering/index.html#cnn-kmeans-sagemaker-algorithm"
     target="_blank">CNN-KMeans SageMaker algorithm</a>, for clustering the control charts in the
     <a href="http://www.timeseriesclassification.com/description.php?Dataset=SyntheticControl" target="_blank">
     Synthetic Control dataset</a> <a href="#references">[6]</a>.
