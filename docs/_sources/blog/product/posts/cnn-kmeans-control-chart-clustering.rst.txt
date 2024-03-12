@@ -15,6 +15,9 @@ Control chart pattern clustering with the CNN-KMeans SageMaker Algorithm
     directly applicable to time series data, as time series with similar patterns can have large Euclidean
     distance due to misalignments and offsets along the time axis <a href="#references">[1]</a>,
     <a href="#references">[2]</a>, <a href="#references">[3]</a>.
+    </p>
+
+    <p>
     A possible solution to this problem is to encode the time series into a number of time-independent features,
     and to use these derived features as inputs in a standard clustering algorithm based on the Euclidean distance
     <a href="#references">[3]</a>.
