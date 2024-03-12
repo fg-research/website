@@ -21,7 +21,7 @@ Control chart pattern clustering with the CNN-KMeans SageMaker Algorithm
     A possible solution to this problem is to encode the time series into a number of time-independent features,
     and to use these derived features as inputs in a standard clustering algorithm <a href="#references">[3]</a>.
     The task of extracting the time-independent features of a set of unlabelled time series is referred to as
-    *time series representation learning*.
+    <i>time series representation learning</i>.
     </p>
 
     <p>
