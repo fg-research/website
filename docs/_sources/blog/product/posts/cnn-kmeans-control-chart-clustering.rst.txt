@@ -11,27 +11,27 @@ Control chart pattern clustering with the CNN-KMeans SageMaker Algorithm
 
     <p>
     Time series clustering is the task of partitioning a set of time series into homogeneous groups.
-    Traditional clustering algorithms based on the Euclidean distance, such as K-Means clustering, are not
-    directly applicable to time series data, as time series with similar patterns can have large Euclidean
-    distance due to misalignments and offsets along the time axis <a href="#references">[1]</a>,
+    Traditional clustering algorithms based on the Euclidean distance, such as K-Means clustering, are
+    not directly applicable to time series data, as time series with similar patterns can have large
+    Euclidean distance due to misalignments and offsets along the time axis <a href="#references">[1]</a>,
     <a href="#references">[2]</a>, <a href="#references">[3]</a>.
     </p>
 
     <p>
     A possible solution to this problem is to encode the time series into a number of time-independent features,
     and to use these derived features as inputs in a standard clustering algorithm based on the Euclidean distance
-    <a href="#references">[3]</a>.
-    The task of extracting the time-independent features of a set of unlabelled time series is referred to as
-    <i>time series representation learning</i>.
+    <a href="#references">[3]</a>. The task of extracting the time-independent features of a set of unlabelled time
+    series is referred to as <i>time series representation learning</i>.
     </p>
 
     <p>
     Several unsupervised and self-supervised deep learning architectures have been proposed in the literature on
     time series representation learning <a href="#references">[4]</a>. One of the most general frameworks is
     introduced in <a href="#references">[5]</a>, where a convolutional encoder is trained in an unsupervised
-    manner by minimizing the <i>triplet loss</i> in order to extract a fixed-length feature vector from a set of possibly
-    varying-length time series. The feature vectors produced by the encoder can then be used in both unsupervised and
-    supervised downstream tasks, such as time series clustering, time series classification and time series regression.
+    manner by minimizing the <i>triplet loss</i> in order to extract a fixed-length feature vector from a set of
+    possibly varying-length time series. The feature vectors produced by the convolutional encoder can then be used
+    in both unsupervised and supervised downstream tasks, such as time series clustering, time series classification
+    and time series regression.
     </p>
 
     <p>
