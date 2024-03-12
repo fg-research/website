@@ -85,12 +85,14 @@ Data
     target="_blank"> UCR Time Series Classification Archive <a href="#references">[6]</a>.
     The dataset contains 600 synthetically generated time series, which are equally split into a training set and a test set.
     The time series represent 6 different control chart patterns:
-    - Class 1: Normal,
+    <ul>
+    <li>Class 1: Normal</li>
     - Class 2: Cyclic,
     - Class 3: Increasing trend,
     - Class 4: Decreasing trend,
     - Class 5: Upward shift,
     - Class 6: Downward shift.
+    </ul>
     </p>
 
     <img
