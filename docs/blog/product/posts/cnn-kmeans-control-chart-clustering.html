@@ -185,8 +185,13 @@ These extracted features are then used for training the K-Means clusterer.
  We use the <a href="http://www.timeseriesclassification.com/description.php?Dataset=SyntheticControl" target="_blank">
  Synthetic Control dataset</a> introduced in <a href="#references">[2]</a> and available in the <a href="http://www.timeseriesclassification.com/dataset.php" target="_blank"> UCR Time Series Classification Archive <a href="#references">[6]</a>.
  The dataset contains 600 synthetically generated time series, which are equally split into a training set and a test set.
- The time series represent 6 different control chart patterns: normal (class 1), cyclic (class 2), increasing trend (class 3),
- decreasing trend (class 4), upward shift (class 5) and downward shift (class 6).
+ The time series represent 6 different control chart patterns:
+ - Class 1: Normal,
+ - Class 2: Cyclic,
+ - Class 3: Increasing trend,
+ - Class 4: Decreasing trend,
+ - Class 5: Upward shift,
+ - Class 6: Downward shift.
  </a></p>
 <img alt="Synthetic Control dataset (combined training and test sets)" class="blog-post-image" id="cnn-kmeans-control-chart-clustering-dataset" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/control-chart-clustering/data_light.png" style="width:100%"/>
 <p class="blog-post-image-caption"> Synthetic Control dataset (combined training and test sets).</p></section>
@@ -321,7 +326,7 @@ which are stored in the subsequent columns.</p>
 </span><span id="line-8"><span class="n">predictions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">predictions</span><span class="p">),</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
-<p>After loading the model outputs from S3, we can calculate the &lt;i&gt;Silhouette coefficient&lt;/i&gt;.
+<p>After loading the model outputs from S3, we can calculate the <em>Silhouette coefficient</em>.
 The Silhouette coefficient ranges from -1 to 1, with higher values indicating better clustering.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># calculate the Silhouette coefficient</span>
 </span><span id="line-2"><span class="n">score</span> <span class="o">=</span> <span class="n">silhouette_score</span><span class="p">(</span>

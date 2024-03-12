@@ -84,8 +84,13 @@ Data
     Synthetic Control dataset</a> introduced in <a href="#references">[2]</a> and available in the <a href="http://www.timeseriesclassification.com/dataset.php"
     target="_blank"> UCR Time Series Classification Archive <a href="#references">[6]</a>.
     The dataset contains 600 synthetically generated time series, which are equally split into a training set and a test set.
-    The time series represent 6 different control chart patterns: normal (class 1), cyclic (class 2), increasing trend (class 3),
-    decreasing trend (class 4), upward shift (class 5) and downward shift (class 6).
+    The time series represent 6 different control chart patterns:
+    - Class 1: Normal,
+    - Class 2: Cyclic,
+    - Class 3: Increasing trend,
+    - Class 4: Decreasing trend,
+    - Class 5: Upward shift,
+    - Class 6: Downward shift.
     </p>
 
     <img
@@ -246,7 +251,7 @@ which are stored in the subsequent columns.
     # convert the model outputs to data frame
     predictions = pd.read_csv(io.StringIO(predictions), header=None, dtype=float)
 
-After loading the model outputs from S3, we can calculate the <i>Silhouette coefficient</i>.
+After loading the model outputs from S3, we can calculate the *Silhouette coefficient*.
 The Silhouette coefficient ranges from -1 to 1, with higher values indicating better clustering.
 
 .. code:: python
