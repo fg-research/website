@@ -14,7 +14,7 @@ ECG anomaly detection with the LSTM-AD SageMaker Algorithm
     and treatment of cardiovascular diseases. With the development of wearable ECG sensors,
     it has become possible to monitor a patient's heart condition continuously and in real
     time. However, it is impracticable for healthcare professional to manually review such
-    a large amount of ECG readings. Machine learning algorithms can automate the process of
+    a large amount of data. Machine learning algorithms can automate the process of
     ECG analysis, reducing the need for manual inspection by healthcare professionals.
     </p>
 
