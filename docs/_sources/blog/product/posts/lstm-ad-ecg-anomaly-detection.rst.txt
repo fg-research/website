@@ -11,11 +11,9 @@ ECG anomaly detection with the LSTM-AD SageMaker Algorithm
 
     <p>
     Anomaly detection in Electrocardiogram (ECG) signals is crucial for early diagnosis
-    and treatment of cardiovascular diseases. Machine learning algorithms can automate
-    the process of ECG analysis, reducing the need for manual inspection by healthcare
-    professionals.
-
-    <p>
+    and treatment of cardiovascular diseases.
+    Machine learning algorithms can automate the process of ECG analysis, reducing the need
+    for manual inspection by healthcare professionals.
     Different supervised <a href="#references">[1]</a> and unsupervised <a href="#references">[2]</a>
     machine learning algorithms have been studied in the literature on ECG anomaly detection.
     In this post, we will focus on the
