@@ -25,7 +25,7 @@ window.setInterval(function(){
         'lstm-fcn-ecg-classification-toctree',
         'fred-md-overview-toctree',
         'cnn-kmeans-control-chart-clustering-toctree',
-        'lstm-ad-ecg-anomaly-detection-toctree',
+        'lstm-ad-ecg-anomaly-detection-toctree'
     ];
     for (var i = 0; i < elements.length; i++) {
         var f = document.getElementById(elements[i]);
@@ -48,7 +48,7 @@ window.setInterval(function(){
         'cnn-kmeans-control-chart-clustering-dataset',
         'cnn-kmeans-control-chart-clustering-results',
         'lstm-ad-ecg-anomaly-detection-dataset',
-        'lstm-ad-ecg-anomaly-detection-results',
+        'lstm-ad-ecg-anomaly-detection-results'
     ];
     for (var i = 0; i < elements.length; i++) {
         var f = document.getElementById(elements[i]);

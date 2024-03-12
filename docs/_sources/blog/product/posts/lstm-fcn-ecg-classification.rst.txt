@@ -34,6 +34,7 @@ Arrhythmia classification with the LSTM-FCN SageMaker Algorithm
     target="_blank">LSTM-FCN SageMaker algorithm</a>, for categorizing the ECG traces in the
     <a href="https://physionet.org/content/mitdb/1.0.0" target="_blank">PhysioNet MIT-BIH Arrhythmia Database</a>
     <a href="#references">[3]</a>.
+    </p>
 
 ******************************************
 Model

@@ -26,10 +26,10 @@ Product
 
     .. _lstm-ad-ecg-anomaly-detection-include:
 
-    Time series clustering is the task of partitioning a set of time series into homogeneous groups.
-    Traditional clustering algorithms based on the Euclidean distance, such as K-Means clustering,
-    are not directly applicable to time series data, as time series with similar patterns can have
-    large Euclidean distance due to misalignments and offsets along the time axis...
+    Anomaly detection in Electrocardiogram (ECG) signals is crucial for early diagnosis
+    and treatment of cardiovascular diseases. Machine learning algorithms can automate
+    the process of ECG analysis, reducing the need for manual inspection by healthcare
+    professionals...
 
     .. grid:: 2
         :margin: 0 3 auto auto
