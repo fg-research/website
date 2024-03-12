@@ -130,7 +130,7 @@
 <section id="ecg-anomaly-detection-with-the-lstm-ad-sagemaker-algorithm">
 <h1>ECG anomaly detection with the LSTM-AD SageMaker Algorithm<a class="headerlink" href="#ecg-anomaly-detection-with-the-lstm-ad-sagemaker-algorithm" title="Permalink to this heading">¶</a></h1>
 <p>
-Anomaly detection in Electrocardiogram (ECG) signals is crucial for early diagnosis
+Anomaly detection in electrocardiogram (ECG) signals is crucial for early diagnosis
 and treatment of cardiovascular diseases. With the development of wearable ECG sensors,
 it has become possible to monitor a patient's heart condition continuously and in real
 time. However, it is impracticable for healthcare professional to manually review such
@@ -150,7 +150,7 @@ for detecting anomalies in an ECG trace.
 </p><section id="model">
 <h2>Model<a class="headerlink" href="#model" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#model'">¶</a></h2>
 <p>
-The LSTM-AD model predicts the time series with a multivariate stacked LSTM model.
+The LSTM-AD model predicts the future values of the time series with a multivariate stacked LSTM model.
 </p>
 <p>
 The model parameters are learned on a training set containing only normal data (i.e. without anomalies)
@@ -172,12 +172,13 @@ by maximizing the F-beta score between the actual and predicted anomaly labels.<
 <section id="data">
 <h2>Data<a class="headerlink" href="#data" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data'">¶</a></h2>
 <p>
-We use dataset number 179 from the Hexagon ML / UCR Time Series Anomaly Detection Archive.
+We use dataset number 179 from the <a href="https://www.cs.ucr.edu/~eamonn/time_series_data_2018/" target="_blank">Hexagon ML / UCR Time Series Anomaly Detection Archive</a>.
 The dataset includes a single time series representing a human subject ECG trace sourced from
-record s30791 in the Long Term ST Database (LTST DB). The length of the time series is 55000
-observations. The first 23000 observations are included in the training set, while the remaining
-32000 observations are included in the test set. The training set contains only normal data,
-while the test set contains an anomalous heartbeat between observations 52600 and 52800.
+record <i>s30791</i> in the <a href="https://physionet.org/content/ltstdb/1.0.0/" target="_blank">
+Long Term ST Database (LTST DB)</a>. The length of the time series is 55,000
+observations. The first 23,000 observations are included in the training set, while the remaining
+32,000 observations are included in the test set. The training set contains only normal data,
+while the test set contains an anomalous heartbeat between observations 52,600 and 52,800.
 </p><img alt="Hexagon ML / UCR dataset N°179 (combined training and test sets)" class="blog-post-image" id="lstm-ad-ecg-anomaly-detection-dataset" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/ecg-anomaly-detection/data_light.png"/>
 <p class="blog-post-image-caption">Hexagon ML / UCR dataset N°179 (combined training and test sets).</p></section>
 <section id="code">

@@ -10,7 +10,7 @@ ECG anomaly detection with the LSTM-AD SageMaker Algorithm
 .. raw:: html
 
     <p>
-    Anomaly detection in Electrocardiogram (ECG) signals is crucial for early diagnosis
+    Anomaly detection in electrocardiogram (ECG) signals is crucial for early diagnosis
     and treatment of cardiovascular diseases. With the development of wearable ECG sensors,
     it has become possible to monitor a patient's heart condition continuously and in real
     time. However, it is impracticable for healthcare professional to manually review such
@@ -37,7 +37,7 @@ Model
 .. raw:: html
 
     <p>
-    The LSTM-AD model predicts the time series with a multivariate stacked LSTM model.
+    The LSTM-AD model predicts the future values of the time series with a multivariate stacked LSTM model.
     </p>
 
     <p>
@@ -65,12 +65,14 @@ Data
 .. raw:: html
 
     <p>
-    We use dataset number 179 from the Hexagon ML / UCR Time Series Anomaly Detection Archive.
+    We use dataset number 179 from the <a href="https://www.cs.ucr.edu/~eamonn/time_series_data_2018/"
+    target="_blank">Hexagon ML / UCR Time Series Anomaly Detection Archive</a>.
     The dataset includes a single time series representing a human subject ECG trace sourced from
-    record s30791 in the Long Term ST Database (LTST DB). The length of the time series is 55000
-    observations. The first 23000 observations are included in the training set, while the remaining
-    32000 observations are included in the test set. The training set contains only normal data,
-    while the test set contains an anomalous heartbeat between observations 52600 and 52800.
+    record <i>s30791</i> in the <a href="https://physionet.org/content/ltstdb/1.0.0/" target="_blank">
+    Long Term ST Database (LTST DB)</a>. The length of the time series is 55,000
+    observations. The first 23,000 observations are included in the training set, while the remaining
+    32,000 observations are included in the test set. The training set contains only normal data,
+    while the test set contains an anomalous heartbeat between observations 52,600 and 52,800.
     </p>
 
 .. raw:: html
