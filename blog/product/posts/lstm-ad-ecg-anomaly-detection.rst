@@ -14,7 +14,6 @@ ECG anomaly detection with the LSTM-AD SageMaker Algorithm
     and treatment of cardiovascular diseases. Machine learning algorithms can automate
     the process of ECG analysis, reducing the need for manual inspection by healthcare
     professionals.
-    </p>
 
     <p>
     Different supervised <a href="#references">[1]</a> and unsupervised <a href="#references">[2]</a>
