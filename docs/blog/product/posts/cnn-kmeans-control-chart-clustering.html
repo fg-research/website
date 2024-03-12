@@ -138,13 +138,13 @@ Euclidean distance due to misalignments and offsets along the time axis <a href=
 A possible solution to this problem is to encode the time series into a number of time-independent features,
 and to use these derived features as inputs in a standard clustering algorithm based on the Euclidean distance
 <a href="#references">[3]</a>. The task of extracting the time-independent features of a set of unlabelled time
-series is referred to as <i>time series representation learning</i>.
+series is referred to as time series representation learning.
 </p>
 <p>
 Several unsupervised and self-supervised deep learning architectures have been proposed in the literature on
 time series representation learning <a href="#references">[4]</a>. One of the most general frameworks is
 introduced in <a href="#references">[5]</a>, where a convolutional encoder is trained in an unsupervised
-manner by minimizing the <i>triplet loss</i> in order to extract a fixed-length feature vector from a set of
+manner by minimizing the triplet loss in order to extract a fixed-length feature vector from a set of
 possibly varying-length time series. The feature vectors produced by the convolutional encoder can then be used
 in both unsupervised and supervised downstream tasks, such as time series clustering, time series classification
 and time series regression.
@@ -183,12 +183,10 @@ These features are used for training the K-Means clusterer.
 <p>
 We use the <a href="http://www.timeseriesclassification.com/description.php?Dataset=SyntheticControl" target="_blank">
 Synthetic Control dataset</a> introduced in <a href="#references">[2]</a> and available in the <a href="http://www.timeseriesclassification.com/dataset.php" target="_blank"> UCR Time Series Classification Archive <a href="#references">[6]</a>.
-</a></p>
-<p>
 The dataset contains 600 synthetically generated time series representing 6 different control chart patterns:
 normal (class 1), cyclic (class 2), increasing trend (class 3), decreasing trend (class 4), upward shift (class 5)
 and downward shift (class 6). The time series are equally split into a training set and a test set.
-</p></section>
+</a></p></section>
 <section id="code">
 <h2>Code<a class="headerlink" href="#code" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#code'">¶</a></h2>
 <section id="environment-set-up">
