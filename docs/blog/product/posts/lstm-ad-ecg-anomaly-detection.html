@@ -136,10 +136,11 @@ the process of ECG analysis, reducing the need for manual inspection by healthca
 professionals.
 </p>
 <p>
-Different supervised and unsupervised machine learning algorithms have been studied
-in the literature on ECG anomaly detection. In this post, we will focus on the
+Different supervised <a href="#references">[1]</a> and unsupervised <a href="#references">[2]</a>
+machine learning algorithms have been studied in the literature on ECG anomaly detection.
+In this post, we will focus on the
 <a href="https://www.esann.org/sites/default/files/proceedings/legacy/es2015-56.pdf" target="_blank">
-Long Short-Term Memory Network for Anomaly Detection</a> <a href="#references">[2]</a>,
+Long Short-Term Memory Network for Anomaly Detection</a> <a href="#references">[3]</a>,
 which we will refer to as the LSTM-AD model. We will demonstrate how to use our
 Amazon SageMaker implementation of the LSTM-AD model, the
 <a href="https://fg-research.com/algorithms/time-series-anomaly-detection/index.html#lstm-ad-sagemaker-algorithm" target="_blank">LSTM-AD SageMaker algorithm</a>,
@@ -199,8 +200,15 @@ while the test set contains an anomalous heartbeat between observations 52600 an
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#references'">¶</a></h2>
-<p>[1]</p>
-<p>[2] Malhotra, P., Vig, L., Shroff, G., &amp; Agarwal, P. (2015).
+<p>[1] Li, H., &amp; Boulanger, P. (2020).
+A survey of heart anomaly detection using ambulatory electrocardiogram (ECG).
+<em>Sensors 2020</em>, 20, 1461.
+<a class="reference external" href="https://doi.org/10.3390/s20051461">doi: 10.3390/s20051461</a>.</p>
+<p>[2] Nezamabadi, K., Sardaripour, N., Haghi, B., &amp; Forouzanfar, M. (2022).
+Unsupervised ECG analysis: A review.
+<em>IEEE Reviews in Biomedical Engineering</em>, vol. 16, pp. 208-224.
+<a class="reference external" href="https://doi.org/10.1109/RBME.2022.3154893.">doi: 10.1109/RBME.2022.3154893</a>.</p>
+<p>[3] Malhotra, P., Vig, L., Shroff, G., &amp; Agarwal, P. (2015).
 Long Short Term Memory Networks for Anomaly Detection in Time Series.
 In <em>European Symposium on Artificial Neural Networks, Computational Intelligence
 and Machine Learning. Bruges (Belgium), 22-24 April 2015</em>, pp. 89-94.</p>

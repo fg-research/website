@@ -17,10 +17,11 @@ ECG anomaly detection with the LSTM-AD SageMaker Algorithm
     </p>
 
     <p>
-    Different supervised and unsupervised machine learning algorithms have been studied
-    in the literature on ECG anomaly detection. In this post, we will focus on the
+    Different supervised <a href="#references">[1]</a> and unsupervised <a href="#references">[2]</a>
+    machine learning algorithms have been studied in the literature on ECG anomaly detection.
+    In this post, we will focus on the
     <a href="https://www.esann.org/sites/default/files/proceedings/legacy/es2015-56.pdf" target="_blank">
-    Long Short-Term Memory Network for Anomaly Detection</a> <a href="#references">[2]</a>,
+    Long Short-Term Memory Network for Anomaly Detection</a> <a href="#references">[3]</a>,
     which we will refer to as the LSTM-AD model. We will demonstrate how to use our
     Amazon SageMaker implementation of the LSTM-AD model, the
     <a href="https://fg-research.com/algorithms/time-series-anomaly-detection/index.html#lstm-ad-sagemaker-algorithm"
@@ -126,9 +127,17 @@ Inference
 References
 ******************************************
 
-[1]
+[1] Li, H., & Boulanger, P. (2020).
+A survey of heart anomaly detection using ambulatory electrocardiogram (ECG).
+*Sensors 2020*, 20, 1461.
+`doi: 10.3390/s20051461 <https://doi.org/10.3390/s20051461>`__.
 
-[2] Malhotra, P., Vig, L., Shroff, G., & Agarwal, P. (2015).
+[2] Nezamabadi, K., Sardaripour, N., Haghi, B., & Forouzanfar, M. (2022).
+Unsupervised ECG analysis: A review.
+*IEEE Reviews in Biomedical Engineering*, vol. 16, pp. 208-224.
+`doi: 10.1109/RBME.2022.3154893 <https://doi.org/10.1109/RBME.2022.3154893.>`__.
+
+[3] Malhotra, P., Vig, L., Shroff, G., & Agarwal, P. (2015).
 Long Short Term Memory Networks for Anomaly Detection in Time Series.
 In *European Symposium on Artificial Neural Networks, Computational Intelligence
 and Machine Learning. Bruges (Belgium), 22-24 April 2015*, pp. 89-94.
