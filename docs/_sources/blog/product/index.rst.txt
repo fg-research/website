@@ -27,9 +27,9 @@ Product
     .. _lstm-ad-ecg-anomaly-detection-include:
 
     Anomaly detection in Electrocardiogram (ECG) signals is crucial for early diagnosis
-    and treatment of cardiovascular diseases. Machine learning algorithms can automate
-    the process of ECG analysis, reducing the need for manual inspection by healthcare
-    professionals...
+    and treatment of cardiovascular diseases. With the development of wearable ECG sensors,
+    it has become possible to monitor a patient's heart condition continuously and in real
+    time...
 
     .. grid:: 2
         :margin: 0 3 auto auto
