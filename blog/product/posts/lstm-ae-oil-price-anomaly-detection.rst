@@ -323,6 +323,13 @@ spikes on the 20\ :superscript:`th` (anomaly score = 810,274), 21\ :superscript:
 
     <p class="blog-post-image-caption"> LSTM-AE largest anomaly scores from 2019-08-02 to 2020-12-31.</p>
 
+After the analysis has been completed, we can delete the model.
+
+.. code:: python
+
+    # delete the model
+    transformer.delete_model()
+
 .. tip::
 
     You can download the

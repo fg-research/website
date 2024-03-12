@@ -384,7 +384,12 @@ spikes on the 20<sup>th</sup> (anomaly score = 810,274), 21<sup>st</sup> (anomal
 </span></code></pre></div>
 </div>
 <img alt="LSTM-AE largest anomaly scores from 2019-08-02 to 2020-12-31" class="blog-post-image" id="lstm-ae-oil-price-anomaly-detection-results-table" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/anomalies_light.png"/>
-<p class="blog-post-image-caption"> LSTM-AE largest anomaly scores from 2019-08-02 to 2020-12-31.</p><div class="admonition tip">
+<p class="blog-post-image-caption"> LSTM-AE largest anomaly scores from 2019-08-02 to 2020-12-31.</p><p>After the analysis has been completed, we can delete the model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># delete the model</span>
+</span><span id="line-2"><span class="n">transformer</span><span class="o">.</span><span class="n">delete_model</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+<div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>You can download the
 <a class="reference external" href="https://github.com/fg-research/lstm-ae-sagemaker/blob/master/examples/oil_price_anomaly_detection.ipynb">notebook</a>

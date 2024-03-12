@@ -188,17 +188,152 @@ while the test set contains an anomalous heartbeat between observations 52,600 a
 <h2>Code<a class="headerlink" href="#code" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#code'">¶</a></h2>
 <section id="environment-set-up">
 <h3>Environment Set-Up<a class="headerlink" href="#environment-set-up" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#environment-set-up'">¶</a></h3>
+<p>We start by importing all the requirements and setting up the SageMaker environment.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>To be able to run the code below, you need to have an active subscription to the LSTM-AD SageMaker algorithm.
+You can subscribe to a free trial from the <a class="reference external" href="https://aws.amazon.com/marketplace/pp/prodview-4pbvedtnnlphw">AWS Marketplace</a>
+in order to get your Amazon Resource Name (ARN). In this post we use version 1.11 of the LSTM-FCN SageMaker algorithm,
+which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.</p>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span> <span class="nn">io</span>
+</span><span id="line-2"><span class="kn">import</span> <span class="nn">sagemaker</span>
+</span><span id="line-3"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span><span id="line-4"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</span><span id="line-5">
+</span><span id="line-6"><span class="c1"># SageMaker algorithm ARN from AWS Marketplace</span>
+</span><span id="line-7"><span class="n">algo_arn</span> <span class="o">=</span> <span class="s2">"arn:aws:sagemaker:&lt;...&gt;"</span>
+</span><span id="line-8">
+</span><span id="line-9"><span class="c1"># SageMaker session</span>
+</span><span id="line-10"><span class="n">sagemaker_session</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+</span><span id="line-11">
+</span><span id="line-12"><span class="c1"># SageMaker role</span>
+</span><span id="line-13"><span class="n">role</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">get_execution_role</span><span class="p">()</span>
+</span><span id="line-14">
+</span><span id="line-15"><span class="c1"># S3 bucket</span>
+</span><span id="line-16"><span class="n">bucket</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">default_bucket</span><span class="p">()</span>
+</span><span id="line-17">
+</span><span id="line-18"><span class="c1"># EC2 instance</span>
+</span><span id="line-19"><span class="n">instance_type</span> <span class="o">=</span> <span class="s2">"ml.m5.2xlarge"</span>
+</span></code></pre></div>
+</div>
 </section>
 <section id="data-preparation">
 <h3>Data Preparation<a class="headerlink" href="#data-preparation" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data-preparation'">¶</a></h3>
+<p>After that we load the dataset and split it into training and test datasets, which we save to S3.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>To be able to run the code below, you need to download the dataset (<cite>“179_UCR_Anomaly_ltstdbs30791AS_23000_52600_52800.txt”</cite>)
+from the <a class="reference external" href="https://www.cs.ucr.edu/~eamonn/time_series_data_2018/">Hexagon ML / UCR Time Series Anomaly Detection Archive</a>
+and store it in the SageMaker notebook instance.</p>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">dataset_name</span> <span class="o">=</span> <span class="s2">"179_UCR_Anomaly_ltstdbs30791AS_23000_52600_52800"</span>
+</span><span id="line-2"><span class="n">cutoff</span> <span class="o">=</span> <span class="mi">23000</span>  <span class="c1"># train-test cutoff</span>
+</span><span id="line-3"><span class="n">start</span> <span class="o">=</span> <span class="mi">52600</span>   <span class="c1"># start of anomalous time interval</span>
+</span><span id="line-4"><span class="n">end</span> <span class="o">=</span> <span class="mi">52800</span>     <span class="c1"># end of anomalous time interval</span>
+</span><span id="line-5">
+</span><span id="line-6"><span class="c1"># load the dataset</span>
+</span><span id="line-7"><span class="n">dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">.txt"</span><span class="p">))</span>
+</span><span id="line-8">
+</span><span id="line-9"><span class="c1"># extract the training dataset</span>
+</span><span id="line-10"><span class="n">training_dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="n">cutoff</span><span class="p">]</span>
+</span><span id="line-11">
+</span><span id="line-12"><span class="c1"># extract the test dataset</span>
+</span><span id="line-13"><span class="n">test_dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">cutoff</span><span class="p">:]</span>
+</span><span id="line-14">
+</span><span id="line-15"><span class="c1"># save the training dataset in S3</span>
+</span><span id="line-16"><span class="n">training_data</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">upload_string_as_file_body</span><span class="p">(</span>
+</span><span id="line-17">    <span class="n">body</span><span class="o">=</span><span class="n">training_dataset</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+</span><span id="line-18">    <span class="n">bucket</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span>
+</span><span id="line-19">    <span class="n">key</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">_train.csv"</span>
+</span><span id="line-20"><span class="p">)</span>
+</span><span id="line-21">
+</span><span id="line-22"><span class="c1"># save the test dataset in S3</span>
+</span><span id="line-23"><span class="n">test_data</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">upload_string_as_file_body</span><span class="p">(</span>
+</span><span id="line-24">    <span class="n">body</span><span class="o">=</span><span class="n">test_dataset</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+</span><span id="line-25">    <span class="n">bucket</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span>
+</span><span id="line-26">    <span class="n">key</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">_test.csv"</span>
+</span><span id="line-27"><span class="p">)</span>
+</span></code></pre></div>
+</div>
 </section>
 <section id="training">
 <h3>Training<a class="headerlink" href="#training" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#training'">¶</a></h3>
+<p>Now that the training dataset is available in an accessible S3 bucket, we are ready to fit the model.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The algorithm uses the first 80% of the training dataset for learning
+the LSTM parameters, and the remaining 20% of the training dataset
+for estimating the Gaussian distribution parameters.</p>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># create the estimator</span>
+</span><span id="line-2"><span class="n">estimator</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">AlgorithmEstimator</span><span class="p">(</span>
+</span><span id="line-3">    <span class="n">algorithm_arn</span><span class="o">=</span><span class="n">algo_arn</span><span class="p">,</span>
+</span><span id="line-4">    <span class="n">role</span><span class="o">=</span><span class="n">role</span><span class="p">,</span>
+</span><span id="line-5">    <span class="n">instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+</span><span id="line-6">    <span class="n">instance_type</span><span class="o">=</span><span class="n">instance_type</span><span class="p">,</span>
+</span><span id="line-7">    <span class="n">input_mode</span><span class="o">=</span><span class="s2">"File"</span><span class="p">,</span>
+</span><span id="line-8">    <span class="n">sagemaker_session</span><span class="o">=</span><span class="n">sagemaker_session</span><span class="p">,</span>
+</span><span id="line-9">    <span class="n">hyperparameters</span><span class="o">=</span><span class="p">{</span>
+</span><span id="line-10">        <span class="s2">"context-length"</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+</span><span id="line-11">        <span class="s2">"prediction-length"</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+</span><span id="line-12">        <span class="s2">"sequence-stride"</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+</span><span id="line-13">        <span class="s2">"hidden-size"</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span>
+</span><span id="line-14">        <span class="s2">"num-layers"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+</span><span id="line-15">        <span class="s2">"dropout"</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+</span><span id="line-16">        <span class="s2">"lr"</span><span class="p">:</span> <span class="mf">0.001</span><span class="p">,</span>
+</span><span id="line-17">        <span class="s2">"batch-size"</span><span class="p">:</span> <span class="mi">128</span><span class="p">,</span>
+</span><span id="line-18">        <span class="s2">"epochs"</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+</span><span id="line-19">    <span class="p">},</span>
+</span><span id="line-20"><span class="p">)</span>
+</span><span id="line-21">
+</span><span id="line-22"><span class="c1"># run the training job</span>
+</span><span id="line-23"><span class="n">estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">({</span><span class="s2">"training"</span><span class="p">:</span> <span class="n">training_data</span><span class="p">})</span>
+</span></code></pre></div>
+</div>
 </section>
 <section id="inference">
 <h3>Inference<a class="headerlink" href="#inference" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#inference'">¶</a></h3>
+<p>Once the training job has completed, we can run a batch transform job on the test dataset.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># create the transformer</span>
+</span><span id="line-2"><span class="n">transformer</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">transformer</span><span class="p">(</span>
+</span><span id="line-3">    <span class="n">instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+</span><span id="line-4">    <span class="n">instance_type</span><span class="o">=</span><span class="n">instance_type</span><span class="p">,</span>
+</span><span id="line-5">    <span class="n">max_payload</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+</span><span id="line-6"><span class="p">)</span>
+</span><span id="line-7">
+</span><span id="line-8"><span class="c1"># run the transform job</span>
+</span><span id="line-9"><span class="n">transformer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
+</span><span id="line-10">    <span class="n">data</span><span class="o">=</span><span class="n">test_data</span><span class="p">,</span>
+</span><span id="line-11">    <span class="n">content_type</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">,</span>
+</span><span id="line-12"><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>The results are saved in an output file in S3 with the same name as the input file and with the <cite>“.out”</cite> file extension.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># load the model outputs from S3</span>
+</span><span id="line-2"><span class="n">predictions</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">read_s3_file</span><span class="p">(</span>
+</span><span id="line-3">    <span class="n">bucket</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span>
+</span><span id="line-4">    <span class="n">key_prefix</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">transformer</span><span class="o">.</span><span class="n">latest_transform_job</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">_test.csv.out"</span>
+</span><span id="line-5"><span class="p">)</span>
+</span><span id="line-6">
+</span><span id="line-7"><span class="c1"># convert the model outputs to data frame</span>
+</span><span id="line-8"><span class="n">predictions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">predictions</span><span class="p">),</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>After loading the normality scores and the predicted values from S3, we can visualize the results.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The algorithm defines the normality scores using the Gaussian log-likelihood instead of the likelihood.</p>
+</div>
 <img alt="Results on Hexagon ML / UCR dataset №179 (test set)" class="blog-post-image" id="lstm-ad-ecg-anomaly-detection-results" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/ecg-anomaly-detection/results_light.png"/>
-<p class="blog-post-image-caption">Results on Hexagon ML / UCR dataset №179 (test set).</p></section>
+<p class="blog-post-image-caption">Results on Hexagon ML / UCR dataset №179 (test set).</p><p>We find that the model correctly identifies the anomalies, as the normality score exhibits the largest
+downward spikes on the same time steps where the anomalies are observed.</p>
+<p>After the analysis has been completed, we can delete the model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># delete the model</span>
+</span><span id="line-2"><span class="n">transformer</span><span class="o">.</span><span class="n">delete_model</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+</section>
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#references'">¶</a></h2>

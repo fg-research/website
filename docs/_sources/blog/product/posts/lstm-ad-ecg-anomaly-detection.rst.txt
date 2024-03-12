@@ -99,18 +99,156 @@ Code
 Environment Set-Up
 ==========================================
 
+We start by importing all the requirements and setting up the SageMaker environment.
+
+.. warning::
+
+    To be able to run the code below, you need to have an active subscription to the LSTM-AD SageMaker algorithm.
+    You can subscribe to a free trial from the `AWS Marketplace <https://aws.amazon.com/marketplace/pp/prodview-4pbvedtnnlphw>`__
+    in order to get your Amazon Resource Name (ARN). In this post we use version 1.11 of the LSTM-FCN SageMaker algorithm,
+    which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.
+
+.. code::
+
+    import io
+    import sagemaker
+    import pandas as pd
+    import numpy as np
+
+    # SageMaker algorithm ARN from AWS Marketplace
+    algo_arn = "arn:aws:sagemaker:<...>"
+
+    # SageMaker session
+    sagemaker_session = sagemaker.Session()
+
+    # SageMaker role
+    role = sagemaker.get_execution_role()
+
+    # S3 bucket
+    bucket = sagemaker_session.default_bucket()
+
+    # EC2 instance
+    instance_type = "ml.m5.2xlarge"
 
 ==========================================
 Data Preparation
 ==========================================
 
+After that we load the dataset and split it into training and test datasets, which we save to S3.
+
+.. warning::
+
+    To be able to run the code below, you need to download the dataset (`"179_UCR_Anomaly_ltstdbs30791AS_23000_52600_52800.txt"`)
+    from the `Hexagon ML / UCR Time Series Anomaly Detection Archive <https://www.cs.ucr.edu/~eamonn/time_series_data_2018/>`__
+    and store it in the SageMaker notebook instance.
+
+.. code::
+
+    dataset_name = "179_UCR_Anomaly_ltstdbs30791AS_23000_52600_52800"
+    cutoff = 23000  # train-test cutoff
+    start = 52600   # start of anomalous time interval
+    end = 52800     # end of anomalous time interval
+
+    # load the dataset
+    dataset = pd.DataFrame(data=np.genfromtxt(f"{dataset_name}.txt"))
+
+    # extract the training dataset
+    training_dataset = dataset.iloc[:cutoff]
+
+    # extract the test dataset
+    test_dataset = dataset.iloc[cutoff:]
+
+    # save the training dataset in S3
+    training_data = sagemaker_session.upload_string_as_file_body(
+        body=training_dataset.to_csv(index=False, header=False),
+        bucket=bucket,
+        key=f"{dataset_name}_train.csv"
+    )
+
+    # save the test dataset in S3
+    test_data = sagemaker_session.upload_string_as_file_body(
+        body=test_dataset.to_csv(index=False, header=False),
+        bucket=bucket,
+        key=f"{dataset_name}_test.csv"
+    )
+
 ==========================================
 Training
 ==========================================
 
+Now that the training dataset is available in an accessible S3 bucket, we are ready to fit the model.
+
+.. note::
+
+   The algorithm uses the first 80% of the training dataset for learning
+   the LSTM parameters, and the remaining 20% of the training dataset
+   for estimating the Gaussian distribution parameters.
+
+.. code::
+
+    # create the estimator
+    estimator = sagemaker.algorithm.AlgorithmEstimator(
+        algorithm_arn=algo_arn,
+        role=role,
+        instance_count=1,
+        instance_type=instance_type,
+        input_mode="File",
+        sagemaker_session=sagemaker_session,
+        hyperparameters={
+            "context-length": 100,
+            "prediction-length": 10,
+            "sequence-stride": 10,
+            "hidden-size": 32,
+            "num-layers": 2,
+            "dropout": 0.5,
+            "lr": 0.001,
+            "batch-size": 128,
+            "epochs": 100,
+        },
+    )
+
+    # run the training job
+    estimator.fit({"training": training_data})
+
 ==========================================
 Inference
 ==========================================
+
+Once the training job has completed, we can run a batch transform job on the test dataset.
+
+.. code::
+
+    # create the transformer
+    transformer = estimator.transformer(
+        instance_count=1,
+        instance_type=instance_type,
+        max_payload=100,
+    )
+
+    # run the transform job
+    transformer.transform(
+        data=test_data,
+        content_type="text/csv",
+    )
+
+The results are saved in an output file in S3 with the same name as the input file and with the `".out"` file extension.
+
+.. code::
+
+    # load the model outputs from S3
+    predictions = sagemaker_session.read_s3_file(
+        bucket=bucket,
+        key_prefix=f"{transformer.latest_transform_job.name}/{dataset_name}_test.csv.out"
+    )
+
+    # convert the model outputs to data frame
+    predictions = pd.read_csv(io.StringIO(predictions), header=None, dtype=float)
+
+After loading the normality scores and the predicted values from S3, we can visualize the results.
+
+.. note::
+
+    The algorithm defines the normality scores using the Gaussian log-likelihood instead of the likelihood.
 
 .. raw:: html
 
@@ -123,6 +261,15 @@ Inference
 
     <p class="blog-post-image-caption">Results on Hexagon ML / UCR dataset №179 (test set).</p>
 
+We find that the model correctly identifies the anomalies, as the normality score exhibits the largest
+downward spikes on the same time steps where the anomalies are observed.
+
+After the analysis has been completed, we can delete the model.
+
+.. code:: python
+
+    # delete the model
+    transformer.delete_model()
 
 ******************************************
 References
