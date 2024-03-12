@@ -28,7 +28,7 @@ Control chart pattern clustering with the CNN-KMeans SageMaker Algorithm
     Several unsupervised and self-supervised deep learning architectures have been proposed in the literature on
     time series representation learning <a href="#references">[4]</a>. One of the most general frameworks is
     introduced in <a href="#references">[5]</a>, where a convolutional encoder is trained in an unsupervised
-    manner by minimizing the <i>triplet loss<i/> in order to extract a fixed-length feature vector from a set of possibly
+    manner by minimizing the <i>triplet loss</i> in order to extract a fixed-length feature vector from a set of possibly
     varying-length time series. The feature vectors produced by the encoder can then be used in both unsupervised and
     supervised downstream tasks, such as time series clustering, time series classification and time series regression.
     </p>
