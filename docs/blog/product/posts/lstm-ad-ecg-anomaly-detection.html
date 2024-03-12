@@ -136,12 +136,11 @@ the process of ECG analysis, reducing the need for manual inspection by healthca
 professionals.
 </p>
 <p>
-Different machine learning algorithms have been studied in the literature on ECG
-anomaly detection.
-</p>
-<p>
-In this post, we will focus on the <a href="https://www.esann.org/sites/default/files/proceedings/legacy/es2015-56.pdf" target="_blank"> Long Short-Term Memory Network for Anomaly Detection</a>
-<a href="#references">[2]</a>, which we will refer to as the LSTM-AD model.
+Numerous machine learning algorithms have been studied in the literature on ECG
+anomaly detection. In this post, we will focus on the
+<a href="https://www.esann.org/sites/default/files/proceedings/legacy/es2015-56.pdf" target="_blank">
+Long Short-Term Memory Network for Anomaly Detection</a> <a href="#references">[2]</a>,
+which we will refer to as the LSTM-AD model.
 We will demonstrate how to use our Amazon SageMaker implementation of the LSTM-AD model,
 the <a href="https://fg-research.com/algorithms/time-series-anomaly-detection/index.html#lstm-ad-sagemaker-algorithm" target="_blank">LSTM-AD SageMaker algorithm</a>, for detecting anomalies in an ECG trace.
 </p><section id="model">
@@ -180,14 +179,45 @@ observations. The first 23000 observations are included in the training set, whi
 32000 observations are included in the test set. The training set contains only normal data,
 while the test set contains an anomalous heartbeat between observations 52600 and 52800.
 </p><img alt="Hexagon ML / UCR dataset N°179 (combined training and test sets)" class="blog-post-image" id="lstm-ad-ecg-anomaly-detection-dataset" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/ecg-anomaly-detection/data_light.png"/>
-<p class="blog-post-image-caption">Hexagon ML / UCR dataset N°179 (combined training and test sets).</p><img alt="Results on Hexagon ML / UCR dataset №179 (test set)" class="blog-post-image" id="lstm-ad-ecg-anomaly-detection-results" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/ecg-anomaly-detection/results_light.png"/>
+<p class="blog-post-image-caption">Hexagon ML / UCR dataset N°179 (combined training and test sets).</p></section>
+<section id="code">
+<h2>Code<a class="headerlink" href="#code" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#code'">¶</a></h2>
+<section id="environment-set-up">
+<h3>Environment Set-Up<a class="headerlink" href="#environment-set-up" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#environment-set-up'">¶</a></h3>
+</section>
+<section id="data-preparation">
+<h3>Data Preparation<a class="headerlink" href="#data-preparation" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data-preparation'">¶</a></h3>
+</section>
+<section id="training">
+<h3>Training<a class="headerlink" href="#training" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#training'">¶</a></h3>
+</section>
+<section id="inference">
+<h3>Inference<a class="headerlink" href="#inference" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#inference'">¶</a></h3>
+<img alt="Results on Hexagon ML / UCR dataset №179 (test set)" class="blog-post-image" id="lstm-ad-ecg-anomaly-detection-results" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/ecg-anomaly-detection/results_light.png"/>
 <p class="blog-post-image-caption">Results on Hexagon ML / UCR dataset №179 (test set).</p></section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#references'">¶</a></h2>
+<p>[1]</p>
+<p>[2] Malhotra, P., Vig, L., Shroff, G., &amp; Agarwal, P. (2015).
+Long Short Term Memory Networks for Anomaly Detection in Time Series.
+In <em>European Symposium on Artificial Neural Networks, Computational Intelligence
+and Machine Learning. Bruges (Belgium), 22-24 April 2015</em>, pp. 89-94.</p>
+</section>
 </section>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(var(--vh)-4rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
 <li><a :data-current="activeSection === '#model'" class="reference internal" href="#model">Model</a></li>
 <li><a :data-current="activeSection === '#data'" class="reference internal" href="#data">Data</a></li>
+<li><a :data-current="activeSection === '#code'" class="reference internal" href="#code">Code</a><ul>
+<li><a :data-current="activeSection === '#environment-set-up'" class="reference internal" href="#environment-set-up">Environment Set-Up</a></li>
+<li><a :data-current="activeSection === '#data-preparation'" class="reference internal" href="#data-preparation">Data Preparation</a></li>
+<li><a :data-current="activeSection === '#training'" class="reference internal" href="#training">Training</a></li>
+<li><a :data-current="activeSection === '#inference'" class="reference internal" href="#inference">Inference</a></li>
+</ul>
+</li>
+<li><a :data-current="activeSection === '#references'" class="reference internal" href="#references">References</a></li>
 </ul>
 </div>
 </aside>

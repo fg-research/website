@@ -17,14 +17,11 @@ ECG anomaly detection with the LSTM-AD SageMaker Algorithm
     </p>
 
     <p>
-    Different machine learning algorithms have been studied in the literature on ECG
-    anomaly detection.
-    </p>
-
-    <p>
-    In this post, we will focus on the <a href="https://www.esann.org/sites/default/files/proceedings/legacy/es2015-56.pdf"
-    target="_blank"> Long Short-Term Memory Network for Anomaly Detection</a>
-    <a href="#references">[2]</a>, which we will refer to as the LSTM-AD model.
+    Numerous machine learning algorithms have been studied in the literature on ECG
+    anomaly detection. In this post, we will focus on the
+    <a href="https://www.esann.org/sites/default/files/proceedings/legacy/es2015-56.pdf" target="_blank">
+    Long Short-Term Memory Network for Anomaly Detection</a> <a href="#references">[2]</a>,
+    which we will refer to as the LSTM-AD model.
     We will demonstrate how to use our Amazon SageMaker implementation of the LSTM-AD model,
     the <a href="https://fg-research.com/algorithms/time-series-anomaly-detection/index.html#lstm-ad-sagemaker-algorithm"
     target="_blank">LSTM-AD SageMaker algorithm</a>, for detecting anomalies in an ECG trace.
@@ -91,6 +88,26 @@ Data
     <p class="blog-post-image-caption">Hexagon ML / UCR dataset N°179 (combined training and test sets).</p>
 
 
+******************************************
+Code
+******************************************
+
+==========================================
+Environment Set-Up
+==========================================
+
+
+==========================================
+Data Preparation
+==========================================
+
+==========================================
+Training
+==========================================
+
+==========================================
+Inference
+==========================================
 
 .. raw:: html
 
@@ -102,3 +119,15 @@ Data
     />
 
     <p class="blog-post-image-caption">Results on Hexagon ML / UCR dataset №179 (test set).</p>
+
+
+******************************************
+References
+******************************************
+
+[1]
+
+[2] Malhotra, P., Vig, L., Shroff, G., & Agarwal, P. (2015).
+Long Short Term Memory Networks for Anomaly Detection in Time Series.
+In *European Symposium on Artificial Neural Networks, Computational Intelligence
+and Machine Learning. Bruges (Belgium), 22-24 April 2015*, pp. 89-94.
