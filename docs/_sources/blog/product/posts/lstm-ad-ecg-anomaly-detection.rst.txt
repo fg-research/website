@@ -51,9 +51,6 @@ Model
     At inference time, the model predicts the values of all the time series (which can now include anomalies)
     at each time step, and calculates the likelihood of the model’s prediction errors under the fitted multivariate
     Gaussian distribution.
-    </p>
-
-    <p>
     The computed Gaussian likelihood is then used as a normality score: the lower the Gaussian
     likelihood at a given a time step, the more likely the time step is to be an anomaly.
     </p>
