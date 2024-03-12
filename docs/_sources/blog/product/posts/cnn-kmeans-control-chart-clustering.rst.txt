@@ -285,7 +285,7 @@ End-to-end deep representation learning for time series clustering: a comparativ
 [4] Meng, Q., Qian, H., Liu, Y., Xu, Y., Shen, Z., & Cui, L. (2023).
 Unsupervised representation learning for time series: A review.
 *arXiv preprint*.
-`10.48550/arXiv.2308.01578 <https://doi.org/10.48550/arXiv.2308.01578>`__.
+`doi: 10.48550/arXiv.2308.01578 <https://doi.org/10.48550/arXiv.2308.01578>`__.
 
 [5] Franceschi, J. Y., Dieuleveut, A., & Jaggi, M. (2019).
 Unsupervised scalable representation learning for multivariate time series.
@@ -294,4 +294,4 @@ Unsupervised scalable representation learning for multivariate time series.
 [6] Dau, H. A., Bagnall, A., Kamgar, K., Yeh, C. C. M., Zhu, Y., Gharghabi, S., Ratanamahatana, C. A., & Keogh, E. (2019).
 The UCR time series archive.
 *IEEE/CAA Journal of Automatica Sinica*, vol. 6, no. 6, pp. 1293-1305.
-`10.1109/JAS.2019.1911747 <https://doi.org/10.1109/JAS.2019.1911747>`__.
+`doi: 10.1109/JAS.2019.1911747 <https://doi.org/10.1109/JAS.2019.1911747>`__.
