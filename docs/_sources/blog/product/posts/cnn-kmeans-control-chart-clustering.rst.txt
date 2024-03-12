@@ -96,28 +96,170 @@ Environment Set-Up
 
 We start by importing all the requirements and setting up the SageMaker environment.
 
+.. warning::
 
+    To be able to run the code below, you need to have an active subscription to the CNN-KMeans SageMaker algorithm.
+    You can subscribe to a free trial from the `AWS Marketplace <https://aws.amazon.com/marketplace/pp/prodview-3hdblqdz5nx4m>`__
+    in order to get your Amazon Resource Name (ARN). In this post we use version 1.6 of the CNN-KMeans SageMaker algorithm,
+    which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.
 
-To be able to run the code below, you need to download the datasets (SyntheticControl_TRAIN.txt and SyntheticControl_TEST.txt) from the UCR Time Series Classification Archive and store them in the SageMaker notebook instance.
+.. code:: python
 
-You also need to have an active subscription to the algorithm, as you can only run the code using your own Amazon Resource Name (ARN). You can subscribe to a free trial of the algorithm from the AWS Marketplace in order to get your ARN.
+    import io
+    import sagemaker
+    import pandas as pd
+    import numpy as np
+    from sklearn.metrics import silhouette_score
 
-We start by setting up the SageMaker environment.
+    # SageMaker algorithm ARN from AWS Marketplace
+    algo_arn = "arn:aws:sagemaker:<...>"
+
+    # SageMaker session
+    sagemaker_session = sagemaker.Session()
+
+    # SageMaker role
+    role = sagemaker.get_execution_role()
+
+    # S3 bucket
+    bucket = sagemaker_session.default_bucket()
+
+    # EC2 instance
+    instance_type = "ml.m5.2xlarge"
+
+==========================================
+Data Preparation
+==========================================
 
 After that we load the training and test datasets, drop the first column with the class labels, and save them in the S3 bucket in CSV format.
 
+.. warning::
+
+    To be able to run the code below, you need to download the datasets (`"SyntheticControl_TRAIN.txt"` and `"SyntheticControl_TEST.txt"`)
+    from the `UCR Time Series Classification Archive <http://www.timeseriesclassification.com/description.php?Dataset=SyntheticControl>`__
+    and store them in the SageMaker notebook instance.
+
+.. code:: python
+
+    # load the training dataset
+    training_dataset = pd.DataFrame(
+        data=np.genfromtxt("SyntheticControl_TRAIN.txt")
+    )
+
+    # load the test dataset
+    test_dataset = pd.DataFrame(
+        data=np.genfromtxt("SyntheticControl_TEST.txt")
+    )
+
+    # save the training dataset in S3
+    training_data = sagemaker_session.upload_string_as_file_body(
+        body=training_dataset.iloc[:, 1:].to_csv(index=False, header=False),
+        bucket=bucket,
+        key="SyntheticControl_train.csv"
+    )
+
+    # save the test dataset in S3
+    test_data = sagemaker_session.upload_string_as_file_body(
+        body=test_dataset.iloc[:, 1:].to_csv(index=False, header=False),
+        bucket=bucket,
+        key="SyntheticControl_test.csv"
+    )
+
+==========================================
+Training
+==========================================
+
 Now that the training dataset is available in an accessible S3 bucket, we are ready to fit the model.
+
+.. code:: python
+
+    # create the estimator
+    estimator = sagemaker.algorithm.AlgorithmEstimator(
+        algorithm_arn=algo_arn,
+        role=role,
+        instance_count=1,
+        instance_type=instance_type,
+        input_mode="File",
+        sagemaker_session=sagemaker_session,
+        hyperparameters={
+            "clusters": 6,
+            "algorithm": "lloyd",
+            "blocks": 10,
+            "filters": 40,
+            "kernel-size": 3,
+            "reduced-size": 160,
+            "output-size": 320,
+            "negative-samples": 10,
+            "lr": 0.001,
+            "batch-size": 128,
+            "epochs": 100,
+        },
+    )
+
+    # run the training job
+    estimator.fit({"training": training_data})
+
+==========================================
+Inference
+==========================================
 
 Once the training job has completed, we can run a batch transform job on the test dataset.
 
-The results are saved in an output file in S3 with the same name as the input file and with the .out file extension. The results include the predicted cluster labels, which are stored in the first column, and the extracted features, which are stored in the subsequent columns.
+.. code:: python
 
+    # create the transformer
+    transformer = estimator.transformer(
+        instance_count=1,
+        instance_type=instance_type,
+        max_payload=100,
+    )
+
+    # run the transform job
+    transformer.transform(
+        data=test_data,
+        content_type="text/csv",
+    )
+
+The results are saved in an output file in S3 with the same name as the input file and with the `".out"` file extension.
+The results include the predicted cluster labels, which are stored in the first column, and the extracted features,
+which are stored in the subsequent columns.
+
+.. code:: python
+
+    # load the model outputs from S3
+    predictions = sagemaker_session.read_s3_file(
+        bucket=bucket,
+        key_prefix=f"{transformer.latest_transform_job.name}/SyntheticControl_test.csv.out"
+    )
+
+    # convert the model outputs to data frame
+    predictions = pd.read_csv(io.StringIO(predictions), header=None, dtype=float)
 
 After loading the model outputs from S3, we can calculate the clustering metrics.
 
+.. code:: python
+
+    # calculate the Silhouette coefficient
+    score = silhouette_score(
+        labels=predictions.iloc[:, 0],
+        X=predictions.iloc[:, 1:]
+    )
+
 We find that the model achieves a Silhouette coefficient of 0.33 on the test set.
 
-You can download the notebook with the full code from our GitHub repository.
+After the analysis has been completed, we can delete the model.
+
+.. code:: python
+
+    # delete the model
+    transformer.delete_model()
+
+.. tip::
+
+    You can download the
+    `notebook <https://github.com/fg-research/cnn-kmeans-sagemaker/blob/master/examples/SyntheticControl.ipynb>`__
+    with the full code from our
+    `GitHub <https://github.com/fg-research/cnn-kmeans-sagemaker>`__
+    repository.
 
 ******************************************
 References

@@ -192,16 +192,154 @@ and downward shift (class 6). The time series are equally split into a training 
 <section id="environment-set-up">
 <h3>Environment Set-Up<a class="headerlink" href="#environment-set-up" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#environment-set-up'">¶</a></h3>
 <p>We start by importing all the requirements and setting up the SageMaker environment.</p>
-<p>To be able to run the code below, you need to download the datasets (SyntheticControl_TRAIN.txt and SyntheticControl_TEST.txt) from the UCR Time Series Classification Archive and store them in the SageMaker notebook instance.</p>
-<p>You also need to have an active subscription to the algorithm, as you can only run the code using your own Amazon Resource Name (ARN). You can subscribe to a free trial of the algorithm from the AWS Marketplace in order to get your ARN.</p>
-<p>We start by setting up the SageMaker environment.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>To be able to run the code below, you need to have an active subscription to the CNN-KMeans SageMaker algorithm.
+You can subscribe to a free trial from the <a class="reference external" href="https://aws.amazon.com/marketplace/pp/prodview-3hdblqdz5nx4m">AWS Marketplace</a>
+in order to get your Amazon Resource Name (ARN). In this post we use version 1.6 of the CNN-KMeans SageMaker algorithm,
+which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span> <span class="nn">io</span>
+</span><span id="line-2"><span class="kn">import</span> <span class="nn">sagemaker</span>
+</span><span id="line-3"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span><span id="line-4"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</span><span id="line-5"><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">silhouette_score</span>
+</span><span id="line-6">
+</span><span id="line-7"><span class="c1"># SageMaker algorithm ARN from AWS Marketplace</span>
+</span><span id="line-8"><span class="n">algo_arn</span> <span class="o">=</span> <span class="s2">"arn:aws:sagemaker:&lt;...&gt;"</span>
+</span><span id="line-9">
+</span><span id="line-10"><span class="c1"># SageMaker session</span>
+</span><span id="line-11"><span class="n">sagemaker_session</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+</span><span id="line-12">
+</span><span id="line-13"><span class="c1"># SageMaker role</span>
+</span><span id="line-14"><span class="n">role</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">get_execution_role</span><span class="p">()</span>
+</span><span id="line-15">
+</span><span id="line-16"><span class="c1"># S3 bucket</span>
+</span><span id="line-17"><span class="n">bucket</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">default_bucket</span><span class="p">()</span>
+</span><span id="line-18">
+</span><span id="line-19"><span class="c1"># EC2 instance</span>
+</span><span id="line-20"><span class="n">instance_type</span> <span class="o">=</span> <span class="s2">"ml.m5.2xlarge"</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="data-preparation">
+<h3>Data Preparation<a class="headerlink" href="#data-preparation" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data-preparation'">¶</a></h3>
 <p>After that we load the training and test datasets, drop the first column with the class labels, and save them in the S3 bucket in CSV format.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>To be able to run the code below, you need to download the datasets (<cite>“SyntheticControl_TRAIN.txt”</cite> and <cite>“SyntheticControl_TEST.txt”</cite>)
+from the <a class="reference external" href="http://www.timeseriesclassification.com/description.php?Dataset=SyntheticControl">UCR Time Series Classification Archive</a>
+and store them in the SageMaker notebook instance.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># load the training dataset</span>
+</span><span id="line-2"><span class="n">training_dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+</span><span id="line-3">    <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="s2">"SyntheticControl_TRAIN.txt"</span><span class="p">)</span>
+</span><span id="line-4"><span class="p">)</span>
+</span><span id="line-5">
+</span><span id="line-6"><span class="c1"># load the test dataset</span>
+</span><span id="line-7"><span class="n">test_dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+</span><span id="line-8">    <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="s2">"SyntheticControl_TEST.txt"</span><span class="p">)</span>
+</span><span id="line-9"><span class="p">)</span>
+</span><span id="line-10">
+</span><span id="line-11"><span class="c1"># save the training dataset in S3</span>
+</span><span id="line-12"><span class="n">training_data</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">upload_string_as_file_body</span><span class="p">(</span>
+</span><span id="line-13">    <span class="n">body</span><span class="o">=</span><span class="n">training_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+</span><span id="line-14">    <span class="n">bucket</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span>
+</span><span id="line-15">    <span class="n">key</span><span class="o">=</span><span class="s2">"SyntheticControl_train.csv"</span>
+</span><span id="line-16"><span class="p">)</span>
+</span><span id="line-17">
+</span><span id="line-18"><span class="c1"># save the test dataset in S3</span>
+</span><span id="line-19"><span class="n">test_data</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">upload_string_as_file_body</span><span class="p">(</span>
+</span><span id="line-20">    <span class="n">body</span><span class="o">=</span><span class="n">test_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+</span><span id="line-21">    <span class="n">bucket</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span>
+</span><span id="line-22">    <span class="n">key</span><span class="o">=</span><span class="s2">"SyntheticControl_test.csv"</span>
+</span><span id="line-23"><span class="p">)</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="training">
+<h3>Training<a class="headerlink" href="#training" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#training'">¶</a></h3>
 <p>Now that the training dataset is available in an accessible S3 bucket, we are ready to fit the model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># create the estimator</span>
+</span><span id="line-2"><span class="n">estimator</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">AlgorithmEstimator</span><span class="p">(</span>
+</span><span id="line-3">    <span class="n">algorithm_arn</span><span class="o">=</span><span class="n">algo_arn</span><span class="p">,</span>
+</span><span id="line-4">    <span class="n">role</span><span class="o">=</span><span class="n">role</span><span class="p">,</span>
+</span><span id="line-5">    <span class="n">instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+</span><span id="line-6">    <span class="n">instance_type</span><span class="o">=</span><span class="n">instance_type</span><span class="p">,</span>
+</span><span id="line-7">    <span class="n">input_mode</span><span class="o">=</span><span class="s2">"File"</span><span class="p">,</span>
+</span><span id="line-8">    <span class="n">sagemaker_session</span><span class="o">=</span><span class="n">sagemaker_session</span><span class="p">,</span>
+</span><span id="line-9">    <span class="n">hyperparameters</span><span class="o">=</span><span class="p">{</span>
+</span><span id="line-10">        <span class="s2">"clusters"</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+</span><span id="line-11">        <span class="s2">"algorithm"</span><span class="p">:</span> <span class="s2">"lloyd"</span><span class="p">,</span>
+</span><span id="line-12">        <span class="s2">"blocks"</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+</span><span id="line-13">        <span class="s2">"filters"</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span>
+</span><span id="line-14">        <span class="s2">"kernel-size"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+</span><span id="line-15">        <span class="s2">"reduced-size"</span><span class="p">:</span> <span class="mi">160</span><span class="p">,</span>
+</span><span id="line-16">        <span class="s2">"output-size"</span><span class="p">:</span> <span class="mi">320</span><span class="p">,</span>
+</span><span id="line-17">        <span class="s2">"negative-samples"</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+</span><span id="line-18">        <span class="s2">"lr"</span><span class="p">:</span> <span class="mf">0.001</span><span class="p">,</span>
+</span><span id="line-19">        <span class="s2">"batch-size"</span><span class="p">:</span> <span class="mi">128</span><span class="p">,</span>
+</span><span id="line-20">        <span class="s2">"epochs"</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+</span><span id="line-21">    <span class="p">},</span>
+</span><span id="line-22"><span class="p">)</span>
+</span><span id="line-23">
+</span><span id="line-24"><span class="c1"># run the training job</span>
+</span><span id="line-25"><span class="n">estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">({</span><span class="s2">"training"</span><span class="p">:</span> <span class="n">training_data</span><span class="p">})</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="inference">
+<h3>Inference<a class="headerlink" href="#inference" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#inference'">¶</a></h3>
 <p>Once the training job has completed, we can run a batch transform job on the test dataset.</p>
-<p>The results are saved in an output file in S3 with the same name as the input file and with the .out file extension. The results include the predicted cluster labels, which are stored in the first column, and the extracted features, which are stored in the subsequent columns.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># create the transformer</span>
+</span><span id="line-2"><span class="n">transformer</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">transformer</span><span class="p">(</span>
+</span><span id="line-3">    <span class="n">instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+</span><span id="line-4">    <span class="n">instance_type</span><span class="o">=</span><span class="n">instance_type</span><span class="p">,</span>
+</span><span id="line-5">    <span class="n">max_payload</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+</span><span id="line-6"><span class="p">)</span>
+</span><span id="line-7">
+</span><span id="line-8"><span class="c1"># run the transform job</span>
+</span><span id="line-9"><span class="n">transformer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
+</span><span id="line-10">    <span class="n">data</span><span class="o">=</span><span class="n">test_data</span><span class="p">,</span>
+</span><span id="line-11">    <span class="n">content_type</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">,</span>
+</span><span id="line-12"><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>The results are saved in an output file in S3 with the same name as the input file and with the <cite>“.out”</cite> file extension.
+The results include the predicted cluster labels, which are stored in the first column, and the extracted features,
+which are stored in the subsequent columns.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># load the model outputs from S3</span>
+</span><span id="line-2"><span class="n">predictions</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">read_s3_file</span><span class="p">(</span>
+</span><span id="line-3">    <span class="n">bucket</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span>
+</span><span id="line-4">    <span class="n">key_prefix</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">transformer</span><span class="o">.</span><span class="n">latest_transform_job</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">/SyntheticControl_test.csv.out"</span>
+</span><span id="line-5"><span class="p">)</span>
+</span><span id="line-6">
+</span><span id="line-7"><span class="c1"># convert the model outputs to data frame</span>
+</span><span id="line-8"><span class="n">predictions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">predictions</span><span class="p">),</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
 <p>After loading the model outputs from S3, we can calculate the clustering metrics.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># calculate the Silhouette coefficient</span>
+</span><span id="line-2"><span class="n">score</span> <span class="o">=</span> <span class="n">silhouette_score</span><span class="p">(</span>
+</span><span id="line-3">    <span class="n">labels</span><span class="o">=</span><span class="n">predictions</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span>
+</span><span id="line-4">    <span class="n">X</span><span class="o">=</span><span class="n">predictions</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span>
+</span><span id="line-5"><span class="p">)</span>
+</span></code></pre></div>
+</div>
 <p>We find that the model achieves a Silhouette coefficient of 0.33 on the test set.</p>
-<p>You can download the notebook with the full code from our GitHub repository.</p>
+<p>After the analysis has been completed, we can delete the model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># delete the model</span>
+</span><span id="line-2"><span class="n">transformer</span><span class="o">.</span><span class="n">delete_model</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can download the
+<a class="reference external" href="https://github.com/fg-research/cnn-kmeans-sagemaker/blob/master/examples/SyntheticControl.ipynb">notebook</a>
+with the full code from our
+<a class="reference external" href="https://github.com/fg-research/cnn-kmeans-sagemaker">GitHub</a>
+repository.</p>
+</div>
 </section>
 </section>
 <section id="references">
@@ -237,6 +375,9 @@ The UCR time series archive.
 <li><a :data-current="activeSection === '#data'" class="reference internal" href="#data">Data</a></li>
 <li><a :data-current="activeSection === '#code'" class="reference internal" href="#code">Code</a><ul>
 <li><a :data-current="activeSection === '#environment-set-up'" class="reference internal" href="#environment-set-up">Environment Set-Up</a></li>
+<li><a :data-current="activeSection === '#data-preparation'" class="reference internal" href="#data-preparation">Data Preparation</a></li>
+<li><a :data-current="activeSection === '#training'" class="reference internal" href="#training">Training</a></li>
+<li><a :data-current="activeSection === '#inference'" class="reference internal" href="#inference">Inference</a></li>
 </ul>
 </li>
 <li><a :data-current="activeSection === '#references'" class="reference internal" href="#references">References</a></li>
