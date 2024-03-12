@@ -84,15 +84,8 @@ Data
     Synthetic Control dataset</a> introduced in <a href="#references">[2]</a> and available in the <a href="http://www.timeseriesclassification.com/dataset.php"
     target="_blank"> UCR Time Series Classification Archive <a href="#references">[6]</a>.
     The dataset contains 600 synthetically generated time series, which are equally split into a training set and a test set.
-    The time series represent 6 different control chart patterns:
-    <ul>
-    <li>Class 1: Normal</li>
-    <li>Class 2: Cyclic</li>
-    <li>Class 3: Increasing trend</li>
-    <li>Class 4: Decreasing trend</li>
-    <li>Class 5: Upward shift</li>
-    <li>Class 6: Downward shift</li>
-    </ul>
+    The time series represent 6 different control chart patterns: normal (class 1), cyclic (class 2), increasing trend (class 3),
+    decreasing trend (class 4), upward shift (class 5) and downward shift (class 6).
     </p>
 
     <img
