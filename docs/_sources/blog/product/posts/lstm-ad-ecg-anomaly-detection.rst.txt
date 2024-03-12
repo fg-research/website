@@ -271,7 +271,7 @@ After the analysis has been completed, we can delete the model.
 .. tip::
 
     You can download the
-    `notebook <https://github.com/fg-research/lstm-ad-sagemaker/blob/master/examples/https://github.com/fg-research/lstm-ad-sagemaker/blob/master/examples/179_UCR_Anomaly_ltstdbs30791AS_23000_52600_52800.ipynb>`__
+    `notebook <https://github.com/fg-research/lstm-ad-sagemaker/blob/master/examples/179_UCR_Anomaly_ltstdbs30791AS_23000_52600_52800.ipynb>`__
     with the full code from our
     `GitHub <https://github.com/fg-research/lstm-ad-sagemaker>`__
     repository.
