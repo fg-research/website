@@ -14,6 +14,38 @@ Product
 
 .. card::
     :width: 100%
+    :link: posts/lstm-ad-ecg-anomaly-detection
+    :link-type: doc
+
+    .. _lstm-ad-ecg-anomaly-detection-toctree:
+
+    .. toctree::
+        :titlesonly:
+
+        posts/lstm-ad-ecg-anomaly-detection
+
+    .. _lstm-ad-ecg-anomaly-detection-include:
+
+    Time series clustering is the task of partitioning a set of time series into homogeneous groups.
+    Traditional clustering algorithms based on the Euclidean distance, such as K-Means clustering,
+    are not directly applicable to time series data, as time series with similar patterns can have
+    large Euclidean distance due to misalignments and offsets along the time axis...
+
+    .. grid:: 2
+        :margin: 0 3 auto auto
+
+        .. grid-item::
+            :class: sd-text-primary
+
+            :octicon:`graph;1rem;graph-icon` Anomaly Detection
+
+        .. grid-item::
+            :class: sd-text-secondary
+
+            :octicon:`calendar;1rem;calendar-icon` March 12, 2024
+
+.. card::
+    :width: 100%
     :link: posts/cnn-kmeans-control-chart-clustering
     :link-type: doc
 

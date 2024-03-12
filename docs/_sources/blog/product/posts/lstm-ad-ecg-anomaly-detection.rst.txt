@@ -60,3 +60,27 @@ Data
     32000 observations are included in the test set. The training set contains only normal data,
     while the test set contains an anomalous heartbeat between observations 52600 and 52800.
     </p>
+
+.. raw:: html
+
+    <img
+        id="lstm-ad-ecg-anomaly-detection-dataset"
+        class="blog-post-image"
+        alt="Hexagon ML / UCR dataset N°179 (combined training and test sets)"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/ecg-anomaly-detection/data_light.png
+    />
+
+    <p class="blog-post-image-caption">Hexagon ML / UCR dataset N°179 (combined training and test sets).</p>
+
+
+
+.. raw:: html
+
+    <img
+        id="lstm-ad-ecg-anomaly-detection-results"
+        class="blog-post-image"
+        alt="Results on Hexagon ML / UCR dataset №179 (test set)"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/ecg-anomaly-detection/results_light.png
+    />
+
+    <p class="blog-post-image-caption">Results on Hexagon ML / UCR dataset №179 (test set).</p>
