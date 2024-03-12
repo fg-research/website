@@ -14,6 +14,38 @@ Product
 
 .. card::
     :width: 100%
+    :link: posts/cnn-kmeans-control-chart-clustering
+    :link-type: doc
+
+    .. _cnn-kmeans-control-chart-clustering-toctree:
+
+    .. toctree::
+        :titlesonly:
+
+        posts/cnn-kmeans-control-chart-clustering
+
+    .. _cnn-kmeans-control-chart-clustering-include:
+
+    Time series clustering is the task of partitioning a set of time series into homogeneous groups.
+    Traditional clustering algorithms based on the Euclidean distance such as K-Means are not directly
+    applicable to time series data, as time series with similar patterns can have large Euclidean distance
+    due to misalignments and offsets along the time axis...
+
+    .. grid:: 2
+        :margin: 0 3 auto auto
+
+        .. grid-item::
+            :class: sd-text-primary
+
+            :octicon:`graph;1rem;graph-icon` Clustering
+
+        .. grid-item::
+            :class: sd-text-secondary
+
+            :octicon:`calendar;1rem;calendar-icon` March 12, 2024
+
+.. card::
+    :width: 100%
     :link: posts/lstm-fcn-ecg-classification
     :link-type: doc
 
