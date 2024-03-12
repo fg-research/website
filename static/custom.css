@@ -2,6 +2,10 @@
     display: none !important;
 }
 
+p {
+    text-align: justify
+}
+
 h1 {
     font-size: 2rem !important;
 }
