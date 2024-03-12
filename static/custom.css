@@ -6,6 +6,10 @@ p {
     text-align: justify
 }
 
+.admonition p{
+    text-align: left
+}
+
 h1 {
     font-size: 2rem !important;
 }
