@@ -55,8 +55,8 @@ Model
     </p>
 
     <p>
-    The encoder includes a stack of exponentially dilated causal convolutional blocks, followed by an adaptive max pooling layer
-    and a linear output layer. Each block consists of two causal convolutional layers with the same dilation rate, each followed
+    The encoder consists of a stack of exponentially dilated causal convolutional blocks, followed by an adaptive max pooling layer
+    and a linear output layer. Each block includes two causal convolutional layers with the same dilation rate, each followed
     by weight normalization and Leaky ReLU activation. A residual connection is applied between the input and the output of each
     block, where the input is transformed by an additional convolutional layer with a kernel size of 1 when its length does not
     match the one of the output.
@@ -71,7 +71,7 @@ Model
 
     <p>
     The number of features extracted by the encoder is determined by the number of hidden units of the linear output layer.
-    These features are used for training the K-Means clusterer.
+    These extracted features are then used for training the K-Means clusterer.
     </p>
 
 ******************************************
