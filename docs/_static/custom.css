@@ -76,7 +76,9 @@ h6 {
 
 #lstm-ae-oil-price-anomaly-detection-include,
 #fred-md-overview-include,
-#lstm-fcn-ecg-classification-include{
+#lstm-fcn-ecg-classification-include,
+#cnn-kmeans-control-chart-clustering-include
+{
     font-weight: 300 !important;
 }
 

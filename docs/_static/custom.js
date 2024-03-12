@@ -24,6 +24,7 @@ window.setInterval(function(){
         'lstm-ae-oil-price-anomaly-detection-toctree',
         'lstm-fcn-ecg-classification-toctree',
         'fred-md-overview-toctree',
+        'cnn-kmeans-control-chart-clustering-toctree',
     ];
     for (var i = 0; i < elements.length; i++) {
         var f = document.getElementById(elements[i]);
