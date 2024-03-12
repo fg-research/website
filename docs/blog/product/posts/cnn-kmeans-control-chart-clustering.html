@@ -183,12 +183,14 @@ These extracted features are then used for training the K-Means clusterer.
 <section id="data">
 <h2>Data<a class="headerlink" href="#data" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data'">¶</a></h2>
 <p>
-We use the <a href="http://www.timeseriesclassification.com/description.php?Dataset=SyntheticControl" target="_blank">
-Synthetic Control dataset</a> introduced in <a href="#references">[2]</a> and available in the <a href="http://www.timeseriesclassification.com/dataset.php" target="_blank"> UCR Time Series Classification Archive <a href="#references">[6]</a>.
-The dataset contains 600 synthetically generated time series representing 6 different control chart patterns:
-normal (class 1), cyclic (class 2), increasing trend (class 3), decreasing trend (class 4), upward shift (class 5)
-and downward shift (class 6). The time series are equally split into a training set and a test set.
-</a></p></section>
+ We use the <a href="http://www.timeseriesclassification.com/description.php?Dataset=SyntheticControl" target="_blank">
+ Synthetic Control dataset</a> introduced in <a href="#references">[2]</a> and available in the <a href="http://www.timeseriesclassification.com/dataset.php" target="_blank"> UCR Time Series Classification Archive <a href="#references">[6]</a>.
+ The dataset contains 600 synthetically generated time series representing 6 different control chart patterns:
+ normal (class 1), cyclic (class 2), increasing trend (class 3), decreasing trend (class 4), upward shift (class 5)
+ and downward shift (class 6). The time series are equally split into a training set and a test set.
+ </a></p>
+<img alt="Synthetic Control dataset (combined training and test sets)" class="blog-post-image" id="cnn-kmeans-control-chart-clustering-dataset" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/control-chart-clustering/data_light.png"/>
+<p class="blog-post-image-caption"> Synthetic Control dataset (combined training and test sets).</p></section>
 <section id="code">
 <h2>Code<a class="headerlink" href="#code" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#code'">¶</a></h2>
 <section id="environment-set-up">
@@ -329,7 +331,8 @@ which are stored in the subsequent columns.</p>
 </span></code></pre></div>
 </div>
 <p>We find that the model achieves a Silhouette coefficient of 0.33 on the test set.</p>
-<p>After the analysis has been completed, we can delete the model.</p>
+<img alt="Results on Synthetic Control UCR dataset (test set)" class="blog-post-image" id="cnn-kmeans-control-chart-clustering-clusters" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/control-chart-clustering/clusters_light.png"/>
+<p class="blog-post-image-caption"> Results on Synthetic Control UCR dataset (test set).</p><p>After the analysis has been completed, we can delete the model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># delete the model</span>
 </span><span id="line-2"><span class="n">transformer</span><span class="o">.</span><span class="n">delete_model</span><span class="p">()</span>
 </span></code></pre></div>

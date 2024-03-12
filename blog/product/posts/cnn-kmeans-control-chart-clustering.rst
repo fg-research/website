@@ -89,6 +89,10 @@ Data
     and downward shift (class 6). The time series are equally split into a training set and a test set.
     </p>
 
+   <img id="cnn-kmeans-control-chart-clustering-dataset" class="blog-post-image" alt="Synthetic Control dataset (combined training and test sets)" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/control-chart-clustering/data_light.png />
+
+   <p class="blog-post-image-caption"> Synthetic Control dataset (combined training and test sets).</p>
+
 ******************************************
 Code
 ******************************************
@@ -248,6 +252,12 @@ After loading the model outputs from S3, we can calculate the clustering metrics
     )
 
 We find that the model achieves a Silhouette coefficient of 0.33 on the test set.
+
+.. raw:: html
+
+   <img id="cnn-kmeans-control-chart-clustering-clusters" class="blog-post-image" alt="Results on Synthetic Control UCR dataset (test set)" src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/control-chart-clustering/clusters_light.png />
+
+   <p class="blog-post-image-caption"> Results on Synthetic Control UCR dataset (test set).</p>
 
 After the analysis has been completed, we can delete the model.
 
