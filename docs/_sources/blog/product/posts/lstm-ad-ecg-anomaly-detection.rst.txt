@@ -33,6 +33,9 @@ Model
 
     <p>
     The LSTM-AD model predicts the time series with a multivariate stacked LSTM model.
+    </p>
+
+    <p>
     The model parameters are learned on a training set containing only normal data (i.e. without anomalies)
     by minimizing the Mean Squared Error (MSE) between the actual and predicted values of the time series.
     After the model has been trained, a multivariate Gaussian distribution is fitted to the model’s prediction errors
