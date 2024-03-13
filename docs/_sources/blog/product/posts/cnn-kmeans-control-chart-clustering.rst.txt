@@ -70,7 +70,7 @@ Model
 
     <p>
     The number of features extracted by the encoder is determined by the number of hidden units of the linear output layer.
-    These extracted features are then used for training the K-Means clusterer.
+    These extracted features are then used as input by the K-Means clusterer.
     </p>
 
 ******************************************
