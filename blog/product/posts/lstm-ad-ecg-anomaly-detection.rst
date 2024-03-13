@@ -228,7 +228,11 @@ Once the training job has completed, we can run a batch transform job on the tes
         content_type="text/csv",
     )
 
-The results are saved in an output file in S3 with the same name as the input file and with the `".out"` file extension.
+The results are saved in an output file in S3 with the same name
+as the input file and with the `".out"` file extension.
+The output file contains the normality scores in the first
+column, and the predicted values of the time series in the
+subsequent columns.
 
 .. code::
 
