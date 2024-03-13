@@ -26,7 +26,7 @@ Product
 
     .. _lstm-ad-ecg-anomaly-detection-include:
 
-    Anomaly detection in Electrocardiogram (ECG) signals is crucial for early diagnosis
+    Anomaly detection in electrocardiogram (ECG) signals is crucial for early diagnosis
     and treatment of cardiovascular diseases. With the development of wearable ECG sensors,
     it has become possible to monitor a patient's heart condition continuously and in real
     time. However, it is impracticable for healthcare professional to manually review such
