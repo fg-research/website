@@ -82,8 +82,7 @@ codes are defined as follows:
 .. tip::
 
     A Python notebook for downloading and precessing the FRED-MD dataset is available in our
-    `GitHub <https://github.com/fg-research/blog/blob/master/general/fred-md-overview/fred_md_overview.ipynb>`__
-    repository.
+    `GitHub repository <https://github.com/fg-research/blog/blob/master/fred-md-overview/fred_md_overview.ipynb>>`__.
 
 .. raw:: html
 
