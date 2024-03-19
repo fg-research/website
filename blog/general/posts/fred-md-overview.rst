@@ -93,7 +93,7 @@ codes are defined as follows:
         id="fred-md-inflation-indices"
         class="blog-post-image"
         style="width:80%"
-        alt="FRED-MD dataset, 12-2023 vintage"
+        alt="CPI and PCE index data from FRED-MD dataset, 12-2023 vintage"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/fred-md-dataset/indices_light.png
     />
 
