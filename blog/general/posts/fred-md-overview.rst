@@ -98,7 +98,8 @@ codes are defined as follows:
     />
 
     <p class="blog-post-image-caption">Consumer Price Index for All Urban Consumers: All Items in U.S. City Average (CPI)
-    and Personal Consumption Expenditures: Chain-type Price Index (PCE). Source: FRED-MD dataset, 12-2023 vintage.</p>
+    and Personal Consumption Expenditures: Chain-type Price Index (PCE) and corresponding inflation rates (12-month % change).
+    Source: FRED-MD dataset, 12-2023 vintage.</p>
 
 ******************************************
 Code
@@ -212,6 +213,8 @@ We can then use the above function for downloading the 12-2023 dataset vintage a
 
     dataset.tail(n=3)
 
+.. raw:: html
+
     <img
         id="fred-md-dataset-tail"
         class="blog-post-image"
@@ -219,8 +222,6 @@ We can then use the above function for downloading the 12-2023 dataset vintage a
         alt="FRED-MD dataset, 12-2023 vintage"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/fred-md-dataset/dataset_tail_light.png
     />
-
-    <p class="blog-post-image-caption"> FRED-MD dataset, 12-2023 vintage.</p>
 
 .. tip::
 
