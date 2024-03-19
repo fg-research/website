@@ -194,7 +194,10 @@ In <a href="#references">[2]</a> it was shown that a random forest model trained
 <a href="#references">[3]</a> expanded the analysis in <a href="#references">[2]</a> to include an LSTM model and found that it did not significantly outperform the random forest model.
 <a href="#references">[4]</a> applied different dimension reduction techniques to the FRED-MD dataset in order to forecast US inflation and found that autoencoders provide the best performance.
 In <a href="#references">[5]</a> it was shown that machine learning models trained on the FRED-MD dataset outperform the standard linear regression model in all considered forecasting periods.
-</p><section id="code">
+</p>
+<img alt="FRED-MD dataset, 12-2023 vintage" class="blog-post-image" id="fred-md-inflation-indices" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/fred-md-dataset/indices_light.png" style="width:80%"/>
+<p class="blog-post-image-caption">Consumer Price Index for All Urban Consumers: All Items in U.S. City Average (CPI)
+and Personal Consumption Expenditures: Chain-type Price Index (PCE). Source: FRED-MD dataset, 12-2023 vintage.</p><section id="code">
 <h2>Code<a class="headerlink" href="#code" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#code'">¶</a></h2>
 <p>In this section, we provide the Python code for downloading and processing the FRED-MD dataset.
 We start by importing the dependencies.</p>
@@ -277,6 +280,22 @@ We start by importing the dependencies.</p>
 </div>
 <p>We can then use the above function for downloading the 12-2023 dataset vintage as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">dataset</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="mi">2023</span><span class="p">,</span> <span class="n">month</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">dataset</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<img alt="FRED-MD dataset, 12-2023 vintage" class="blog-post-image" id="fred-md-dataset-head" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/fred-md-dataset/dataset_head_light.png" style="width:80%"/><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">dataset</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</span><span id="line-2">
+</span><span id="line-3"><span class="o">&lt;</span><span class="n">img</span>
+</span><span id="line-4">    <span class="nb">id</span><span class="o">=</span><span class="s2">"fred-md-dataset-tail"</span>
+</span><span id="line-5">    <span class="n">class</span><span class="o">=</span><span class="s2">"blog-post-image"</span>
+</span><span id="line-6">    <span class="n">style</span><span class="o">=</span><span class="s2">"width:80%"</span>
+</span><span id="line-7">    <span class="n">alt</span><span class="o">=</span><span class="s2">"FRED-MD dataset, 12-2023 vintage"</span>
+</span><span id="line-8">    <span class="n">src</span><span class="o">=</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">fg</span><span class="o">-</span><span class="n">research</span><span class="o">-</span><span class="n">blog</span><span class="o">.</span><span class="n">s3</span><span class="o">.</span><span class="n">eu</span><span class="o">-</span><span class="n">west</span><span class="o">-</span><span class="mf">1.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">fred</span><span class="o">-</span><span class="n">md</span><span class="o">-</span><span class="n">dataset</span><span class="o">/</span><span class="n">dataset_tail_light</span><span class="o">.</span><span class="n">png</span>
+</span><span id="line-9"><span class="o">/&gt;</span>
+</span><span id="line-10">
+</span><span id="line-11"><span class="o">&lt;</span><span class="n">p</span> <span class="n">class</span><span class="o">=</span><span class="s2">"blog-post-image-caption"</span><span class="o">&gt;</span> <span class="n">FRED</span><span class="o">-</span><span class="n">MD</span> <span class="n">dataset</span><span class="p">,</span> <span class="mi">12</span><span class="o">-</span><span class="mi">2023</span> <span class="n">vintage</span><span class="o">.&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span></code></pre></div>
 </div>
 <div class="admonition tip">

@@ -89,6 +89,17 @@ codes are defined as follows:
     In <a href="#references">[5]</a> it was shown that machine learning models trained on the FRED-MD dataset outperform the standard linear regression model in all considered forecasting periods.
     </p>
 
+    <img
+        id="fred-md-inflation-indices"
+        class="blog-post-image"
+        style="width:80%"
+        alt="FRED-MD dataset, 12-2023 vintage"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/fred-md-dataset/indices_light.png
+    />
+
+    <p class="blog-post-image-caption">Consumer Price Index for All Urban Consumers: All Items in U.S. City Average (CPI)
+    and Personal Consumption Expenditures: Chain-type Price Index (PCE). Source: FRED-MD dataset, 12-2023 vintage.</p>
+
 ******************************************
 Code
 ******************************************
@@ -183,7 +194,33 @@ We can then use the above function for downloading the 12-2023 dataset vintage a
 
     dataset = get_data(year=2023, month=12, transform=False)
 
+.. code:: python
 
+    dataset.head(n=3)
+
+.. raw:: html
+
+    <img
+        id="fred-md-dataset-head"
+        class="blog-post-image"
+        style="width:80%"
+        alt="FRED-MD dataset, 12-2023 vintage"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/fred-md-dataset/dataset_head_light.png
+    />
+
+.. code:: python
+
+    dataset.tail(n=3)
+
+    <img
+        id="fred-md-dataset-tail"
+        class="blog-post-image"
+        style="width:80%"
+        alt="FRED-MD dataset, 12-2023 vintage"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/fred-md-dataset/dataset_tail_light.png
+    />
+
+    <p class="blog-post-image-caption"> FRED-MD dataset, 12-2023 vintage.</p>
 
 .. tip::
 
