@@ -98,7 +98,7 @@ codes are defined as follows:
     />
 
     <p class="blog-post-image-caption">Consumer Price Index for All Urban Consumers: All Items in U.S. City Average (CPI)
-    and Personal Consumption Expenditures: Chain-type Price Index (PCE) and corresponding inflation rates (12-month % change).
+    and Personal Consumption Expenditures: Chain-type Price Index (PCE) with corresponding inflation rates (12-month % change).
     Source: FRED-MD dataset, 12-2023 vintage.</p>
 
 ******************************************
