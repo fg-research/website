@@ -79,11 +79,6 @@ codes are defined as follows:
 6. second order logarithmic difference
 7. percentage change
 
-.. tip::
-
-    A Python notebook for downloading and precessing the FRED-MD dataset is available in our
-    `GitHub repository <https://github.com/fg-research/blog/blob/master/fred-md-overview/fred_md_overview.ipynb>`__.
-
 .. raw:: html
 
     <p>
@@ -93,6 +88,108 @@ codes are defined as follows:
     <a href="#references">[4]</a> applied different dimension reduction techniques to the FRED-MD dataset in order to forecast US inflation and found that autoencoders provide the best performance.
     In <a href="#references">[5]</a> it was shown that machine learning models trained on the FRED-MD dataset outperform the standard linear regression model in all considered forecasting periods.
     </p>
+
+******************************************
+Code
+******************************************
+In this section, we provide the Python code for downloading and processing the FRED-MD dataset.
+We start by importing the dependencies.
+
+.. code:: python
+
+    import os
+    import pandas as pd
+    import numpy as np
+
+After that we define a function for transforming the time series based on their assigned transformation code.
+
+.. code:: python
+
+    def transform_series(x, tcode):
+        '''
+        Transform the time series.
+
+        Parameters:
+        ______________________________
+        x: pandas.Series
+            Time series.
+
+        tcode: int.
+            Transformation code.
+        '''
+
+        if tcode == 1:
+            return x
+        elif tcode == 2:
+            return x.diff()
+        elif tcode == 3:
+            return x.diff().diff()
+        elif tcode == 4:
+            return np.log(x)
+        elif tcode == 5:
+            return np.log(x).diff()
+        elif tcode == 6:
+            return np.log(x).diff().diff()
+        elif tcode == 7:
+            return x.pct_change()
+        else:
+            raise ValueError(f"unknown `tcode` {tcode}")
+
+We can now define a function for downloading and, optionally, transforming the time series.
+
+.. code:: python
+
+    def get_data(year, month, transform=True):
+        '''
+        Download and (optionally) transform the time series.
+
+        Parameters:
+        ______________________________
+        year: int
+            The year of the dataset vintage.
+
+        month: int.
+            The month of the dataset vintage.
+
+        transform: bool.
+            Whether the time series should be transformed or not.
+        '''
+
+        # get the dataset URL
+        file = f"https://files.stlouisfed.org/files/htdocs/fred-md/monthly/{year}-{format(month, '02d')}.csv"
+
+        # get the time series
+        data = pd.read_csv(file, skiprows=[1], index_col=0)
+        data.columns = [c.upper() for c in data.columns]
+
+        # process the dates
+        data = data.loc[pd.notna(data.index), :]
+        data.index = pd.date_range(start="1959-01-01", freq="MS", periods=len(data))
+
+        if transform:
+
+            # get the transformation codes
+            tcodes = pd.read_csv(file, nrows=1, index_col=0)
+            tcodes.columns = [c.upper() for c in tcodes.columns]
+
+            # transform the time series
+            data = data.apply(lambda x: transform_series(x, tcodes[x.name].item()))
+
+        return data
+
+We can then use the above function for downloading the 12-2023 dataset vintage as follows:
+
+.. code:: python
+
+    dataset = get_data(year=2023, month=12, transform=False)
+
+
+
+
+.. tip::
+
+    A Python notebook with additional functions for working with the FRED-MD dataset is available in our
+    `GitHub repository <https://github.com/fg-research/blog/blob/master/fred-md-overview/fred_md_overview.ipynb>`__.
 
 ******************************************
 References
