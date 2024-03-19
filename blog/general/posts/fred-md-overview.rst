@@ -185,7 +185,6 @@ We can then use the above function for downloading the 12-2023 dataset vintage a
 
 
 
-
 .. tip::
 
     A Python notebook with additional functions for working with the FRED-MD dataset is available in our
