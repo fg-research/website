@@ -199,7 +199,7 @@ References
 
 [2] Medeiros, M. C., Vasconcelos, G. F., Veiga, Á., & Zilberman, E. (2021). Forecasting inflation in a data-rich environment: the benefits of machine learning methods. *Journal of Business & Economic Statistics*, 39(1), 98-119. `doi: 10.1080/07350015.2019.1637745 <https://doi.org/10.1080/07350015.2019.1637745>`__.
 
-[3] Paranhos, L (2023). Predicting Inflation with Recurrent Neural Networks. *Working Paper*.
+[3] Paranhos, L. (2023). Predicting Inflation with Recurrent Neural Networks. *Working Paper*.
 
 [4] Hauzenberger, N., Huber, F., & Klieber, K. (2023). Real-time inflation forecasting using non-linear dimension reduction techniques. *International Journal of Forecasting*, 39(2), 901-921. `doi: 10.1016/j.ijforecast.2022.03.002 <https://doi.org/10.1016/j.ijforecast.2022.03.002>`__.
 
