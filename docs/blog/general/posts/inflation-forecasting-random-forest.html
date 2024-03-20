@@ -201,11 +201,10 @@ Source: FRED-MD dataset, 02-2024 vintage.</p></section>
 </span><span id="line-7"><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">root_mean_squared_error</span>
 </span></code></pre></div>
 </div>
-<p>After that, we define a number of auxiliary functions for downloading and processing the FRED-MD dataset.
-As discussed in &lt;a href=https://fg-research.com/blog/general/posts/fred-md-overview.html target=”_blank”&gt;
-our previous post&lt;/a&gt;, the FRED-MD dataset indicates a set of transformations to be applied to the time
-series in order to ensure their stationarity, which are implemented in the function below.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">def</span> <span class="nf">transform_series</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">tcode</span><span class="p">):</span>
+After that, we define a number of auxiliary functions for downloading and processing the FRED-MD dataset.
+As discussed in <a href="https://fg-research.com/blog/general/posts/fred-md-overview.html" target="_blank">
+our previous post</a>, the FRED-MD dataset includes a set of transformations to be applied to the time
+series in order to ensure their stationarity, which are implemented in the function below.<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">def</span> <span class="nf">transform_series</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">tcode</span><span class="p">):</span>
 </span><span id="line-2"><span class="w">    </span><span class="sd">'''</span>
 </span><span id="line-3"><span class="sd">    Transform the time series.</span>
 </span><span id="line-4">
