@@ -54,28 +54,27 @@ Data
     <p>
     As discussed in <a href=https://fg-research.com/blog/general/posts/fred-md-overview.html
     target="_blank">our previous post</a>, the FRED-MD dataset is updated on a monthly basis.
-    The monthly releases are referred to as <i>real-time vintages</i>. Each real-time vintage
-    includes the data from January 1959 up to the previous month. For instance, the 02-2024
-    vintage contains the data from January 1959 to January 2024.
+    The monthly releases are referred to as <i>vintages</i>. Each vintage includes the data
+    from January 1959 up to the previous month. For instance, the 02-2024 vintage contains
+    the data from January 1959 to January 2024.
     </p>
 
     <p>
-    The real-time vintages are subject to retrospective adjustments, such as seasonal
-    adjustments, inflation adjustments and backfilling of missing values. For this reason,
-    different real-time vintages can potentially report different values for the same
-    time series on the same date. Furthermore, different real-time vintages can include
-    different time series, as indicators are occasionally added and removed from the dataset.
+    The vintages are subject to retrospective adjustments, such as seasonal adjustments,
+    inflation adjustments and backfilling of missing values. For this reason, different
+    vintages can potentially report different values for the same time series on the
+    same date. Furthermore, different vintages can include different time series, as
+    indicators are occasionally added and removed from the dataset.
     </p>
 
     <p>
     We use 02-2023 vintage for training and hyperparameter tuning, while we use the last
-    month in all real-time vintages from 03-2023 to 02-2024 for testing. Our approach
-    is different from the one used in <a href="#references">[2]</a>, where the same
-    real-time vintage is used for both training and testing. In our view, our approach
-    allows us to evaluate the model in a more realistic scenario where on a given month
-    we forecast next month's inflation using as input the data in the real-time vintage
-    released on that month, without taking into account any retrospective adjustment
-    that could be applied to the FRED-MD dataset in the future.
+    month in each vintage from 03-2023 to 02-2024 for testing. Our approach is different
+    from the one used in <a href="#references">[2]</a>, where the same vintage (01-2016)
+    is used for both training and testing. In our view, our approach allows us to evaluate
+    the model in a more realistic scenario where on a given month we forecast next month's
+    inflation using as input the data available on that month, without taking into account
+    any ex-post adjustment that could be applied to the data in the future.
     </p>
 
     <img
@@ -111,7 +110,7 @@ Model evaluation
         class="blog-post-image"
         style="width:80%"
         alt="Month-over-month logarithmic change in the US CPI index with random forest (RF) and AR(1) forecasts"
-        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/inflation-forecasting-random-forest/time_series_light.png
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/inflation-forecasting-random-forest/forecasts_light.png
     />
 
     <p class="blog-post-image-caption">Month-over-month logarithmic change in the US CPI index (FRED: CPIAUCSL)
