@@ -78,6 +78,17 @@ Data
     that could be applied to the FRED-MD dataset in the future.
     </p>
 
+    <img
+        id="inflation-forecasting-random-forest-time-series"
+        class="blog-post-image"
+        style="width:80%"
+        alt="Month-over-month logarithmic change in the US CPI index"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/inflation-forecasting-random-forest/time_series_light.png
+    />
+
+    <p class="blog-post-image-caption">Month-over-month logarithmic change in the US CPI index (FRED: CPIAUCSL).
+    Source: FRED-MD dataset, 02-2024 vintage.</p>
+
 ******************************************
 Code
 ******************************************
@@ -93,6 +104,18 @@ Hyperparameter Tuning
 ==========================================
 Model evaluation
 ==========================================
+.. raw:: html
+
+    <img
+        id="inflation-forecasting-random-forest-forecasts"
+        class="blog-post-image"
+        style="width:80%"
+        alt="Month-over-month logarithmic change in the US CPI index with random forest (RF) and AR(1) forecasts"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/inflation-forecasting-random-forest/time_series_light.png
+    />
+
+    <p class="blog-post-image-caption">Month-over-month logarithmic change in the US CPI index (FRED: CPIAUCSL)
+    with random forest (RF) and AR(1) forecasts.</p>
 
 ******************************************
 References

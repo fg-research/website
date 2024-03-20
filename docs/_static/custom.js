@@ -52,7 +52,9 @@ window.setInterval(function(){
         'lstm-ad-ecg-anomaly-detection-results',
         'fred-md-dataset-head',
         'fred-md-dataset-tail',
-        'fred-md-inflation-indices'
+        'fred-md-inflation-indices',
+        'inflation-forecasting-random-forest-time-series',
+        'inflation-forecasting-random-forest-forecasts'
     ];
     for (var i = 0; i < elements.length; i++) {
         var f = document.getElementById(elements[i]);
