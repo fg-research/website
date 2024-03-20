@@ -23,9 +23,7 @@ Forecasting US inflation with random forests
     dataset <a href="#references">[1]</a>. The FRED-MD dataset includes
     over 100 monthly time series of 8 different categories of US economic indicators:
     output and income, labour market, consumption and orders, orders and inventory,
-    money and credit, interest rates and exchange rates, prices and stock market.
-    A detailed overview of the FRED-MD dataset is provided in <a href=https://fg-research.com/blog/general/posts/fred-md-overview.html
-    target="_blank">our previous blog post</a>.
+    money and credit, interest rates and exchange rates, prices, and stock market.
     </p>
 
     <p>
@@ -41,6 +39,11 @@ Model
 ******************************************
 Data
 ******************************************
+.. raw:: html
+
+    For a detailed overview of the FRED-MD dataset we refer to
+    <a href=https://fg-research.com/blog/general/posts/fred-md-overview.html
+    target="_blank">our previous blog post</a>.
 
 ******************************************
 Code
