@@ -91,15 +91,59 @@ Data
 ******************************************
 Code
 ******************************************
-We start by importing the dependencies.
-
-.. code:: python
-
+This section presents and explains the Python code used for the analysis.
 
 ==========================================
 Set-Up
 ==========================================
+We start by importing the dependencies.
 
+.. code:: python
+
+    import optuna
+    import pandas as pd
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from sklearn.linear_model import LinearRegression
+    from sklearn.ensemble import RandomForestRegressor
+    from sklearn.metrics import root_mean_squared_error
+
+After that, we define a number of auxiliary functions for downloading and processing the FRED-MD dataset.
+As discussed in <a href=https://fg-research.com/blog/general/posts/fred-md-overview.html target="_blank">
+our previous post</a>, the FRED-MD dataset indicates a set of transformations to be applied to the time
+series in order to ensure their stationarity, which are implemented in the function below.
+
+.. code:: python
+
+    def transform_series(x, tcode):
+        '''
+        Transform the time series.
+
+        Parameters:
+        ______________________________________________________________
+        x: pandas.Series
+            Time series.
+
+        tcode: int.
+            Transformation code.
+        '''
+
+        if tcode == 1:
+            return x
+        elif tcode == 2:
+            return x.diff()
+        elif tcode == 3:
+            return x.diff().diff()
+        elif tcode == 4:
+            return np.log(x)
+        elif tcode == 5:
+            return np.log(x).diff()
+        elif tcode == 6:
+            return np.log(x).diff().diff()
+        elif tcode == 7:
+            return x.pct_change()
+        else:
+            raise ValueError(f"unknown `tcode` {tcode}")
 ==========================================
 Hyperparameter Tuning
 ==========================================

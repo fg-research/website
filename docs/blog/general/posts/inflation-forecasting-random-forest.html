@@ -188,9 +188,54 @@ any ex-post adjustment that could be applied to the data in the future.
 Source: FRED-MD dataset, 02-2024 vintage.</p></section>
 <section id="code">
 <h2>Code<a class="headerlink" href="#code" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#code'">¶</a></h2>
-<p>We start by importing the dependencies.</p>
+<p>This section presents and explains the Python code used for the analysis.</p>
 <section id="set-up">
 <h3>Set-Up<a class="headerlink" href="#set-up" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#set-up'">¶</a></h3>
+<p>We start by importing the dependencies.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span> <span class="nn">optuna</span>
+</span><span id="line-2"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span><span id="line-3"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</span><span id="line-4"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</span><span id="line-5"><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+</span><span id="line-6"><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestRegressor</span>
+</span><span id="line-7"><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">root_mean_squared_error</span>
+</span></code></pre></div>
+</div>
+<p>After that, we define a number of auxiliary functions for downloading and processing the FRED-MD dataset.
+As discussed in &lt;a href=https://fg-research.com/blog/general/posts/fred-md-overview.html target=”_blank”&gt;
+our previous post&lt;/a&gt;, the FRED-MD dataset indicates a set of transformations to be applied to the time
+series in order to ensure their stationarity, which are implemented in the function below.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">def</span> <span class="nf">transform_series</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">tcode</span><span class="p">):</span>
+</span><span id="line-2"><span class="w">    </span><span class="sd">'''</span>
+</span><span id="line-3"><span class="sd">    Transform the time series.</span>
+</span><span id="line-4">
+</span><span id="line-5"><span class="sd">    Parameters:</span>
+</span><span id="line-6"><span class="sd">    ______________________________________________________________</span>
+</span><span id="line-7"><span class="sd">    x: pandas.Series</span>
+</span><span id="line-8"><span class="sd">        Time series.</span>
+</span><span id="line-9">
+</span><span id="line-10"><span class="sd">    tcode: int.</span>
+</span><span id="line-11"><span class="sd">        Transformation code.</span>
+</span><span id="line-12"><span class="sd">    '''</span>
+</span><span id="line-13">
+</span><span id="line-14">    <span class="k">if</span> <span class="n">tcode</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+</span><span id="line-15">        <span class="k">return</span> <span class="n">x</span>
+</span><span id="line-16">    <span class="k">elif</span> <span class="n">tcode</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+</span><span id="line-17">        <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span>
+</span><span id="line-18">    <span class="k">elif</span> <span class="n">tcode</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+</span><span id="line-19">        <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span>
+</span><span id="line-20">    <span class="k">elif</span> <span class="n">tcode</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+</span><span id="line-21">        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span><span id="line-22">    <span class="k">elif</span> <span class="n">tcode</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
+</span><span id="line-23">        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span>
+</span><span id="line-24">    <span class="k">elif</span> <span class="n">tcode</span> <span class="o">==</span> <span class="mi">6</span><span class="p">:</span>
+</span><span id="line-25">        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span>
+</span><span id="line-26">    <span class="k">elif</span> <span class="n">tcode</span> <span class="o">==</span> <span class="mi">7</span><span class="p">:</span>
+</span><span id="line-27">        <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">pct_change</span><span class="p">()</span>
+</span><span id="line-28">    <span class="k">else</span><span class="p">:</span>
+</span><span id="line-29">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"unknown `tcode` </span><span class="si">{</span><span class="n">tcode</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
 </section>
 <section id="hyperparameter-tuning">
 <h3>Hyperparameter Tuning<a class="headerlink" href="#hyperparameter-tuning" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#hyperparameter-tuning'">¶</a></h3>
