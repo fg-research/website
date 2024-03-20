@@ -111,10 +111,12 @@ We start by importing the dependencies.
 
 .. raw:: html
 
+    <br>
     After that, we define a number of auxiliary functions for downloading and processing the FRED-MD dataset.
     As discussed in <a href=https://fg-research.com/blog/general/posts/fred-md-overview.html target="_blank">
     our previous post</a>, the FRED-MD dataset includes a set of transformations to be applied to the time
     series in order to ensure their stationarity, which are implemented in the function below.
+    <br>
 
 
 .. code:: python
