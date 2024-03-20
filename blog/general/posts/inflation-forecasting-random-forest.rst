@@ -226,7 +226,7 @@ We start by importing the dependencies.
     The function below is used for downloading and processing the test data.
     <br>
 
-.. code:: python
+
 
 
 
