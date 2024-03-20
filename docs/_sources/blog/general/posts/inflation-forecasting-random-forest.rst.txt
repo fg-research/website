@@ -67,15 +67,9 @@ Data
     inflation adjustments and backfilling of missing values. For this reason, different
     real-time vintages can potentially report different values for the same time series
     on the same date. Furthermore, different real-time vintages can include different
-    time series, as indicators are occasionally added or removed from the dataset.
+    time series, as indicators are occasionally added and removed from the dataset.
     </p>
 
-    <p>
-    The real-time vintages also include the suggested transformations to be applied to the time
-    series in order to ensure their stationarity. The possible transformations are first order
-    difference, second order difference, logarithm, first order logarithmic difference,
-    second order logarithmic difference, percentage change, and no transformation.
-    </p>
 
 ******************************************
 Code
