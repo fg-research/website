@@ -63,8 +63,8 @@ Data
     </p>
 
     <p>
-    The real-time vintages also include a suggested transformation to be applied to each time
-    series in order to ensure stationarity. The possible transformations are first order
+    The real-time vintages also include the suggested transformations to be applied to the time
+    series in order to ensure their stationarity. The possible transformations are first order
     difference, second order difference, logarithm, first order logarithmic difference,
     second order logarithmic difference, percentage change and no transformation.
     </p>
