@@ -163,7 +163,6 @@ We start by importing the dependencies.
     missing values.
     <br>
 
-
 .. code:: python
 
     def get_training_data(year, month, target_name, target_tcode):
@@ -220,6 +219,15 @@ We start by importing the dependencies.
         data = data.loc[:, [target_name] + [c for c in data.columns if c != target_name and data[c].isna().sum() == 0]]
 
         return data
+
+.. raw:: html
+
+    <br>
+    The function below is used for downloading and processing the test data.
+    <br>
+
+.. code:: python
+
 
 
 ==========================================
