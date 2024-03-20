@@ -28,8 +28,8 @@ Forecasting US inflation with random forests
 
     <p>
     In this post, we will focus on the random forest model introduced in <a href="#references">[2]</a>,
-    which was found to outperform several
-
+    which was found to outperform both standard univariate forecasting models such as the AR(1) model
+    and several other machine learning models including Lasso, Ridge and Elastic Net regressions.
 
     </p>
 
