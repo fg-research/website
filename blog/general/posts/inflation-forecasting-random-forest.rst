@@ -38,16 +38,13 @@ Forecasting US inflation with random forests
     </p>
 
     <p>
-    For simplicity, we will consider only one-month-ahead forecasts. We will train the model
-    to predict next month's inflation based on the current month's values of all FRED-MD
-    time series, including the current month's inflation. We will train the model
-    on the FRED-MD time series up to January 2023, and generate the one-month-ahead forecasts
-    from February 2023 to January 2024.
+    For simplicity, we will consider only one-month-ahead forecasts. We will use the random
+    forest model for predicting next month's inflation based on the current month's values
+    of all FRED-MD indicators, including the current month's inflation. We will train the
+    model on the FRED-MD time series up to January 2023, and generate the one-month-ahead
+    forecasts from February 2023 to January 2024.
     </p>
 
-******************************************
-Model
-******************************************
 
 ******************************************
 Data
@@ -63,13 +60,23 @@ Data
     </p>
 
     <p>
-    The real-time vintages are subject to ex-post adjustments, such as seasonal adjustments,
-    inflation adjustments and backfilling of missing values. For this reason, different
-    real-time vintages can potentially report different values for the same time series
-    on the same date. Furthermore, different real-time vintages can include different
-    time series, as indicators are occasionally added and removed from the dataset.
+    The real-time vintages are subject to retrospective adjustments, such as seasonal
+    adjustments, inflation adjustments and backfilling of missing values. For this reason,
+    different real-time vintages can potentially report different values for the same
+    time series on the same date. Furthermore, different real-time vintages can include
+    different time series, as indicators are occasionally added and removed from the dataset.
     </p>
 
+    <p>
+    We use 02-2023 vintage for training and hyperparameter tuning, while we use the last
+    month in all real-time vintages from 03-2023 to 02-2024 for testing. Our approach
+    is different from the one used in <a href="#references">[2]</a>, where the same
+    real-time vintage is used for both training and testing. In our view, our approach
+    allows us to evaluate the model in a more realistic scenario where on a given month
+    we forecast next month's inflation using as input the data in the real-time vintage
+    released on that month, without taking into account any retrospective adjustment
+    that could be applied to the FRED-MD dataset in the future.
+    </p>
 
 ******************************************
 Code

@@ -154,15 +154,12 @@ We will use the random forest model for forecasting the US CPI monthly inflation
 define as the month-over-month logarithmic change in the US CPI index as in <a href="#references">[2]</a>.
 </p>
 <p>
-For simplicity, we will consider only one-month-ahead forecasts. We will train the model
-to predict next month's inflation based on the current month's values of all FRED-MD
-time series, including the current month's inflation. We will train the model
-on the FRED-MD time series up to January 2023, and generate the one-month-ahead forecasts
-from February 2023 to January 2024.
-</p><section id="model">
-<h2>Model<a class="headerlink" href="#model" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#model'">¶</a></h2>
-</section>
-<section id="data">
+For simplicity, we will consider only one-month-ahead forecasts. We will use the random
+forest model for predicting next month's inflation based on the current month's values
+of all FRED-MD indicators, including the current month's inflation. We will train the
+model on the FRED-MD time series up to January 2023, and generate the one-month-ahead
+forecasts from February 2023 to January 2024.
+</p><section id="data">
 <h2>Data<a class="headerlink" href="#data" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data'">¶</a></h2>
 <p>
 As discussed in <a href="https://fg-research.com/blog/general/posts/fred-md-overview.html" target="_blank">our previous post</a>, the FRED-MD dataset is updated on a monthly basis.
@@ -171,11 +168,21 @@ includes the data from January 1959 up to the previous month. For instance, the 
 vintage contains the data from January 1959 to January 2024.
 </p>
 <p>
-The real-time vintages are subject to ex-post adjustments, such as seasonal adjustments,
-inflation adjustments and backfilling of missing values. For this reason, different
-real-time vintages can potentially report different values for the same time series
-on the same date. Furthermore, different real-time vintages can include different
-time series, as indicators are occasionally added and removed from the dataset.
+The real-time vintages are subject to retrospective adjustments, such as seasonal
+adjustments, inflation adjustments and backfilling of missing values. For this reason,
+different real-time vintages can potentially report different values for the same
+time series on the same date. Furthermore, different real-time vintages can include
+different time series, as indicators are occasionally added and removed from the dataset.
+</p>
+<p>
+We use 02-2023 vintage for training and hyperparameter tuning, while we use the last
+month in all real-time vintages from 03-2023 to 02-2024 for testing. Our approach
+is different from the one used in <a href="#references">[2]</a>, where the same
+real-time vintage is used for both training and testing. In our view, our approach
+allows us to evaluate the model in a more realistic scenario where on a given month
+we forecast next month's inflation using as input the data in the real-time vintage
+released on that month, without taking into account any retrospective adjustment
+that could be applied to the FRED-MD dataset in the future.
 </p></section>
 <section id="code">
 <h2>Code<a class="headerlink" href="#code" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#code'">¶</a></h2>
@@ -198,7 +205,6 @@ time series, as indicators are occasionally added and removed from the dataset.
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(var(--vh)-4rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
-<li><a :data-current="activeSection === '#model'" class="reference internal" href="#model">Model</a></li>
 <li><a :data-current="activeSection === '#data'" class="reference internal" href="#data">Data</a></li>
 <li><a :data-current="activeSection === '#code'" class="reference internal" href="#code">Code</a><ul>
 <li><a :data-current="activeSection === '#set-up'" class="reference internal" href="#set-up">Set-Up</a></li>
