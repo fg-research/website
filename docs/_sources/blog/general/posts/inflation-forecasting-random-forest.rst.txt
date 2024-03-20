@@ -27,7 +27,8 @@ Forecasting US inflation with random forests
     </p>
 
     <p>
-
+    In this post, we will focus on the random forest model introduced in <a href="#references">[2]</a>,
+    which was found to outperform several
 
 
     </p>
@@ -76,9 +77,3 @@ References
 [1] McCracken, M. W., & Ng, S. (2016). FRED-MD: A monthly database for macroeconomic research. *Journal of Business & Economic Statistics*, 34(4), 574-589. `doi: 10.1080/07350015.2015.1086655 <https://doi.org/10.1080/07350015.2015.1086655>`__.
 
 [2] Medeiros, M. C., Vasconcelos, G. F., Veiga, Á., & Zilberman, E. (2021). Forecasting inflation in a data-rich environment: the benefits of machine learning methods. *Journal of Business & Economic Statistics*, 39(1), 98-119. `doi: 10.1080/07350015.2019.1637745 <https://doi.org/10.1080/07350015.2019.1637745>`__.
-
-[3] Paranhos, L. (2023). Predicting Inflation with Recurrent Neural Networks. *Working Paper*.
-
-[4] Hauzenberger, N., Huber, F., & Klieber, K. (2023). Real-time inflation forecasting using non-linear dimension reduction techniques. *International Journal of Forecasting*, 39(2), 901-921. `doi: 10.1016/j.ijforecast.2022.03.002 <https://doi.org/10.1016/j.ijforecast.2022.03.002>`__.
-
-[5] Malladi, R. K. (2023). Benchmark Analysis of Machine Learning Methods to Forecast the US Annual Inflation Rate During a High-Decile Inflation Period. *Computational Economics*, 1-41. `doi: 10.1007/s10614-023-10436-w <https://doi.org/10.1007/s10614-023-10436-w>`__.
