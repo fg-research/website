@@ -144,6 +144,7 @@ series in order to ensure their stationarity, which are implemented in the funct
             return x.pct_change()
         else:
             raise ValueError(f"unknown `tcode` {tcode}")
+
 ==========================================
 Hyperparameter Tuning
 ==========================================
