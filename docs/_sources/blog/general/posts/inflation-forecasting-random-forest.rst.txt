@@ -19,7 +19,8 @@ Forecasting US Inflation with Random Forests
 
     <p>
     Several recent papers have studied the problem of forecasting US inflation with
-    machine learning methods using the FRED-MD dataset. The FRED-MD dataset includes
+    machine learning methods using the <a href="https://research.stlouisfed.org/econ/mccracken/fred-databases/" target="_blank">FRED-MD</a>
+    dataset <a href="#references">[1]</a>. The FRED-MD dataset includes
     over 100 monthly time series of 8 different categories of US economic indicators:
     output and income, labour market, consumption and orders, orders and inventory,
     money and credit, interest rates and exchange rates, prices and stock market.
@@ -28,6 +29,7 @@ Forecasting US Inflation with Random Forests
     </p>
 
     <p>
+
 
 
     </p>
