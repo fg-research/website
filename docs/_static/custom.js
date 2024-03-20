@@ -25,7 +25,8 @@ window.setInterval(function(){
         'lstm-fcn-ecg-classification-toctree',
         'fred-md-overview-toctree',
         'cnn-kmeans-control-chart-clustering-toctree',
-        'lstm-ad-ecg-anomaly-detection-toctree'
+        'lstm-ad-ecg-anomaly-detection-toctree',
+        'inflation-forecasting-random-forest-toctree'
     ];
     for (var i = 0; i < elements.length; i++) {
         var f = document.getElementById(elements[i]);

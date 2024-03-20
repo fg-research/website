@@ -78,7 +78,8 @@ h6 {
 #fred-md-overview-include,
 #lstm-fcn-ecg-classification-include,
 #cnn-kmeans-control-chart-clustering-include,
-#lstm-ad-ecg-anomaly-detection-include{
+#lstm-ad-ecg-anomaly-detection-include,
+#inflation-forecasting-random-forest-include{
     font-weight: 300 !important;
 }
 
