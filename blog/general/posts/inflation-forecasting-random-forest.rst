@@ -24,6 +24,9 @@ Forecasting US inflation with random forests
     monthly time series belonging to 8 different groups of US macroeconomic indicators:
     output and income, labour market, consumption and orders, orders and inventory,
     money and credit, interest rates and exchange rates, prices, and stock market.
+    For a detailed overview of the FRED-MD dataset we refer to
+    <a href=https://fg-research.com/blog/general/posts/fred-md-overview.html
+    target="_blank">our previous blog post</a>.
     </p>
 
     <p>
@@ -47,11 +50,9 @@ Model
 Data
 ******************************************
 
-.. raw:: html
 
-    For a detailed overview of the FRED-MD dataset we refer to
-    <a href=https://fg-research.com/blog/general/posts/fred-md-overview.html
-    target="_blank">our previous blog post</a>.
+
+
 
 ******************************************
 Code
