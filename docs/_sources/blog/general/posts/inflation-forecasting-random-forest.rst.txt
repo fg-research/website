@@ -76,7 +76,7 @@ Data
     and minimizing the RMSE on the data from February 2022 to January 2023. After that we retrain
     the model on all the data up to January 2023, and generate the one-month-ahead forecasts from
     February 2023 to January 2024 by using as inputs in the model the data in the real-time
-    vintages from 03-2023 to 02-2024.
+    vintages from 02-2023 to 01-2024.
     </p>
 
 ******************************************
