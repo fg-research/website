@@ -24,9 +24,9 @@ Forecasting US inflation with random forests
     monthly time series belonging to 8 different groups of US macroeconomic indicators:
     output and income, labour market, consumption and orders, orders and inventory,
     money and credit, interest rates and exchange rates, prices, and stock market.
-    For a detailed overview of the FRED-MD dataset we refer to
+    For a detailed overview of the FRED-MD dataset, we refer to
     <a href=https://fg-research.com/blog/general/posts/fred-md-overview.html
-    target="_blank">our previous blog post</a>.
+    target="_blank">our previous post</a>.
     </p>
 
     <p>
@@ -38,7 +38,7 @@ Forecasting US inflation with random forests
     For simplicity, we will consider only one-month-ahead forecasts. We will train the model
     on the FRED-MD time series up to January 2023, and generate the one-month-ahead forecasts
     from February 2023 to January 2024. Our findings indicate that the random forest model outperforms
-    the AR(1) model by approximately 30% in terms of reduction in root mean squared error (RMSE), in line
+    the AR(1) model by approximately 30% in terms of root mean squared error (RMSE), in line
     with the results in <a href="#references">[2]</a>.
     </p>
 
@@ -49,9 +49,6 @@ Model
 ******************************************
 Data
 ******************************************
-
-
-
 
 
 ******************************************
