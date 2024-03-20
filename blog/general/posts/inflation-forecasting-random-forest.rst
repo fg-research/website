@@ -19,12 +19,12 @@ Forecasting US inflation with random forests
 
     <p>
     Several recent papers have studied the problem of forecasting US inflation with
-    machine learning methods using the <a href="https://research.stlouisfed.org/econ/mccracken/fred-databases/" target="_blank">FRED-MD</a>
-    dataset <a href="#references">[1]</a>. The FRED-MD dataset includes over 100
-    monthly time series belonging to 8 different groups of US macroeconomic indicators:
-    output and income, labour market, consumption and orders, orders and inventory,
-    money and credit, interest rates and exchange rates, prices, and stock market.
-    For a detailed overview of the FRED-MD dataset, we refer to
+    machine learning methods using the <a href="https://research.stlouisfed.org/econ/mccracken/fred-databases/" target="_blank">
+    FRED-MD</a> dataset <a href="#references">[1]</a>. The FRED-MD dataset includes
+    over 100 monthly time series belonging to 8 different groups of US macroeconomic
+    indicators: output and income, labour market, consumption and orders, orders and
+    inventory, money and credit, interest rates and exchange rates, prices, and stock
+    market. For a detailed overview of the FRED-MD dataset, we refer to
     <a href=https://fg-research.com/blog/general/posts/fred-md-overview.html
     target="_blank">our previous post</a>.
     </p>
@@ -40,9 +40,9 @@ Forecasting US inflation with random forests
     <p>
     For simplicity, we will consider only one-month-ahead forecasts. We will train the model
     on the FRED-MD time series up to January 2023, and generate the one-month-ahead forecasts
-    from February 2023 to January 2024. Our findings indicate that the random forest model outperforms
-    the AR(1) model by approximately 30% in terms of root mean squared error (RMSE), in line
-    with the results in <a href="#references">[2]</a>.
+    from February 2023 to January 2024. Our findings indicate that the random forest model
+    outperforms the AR(1) model by almost 30% in terms of root mean squared error (RMSE),
+    in line with the results in <a href="#references">[2]</a>.
     </p>
 
 ******************************************
@@ -63,20 +63,18 @@ Data
     </p>
 
     <p>
-    The real-time vintages also include the suggested transformations to be applied to the time
-    series in order to ensure their stationarity. The possible transformations are first order
-    difference, second order difference, logarithm, first order logarithmic difference,
-    second order logarithmic difference, percentage change and no transformation.
+    The real-time vintages are subject to ex-post adjustments, such as seasonal adjustments,
+    inflation adjustments and backfilling of missing values. For this reason, different
+    real-time vintages can potentially report different values for the same time series
+    on the same date. Furthermore, different real-time vintages can include different
+    time series, as indicators are occasionally added or removed from the dataset.
     </p>
 
     <p>
-    In this post, we use the 02-2023 real-time vintage for model training and hyperparameter tuning,
-    while we use all subsequent real-time vintage up to 02-2024 for model testing. As a first
-    step, we find the best model hyperparameters by training model on the data up to January 2022
-    and minimizing the RMSE on the data from February 2022 to January 2023. After that we retrain
-    the model on all the data up to January 2023, and generate the one-month-ahead forecasts from
-    February 2023 to January 2024 by using as inputs in the model the data in the real-time
-    vintages from 02-2023 to 01-2024.
+    The real-time vintages also include the suggested transformations to be applied to the time
+    series in order to ensure their stationarity. The possible transformations are first order
+    difference, second order difference, logarithm, first order logarithmic difference,
+    second order logarithmic difference, percentage change, and no transformation.
     </p>
 
 ******************************************
@@ -84,11 +82,7 @@ Code
 ******************************************
 
 ==========================================
-Environment Set-Up
-==========================================
-
-==========================================
-Data Preparation
+Set-Up
 ==========================================
 
 ==========================================
@@ -96,16 +90,8 @@ Hyperparameter Tuning
 ==========================================
 
 ==========================================
-Training
+Model evaluation
 ==========================================
-
-==========================================
-Inference
-==========================================
-
-
-
-
 
 ******************************************
 References
