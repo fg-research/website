@@ -40,6 +40,7 @@ Model
 ******************************************
 Data
 ******************************************
+
 .. raw:: html
 
     For a detailed overview of the FRED-MD dataset we refer to
