@@ -1,10 +1,10 @@
 .. meta::
    :thumbnail: https://fg-research.com/_static/thumbnail.png
-   :description: An overview of the FRED-MD database
+   :description: Forecasting US inflation with random forests
    :keywords: Time Series, Forecasting, Machine Learning, Macroeconomics, Inflation
 
 ######################################################################################
-Forecasting US Inflation with Random Forests
+Forecasting US inflation with random forests
 ######################################################################################
 
 .. raw:: html
