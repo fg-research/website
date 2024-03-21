@@ -242,65 +242,9 @@ exception of the target time series, for which we use the first order
 logarithmic difference as in <a href="#references">[2]</a>) and define the
 features as the first lag (i.e. the one-month lag) of the all the time series
 (including the target time series). As in <a href="#references">[2]</a>,
-we use the data after January 2060, and we use only the time series without
+we use the data after January 1960, and we use only the time series without
 missing values.
-<br/><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">def</span> <span class="nf">get_training_data</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">target_name</span><span class="p">,</span> <span class="n">target_tcode</span><span class="p">):</span>
-</span><span id="line-2"><span class="w">    </span><span class="sd">'''</span>
-</span><span id="line-3"><span class="sd">    Download and process the training data.</span>
-</span><span id="line-4">
-</span><span id="line-5"><span class="sd">    Parameters:</span>
-</span><span id="line-6"><span class="sd">    ______________________________________________________________</span>
-</span><span id="line-7"><span class="sd">    year: int</span>
-</span><span id="line-8"><span class="sd">        The year of the dataset vintage.</span>
-</span><span id="line-9">
-</span><span id="line-10"><span class="sd">    month: int.</span>
-</span><span id="line-11"><span class="sd">        The month of the dataset vintage.</span>
-</span><span id="line-12">
-</span><span id="line-13"><span class="sd">    target_name: string.</span>
-</span><span id="line-14"><span class="sd">        The name of the target time series.</span>
-</span><span id="line-15">
-</span><span id="line-16"><span class="sd">    target_tcode: int.</span>
-</span><span id="line-17"><span class="sd">        The transformation code of the target time series.</span>
-</span><span id="line-18"><span class="sd">    '''</span>
-</span><span id="line-19">
-</span><span id="line-20">    <span class="c1"># get the dataset URL</span>
-</span><span id="line-21">    <span class="n">file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"https://files.stlouisfed.org/files/htdocs/fred-md/monthly/</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="nb">format</span><span class="p">(</span><span class="n">month</span><span class="p">,</span><span class="w"> </span><span class="s1">'02d'</span><span class="p">)</span><span class="si">}</span><span class="s2">.csv"</span>
-</span><span id="line-22">
-</span><span id="line-23">    <span class="c1"># get the time series</span>
-</span><span id="line-24">    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-</span><span id="line-25">    <span class="n">data</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
-</span><span id="line-26">
-</span><span id="line-27">    <span class="c1"># process the dates</span>
-</span><span id="line-28">    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">notna</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">),</span> <span class="p">:]</span>
-</span><span id="line-29">    <span class="n">data</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s2">"1959-01-01"</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">"MS"</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
-</span><span id="line-30">
-</span><span id="line-31">    <span class="c1"># get the transformation codes</span>
-</span><span id="line-32">    <span class="n">tcodes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-</span><span id="line-33">    <span class="n">tcodes</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">tcodes</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
-</span><span id="line-34">
-</span><span id="line-35">    <span class="c1"># override the target's transformation code</span>
-</span><span id="line-36">    <span class="n">tcodes</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">target_tcode</span>
-</span><span id="line-37">
-</span><span id="line-38">    <span class="c1"># transform the time series</span>
-</span><span id="line-39">    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">transform_series</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">tcodes</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()))</span>
-</span><span id="line-40">
-</span><span id="line-41">    <span class="c1"># lag the features</span>
-</span><span id="line-42">    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="n">target_name</span><span class="p">]]</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-</span><span id="line-43">        <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="n">periods</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
-</span><span id="line-44">        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">c</span> <span class="o">+</span> <span class="s2">"_L1"</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">],</span>
-</span><span id="line-45">        <span class="n">index</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">index</span>
-</span><span id="line-46">    <span class="p">))</span>
-</span><span id="line-47">
-</span><span id="line-48">    <span class="c1"># select the data after January 1960</span>
-</span><span id="line-49">    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">index</span> <span class="o">&gt;=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s2">"1960-01-01"</span><span class="p">)]</span>
-</span><span id="line-50">
-</span><span id="line-51">    <span class="c1"># select the features without missing values</span>
-</span><span id="line-52">    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="n">target_name</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span> <span class="o">!=</span> <span class="n">target_name</span> <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]]</span>
-</span><span id="line-53">
-</span><span id="line-54">    <span class="k">return</span> <span class="n">data</span>
-</span></code></pre></div>
-</div>
-<br/>
+<br/><br/>
 The function below is used for downloading and processing the test data.
 <br/></section>
 <section id="hyperparameter-tuning">
