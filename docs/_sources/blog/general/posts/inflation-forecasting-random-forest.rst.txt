@@ -52,7 +52,7 @@ Model
 .. raw:: html
 
     <p>
-    A random forest is an ensemble of decision trees. A <i>decision tree</i> approximates the
+    A random forest is an ensemble of decision trees. A decision tree approximates the
     relationship between the target and the features by splitting the feature space
     into different subsets, and generating a constant prediction for each subset, where
     each subset of the feature space represents a different combination of feature values.
@@ -70,39 +70,43 @@ Model
     <p>
     The partition of the feature space is determined in a recursive manner during the
     process of growing the tree. At the beginning of this process, the decision tree
-    contains only one node, referred to as <i>root note</i>, which includes the full
+    contains only one node, referred to as root note, which includes the full
     dataset. The root note predicts the target with the average of all target
     observations in the dataset.
-    After that, the dataset is recursively splits into smaller and smaller subsets
-    referred to as <i>nodes</i>, where each newly created node (child) is a subsample
-    of a previously existing node (parent). At each node, the target is predicted with
-    the average of the target observations in that node.
-    As the tree grows, finer and finer partitions of the feature space are created,
-    increasing the accuracy of the target predictions.
     </p>
 
     <p>
-    The optimal nodes or <i>best splits</i> are determined by optimizing a given objective
-    function (such as the mean squared error of the predicted target values) under a number of
-    constraints (such as that each node should contain at least a certain number of samples).
-    This process continues until a pre-specified condition is met, such as that all terminal
-    nodes, referred to as <i>leaves</i>, contain at least a certain number of samples,
-    or that the <i>depth</i> of the tree, as determined by the number of nodes or recursive splits
+    After that, the dataset is recursively splits into smaller and smaller subsets
+    referred to as nodes, where each newly created node (child) is a subsample
+    of a previously existing node (parent). At each node, the target is predicted with
+    the average of the target observations in that node. The splits used for creating
+    the nodes are determined through an optimization process which aims to minimize a
+    given loss function (such as by minimizing the mean squared error of the node's
+    prediction, which is equivalent to minimizing the variance of the target values in
+    the node) under a number of constraints, such as that each node should contain
+    at least a certain number of observations.
+    </p>
+
+    <p>
+    As the tree grows, finer and finer partitions of the feature space are created,
+    reducing the error of the target predictions. This process continues until a
+    pre-specified condition is met, such as that all terminal nodes, referred to as
+    leaves, contain at least a certain number of observations, or that the depth of
+    the tree, as determined by the number of nodes or recursive splits
     from the root node to the leaves, has reached a certain maximum value.
     </p>
 
 
 
+...
+Each tree is trained on random subsample
+of the training data, and uses a random subset of features to determine the best split at
+each node
+<a href="#references">[3]</a>
+In this post we use the random
+forest algorithm for a regression task, in which case the model predictions are obtained
+by averaging the predictions of the individual trees.
 
-    Each tree is trained on random subsample
-    of the training data, and uses a random subset of features to determine the best split at
-    each node
-    <a href="#references">[3]</a>
-
-    In this post we use the random
-    forest algorithm for a regression task, in which case the model predictions are obtained
-    by averaging the predictions of the individual trees.
-    </p>
 
 ******************************************
 Data
