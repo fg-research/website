@@ -28,10 +28,10 @@ General
         .. _inflation-forecasting-random-forest-include:
 
         Inflation forecasts are used for informing economic decisions at various levels,
-        from households to businesses and policymakers. Machine learning approaches
-        offer several potential advantages for inflation forecasting, including the ability to
-        handle large and complex datasets, capture nonlinear relationships, and adapt
-        to changing economic conditions....
+        from households to businesses and policymakers. The application of machine learning
+        methods to inflation forecasting offers several potential advantages, including
+        the ability to handle large and complex datasets, capture nonlinear relationships,
+        and adapt to changing economic conditions...
 
         .. grid:: 2
             :margin: 0 3 auto auto
