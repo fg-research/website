@@ -80,7 +80,7 @@ Model
     that each node should contain a certain minimum number of samples.
     An example of loss function is the mean squared error of the node's prediction,
     which is equal to the variance of the target values in the node, and which therefore
-    tends to create nodes containing target values that are as close as possible to each other.
+    tends to result in nodes containing similar target values.
     </p>
 
     <p>
@@ -89,7 +89,26 @@ Model
     pre-specified condition is met, such as that all terminal nodes, referred to as
     leaves, contain at least a given number of observations, or that the depth of
     the tree, as determined by the number of nodes or recursive splits
-    from the root node to the leaves, has reached a pre-defined maximum value.
+    from the root node to the leaves, has reached a predetermined maximum value.
+    </p>
+
+    <p>
+    Decision trees are prone to overfitting. A deep-enough tree can potentially isolate
+    each target value in one leaf, in which case the model predictions exactly match
+    the target values observed during training, but are unlikely to provide a good
+    approximation for new unseen data that was not used for training. Decision trees
+    are also not very robust to the input data, as small changes in the training data
+    can potentially result in completely different tree structures.
+    </p>
+
+    <p>
+    Random forests address these limitations by creating an ensemble of decision trees
+    which are trained on different random subsets of the training data (sample bagging) using
+    different random subsets of features (features bagging). The random forest predictions
+    are then obtained by averaging the individual predictions of the trees in the ensemble.
+    The mechanisms of sample bagging and feature bagging reduce the correlation between
+    the predictions of the different trees, and make the overall ensemble more robust
+    and less prone to overfitting <a href="#references">[3]</a>.
     </p>
 
     <img
