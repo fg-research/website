@@ -34,19 +34,23 @@ An overview of the FRED-MD database
     target="_blank">Federal Reserve Economic Data (FRED) database</a>, which is St. Louis Fed’s main, publicly
     available, economic database. The FRED-MD dataset applies different adjustments to the raw data sourced
     from FRED, such as seasonal adjustments, inflation adjustments and backfilling of missing values.
+    </p>
+
     <p>
+    The FRED-MD dataset also takes into account data changes and revisions.
+    For instance, in the main FRED database the same indicator can be released with different
+    names and, potentially, be reported in different units, over different time periods.
+    In the FRED-MD dataset each indicator is instead always represented by a single
+    time series with a unique name and is always reported in the same units.
+    </p>
 
-The FRED-MD dataset also takes into account data changes and revisions.
-For instance, in the main FRED database the same indicator can be released with different
-names and, potentially, be reported in different units, over different time periods.
-In the FRED-MD dataset each indicator is instead always represented by a single
-time series with a unique name and is always reported in the same units.
-
-The FRED-MD dataset was released for the first time in 01-2015.
-At the time of its first release, the FRED-MD dataset contained 134 time series.
-As of 12-2023, the FRED-MD dataset contains 127 time series.
-118 time series are included in all monthly releases from 01-2015 to 12-2023.
-The first date included in the FRED-MD dataset is 01-1959, even though a few time series start several years later.
+    <p>
+    The FRED-MD dataset was released for the first time in 01-2015.
+    At the time of its first release, the FRED-MD dataset contained 134 time series.
+    As of 12-2023, the FRED-MD dataset contains 127 time series.
+    118 time series are included in all monthly releases from 01-2015 to 12-2023.
+    The first date included in the FRED-MD dataset is 01-1959, even though a few time series start several years later.
+    </p>
 
 The FRED-MD dataset is updated on a monthly basis. Each monthly release is referred to as a *vintage*.
 A different CSV file is released for each month. The CSV files can be downloaded from the URL below,

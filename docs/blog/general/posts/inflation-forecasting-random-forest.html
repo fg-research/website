@@ -129,7 +129,7 @@
 <p>
 Inflation forecasts are used for informing economic decisions at various levels,
 from households to businesses and policymakers. Machine learning approaches
-offer several advantages for inflation forecasting, including the ability to
+offer several potential advantages for inflation forecasting, including the ability to
 handle large and complex datasets, capture nonlinear relationships, and adapt
 to changing economic conditions.
 </p>
@@ -160,7 +160,7 @@ outperforms the AR(1) model by almost 20% in terms of forecast error.
 </p><section id="model">
 <h2>Model<a class="headerlink" href="#model" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#model'">¶</a></h2>
 <p>
-A random forest is an ensemble of decision trees. A decision tree approximates the
+A random forest is an ensemble of decision trees. A <i>decision tree</i> approximates the
 relationship between the target and the features by splitting the feature space
 into different subsets, and generating a constant prediction for each subset, where
 each subset of the feature space represents a different combination of feature values.
@@ -176,42 +176,37 @@ combination of feature values.
 <p>
 The partition of the feature space is determined in a recursive manner during the
 process of growing the tree. At the beginning of this process, the decision tree
-contains only one node, referred to as root note, which includes the full dataset.
-The root note estimates the target as the average of the entire dataset. After that,
-the dataset is recursively splits into smaller and smaller subsets referred to as
-nodes, where each newly created node (child) is a subsample of a previous
-existing node (parent). At each node, the target is estimated as the average of
-the observations in that node.
+contains only one node, referred to as <i>root note</i>, which includes the full
+dataset. The root note predicts the target with the average of all target
+observations in the dataset.
+After that, the dataset is recursively splits into smaller and smaller subsets
+referred to as <i>nodes</i>, where each newly created node (child) is a subsample
+of a previously existing node (parent). At each node, the target is predicted with
+the average of the target observations in that node.
+As the tree grows, finer and finer partitions of the feature space are created,
+increasing the accuracy of the target predictions.
 </p>
 <p>
-This process continues
-until a pre-specified condition is met, such as that all terminal nodes, referred to
-as leaves, contain at least a certain number of samples, or the depth of the tree has reached a certain maximum.
-
-
-The optimal nodes or best splits are determined by optimizing a given objective function
-(such as the mean squared error of the predicted target values) under a number of
+The optimal nodes or <i>best splits</i> are determined by optimizing a given objective
+function (such as the mean squared error of the predicted target values) under a number of
 constraints (such as that each node should contain at least a certain number of samples).
+This process continues until a pre-specified condition is met, such as that all terminal
+nodes, referred to as <i>leaves</i>, contain at least a certain number of samples,
+or that the <i>depth</i> of the tree, as determined by the number of nodes or recursive splits
+from the root node to the leaves, has reached a certain maximum value.
+</p>
 
 
 
 
-</p><dl>
-<dt>the splits</dt><dd><p>are determined</p>
-<p>A decision tree consists of a root note  and therefore represents the entire feature space,
-of subsequent nodes representing smaller and smaller partitions of the feature space,
-and of terminal nodes or leaves represeting the final partition.
-&lt;/p&gt;</p>
-<p>Each tree is trained on random subsample
+Each tree is trained on random subsample
 of the training data, and uses a random subset of features to determine the best split at
 each node
-&lt;a href=”#references”&gt;[3]&lt;/a&gt;</p>
-<p>In this post we use the random
+<a href="#references">[3]</a>
+
+In this post we use the random
 forest algorithm for a regression task, in which case the model predictions are obtained
 by averaging the predictions of the individual trees.
-&lt;/p&gt;</p>
-</dd>
-</dl>
 </section>
 <section id="data">
 <h2>Data<a class="headerlink" href="#data" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data'">¶</a></h2>
