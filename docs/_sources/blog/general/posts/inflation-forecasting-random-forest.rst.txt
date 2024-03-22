@@ -76,20 +76,21 @@ Model
     </p>
 
     <p>
-    The splits used for creating the nodes are determined through an optimization process which aims to minimize a
-    given loss function (such as the mean squared error of the node's
-    prediction, which is equal to the variance of the target values in
-    the node) under a number of constraints, such as that each node should contain
-    at least a certain number of observations.
+    The splits used for creating the nodes are determined through an optimization process
+    which minimizes a given loss function under a number of constraints, such as
+    that each node should contain at least a certain number of observations.
+    An example of loss function is the mean squared error of the node's prediction,
+    which is equal to the variance of the target values in the node, and which therefore
+    tends to create nodes where target values are as close as possible to each other.
     </p>
 
     <p>
     As the tree grows, finer and finer partitions of the feature space are created,
     reducing the error of the predictions. This process continues until a
     pre-specified condition is met, such as that all terminal nodes, referred to as
-    leaves, contain at least a certain number of observations, or that the depth of
+    leaves, contain at least a given number of observations, or that the depth of
     the tree, as determined by the number of nodes or recursive splits
-    from the root node to the leaves, has reached a certain maximum value.
+    from the root node to the leaves, has reached a pre-defined maximum value.
     </p>
 
 
