@@ -644,7 +644,7 @@ We also define a similar function for the AR(1) model, which we will use as a be
 </span><span id="line-30">    <span class="p">)</span>
 </span></code></pre></div>
 </div>
-<p>Lastly, we define an additional function which uses <a href="#id1"><span class="problematic" id="id2">``</span></a>optuna` &lt;<a class="reference external" href="https://optuna.org/">https://optuna.org/</a>&gt;`__
+<p>Lastly, we define an additional function which uses <a class="reference external" href="https://optuna.org/">optuna</a>
 for tuning the main hyperparameters of the random forest model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">def</span> <span class="nf">tune_random_forest_model</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">valid_dataset</span><span class="p">,</span> <span class="n">target_name</span><span class="p">,</span> <span class="n">n_trials</span><span class="p">):</span>
 </span><span id="line-2"><span class="w">    </span><span class="sd">'''</span>
@@ -728,7 +728,7 @@ time series (i.e. without missing values) from February 1960 to January 2023.</p
 </span></code></pre></div>
 </div>
 <p>We then proceed to tuning the random forest hyperparameters
-by performing random search with <cite>optuna</cite>. We use
+by performing random search with <a class="reference external" href="https://optuna.org/">optuna</a>. We use
 the last 12 months of the training set as validation set
 and we use the root mean squared error (RMSE) as objective function.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">params</span> <span class="o">=</span> <span class="n">tune_random_forest_model</span><span class="p">(</span>

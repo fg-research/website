@@ -602,7 +602,7 @@ We start by importing the dependencies.
             index=test_dataset.index
         )
 
-Lastly, we define an additional function which uses ``optuna` <https://optuna.org/>`__
+Lastly, we define an additional function which uses `optuna <https://optuna.org/>`__
 for tuning the main hyperparameters of the random forest model.
 
 .. code:: python
@@ -692,7 +692,7 @@ time series (i.e. without missing values) from February 1960 to January 2023.
     )
 
 We then proceed to tuning the random forest hyperparameters
-by performing random search with `optuna`. We use
+by performing random search with `optuna <https://optuna.org/>`__. We use
 the last 12 months of the training set as validation set
 and we use the root mean squared error (RMSE) as objective function.
 
