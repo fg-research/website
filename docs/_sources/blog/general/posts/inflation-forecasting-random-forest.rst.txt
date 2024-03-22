@@ -58,7 +58,7 @@ Model
     each subset of the feature space represents a different combination of feature values.
     Decision trees can be used for both classification and regression. In the regression case,
     which is the one relevant to this post, the predicted constant value is the average of
-    the target values corresponding to the considered combination of feature values.
+    the target values that are observed for the considered combination of feature values.
     </p>
 
     <p>
