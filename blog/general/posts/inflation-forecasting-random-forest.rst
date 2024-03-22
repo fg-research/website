@@ -49,11 +49,35 @@ Forecasting US inflation with random forests
 ******************************************
 Model
 ******************************************
-A random forest is an ensemble of decision trees. Each tree is trained on random subset
-of samples drawn without replacement from the training data, and uses a random subset
-of features to determine the best split at each node. In this post we use the random
-forest algorithm for a regression task, in which case the model predictions are obtained
-by averaging the predictions of the individual trees.
+.. raw:: html
+
+    <p>
+    A random forest is an ensemble of decision trees. A decision tree approximates the
+    relationship between the target and the features by splitting the feature space
+    into different subsets, and generating a constant prediction for each subset, where
+    each subset of the feature space represents a different combination of feature values.
+    </p>
+
+    <p>
+    A decision tree can be seen as a nonparametric regression model where the regression
+    function is estimated by a piecewise constant approximation, which assumes that over
+    small subsets of the feature space the target values can be approximated with a
+    constant value.
+    </p>
+
+    <p>
+
+    </p>
+
+    Each tree is trained on random subsample
+    of the training data, and uses a random subset of features to determine the best split at
+    each node
+    <a href="#references">[3]</a>
+
+    In this post we use the random
+    forest algorithm for a regression task, in which case the model predictions are obtained
+    by averaging the predictions of the individual trees.
+    </p>
 
 ******************************************
 Data
