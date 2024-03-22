@@ -54,7 +54,7 @@ Model
     <p>
     A random forest is an ensemble of decision trees. A decision tree approximates the
     relationship between the target and the features by splitting the feature space
-    into different subsets, and generating a constant prediction for each subset, where
+    into different subsets and generating a constant prediction for each subset, where
     each subset of the feature space represents a different combination of feature values.
     </p>
 
