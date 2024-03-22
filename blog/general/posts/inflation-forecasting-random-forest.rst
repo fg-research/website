@@ -106,7 +106,7 @@ Model
     different random subsets of features (features bagging). The random forest predictions
     are then obtained by averaging the individual predictions of the trees in the ensemble.
     The mechanisms of sample bagging and feature bagging reduce the correlation between
-    the predictions of the different trees, and make the overall ensemble more robust
+    the predictions of the different trees, making the overall ensemble more robust
     and less prone to overfitting <a href="#references">[3]</a>.
     </p>
 
@@ -121,22 +121,13 @@ Model
     <p class="blog-post-image-caption">Schematic representation of random forest algorithm, adapted from
     <a href="#references">[4]</a>.</p>
 
-...
-Each tree is trained on random subsample
-of the training data, and uses a random subset of features to determine the best split at
-each node
-<a href="#references">[3]</a>
-In this post we use the random
-forest algorithm for a regression task, in which case the model predictions are obtained
-by averaging the predictions of the individual trees.
-
-
 ******************************************
 Data
 ******************************************
 .. raw:: html
 
     <p>
+    We use the FRED-MD dataset for developing and validating the random forest model.
     As discussed in <a href=https://fg-research.com/blog/general/posts/fred-md-overview.html
     target="_blank">our previous post</a>, the FRED-MD dataset is updated on a monthly basis.
     The monthly releases are referred to as <i>vintages</i>. Each vintage includes the data
