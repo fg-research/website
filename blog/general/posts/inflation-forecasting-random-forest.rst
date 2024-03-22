@@ -187,12 +187,12 @@ We start by importing the dependencies.
 
 .. raw:: html
 
-    <br>
+    <p>
     After that, we define a number of auxiliary functions for downloading and processing the FRED-MD dataset.
     As discussed in <a href=https://fg-research.com/blog/general/posts/fred-md-overview.html target="_blank">
     our previous post</a>, the FRED-MD dataset includes a set of transformations to be applied to the time
     series in order to ensure their stationarity, which are implemented in the function below.
-    <br>
+    </p>
 
 .. code:: python
 
@@ -228,7 +228,7 @@ We start by importing the dependencies.
 
 .. raw:: html
 
-    <br>
+    <p>
     We then define a function for downloading and processing the training data.
     In this function we download the FRED-MD dataset for the considered vintage,
     transform the time series using the provided transformation codes (with the
@@ -238,7 +238,7 @@ We start by importing the dependencies.
     (including the target time series). As in <a href="#references">[2]</a>,
     we use the data after January 1960, and we use only the time series without
     missing values.
-    <br>
+    </p>
 
 .. code:: python
 
@@ -299,12 +299,13 @@ We start by importing the dependencies.
 
 .. raw:: html
 
-    <br>
+    <p>
     For the test data, we download and process the targets and features separately,
     given that they are extracted from different vintages. The targets are extracted
     from the vintages between 03-2023 and 02-2024, while the features are extracted
     from the vintages between 02-2023 and 01-2024.
-    <br>
+    The following function extracts the target values.
+    </p>
 
 .. code:: python
 
@@ -369,6 +370,16 @@ We start by importing the dependencies.
             target = pd.concat([target, data.iloc[-1:]], axis=0)
 
         return target
+
+.. raw:: html
+
+    <p>
+    The following function extracts the feature values. Note that we
+    shift back the dates of the dataset vintages by one month, and we
+    then correspondingly shift forward their time index also by one month,
+    such that the time index of the features data frame matches the time
+    index of the target data frame.
+    </p>
 
 .. code:: python
 
@@ -450,6 +461,13 @@ We start by importing the dependencies.
             features = pd.concat([features, data.iloc[-1:]], axis=0)
 
         return features
+
+.. raw:: html
+
+    <p>
+    The function below extract the target and features from the different
+    dataset vintages as outlined above, and merges them into a unique data frame.
+    </p>
 
 .. code:: python
 
@@ -652,7 +670,9 @@ for tuning the main hyperparameters of the random forest model.
 ==========================================
 Model evaluation
 ==========================================
-We start by defining the target name and the target transformation code.
+We are now ready to run the analysis.
+We start by defining the target name, which is the FRED name of the US CPI index ("CPIAUCSL"),
+and the target transformation code, which is 5 for first order logarithmic difference.
 
 .. code:: python
 
@@ -714,7 +734,7 @@ on the same 110 variables from February 2023 to January 2024.
         feature_names=train_dataset.columns.drop(target_name).tolist()
     )
 
-We can now train the random forest model using the identified best
+We can finally train the random forest model using the identified best
 hyperparameters, generate the forecasts over the test set, and
 calculate the RMSE of the forecasts over the test set.
 

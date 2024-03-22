@@ -259,12 +259,12 @@ Source: FRED-MD dataset, 02-2024 vintage.</p></section>
 </span><span id="line-7"><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">root_mean_squared_error</span>
 </span></code></pre></div>
 </div>
-<br/>
+<p>
 After that, we define a number of auxiliary functions for downloading and processing the FRED-MD dataset.
 As discussed in <a href="https://fg-research.com/blog/general/posts/fred-md-overview.html" target="_blank">
 our previous post</a>, the FRED-MD dataset includes a set of transformations to be applied to the time
 series in order to ensure their stationarity, which are implemented in the function below.
-<br/><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">def</span> <span class="nf">transform_series</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">tcode</span><span class="p">):</span>
+</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">def</span> <span class="nf">transform_series</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">tcode</span><span class="p">):</span>
 </span><span id="line-2"><span class="w">    </span><span class="sd">'''</span>
 </span><span id="line-3"><span class="sd">    Transform the time series.</span>
 </span><span id="line-4">
@@ -295,7 +295,7 @@ series in order to ensure their stationarity, which are implemented in the funct
 </span><span id="line-29">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"unknown `tcode` </span><span class="si">{</span><span class="n">tcode</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
-<br/>
+<p>
 We then define a function for downloading and processing the training data.
 In this function we download the FRED-MD dataset for the considered vintage,
 transform the time series using the provided transformation codes (with the
@@ -305,7 +305,7 @@ features as the first lag (i.e. the one-month lag) of the all the time series
 (including the target time series). As in <a href="#references">[2]</a>,
 we use the data after January 1960, and we use only the time series without
 missing values.
-<br/><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">def</span> <span class="nf">get_training_data</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">target_name</span><span class="p">,</span> <span class="n">target_tcode</span><span class="p">):</span>
+</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">def</span> <span class="nf">get_training_data</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">target_name</span><span class="p">,</span> <span class="n">target_tcode</span><span class="p">):</span>
 </span><span id="line-2"><span class="w">    </span><span class="sd">'''</span>
 </span><span id="line-3"><span class="sd">    Download and process the training data.</span>
 </span><span id="line-4">
@@ -361,12 +361,13 @@ missing values.
 </span><span id="line-54">    <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 </span></code></pre></div>
 </div>
-<br/>
+<p>
 For the test data, we download and process the targets and features separately,
 given that they are extracted from different vintages. The targets are extracted
 from the vintages between 03-2023 and 02-2024, while the features are extracted
 from the vintages between 02-2023 and 01-2024.
-<br/><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">def</span> <span class="nf">get_target</span><span class="p">(</span><span class="n">start_month</span><span class="p">,</span> <span class="n">start_year</span><span class="p">,</span> <span class="n">end_month</span><span class="p">,</span> <span class="n">end_year</span><span class="p">,</span> <span class="n">target_name</span><span class="p">,</span> <span class="n">target_tcode</span><span class="p">):</span>
+The following function extracts the target values.
+</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">def</span> <span class="nf">get_target</span><span class="p">(</span><span class="n">start_month</span><span class="p">,</span> <span class="n">start_year</span><span class="p">,</span> <span class="n">end_month</span><span class="p">,</span> <span class="n">end_year</span><span class="p">,</span> <span class="n">target_name</span><span class="p">,</span> <span class="n">target_tcode</span><span class="p">):</span>
 </span><span id="line-2"><span class="w">    </span><span class="sd">'''</span>
 </span><span id="line-3"><span class="sd">    Extract the target time series from a range of dataset vintages.</span>
 </span><span id="line-4">
@@ -429,7 +430,13 @@ from the vintages between 02-2023 and 01-2024.
 </span><span id="line-61">    <span class="k">return</span> <span class="n">target</span>
 </span></code></pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">def</span> <span class="nf">get_features</span><span class="p">(</span><span class="n">start_month</span><span class="p">,</span> <span class="n">start_year</span><span class="p">,</span> <span class="n">end_month</span><span class="p">,</span> <span class="n">end_year</span><span class="p">,</span> <span class="n">target_name</span><span class="p">,</span> <span class="n">target_tcode</span><span class="p">,</span> <span class="n">feature_names</span><span class="p">):</span>
+<p>
+The following function extracts the feature values. Note that we
+shift back the dates of the dataset vintages by one month, and we
+then correspondingly shift forward their time index also by one month,
+such that the time index of the features data frame matches the time
+index of the target data frame.
+</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">def</span> <span class="nf">get_features</span><span class="p">(</span><span class="n">start_month</span><span class="p">,</span> <span class="n">start_year</span><span class="p">,</span> <span class="n">end_month</span><span class="p">,</span> <span class="n">end_year</span><span class="p">,</span> <span class="n">target_name</span><span class="p">,</span> <span class="n">target_tcode</span><span class="p">,</span> <span class="n">feature_names</span><span class="p">):</span>
 </span><span id="line-2"><span class="w">    </span><span class="sd">'''</span>
 </span><span id="line-3"><span class="sd">    Extract the feature time series from a range of dataset vintages.</span>
 </span><span id="line-4">
@@ -509,7 +516,10 @@ from the vintages between 02-2023 and 01-2024.
 </span><span id="line-78">    <span class="k">return</span> <span class="n">features</span>
 </span></code></pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">def</span> <span class="nf">get_test_data</span><span class="p">(</span><span class="n">start_month</span><span class="p">,</span> <span class="n">start_year</span><span class="p">,</span> <span class="n">end_month</span><span class="p">,</span> <span class="n">end_year</span><span class="p">,</span> <span class="n">target_name</span><span class="p">,</span> <span class="n">target_tcode</span><span class="p">,</span> <span class="n">feature_names</span><span class="p">):</span>
+<p>
+The function below extract the target and features from the different
+dataset vintages as outlined above, and merges them into a unique data frame.
+</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">def</span> <span class="nf">get_test_data</span><span class="p">(</span><span class="n">start_month</span><span class="p">,</span> <span class="n">start_year</span><span class="p">,</span> <span class="n">end_month</span><span class="p">,</span> <span class="n">end_year</span><span class="p">,</span> <span class="n">target_name</span><span class="p">,</span> <span class="n">target_tcode</span><span class="p">,</span> <span class="n">feature_names</span><span class="p">):</span>
 </span><span id="line-2"><span class="w">    </span><span class="sd">'''</span>
 </span><span id="line-3"><span class="sd">    Download and process the test data.</span>
 </span><span id="line-4">
@@ -697,7 +707,9 @@ for tuning the main hyperparameters of the random forest model.</p>
 </section>
 <section id="model-evaluation">
 <h3>Model evaluation<a class="headerlink" href="#model-evaluation" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#model-evaluation'">¶</a></h3>
-<p>We start by defining the target name and the target transformation code.</p>
+<p>We are now ready to run the analysis.
+We start by defining the target name, which is the FRED name of the US CPI index (“CPIAUCSL”),
+and the target transformation code, which is 5 for first order logarithmic difference.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">target_name</span> <span class="o">=</span> <span class="s2">"CPIAUCSL"</span>
 </span><span id="line-2"><span class="n">target_tcode</span> <span class="o">=</span> <span class="mi">5</span>
 </span></code></pre></div>
@@ -749,7 +761,7 @@ on the same 110 variables from February 2023 to January 2024.</p>
 </span><span id="line-9"><span class="p">)</span>
 </span></code></pre></div>
 </div>
-<p>We can now train the random forest model using the identified best
+<p>We can finally train the random forest model using the identified best
 hyperparameters, generate the forecasts over the test set, and
 calculate the RMSE of the forecasts over the test set.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">rf_forecasts</span> <span class="o">=</span> <span class="n">run_random_forest_model</span><span class="p">(</span>
