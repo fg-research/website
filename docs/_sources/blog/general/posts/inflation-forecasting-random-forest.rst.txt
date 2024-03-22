@@ -65,7 +65,7 @@ Model
     process of growing the tree. At the beginning of this process, the decision tree
     contains only one node, referred to as root note, which includes the full
     dataset. The root note predicts the target with the average of all target
-    observations in the dataset.
+    values observed in the dataset.
     </p>
 
     <p>
