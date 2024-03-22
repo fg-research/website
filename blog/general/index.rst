@@ -29,7 +29,7 @@ General
 
         Inflation forecasts are used for informing economic decisions at various levels,
         from households to businesses and policymakers. Machine learning approaches
-        offer several advantages for inflation forecasting, including the ability to
+        offer several potential advantages for inflation forecasting, including the ability to
         handle large and complex datasets, capture nonlinear relationships, and adapt
         to changing economic conditions....
 

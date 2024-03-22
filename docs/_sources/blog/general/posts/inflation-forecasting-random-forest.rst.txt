@@ -11,15 +11,15 @@ Forecasting US inflation with random forests
 
     <p>
     Inflation forecasts are used for informing economic decisions at various levels,
-    from households to businesses and policymakers. Machine learning approaches
-    offer several potential advantages for inflation forecasting, including the ability to
-    handle large and complex datasets, capture nonlinear relationships, and adapt
-    to changing economic conditions.
+    from households to businesses and policymakers. Machine learning approaches offer
+    several potential advantages for inflation forecasting, including the ability to
+    handle large and complex datasets, capture nonlinear relationships, and adapt to
+    changing economic conditions.
     </p>
 
     <p>
-    Several recent papers have studied the problem of forecasting US inflation with
-    machine learning methods using the <a href="https://research.stlouisfed.org/econ/mccracken/fred-databases/" target="_blank">
+    Several recent papers have studied the performance of machine learning methods
+    for forecasting US inflation using the <a href="https://research.stlouisfed.org/econ/mccracken/fred-databases/" target="_blank">
     FRED-MD</a> dataset <a href="#references">[1]</a>. The FRED-MD dataset includes
     over 100 monthly time series belonging to 8 different groups of US macroeconomic
     indicators: output and income, labour market, consumption and orders, orders and
@@ -56,15 +56,9 @@ Model
     relationship between the target and the features by splitting the feature space
     into different subsets, and generating a constant prediction for each subset, where
     each subset of the feature space represents a different combination of feature values.
-    </p>
-
-    <p>
-    A decision tree assumes that, over appropriately chosen subsets of the feature space,
-    the target values can be approximated with a constant value. It follows that a
-    decision tree can be seen as a nonparametric regression model, where the regression
-    function is estimated using a piecewise constant approximation. The constant value
-    used in the approximation is the average of the target values for the considered
-    combination of feature values.
+    Decision trees can be used for both classification and regression. In the regression case,
+    which is the one relevant to this post, the predicted constant value is the average of
+    the target values corresponding to the considered combination of feature values.
     </p>
 
     <p>
