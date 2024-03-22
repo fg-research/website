@@ -159,12 +159,12 @@ Data
         id="inflation-forecasting-random-forest-time-series"
         class="blog-post-image"
         style="width:80%"
-        alt="Month-over-month logarithmic change in the US CPI index"
+        alt="US CPI index Month-over-month logarithmic change in the "
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/inflation-forecasting-random-forest/time_series_light.png
     />
 
-    <p class="blog-post-image-caption">Month-over-month logarithmic change in the US CPI index (FRED: CPIAUCSL).
-    Source: FRED-MD dataset, 02-2024 vintage.
+    <p class="blog-post-image-caption">Consumer Price Index for All Urban Consumers: All Items in U.S. City Average (FRED: CPIAUCSL)
+    with corresponding inflation rate (1-month logarithmic change). Source: FRED-MD dataset, 02-2024 vintage.</p>
 
 ******************************************
 Code
@@ -332,7 +332,6 @@ We start by importing the dependencies.
 
         target_tcode: int.
             The transformation code of the target time series.
-            If None, the target time series is not transformed.
         '''
 
         # create a data frame for storing the target values
@@ -363,8 +362,7 @@ We start by importing the dependencies.
             data = data[[target_name]]
 
             # transform the target time series
-            if target_tcode is not None:
-                data[target_name] = transform_series(data[target_name], target_tcode)
+            data[target_name] = transform_series(data[target_name], target_tcode)
 
             # select the last value and save it in the data frame
             target = pd.concat([target, data.iloc[-1:]], axis=0)

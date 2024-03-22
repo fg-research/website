@@ -245,9 +245,9 @@ the model in a more realistic scenario where on a given month we forecast next m
 inflation using as input the data available on that month, without taking into account
 any ex-post adjustment that could be applied to the data in the future.
 </p>
-<img alt="Month-over-month logarithmic change in the US CPI index" class="blog-post-image" id="inflation-forecasting-random-forest-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inflation-forecasting-random-forest/time_series_light.png" style="width:80%"/>
-<p class="blog-post-image-caption">Month-over-month logarithmic change in the US CPI index (FRED: CPIAUCSL).
-Source: FRED-MD dataset, 02-2024 vintage.</p></section>
+<img alt="US CPI index Month-over-month logarithmic change in the " class="blog-post-image" id="inflation-forecasting-random-forest-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inflation-forecasting-random-forest/time_series_light.png" style="width:80%"/>
+<p class="blog-post-image-caption">Consumer Price Index for All Urban Consumers: All Items in U.S. City Average (FRED: CPIAUCSL)
+with corresponding inflation rate (1-month logarithmic change). Source: FRED-MD dataset, 02-2024 vintage.</p></section>
 <section id="code">
 <h2>Code<a class="headerlink" href="#code" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#code'">¶</a></h2>
 <section id="set-up">
@@ -393,44 +393,42 @@ The following function extracts the target values.
 </span><span id="line-21">
 </span><span id="line-22"><span class="sd">    target_tcode: int.</span>
 </span><span id="line-23"><span class="sd">        The transformation code of the target time series.</span>
-</span><span id="line-24"><span class="sd">        If None, the target time series is not transformed.</span>
-</span><span id="line-25"><span class="sd">    '''</span>
-</span><span id="line-26">
-</span><span id="line-27">    <span class="c1"># create a data frame for storing the target values</span>
-</span><span id="line-28">    <span class="n">target</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
-</span><span id="line-29">
-</span><span id="line-30">    <span class="c1"># define the date range of the dataset vintages</span>
-</span><span id="line-31">    <span class="n">dates</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span>
-</span><span id="line-32">        <span class="n">start</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">start_year</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">start_month</span><span class="si">}</span><span class="s2">-01"</span><span class="p">,</span>
-</span><span id="line-33">        <span class="n">end</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">end_year</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">end_month</span><span class="si">}</span><span class="s2">-01"</span><span class="p">,</span>
-</span><span id="line-34">        <span class="n">freq</span><span class="o">=</span><span class="s2">"MS"</span>
-</span><span id="line-35">    <span class="p">)</span>
-</span><span id="line-36">
-</span><span id="line-37">    <span class="c1"># loop across the dataset vintages</span>
-</span><span id="line-38">    <span class="k">for</span> <span class="n">date</span> <span class="ow">in</span> <span class="n">dates</span><span class="p">:</span>
-</span><span id="line-39">
-</span><span id="line-40">        <span class="c1"># get the dataset URL</span>
-</span><span id="line-41">        <span class="n">file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"https://files.stlouisfed.org/files/htdocs/fred-md/monthly/</span><span class="si">{</span><span class="n">date</span><span class="o">.</span><span class="n">year</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="nb">format</span><span class="p">(</span><span class="n">date</span><span class="o">.</span><span class="n">month</span><span class="p">,</span><span class="w"> </span><span class="s1">'02d'</span><span class="p">)</span><span class="si">}</span><span class="s2">.csv"</span>
-</span><span id="line-42">
-</span><span id="line-43">        <span class="c1"># get the time series</span>
-</span><span id="line-44">        <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-</span><span id="line-45">        <span class="n">data</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
-</span><span id="line-46">
-</span><span id="line-47">        <span class="c1"># process the dates</span>
-</span><span id="line-48">        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">notna</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">),</span> <span class="p">:]</span>
-</span><span id="line-49">        <span class="n">data</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s2">"1959-01-01"</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">"MS"</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
-</span><span id="line-50">
-</span><span id="line-51">        <span class="c1"># select the target time series</span>
-</span><span id="line-52">        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="n">target_name</span><span class="p">]]</span>
-</span><span id="line-53">
-</span><span id="line-54">        <span class="c1"># transform the target time series</span>
-</span><span id="line-55">        <span class="k">if</span> <span class="n">target_tcode</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="line-56">            <span class="n">data</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">transform_series</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">target_name</span><span class="p">],</span> <span class="n">target_tcode</span><span class="p">)</span>
-</span><span id="line-57">
-</span><span id="line-58">        <span class="c1"># select the last value and save it in the data frame</span>
-</span><span id="line-59">        <span class="n">target</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">target</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-</span><span id="line-60">
-</span><span id="line-61">    <span class="k">return</span> <span class="n">target</span>
+</span><span id="line-24"><span class="sd">    '''</span>
+</span><span id="line-25">
+</span><span id="line-26">    <span class="c1"># create a data frame for storing the target values</span>
+</span><span id="line-27">    <span class="n">target</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+</span><span id="line-28">
+</span><span id="line-29">    <span class="c1"># define the date range of the dataset vintages</span>
+</span><span id="line-30">    <span class="n">dates</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span>
+</span><span id="line-31">        <span class="n">start</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">start_year</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">start_month</span><span class="si">}</span><span class="s2">-01"</span><span class="p">,</span>
+</span><span id="line-32">        <span class="n">end</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">end_year</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">end_month</span><span class="si">}</span><span class="s2">-01"</span><span class="p">,</span>
+</span><span id="line-33">        <span class="n">freq</span><span class="o">=</span><span class="s2">"MS"</span>
+</span><span id="line-34">    <span class="p">)</span>
+</span><span id="line-35">
+</span><span id="line-36">    <span class="c1"># loop across the dataset vintages</span>
+</span><span id="line-37">    <span class="k">for</span> <span class="n">date</span> <span class="ow">in</span> <span class="n">dates</span><span class="p">:</span>
+</span><span id="line-38">
+</span><span id="line-39">        <span class="c1"># get the dataset URL</span>
+</span><span id="line-40">        <span class="n">file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"https://files.stlouisfed.org/files/htdocs/fred-md/monthly/</span><span class="si">{</span><span class="n">date</span><span class="o">.</span><span class="n">year</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="nb">format</span><span class="p">(</span><span class="n">date</span><span class="o">.</span><span class="n">month</span><span class="p">,</span><span class="w"> </span><span class="s1">'02d'</span><span class="p">)</span><span class="si">}</span><span class="s2">.csv"</span>
+</span><span id="line-41">
+</span><span id="line-42">        <span class="c1"># get the time series</span>
+</span><span id="line-43">        <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="line-44">        <span class="n">data</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+</span><span id="line-45">
+</span><span id="line-46">        <span class="c1"># process the dates</span>
+</span><span id="line-47">        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">notna</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">),</span> <span class="p">:]</span>
+</span><span id="line-48">        <span class="n">data</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s2">"1959-01-01"</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">"MS"</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+</span><span id="line-49">
+</span><span id="line-50">        <span class="c1"># select the target time series</span>
+</span><span id="line-51">        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="n">target_name</span><span class="p">]]</span>
+</span><span id="line-52">
+</span><span id="line-53">        <span class="c1"># transform the target time series</span>
+</span><span id="line-54">        <span class="n">data</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">transform_series</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">target_name</span><span class="p">],</span> <span class="n">target_tcode</span><span class="p">)</span>
+</span><span id="line-55">
+</span><span id="line-56">        <span class="c1"># select the last value and save it in the data frame</span>
+</span><span id="line-57">        <span class="n">target</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">target</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="line-58">
+</span><span id="line-59">    <span class="k">return</span> <span class="n">target</span>
 </span></code></pre></div>
 </div>
 <p>
