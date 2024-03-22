@@ -77,10 +77,10 @@ Model
     <p>
     The splits used for creating the nodes are determined through an optimization process
     which minimizes a given loss function under a number of constraints, such as
-    that each node should contain at least a certain number of observations.
+    that each node should contain a certain minimum number of samples.
     An example of loss function is the mean squared error of the node's prediction,
     which is equal to the variance of the target values in the node, and which therefore
-    tends to create nodes where target values are as close as possible to each other.
+    tends to create nodes containing target values that are as close as possible to each other.
     </p>
 
     <p>
