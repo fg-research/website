@@ -131,9 +131,6 @@ Data
     As discussed in <a href=https://fg-research.com/blog/general/posts/fred-md-overview.html
     target="_blank">our previous post</a>, FRED-MD is a large, open-source, dataset
     of monthly U.S. macroeconomic indicators maintained by the Federal Reserve Bank of St. Louis.
-    </p>
-
-    <p>
     The FRED-MD dataset is updated on a monthly basis.
     The monthly releases are referred to as <i>vintages</i>. Each vintage includes the data
     from January 1959 up to the previous month. For instance, the 02-2024 vintage contains
