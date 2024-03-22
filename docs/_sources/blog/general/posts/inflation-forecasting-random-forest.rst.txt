@@ -54,11 +54,11 @@ Model
     <p>
     A random forest is an ensemble of decision trees. A decision tree approximates the
     relationship between the target and the features by splitting the feature space
-    into different subsets, and generating a constant prediction for each subset which,
-    in the regression case, is obtained by averaging
-    the target values in the subset.
+    into different subsets, and generating a constant prediction for each subset.
+    In the regression case, which is the one relevant to this post, the constant
+    prediction is the average of the target values in the subset.
 
-    It follows that a decision tree can be seen as a nonparametric regression model
+    It follows that a decision tree can be seen as a nonparametric regression model,
     where the regression function that links the target to the features is estimated
     using a piecewise constant approximation.
     </p>
