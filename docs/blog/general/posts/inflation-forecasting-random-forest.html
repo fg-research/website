@@ -237,18 +237,16 @@ indicators are occasionally added and removed from the dataset.
 We use 02-2023 vintage for training and hyperparameter tuning, while we use the last
 month in each vintage from 03-2023 to 02-2024 for testing. Our approach is different
 from the one used in <a href="#references">[2]</a>, where the same vintage (01-2016)
-is used for both training and testing. Our approach allows us to evaluate
+is used for both training and testing. In our view, our approach allows us to evaluate
 the model in a more realistic scenario where on a given month we forecast next month's
 inflation using as input the data available on that month, without taking into account
 any ex-post adjustment that could be applied to the data in the future.
 </p>
 <img alt="Month-over-month logarithmic change in the US CPI index" class="blog-post-image" id="inflation-forecasting-random-forest-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inflation-forecasting-random-forest/time_series_light.png" style="width:80%"/>
 <p class="blog-post-image-caption">Month-over-month logarithmic change in the US CPI index (FRED: CPIAUCSL).
-Source: FRED-MD dataset, 02-2024 vintage.<p>&lt;/p&gt;</p>
-</p></section>
+Source: FRED-MD dataset, 02-2024 vintage.</p></section>
 <section id="code">
 <h2>Code<a class="headerlink" href="#code" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#code'">¶</a></h2>
-<p>This section presents and explains the Python code used for the analysis.</p>
 <section id="set-up">
 <h3>Set-Up<a class="headerlink" href="#set-up" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#set-up'">¶</a></h3>
 <p>We start by importing the dependencies.</p>
@@ -298,7 +296,7 @@ series in order to ensure their stationarity, which are implemented in the funct
 </span></code></pre></div>
 </div>
 <br/>
-The function below is used for downloading and processing the training data.
+We then define a function for downloading and processing the training data.
 In this function we download the FRED-MD dataset for the considered vintage,
 transform the time series using the provided transformation codes (with the
 exception of the target time series, for which we use the first order
@@ -307,17 +305,490 @@ features as the first lag (i.e. the one-month lag) of the all the time series
 (including the target time series). As in <a href="#references">[2]</a>,
 we use the data after January 1960, and we use only the time series without
 missing values.
-<br/><br/>
-The function below is used for downloading and processing the test data.
-<br/></section>
-<section id="hyperparameter-tuning">
-<h3>Hyperparameter Tuning<a class="headerlink" href="#hyperparameter-tuning" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#hyperparameter-tuning'">¶</a></h3>
+<br/><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">def</span> <span class="nf">get_training_data</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">,</span> <span class="n">target_name</span><span class="p">,</span> <span class="n">target_tcode</span><span class="p">):</span>
+</span><span id="line-2"><span class="w">    </span><span class="sd">'''</span>
+</span><span id="line-3"><span class="sd">    Download and process the training data.</span>
+</span><span id="line-4">
+</span><span id="line-5"><span class="sd">    Parameters:</span>
+</span><span id="line-6"><span class="sd">    ______________________________________________________________</span>
+</span><span id="line-7"><span class="sd">    year: int</span>
+</span><span id="line-8"><span class="sd">        The year of the dataset vintage.</span>
+</span><span id="line-9">
+</span><span id="line-10"><span class="sd">    month: int.</span>
+</span><span id="line-11"><span class="sd">        The month of the dataset vintage.</span>
+</span><span id="line-12">
+</span><span id="line-13"><span class="sd">    target_name: string.</span>
+</span><span id="line-14"><span class="sd">        The name of the target time series.</span>
+</span><span id="line-15">
+</span><span id="line-16"><span class="sd">    target_tcode: int.</span>
+</span><span id="line-17"><span class="sd">        The transformation code of the target time series.</span>
+</span><span id="line-18"><span class="sd">    '''</span>
+</span><span id="line-19">
+</span><span id="line-20">    <span class="c1"># get the dataset URL</span>
+</span><span id="line-21">    <span class="n">file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"https://files.stlouisfed.org/files/htdocs/fred-md/monthly/</span><span class="si">{</span><span class="n">year</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="nb">format</span><span class="p">(</span><span class="n">month</span><span class="p">,</span><span class="w"> </span><span class="s1">'02d'</span><span class="p">)</span><span class="si">}</span><span class="s2">.csv"</span>
+</span><span id="line-22">
+</span><span id="line-23">    <span class="c1"># get the time series</span>
+</span><span id="line-24">    <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="line-25">    <span class="n">data</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+</span><span id="line-26">
+</span><span id="line-27">    <span class="c1"># move the target to the first column</span>
+</span><span id="line-28">    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="n">target_name</span><span class="p">]</span> <span class="o">+</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">target_name</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()]</span>
+</span><span id="line-29">
+</span><span id="line-30">    <span class="c1"># process the dates</span>
+</span><span id="line-31">    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">notna</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">),</span> <span class="p">:]</span>
+</span><span id="line-32">    <span class="n">data</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s2">"1959-01-01"</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">"MS"</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+</span><span id="line-33">
+</span><span id="line-34">    <span class="c1"># get the transformation codes</span>
+</span><span id="line-35">    <span class="n">tcodes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="line-36">    <span class="n">tcodes</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">tcodes</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+</span><span id="line-37">
+</span><span id="line-38">    <span class="c1"># override the target's transformation code</span>
+</span><span id="line-39">    <span class="n">tcodes</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">target_tcode</span>
+</span><span id="line-40">
+</span><span id="line-41">    <span class="c1"># transform the time series</span>
+</span><span id="line-42">    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">transform_series</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">tcodes</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()))</span>
+</span><span id="line-43">
+</span><span id="line-44">    <span class="c1"># select the data after January 1960</span>
+</span><span id="line-45">    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">index</span> <span class="o">&gt;=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s2">"1960-01-01"</span><span class="p">)]</span>
+</span><span id="line-46">
+</span><span id="line-47">    <span class="c1"># select the time series without missing values</span>
+</span><span id="line-48">    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">data</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+</span><span id="line-49">
+</span><span id="line-50">    <span class="c1"># lag the features</span>
+</span><span id="line-51">    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="n">target_name</span><span class="p">]]</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="n">periods</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">"_LAG"</span><span class="p">))</span>
+</span><span id="line-52">
+</span><span id="line-53">    <span class="c1"># drop the missing value resulting from taking the lag</span>
+</span><span id="line-54">    <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+</span></code></pre></div>
+</div>
+<br/>
+For the test data, we download and process the targets and features separately,
+given that they are extracted from different vintages. The targets are extracted
+from the vintages between 03-2023 and 02-2024, while the features are extracted
+from the vintages between 02-2023 and 01-2024.
+<br/><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">def</span> <span class="nf">get_target</span><span class="p">(</span><span class="n">start_month</span><span class="p">,</span> <span class="n">start_year</span><span class="p">,</span> <span class="n">end_month</span><span class="p">,</span> <span class="n">end_year</span><span class="p">,</span> <span class="n">target_name</span><span class="p">,</span> <span class="n">target_tcode</span><span class="p">):</span>
+</span><span id="line-2"><span class="w">    </span><span class="sd">'''</span>
+</span><span id="line-3"><span class="sd">    Extract the target time series from a range of dataset vintages.</span>
+</span><span id="line-4">
+</span><span id="line-5"><span class="sd">    Parameters:</span>
+</span><span id="line-6"><span class="sd">    ______________________________________________________________</span>
+</span><span id="line-7"><span class="sd">    start_month: int.</span>
+</span><span id="line-8"><span class="sd">        The month of the first vintage.</span>
+</span><span id="line-9">
+</span><span id="line-10"><span class="sd">    start_year: int.</span>
+</span><span id="line-11"><span class="sd">        The year of the first vintage.</span>
+</span><span id="line-12">
+</span><span id="line-13"><span class="sd">    end_month: int.</span>
+</span><span id="line-14"><span class="sd">        The month of the last vintage.</span>
+</span><span id="line-15">
+</span><span id="line-16"><span class="sd">    end_year: int.</span>
+</span><span id="line-17"><span class="sd">        The year of the last vintage.</span>
+</span><span id="line-18">
+</span><span id="line-19"><span class="sd">    target_name: str.</span>
+</span><span id="line-20"><span class="sd">        The name of the target time series.</span>
+</span><span id="line-21">
+</span><span id="line-22"><span class="sd">    target_tcode: int.</span>
+</span><span id="line-23"><span class="sd">        The transformation code of the target time series.</span>
+</span><span id="line-24"><span class="sd">        If None, the target time series is not transformed.</span>
+</span><span id="line-25"><span class="sd">    '''</span>
+</span><span id="line-26">
+</span><span id="line-27">    <span class="c1"># create a data frame for storing the target values</span>
+</span><span id="line-28">    <span class="n">target</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+</span><span id="line-29">
+</span><span id="line-30">    <span class="c1"># define the date range of the dataset vintages</span>
+</span><span id="line-31">    <span class="n">dates</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span>
+</span><span id="line-32">        <span class="n">start</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">start_year</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">start_month</span><span class="si">}</span><span class="s2">-01"</span><span class="p">,</span>
+</span><span id="line-33">        <span class="n">end</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">end_year</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">end_month</span><span class="si">}</span><span class="s2">-01"</span><span class="p">,</span>
+</span><span id="line-34">        <span class="n">freq</span><span class="o">=</span><span class="s2">"MS"</span>
+</span><span id="line-35">    <span class="p">)</span>
+</span><span id="line-36">
+</span><span id="line-37">    <span class="c1"># loop across the dataset vintages</span>
+</span><span id="line-38">    <span class="k">for</span> <span class="n">date</span> <span class="ow">in</span> <span class="n">dates</span><span class="p">:</span>
+</span><span id="line-39">
+</span><span id="line-40">        <span class="c1"># get the dataset URL</span>
+</span><span id="line-41">        <span class="n">file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"https://files.stlouisfed.org/files/htdocs/fred-md/monthly/</span><span class="si">{</span><span class="n">date</span><span class="o">.</span><span class="n">year</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="nb">format</span><span class="p">(</span><span class="n">date</span><span class="o">.</span><span class="n">month</span><span class="p">,</span><span class="w"> </span><span class="s1">'02d'</span><span class="p">)</span><span class="si">}</span><span class="s2">.csv"</span>
+</span><span id="line-42">
+</span><span id="line-43">        <span class="c1"># get the time series</span>
+</span><span id="line-44">        <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="line-45">        <span class="n">data</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+</span><span id="line-46">
+</span><span id="line-47">        <span class="c1"># process the dates</span>
+</span><span id="line-48">        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">notna</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">),</span> <span class="p">:]</span>
+</span><span id="line-49">        <span class="n">data</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s2">"1959-01-01"</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">"MS"</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+</span><span id="line-50">
+</span><span id="line-51">        <span class="c1"># select the target time series</span>
+</span><span id="line-52">        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[[</span><span class="n">target_name</span><span class="p">]]</span>
+</span><span id="line-53">
+</span><span id="line-54">        <span class="c1"># transform the target time series</span>
+</span><span id="line-55">        <span class="k">if</span> <span class="n">target_tcode</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="line-56">            <span class="n">data</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">transform_series</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">target_name</span><span class="p">],</span> <span class="n">target_tcode</span><span class="p">)</span>
+</span><span id="line-57">
+</span><span id="line-58">        <span class="c1"># select the last value and save it in the data frame</span>
+</span><span id="line-59">        <span class="n">target</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">target</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="line-60">
+</span><span id="line-61">    <span class="k">return</span> <span class="n">target</span>
+</span></code></pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">def</span> <span class="nf">get_features</span><span class="p">(</span><span class="n">start_month</span><span class="p">,</span> <span class="n">start_year</span><span class="p">,</span> <span class="n">end_month</span><span class="p">,</span> <span class="n">end_year</span><span class="p">,</span> <span class="n">target_name</span><span class="p">,</span> <span class="n">target_tcode</span><span class="p">,</span> <span class="n">feature_names</span><span class="p">):</span>
+</span><span id="line-2"><span class="w">    </span><span class="sd">'''</span>
+</span><span id="line-3"><span class="sd">    Extract the feature time series from a range of dataset vintages.</span>
+</span><span id="line-4">
+</span><span id="line-5"><span class="sd">    Parameters:</span>
+</span><span id="line-6"><span class="sd">    ______________________________________________________________</span>
+</span><span id="line-7"><span class="sd">    start_month: int.</span>
+</span><span id="line-8"><span class="sd">        The month of the first vintage.</span>
+</span><span id="line-9">
+</span><span id="line-10"><span class="sd">    start_year: int.</span>
+</span><span id="line-11"><span class="sd">        The year of the first vintage.</span>
+</span><span id="line-12">
+</span><span id="line-13"><span class="sd">    end_month: int.</span>
+</span><span id="line-14"><span class="sd">        The month of the last vintage.</span>
+</span><span id="line-15">
+</span><span id="line-16"><span class="sd">    end_year: int.</span>
+</span><span id="line-17"><span class="sd">        The year of the last vintage.</span>
+</span><span id="line-18">
+</span><span id="line-19"><span class="sd">    target_name: str.</span>
+</span><span id="line-20"><span class="sd">        The name of the target time series.</span>
+</span><span id="line-21">
+</span><span id="line-22"><span class="sd">    target_tcode: int.</span>
+</span><span id="line-23"><span class="sd">        The transformation code of the target time series.</span>
+</span><span id="line-24">
+</span><span id="line-25"><span class="sd">    feature_names: list of str.</span>
+</span><span id="line-26"><span class="sd">        The names of the features time series.</span>
+</span><span id="line-27"><span class="sd">    '''</span>
+</span><span id="line-28">
+</span><span id="line-29">    <span class="c1"># create a data frame for storing the feature values</span>
+</span><span id="line-30">    <span class="n">features</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+</span><span id="line-31">
+</span><span id="line-32">    <span class="c1"># define the date range of the dataset vintages</span>
+</span><span id="line-33">    <span class="n">dates</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span>
+</span><span id="line-34">        <span class="n">start</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">start_year</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">start_month</span><span class="si">}</span><span class="s2">-01"</span><span class="p">,</span>
+</span><span id="line-35">        <span class="n">end</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">end_year</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">end_month</span><span class="si">}</span><span class="s2">-01"</span><span class="p">,</span>
+</span><span id="line-36">        <span class="n">freq</span><span class="o">=</span><span class="s2">"MS"</span>
+</span><span id="line-37">    <span class="p">)</span>
+</span><span id="line-38">
+</span><span id="line-39">    <span class="c1"># loop across the dataset vintages</span>
+</span><span id="line-40">    <span class="k">for</span> <span class="n">date</span> <span class="ow">in</span> <span class="n">dates</span><span class="p">:</span>
+</span><span id="line-41">
+</span><span id="line-42">        <span class="c1"># get the dataset URL</span>
+</span><span id="line-43">        <span class="n">file</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"https://files.stlouisfed.org/files/htdocs/fred-md/monthly/</span><span class="si">{</span><span class="p">(</span><span class="n">date</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pd</span><span class="o">.</span><span class="n">offsets</span><span class="o">.</span><span class="n">MonthBegin</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">year</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="nb">format</span><span class="p">((</span><span class="n">date</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">pd</span><span class="o">.</span><span class="n">offsets</span><span class="o">.</span><span class="n">MonthBegin</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">month</span><span class="p">,</span><span class="w"> </span><span class="s1">'02d'</span><span class="p">)</span><span class="si">}</span><span class="s2">.csv"</span>
+</span><span id="line-44">
+</span><span id="line-45">        <span class="c1"># get the time series</span>
+</span><span id="line-46">        <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="line-47">        <span class="n">data</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+</span><span id="line-48">
+</span><span id="line-49">        <span class="c1"># process the dates</span>
+</span><span id="line-50">        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">notna</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">index</span><span class="p">),</span> <span class="p">:]</span>
+</span><span id="line-51">        <span class="n">data</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s2">"1959-01-01"</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s2">"MS"</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+</span><span id="line-52">
+</span><span id="line-53">        <span class="c1"># get the transformation codes</span>
+</span><span id="line-54">        <span class="n">tcodes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="line-55">        <span class="n">tcodes</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">tcodes</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+</span><span id="line-56">
+</span><span id="line-57">        <span class="c1"># override the target's transformation code</span>
+</span><span id="line-58">        <span class="n">tcodes</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">target_tcode</span>
+</span><span id="line-59">
+</span><span id="line-60">        <span class="c1"># transform the time series</span>
+</span><span id="line-61">        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">transform_series</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">tcodes</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()))</span>
+</span><span id="line-62">
+</span><span id="line-63">        <span class="c1"># rename the time series</span>
+</span><span id="line-64">        <span class="n">data</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="o">+</span> <span class="s2">"_LAG_1"</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+</span><span id="line-65">
+</span><span id="line-66">        <span class="c1"># drop any features that were not used for training</span>
+</span><span id="line-67">        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">feature_names</span><span class="p">]</span>
+</span><span id="line-68">
+</span><span id="line-69">        <span class="c1"># forward fill any missing values</span>
+</span><span id="line-70">        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">ffill</span><span class="p">()</span>
+</span><span id="line-71">
+</span><span id="line-72">        <span class="c1"># shift the dates one month forward</span>
+</span><span id="line-73">        <span class="n">data</span><span class="o">.</span><span class="n">index</span> <span class="o">+=</span> <span class="n">pd</span><span class="o">.</span><span class="n">offsets</span><span class="o">.</span><span class="n">MonthBegin</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="line-74">
+</span><span id="line-75">        <span class="c1"># select the last values and save them in the data frame</span>
+</span><span id="line-76">        <span class="n">features</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">features</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="line-77">
+</span><span id="line-78">    <span class="k">return</span> <span class="n">features</span>
+</span></code></pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">def</span> <span class="nf">get_test_data</span><span class="p">(</span><span class="n">start_month</span><span class="p">,</span> <span class="n">start_year</span><span class="p">,</span> <span class="n">end_month</span><span class="p">,</span> <span class="n">end_year</span><span class="p">,</span> <span class="n">target_name</span><span class="p">,</span> <span class="n">target_tcode</span><span class="p">,</span> <span class="n">feature_names</span><span class="p">):</span>
+</span><span id="line-2"><span class="w">    </span><span class="sd">'''</span>
+</span><span id="line-3"><span class="sd">    Download and process the test data.</span>
+</span><span id="line-4">
+</span><span id="line-5"><span class="sd">    Parameters:</span>
+</span><span id="line-6"><span class="sd">    ______________________________________________________________</span>
+</span><span id="line-7"><span class="sd">    start_month: int.</span>
+</span><span id="line-8"><span class="sd">        The month of the first vintage.</span>
+</span><span id="line-9">
+</span><span id="line-10"><span class="sd">    start_year: int.</span>
+</span><span id="line-11"><span class="sd">        The year of the first vintage.</span>
+</span><span id="line-12">
+</span><span id="line-13"><span class="sd">    end_month: int.</span>
+</span><span id="line-14"><span class="sd">        The month of the last vintage.</span>
+</span><span id="line-15">
+</span><span id="line-16"><span class="sd">    end_year: int.</span>
+</span><span id="line-17"><span class="sd">        The year of the last vintage.</span>
+</span><span id="line-18">
+</span><span id="line-19"><span class="sd">    target_name: str.</span>
+</span><span id="line-20"><span class="sd">        The name of the target time series.</span>
+</span><span id="line-21">
+</span><span id="line-22"><span class="sd">    target_tcode: int.</span>
+</span><span id="line-23"><span class="sd">        The transformation code of the target time series.</span>
+</span><span id="line-24">
+</span><span id="line-25"><span class="sd">    feature_names: list of str.</span>
+</span><span id="line-26"><span class="sd">        The names of the features time series.</span>
+</span><span id="line-27"><span class="sd">    '''</span>
+</span><span id="line-28">
+</span><span id="line-29">    <span class="c1"># get the targets</span>
+</span><span id="line-30">    <span class="n">target</span> <span class="o">=</span> <span class="n">get_target</span><span class="p">(</span>
+</span><span id="line-31">        <span class="n">start_year</span><span class="o">=</span><span class="n">start_year</span><span class="p">,</span>
+</span><span id="line-32">        <span class="n">start_month</span><span class="o">=</span><span class="n">start_month</span><span class="p">,</span>
+</span><span id="line-33">        <span class="n">end_year</span><span class="o">=</span><span class="n">end_year</span><span class="p">,</span>
+</span><span id="line-34">        <span class="n">end_month</span><span class="o">=</span><span class="n">end_month</span><span class="p">,</span>
+</span><span id="line-35">        <span class="n">target_name</span><span class="o">=</span><span class="n">target_name</span><span class="p">,</span>
+</span><span id="line-36">        <span class="n">target_tcode</span><span class="o">=</span><span class="n">target_tcode</span><span class="p">,</span>
+</span><span id="line-37">    <span class="p">)</span>
+</span><span id="line-38">
+</span><span id="line-39">    <span class="c1"># get the features</span>
+</span><span id="line-40">    <span class="n">features</span> <span class="o">=</span> <span class="n">get_features</span><span class="p">(</span>
+</span><span id="line-41">        <span class="n">start_year</span><span class="o">=</span><span class="n">start_year</span><span class="p">,</span>
+</span><span id="line-42">        <span class="n">start_month</span><span class="o">=</span><span class="n">start_month</span><span class="p">,</span>
+</span><span id="line-43">        <span class="n">end_year</span><span class="o">=</span><span class="n">end_year</span><span class="p">,</span>
+</span><span id="line-44">        <span class="n">end_month</span><span class="o">=</span><span class="n">end_month</span><span class="p">,</span>
+</span><span id="line-45">        <span class="n">target_name</span><span class="o">=</span><span class="n">target_name</span><span class="p">,</span>
+</span><span id="line-46">        <span class="n">target_tcode</span><span class="o">=</span><span class="n">target_tcode</span><span class="p">,</span>
+</span><span id="line-47">        <span class="n">feature_names</span><span class="o">=</span><span class="n">feature_names</span>
+</span><span id="line-48">    <span class="p">)</span>
+</span><span id="line-49">
+</span><span id="line-50">    <span class="k">return</span> <span class="n">target</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<br/>
+Finally, we define a function for training the random forest model
+and generating the test set predictions.
+<br/><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">def</span> <span class="nf">run_random_forest_model</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">train_dataset</span><span class="p">,</span> <span class="n">test_dataset</span><span class="p">,</span> <span class="n">target_name</span><span class="p">):</span>
+</span><span id="line-2"><span class="w">    </span><span class="sd">'''</span>
+</span><span id="line-3"><span class="sd">    Run the random forest model.</span>
+</span><span id="line-4">
+</span><span id="line-5"><span class="sd">    Parameters:</span>
+</span><span id="line-6"><span class="sd">    ______________________________________________________________</span>
+</span><span id="line-7"><span class="sd">    params: dict.</span>
+</span><span id="line-8"><span class="sd">        The random forest hyperparameters</span>
+</span><span id="line-9">
+</span><span id="line-10"><span class="sd">    train_dataset: pandas.DataFrame.</span>
+</span><span id="line-11"><span class="sd">        Training dataset.</span>
+</span><span id="line-12">
+</span><span id="line-13"><span class="sd">    test_dataset: pandas.DataFrame.</span>
+</span><span id="line-14"><span class="sd">        Test dataset.</span>
+</span><span id="line-15">
+</span><span id="line-16"><span class="sd">    target_name: str.</span>
+</span><span id="line-17"><span class="sd">        The name of the target time series.</span>
+</span><span id="line-18"><span class="sd">    '''</span>
+</span><span id="line-19">
+</span><span id="line-20">    <span class="c1"># instantiate the model</span>
+</span><span id="line-21">    <span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestRegressor</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+</span><span id="line-22">
+</span><span id="line-23">    <span class="c1"># fit the model to the training set</span>
+</span><span id="line-24">    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+</span><span id="line-25">        <span class="n">X</span><span class="o">=</span><span class="n">train_dataset</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="n">target_name</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+</span><span id="line-26">        <span class="n">y</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
+</span><span id="line-27">    <span class="p">)</span>
+</span><span id="line-28">
+</span><span id="line-29">    <span class="c1"># generate the forecasts over the test set</span>
+</span><span id="line-30">    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+</span><span id="line-31">        <span class="n">data</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">test_dataset</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="n">target_name</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)),</span>
+</span><span id="line-32">        <span class="n">index</span><span class="o">=</span><span class="n">test_dataset</span><span class="o">.</span><span class="n">index</span>
+</span><span id="line-33">    <span class="p">)</span>
+</span></code></pre></div>
+</div>
+<br/>
+We also define a similar function for the AR(1) model, which we will use as a benchmark.
+<br/><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">def</span> <span class="nf">run_autoregressive_model</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">test_dataset</span><span class="p">,</span> <span class="n">target_name</span><span class="p">):</span>
+</span><span id="line-2"><span class="w">    </span><span class="sd">'''</span>
+</span><span id="line-3"><span class="sd">    Run the AR(1) model.</span>
+</span><span id="line-4">
+</span><span id="line-5"><span class="sd">    Parameters:</span>
+</span><span id="line-6"><span class="sd">    ______________________________________________________________</span>
+</span><span id="line-7"><span class="sd">    train_dataset: pandas.DataFrame.</span>
+</span><span id="line-8"><span class="sd">        Training dataset.</span>
+</span><span id="line-9">
+</span><span id="line-10"><span class="sd">    test_dataset: pandas.DataFrame.</span>
+</span><span id="line-11"><span class="sd">        Validation dataset.</span>
+</span><span id="line-12">
+</span><span id="line-13"><span class="sd">    target_name: str.</span>
+</span><span id="line-14"><span class="sd">        The name of the target time series.</span>
+</span><span id="line-15"><span class="sd">    '''</span>
+</span><span id="line-16">
+</span><span id="line-17">    <span class="c1"># instantiate the model</span>
+</span><span id="line-18">    <span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">(</span><span class="n">fit_intercept</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="line-19">
+</span><span id="line-20">    <span class="c1"># fit the model to the training set</span>
+</span><span id="line-21">    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+</span><span id="line-22">        <span class="n">X</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">[[</span><span class="n">target_name</span> <span class="o">+</span> <span class="s2">"_LAG_1"</span><span class="p">]],</span>
+</span><span id="line-23">        <span class="n">y</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">[</span><span class="n">target_name</span><span class="p">]</span>
+</span><span id="line-24">    <span class="p">)</span>
+</span><span id="line-25">
+</span><span id="line-26">    <span class="c1"># generate the forecasts over the test set</span>
+</span><span id="line-27">    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+</span><span id="line-28">        <span class="n">data</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">test_dataset</span><span class="p">[[</span><span class="n">target_name</span> <span class="o">+</span> <span class="s2">"_LAG_1"</span><span class="p">]]),</span>
+</span><span id="line-29">        <span class="n">index</span><span class="o">=</span><span class="n">test_dataset</span><span class="o">.</span><span class="n">index</span>
+</span><span id="line-30">    <span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>Lastly, we define an additional function which uses <a href="#id1"><span class="problematic" id="id2">``</span></a>optuna` &lt;<a class="reference external" href="https://optuna.org/">https://optuna.org/</a>&gt;`__
+for tuning the main hyperparameters of the random forest model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">def</span> <span class="nf">tune_random_forest_model</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">valid_dataset</span><span class="p">,</span> <span class="n">target_name</span><span class="p">,</span> <span class="n">n_trials</span><span class="p">):</span>
+</span><span id="line-2"><span class="w">    </span><span class="sd">'''</span>
+</span><span id="line-3"><span class="sd">    Tune the random forest hyperparameters.</span>
+</span><span id="line-4">
+</span><span id="line-5"><span class="sd">    Parameters:</span>
+</span><span id="line-6"><span class="sd">    ______________________________________________________________</span>
+</span><span id="line-7"><span class="sd">    train_dataset: pandas.DataFrame.</span>
+</span><span id="line-8"><span class="sd">        Training dataset.</span>
+</span><span id="line-9">
+</span><span id="line-10"><span class="sd">    valid_dataset: pandas.DataFrame.</span>
+</span><span id="line-11"><span class="sd">        Validation dataset.</span>
+</span><span id="line-12">
+</span><span id="line-13"><span class="sd">    target_name: str.</span>
+</span><span id="line-14"><span class="sd">        The name of the target time series.</span>
+</span><span id="line-15">
+</span><span id="line-16"><span class="sd">    n_trials: int.</span>
+</span><span id="line-17"><span class="sd">        The number of random search iterations.</span>
+</span><span id="line-18"><span class="sd">    '''</span>
+</span><span id="line-19">
+</span><span id="line-20">    <span class="c1"># define the objective function</span>
+</span><span id="line-21">    <span class="k">def</span> <span class="nf">objective</span><span class="p">(</span><span class="n">trial</span><span class="p">):</span>
+</span><span id="line-22">
+</span><span id="line-23">        <span class="c1"># sample the hyperparameters</span>
+</span><span id="line-24">        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="line-25">            <span class="s2">"criterion"</span><span class="p">:</span> <span class="n">trial</span><span class="o">.</span><span class="n">suggest_categorical</span><span class="p">(</span><span class="s2">"criterion"</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">"absolute_error"</span><span class="p">,</span> <span class="s2">"squared_error"</span><span class="p">]),</span>
+</span><span id="line-26">            <span class="s2">"n_estimators"</span><span class="p">:</span> <span class="n">trial</span><span class="o">.</span><span class="n">suggest_int</span><span class="p">(</span><span class="s2">"n_estimators"</span><span class="p">,</span> <span class="n">low</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">100</span><span class="p">),</span>
+</span><span id="line-27">            <span class="s2">"max_features"</span><span class="p">:</span> <span class="n">trial</span><span class="o">.</span><span class="n">suggest_float</span><span class="p">(</span><span class="s2">"max_features"</span><span class="p">,</span> <span class="n">low</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">1.0</span><span class="p">),</span>
+</span><span id="line-28">            <span class="s2">"max_samples"</span><span class="p">:</span> <span class="n">trial</span><span class="o">.</span><span class="n">suggest_float</span><span class="p">(</span><span class="s2">"max_samples"</span><span class="p">,</span> <span class="n">low</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mf">1.0</span><span class="p">),</span>
+</span><span id="line-29">            <span class="s2">"max_depth"</span><span class="p">:</span> <span class="n">trial</span><span class="o">.</span><span class="n">suggest_int</span><span class="p">(</span><span class="s2">"max_depth"</span><span class="p">,</span> <span class="n">low</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="mi">100</span><span class="p">),</span>
+</span><span id="line-30">            <span class="s2">"random_state"</span><span class="p">:</span> <span class="n">trial</span><span class="o">.</span><span class="n">suggest_categorical</span><span class="p">(</span><span class="s2">"random_state"</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="mi">42</span><span class="p">]),</span>
+</span><span id="line-31">            <span class="s2">"n_jobs"</span><span class="p">:</span> <span class="n">trial</span><span class="o">.</span><span class="n">suggest_categorical</span><span class="p">(</span><span class="s2">"n_jobs"</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</span><span id="line-32">        <span class="p">}</span>
+</span><span id="line-33">
+</span><span id="line-34">        <span class="c1"># calculate the root mean squared error of the forecasts</span>
+</span><span id="line-35">        <span class="k">return</span> <span class="n">root_mean_squared_error</span><span class="p">(</span>
+</span><span id="line-36">            <span class="n">y_true</span><span class="o">=</span><span class="n">valid_dataset</span><span class="p">[</span><span class="n">target_name</span><span class="p">],</span>
+</span><span id="line-37">            <span class="n">y_pred</span><span class="o">=</span><span class="n">run_random_forest_model</span><span class="p">(</span>
+</span><span id="line-38">                <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
+</span><span id="line-39">                <span class="n">train_dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span>
+</span><span id="line-40">                <span class="n">test_dataset</span><span class="o">=</span><span class="n">valid_dataset</span><span class="p">,</span>
+</span><span id="line-41">                <span class="n">target_name</span><span class="o">=</span><span class="n">target_name</span>
+</span><span id="line-42">            <span class="p">)</span>
+</span><span id="line-43">        <span class="p">)</span>
+</span><span id="line-44">
+</span><span id="line-45">    <span class="c1"># minimize the objective function</span>
+</span><span id="line-46">    <span class="n">study</span> <span class="o">=</span> <span class="n">optuna</span><span class="o">.</span><span class="n">create_study</span><span class="p">(</span>
+</span><span id="line-47">        <span class="n">sampler</span><span class="o">=</span><span class="n">optuna</span><span class="o">.</span><span class="n">samplers</span><span class="o">.</span><span class="n">RandomSampler</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">),</span>
+</span><span id="line-48">        <span class="n">direction</span><span class="o">=</span><span class="s2">"minimize"</span>
+</span><span id="line-49">    <span class="p">)</span>
+</span><span id="line-50">
+</span><span id="line-51">    <span class="n">study</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span>
+</span><span id="line-52">        <span class="n">func</span><span class="o">=</span><span class="n">objective</span><span class="p">,</span>
+</span><span id="line-53">        <span class="n">n_trials</span><span class="o">=</span><span class="n">n_trials</span>
+</span><span id="line-54">    <span class="p">)</span>
+</span><span id="line-55">
+</span><span id="line-56">    <span class="c1"># return the best hyperparameters</span>
+</span><span id="line-57">    <span class="k">return</span> <span class="n">study</span><span class="o">.</span><span class="n">best_params</span>
+</span></code></pre></div>
+</div>
 </section>
 <section id="model-evaluation">
 <h3>Model evaluation<a class="headerlink" href="#model-evaluation" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#model-evaluation'">¶</a></h3>
+<p>We start by defining the target name and the target transformation code.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">target_name</span> <span class="o">=</span> <span class="s2">"CPIAUCSL"</span>
+</span><span id="line-2"><span class="n">target_tcode</span> <span class="o">=</span> <span class="mi">5</span>
+</span></code></pre></div>
+</div>
+<p>After that we load the training dataset, which contains 756 monthly observations
+on 110 variables. The variables include the target time series, the first lag of the target
+time series, and the first lag of 108 macroeconomic indicators with complete
+time series (i.e. without missing values) from February 1960 to January 2023.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">get_training_data</span><span class="p">(</span>
+</span><span id="line-2">    <span class="n">year</span><span class="o">=</span><span class="mi">2023</span><span class="p">,</span>
+</span><span id="line-3">    <span class="n">month</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+</span><span id="line-4">    <span class="n">target_name</span><span class="o">=</span><span class="n">target_name</span><span class="p">,</span>
+</span><span id="line-5">    <span class="n">target_tcode</span><span class="o">=</span><span class="n">target_tcode</span>
+</span><span id="line-6"><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>We then proceed to tuning the random forest hyperparameters
+by performing random search with <cite>optuna</cite>. We use
+the last 12 months of the training set as validation set
+and we use the root mean squared error (RMSE) as objective function.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">params</span> <span class="o">=</span> <span class="n">tune_random_forest_model</span><span class="p">(</span>
+</span><span id="line-2">    <span class="n">train_dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="o">-</span><span class="mi">12</span><span class="p">],</span>
+</span><span id="line-3">    <span class="n">valid_dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">12</span><span class="p">:],</span>
+</span><span id="line-4">    <span class="n">target_name</span><span class="o">=</span><span class="n">target_name</span><span class="p">,</span>
+</span><span id="line-5">    <span class="n">n_trials</span><span class="o">=</span><span class="mi">30</span>
+</span><span id="line-6"><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>The identified best hyperparameters are reported below.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="p">{</span>
+</span><span id="line-2">    <span class="s1">'criterion'</span><span class="p">:</span> <span class="s1">'absolute_error'</span><span class="p">,</span>
+</span><span id="line-3">    <span class="s1">'n_estimators'</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>
+</span><span id="line-4">    <span class="s1">'max_features'</span><span class="p">:</span> <span class="mf">0.6431565707973218</span><span class="p">,</span>
+</span><span id="line-5">    <span class="s1">'max_samples'</span><span class="p">:</span> <span class="mf">0.6125716742746937</span><span class="p">,</span>
+</span><span id="line-6">    <span class="s1">'max_depth'</span><span class="p">:</span> <span class="mi">64</span>
+</span><span id="line-7"><span class="p">}</span>
+</span></code></pre></div>
+</div>
+<p>We now load the test dataset, which contains 12 monthly observations
+on the same 110 variables from February 2023 to January 2024.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">test_dataset</span> <span class="o">=</span> <span class="n">get_test_data</span><span class="p">(</span>
+</span><span id="line-2">    <span class="n">start_year</span><span class="o">=</span><span class="mi">2023</span><span class="p">,</span>
+</span><span id="line-3">    <span class="n">start_month</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+</span><span id="line-4">    <span class="n">end_year</span><span class="o">=</span><span class="mi">2024</span><span class="p">,</span>
+</span><span id="line-5">    <span class="n">end_month</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+</span><span id="line-6">    <span class="n">target_name</span><span class="o">=</span><span class="n">target_name</span><span class="p">,</span>
+</span><span id="line-7">    <span class="n">target_tcode</span><span class="o">=</span><span class="n">target_tcode</span><span class="p">,</span>
+</span><span id="line-8">    <span class="n">feature_names</span><span class="o">=</span><span class="n">train_dataset</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">target_name</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+</span><span id="line-9"><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>We can now train the random forest model using the identified best
+hyperparameters, generate the forecasts over the test set, and
+calculate the RMSE of the forecasts over the test set.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">rf_forecasts</span> <span class="o">=</span> <span class="n">run_random_forest_model</span><span class="p">(</span>
+</span><span id="line-2">    <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
+</span><span id="line-3">    <span class="n">train_dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span>
+</span><span id="line-4">    <span class="n">test_dataset</span><span class="o">=</span><span class="n">test_dataset</span><span class="p">,</span>
+</span><span id="line-5">    <span class="n">target_name</span><span class="o">=</span><span class="n">target_name</span>
+</span><span id="line-6"><span class="p">)</span>
+</span><span id="line-7">
+</span><span id="line-8"><span class="n">rf_error</span> <span class="o">=</span> <span class="n">root_mean_squared_error</span><span class="p">(</span>
+</span><span id="line-9">    <span class="n">y_true</span><span class="o">=</span><span class="n">forecasts</span><span class="p">[</span><span class="n">target_name</span><span class="p">],</span>
+</span><span id="line-10">    <span class="n">y_pred</span><span class="o">=</span><span class="n">rf_forecasts</span>
+</span><span id="line-11"><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>We do the same for the AR(1) model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">ar1_forecasts</span> <span class="o">=</span> <span class="n">run_autoregressive_model</span><span class="p">(</span>
+</span><span id="line-2">    <span class="n">train_dataset</span><span class="o">=</span><span class="n">train_dataset</span><span class="p">,</span>
+</span><span id="line-3">    <span class="n">test_dataset</span><span class="o">=</span><span class="n">test_dataset</span><span class="p">,</span>
+</span><span id="line-4">    <span class="n">target_name</span><span class="o">=</span><span class="n">target_name</span><span class="p">,</span>
+</span><span id="line-5"><span class="p">)</span>
+</span><span id="line-6">
+</span><span id="line-7"><span class="n">ar1_error</span> <span class="o">=</span> <span class="n">root_mean_squared_error</span><span class="p">(</span>
+</span><span id="line-8">    <span class="n">y_true</span><span class="o">=</span><span class="n">forecasts</span><span class="p">[</span><span class="n">target_name</span><span class="p">],</span>
+</span><span id="line-9">    <span class="n">y_pred</span><span class="o">=</span><span class="n">ar1_forecasts</span>
+</span><span id="line-10"><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>The RMSE of the random forest model forecasts is 0.001649,
+while the RMSE of the AR(1) model forecasts is 0.002023.
+The reduction in RMSE provided by the random forest model is 18.5%.</p>
 <img alt="Month-over-month logarithmic change in the US CPI index with random forest (RF) and AR(1) forecasts" class="blog-post-image" id="inflation-forecasting-random-forest-forecasts" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inflation-forecasting-random-forest/forecasts_light.png" style="width:80%"/>
 <p class="blog-post-image-caption">Month-over-month logarithmic change in the US CPI index (FRED: CPIAUCSL)
-with random forest (RF) and AR(1) forecasts.</p></section>
+with random forest (RF) and AR(1) forecasts.</p><div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>A Python notebook with the full code is available in our
+<a class="reference external" href="https://github.com/fg-research/blog/blob/master/inflation-forecasting-random-forest/inflation-forecasting-random-forest.ipynb">GitHub repository</a>.</p>
+</div>
+</section>
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#references'">¶</a></h2>
@@ -334,7 +805,6 @@ with random forest (RF) and AR(1) forecasts.</p></section>
 <li><a :data-current="activeSection === '#data'" class="reference internal" href="#data">Data</a></li>
 <li><a :data-current="activeSection === '#code'" class="reference internal" href="#code">Code</a><ul>
 <li><a :data-current="activeSection === '#set-up'" class="reference internal" href="#set-up">Set-Up</a></li>
-<li><a :data-current="activeSection === '#hyperparameter-tuning'" class="reference internal" href="#hyperparameter-tuning">Hyperparameter Tuning</a></li>
 <li><a :data-current="activeSection === '#model-evaluation'" class="reference internal" href="#model-evaluation">Model evaluation</a></li>
 </ul>
 </li>
