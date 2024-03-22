@@ -62,11 +62,47 @@ Model
     A decision tree assumes that, over appropriately chosen subsets of the feature space,
     the target values can be approximated with a constant value. It follows that a
     decision tree can be seen as a nonparametric regression model, where the regression
-    function is estimated using a piecewise constant approximation.
+    function is estimated using a piecewise constant approximation. The constant value
+    used in the approximation is the average of the target values for the considered
+    combination of feature values.
     </p>
 
     <p>
+    The partition of the feature space is determined in a recursive manner during the
+    process of growing the tree. At the beginning of this process, the decision tree
+    contains only one node, referred to as root note, which includes the full dataset.
+    The root note estimates the target as the average of the entire dataset. After that,
+    the dataset is recursively splits into smaller and smaller subsets referred to as
+    nodes, where each newly created node (child) is a subsample of a previous
+    existing node (parent). At each node, the target is estimated as the average of
+    the observations in that node.
+    </p>
 
+    <p>
+    This process continues
+    until a pre-specified condition is met, such as that all terminal nodes, referred to
+    as leaves, contain at least a certain number of samples, or the depth of the tree has reached a certain maximum.
+
+
+    The optimal nodes or best splits are determined by optimizing a given objective function
+    (such as the mean squared error of the predicted target values) under a number of
+    constraints (such as that each node should contain at least a certain number of samples).
+
+
+
+
+    </p>
+
+
+
+
+the splits
+    are determined
+
+
+    A decision tree consists of a root note  and therefore represents the entire feature space,
+    of subsequent nodes representing smaller and smaller partitions of the feature space,
+    and of terminal nodes or leaves represeting the final partition.
     </p>
 
     Each tree is trained on random subsample
