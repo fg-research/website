@@ -43,9 +43,17 @@ Forecasting US inflation with random forests
     of all FRED-MD indicators, including the current month's inflation. We will train the
     model on the FRED-MD time series up to January 2023, and generate the one-month-ahead
     forecasts from February 2023 to January 2024. We find that the random forest model
-    outperforms the AR(1) model by almost 20% in terms of root mean squared error.
+    outperforms the AR(1) model by almost 20% in terms of forecast error.
     </p>
 
+******************************************
+Model
+******************************************
+A random forest is an ensemble of decision trees. Each tree is trained on random subset
+of samples drawn without replacement from the training data, and uses a random subset
+of features to determine the best split at each node. In this post we use the random
+forest algorithm for a regression task, in which case the model predictions are obtained
+by averaging the predictions of the individual trees.
 
 ******************************************
 Data
