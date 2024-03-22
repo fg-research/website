@@ -60,8 +60,8 @@ Model
 
     <p>
     A decision tree can be seen as a nonparametric regression model where the regression
-    function is estimated by a piecewise constant approximation, which assumes that over
-    small subsets of the feature space the target values can be approximated with a
+    function is estimated using a piecewise constant approximation which assumes that
+    over appropriately chosen subsets of the feature space the target values can be approximated with a
     constant value.
     </p>
 
