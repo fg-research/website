@@ -93,7 +93,16 @@ Model
     from the root node to the leaves, has reached a pre-defined maximum value.
     </p>
 
+    <img
+        id="inflation-forecasting-random-forest-diagram"
+        class="blog-post-image"
+        style="width:80%"
+        alt="Schematic representation of random forest algorithm"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/inflation-forecasting-random-forest/diagram_light.png
+    />
 
+    <p class="blog-post-image-caption">Schematic representation of random forest algorithm, adapted from
+    <a href="#references">[4]</a>.</p>
 
 ...
 Each tree is trained on random subsample
@@ -145,7 +154,9 @@ Data
     />
 
     <p class="blog-post-image-caption">Month-over-month logarithmic change in the US CPI index (FRED: CPIAUCSL).
-    Source: FRED-MD dataset, 02-2024 vintage.</p>
+    Source: FRED-MD dataset, 02-2024 vintage.
+
+</p>
 
 ******************************************
 Code
@@ -262,3 +273,5 @@ References
 [2] Medeiros, M. C., Vasconcelos, G. F., Veiga, Á., & Zilberman, E. (2021). Forecasting inflation in a data-rich environment: the benefits of machine learning methods. *Journal of Business & Economic Statistics*, 39(1), 98-119. `doi: 10.1080/07350015.2019.1637745 <https://doi.org/10.1080/07350015.2019.1637745>`__.
 
 [3] Breiman, L. (2001). Random forests. *Machine learning*, 45, 5-32. `doi: 10.1023/A:101093340432 <https://doi.org/10.1023/A:1010933404324>`__.
+
+[4] Janosh Riebesell. (2022). janosh/tikz: v0.1.0 (v0.1.0). Zenodo. `doi: 10.5281/zenodo.7486911 <https://doi.org/10.5281/zenodo.7486911>`__.

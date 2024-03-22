@@ -195,7 +195,10 @@ pre-specified condition is met, such as that all terminal nodes, referred to as
 leaves, contain at least a given number of observations, or that the depth of
 the tree, as determined by the number of nodes or recursive splits
 from the root node to the leaves, has reached a pre-defined maximum value.
-</p><p>…
+</p>
+<img alt="Schematic representation of random forest algorithm" class="blog-post-image" id="inflation-forecasting-random-forest-diagram" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inflation-forecasting-random-forest/diagram_light.png" style="width:80%"/>
+<p class="blog-post-image-caption">Schematic representation of random forest algorithm, adapted from
+<a href="#references">[4]</a>.</p><p>…
 Each tree is trained on random subsample
 of the training data, and uses a random subset of features to determine the best split at
 each node
@@ -230,7 +233,8 @@ any ex-post adjustment that could be applied to the data in the future.
 </p>
 <img alt="Month-over-month logarithmic change in the US CPI index" class="blog-post-image" id="inflation-forecasting-random-forest-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inflation-forecasting-random-forest/time_series_light.png" style="width:80%"/>
 <p class="blog-post-image-caption">Month-over-month logarithmic change in the US CPI index (FRED: CPIAUCSL).
-Source: FRED-MD dataset, 02-2024 vintage.</p></section>
+Source: FRED-MD dataset, 02-2024 vintage.<p>&lt;/p&gt;</p>
+</p></section>
 <section id="code">
 <h2>Code<a class="headerlink" href="#code" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#code'">¶</a></h2>
 <p>This section presents and explains the Python code used for the analysis.</p>
@@ -309,6 +313,7 @@ with random forest (RF) and AR(1) forecasts.</p></section>
 <p>[1] McCracken, M. W., &amp; Ng, S. (2016). FRED-MD: A monthly database for macroeconomic research. <em>Journal of Business &amp; Economic Statistics</em>, 34(4), 574-589. <a class="reference external" href="https://doi.org/10.1080/07350015.2015.1086655">doi: 10.1080/07350015.2015.1086655</a>.</p>
 <p>[2] Medeiros, M. C., Vasconcelos, G. F., Veiga, Á., &amp; Zilberman, E. (2021). Forecasting inflation in a data-rich environment: the benefits of machine learning methods. <em>Journal of Business &amp; Economic Statistics</em>, 39(1), 98-119. <a class="reference external" href="https://doi.org/10.1080/07350015.2019.1637745">doi: 10.1080/07350015.2019.1637745</a>.</p>
 <p>[3] Breiman, L. (2001). Random forests. <em>Machine learning</em>, 45, 5-32. <a class="reference external" href="https://doi.org/10.1023/A:1010933404324">doi: 10.1023/A:101093340432</a>.</p>
+<p>[4] Janosh Riebesell. (2022). janosh/tikz: v0.1.0 (v0.1.0). Zenodo. <a class="reference external" href="https://doi.org/10.5281/zenodo.7486911">doi: 10.5281/zenodo.7486911</a>.</p>
 </section>
 </section>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
