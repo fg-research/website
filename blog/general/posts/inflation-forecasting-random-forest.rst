@@ -127,7 +127,6 @@ Data
 .. raw:: html
 
     <p>
-    We use the FRED-MD dataset for developing and validating the random forest model.
     As discussed in <a href=https://fg-research.com/blog/general/posts/fred-md-overview.html
     target="_blank">our previous post</a>, the FRED-MD dataset is updated on a monthly basis.
     The monthly releases are referred to as <i>vintages</i>. Each vintage includes the data
@@ -147,7 +146,7 @@ Data
     We use 02-2023 vintage for training and hyperparameter tuning, while we use the last
     month in each vintage from 03-2023 to 02-2024 for testing. Our approach is different
     from the one used in <a href="#references">[2]</a>, where the same vintage (01-2016)
-    is used for both training and testing. In our view, our approach allows us to evaluate
+    is used for both training and testing. Our approach allows us to evaluate
     the model in a more realistic scenario where on a given month we forecast next month's
     inflation using as input the data available on that month, without taking into account
     any ex-post adjustment that could be applied to the data in the future.
