@@ -159,12 +159,12 @@ Data
         id="inflation-forecasting-random-forest-time-series"
         class="blog-post-image"
         style="width:80%"
-        alt="US CPI index Month-over-month logarithmic change in the "
+        alt="US CPI index and corresponding month-over-month logarithmic change"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/inflation-forecasting-random-forest/time_series_light.png
     />
 
-    <p class="blog-post-image-caption">Consumer Price Index for All Urban Consumers: All Items in U.S. City Average (FRED: CPIAUCSL)
-    with corresponding inflation rate (1-month logarithmic change). Source: FRED-MD dataset, 02-2024 vintage.</p>
+    <p class="blog-post-image-caption">US CPI index (FRED: CPIAUCSL) and corresponding month-over-month
+    logarithmic change. Source: FRED-MD dataset, 02-2024 vintage.</p>
 
 ******************************************
 Code
