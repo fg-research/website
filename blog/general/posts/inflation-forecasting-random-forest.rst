@@ -42,7 +42,8 @@ Forecasting US inflation with random forests
     forest model for predicting next month's inflation based on the current month's values
     of all FRED-MD indicators, including the current month's inflation. We will train the
     model on the FRED-MD time series up to January 2023, and generate the one-month-ahead
-    forecasts from February 2023 to January 2024.
+    forecasts from February 2023 to January 2024. We find that the random forest model
+    outperforms the AR(1) model by almost 20% in terms of root mean squared error.
     </p>
 
 
