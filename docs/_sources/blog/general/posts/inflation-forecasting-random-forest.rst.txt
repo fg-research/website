@@ -666,7 +666,7 @@ for tuning the main hyperparameters of the random forest model.
         return study.best_params
 
 ==========================================
-Model evaluation
+Analysis
 ==========================================
 We are now ready to run the analysis.
 We start by defining the target name, which is the FRED name of the US CPI index ("CPIAUCSL"),
