@@ -66,8 +66,7 @@ Model
     The partition of the feature space is determined in a recursive manner during the
     process of growing the tree. At the beginning of this process, the decision tree
     contains only one node, referred to as root note, which includes the full
-    dataset. The root note predicts the target with the average of all target
-    observations in the dataset.
+    dataset. In the root node, the target is predicted with the average of all target observations in the dataset.
     After that, the dataset is recursively split into smaller and smaller subsets
     referred to as nodes, where each newly created node (child) is a subsample
     of a previously existing node (parent). At each node, the target is predicted with
