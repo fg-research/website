@@ -12,40 +12,38 @@ General
 
    Learn about time series analysis
 
-..
-    .. card::
-        :width: 100%
-        :link: posts/inflation-forecasting-random-forest
-        :link-type: doc
+.. card::
+    :width: 100%
+    :link: posts/inflation-forecasting-random-forest
+    :link-type: doc
 
-        .. _inflation-forecasting-random-forest-toctree:
+    .. _inflation-forecasting-random-forest-toctree:
 
-        .. toctree::
-            :titlesonly:
+    .. toctree::
+        :titlesonly:
 
-            posts/inflation-forecasting-random-forest
+        posts/inflation-forecasting-random-forest
 
-        .. _inflation-forecasting-random-forest-include:
+    .. _inflation-forecasting-random-forest-include:
 
-        Inflation forecasts are used for informing economic decisions at various levels,
-        from households to businesses and policymakers. The application of machine learning
-        methods to inflation forecasting offers several potential advantages, including
-        the ability to handle large and complex datasets, capture nonlinear relationships,
-        and adapt to changing economic conditions...
+    Inflation forecasts are used for informing economic decisions at various levels,
+    from households to businesses and policymakers. The application of machine learning
+    methods to inflation forecasting offers several potential advantages, including
+    the ability to handle large and complex datasets, capture nonlinear relationships,
+    and adapt to changing economic conditions...
 
-        .. grid:: 2
-            :margin: 0 3 auto auto
+    .. grid:: 2
+        :margin: 0 3 auto auto
 
-            .. grid-item::
-                :class: sd-text-primary
+        .. grid-item::
+            :class: sd-text-primary
 
-                :octicon:`graph;1rem;graph-icon` Forecasting
+            :octicon:`graph;1rem;graph-icon` Forecasting
 
-            .. grid-item::
-                :class: sd-text-secondary
+        .. grid-item::
+            :class: sd-text-secondary
 
-                :octicon:`calendar;1rem;calendar-icon` March 20, 2024
-
+            :octicon:`calendar;1rem;calendar-icon` March 20, 2024
 
 .. card::
     :width: 100%
