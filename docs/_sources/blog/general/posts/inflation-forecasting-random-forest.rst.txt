@@ -72,8 +72,11 @@ Model
     After that, the dataset is recursively splits into smaller and smaller subsets
     referred to as nodes, where each newly created node (child) is a subsample
     of a previously existing node (parent). At each node, the target is predicted with
-    the average of the target observations in that node. The splits used for creating
-    the nodes are determined through an optimization process which aims to minimize a
+    the average of the target observations in that node.
+    </p>
+
+    <p>
+    The splits used for creating the nodes are determined through an optimization process which aims to minimize a
     given loss function (such as the mean squared error of the node's
     prediction, which is equal to the variance of the target values in
     the node) under a number of constraints, such as that each node should contain
