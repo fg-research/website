@@ -43,7 +43,8 @@ Forecasting US inflation with random forests
     of all FRED-MD indicators, including the current month's inflation. We will train the
     model on the FRED-MD time series up to January 2023, and generate the one-month-ahead
     forecasts from February 2023 to January 2024. We find that the random forest model
-    outperforms the AR(1) model by almost 20% in terms of forecast error.
+    outperforms the AR(1) model by almost 20% in terms of root mean squared error (RMSE)
+    of the forecasts.
     </p>
 
 ******************************************
@@ -64,7 +65,7 @@ Model
 
     <p>
     The partition of the feature space is determined in a recursive manner during the
-    process of growing the tree. At the beginning of this process, the decision tree
+    process of growing the tree. At the beginning of this process, the tree
     contains only one node, referred to as root note, which includes the full
     dataset. In the root node, the target is predicted with the average of all target observations in the dataset.
     After that, the dataset is recursively split into smaller and smaller subsets
@@ -88,7 +89,7 @@ Model
     pre-specified condition is met, such as that all terminal nodes, referred to as
     leaves, contain at least a given number of observations, or that the depth of
     the tree, as determined by the number of nodes or recursive splits
-    from the root node to the leaves, has reached a predetermined maximum value.
+    from the root node to the leaves, has reached a certain maximum value.
     </p>
 
     <p>
@@ -150,7 +151,7 @@ Data
     month in each vintage from 03-2023 to 02-2024 for testing. Our approach is different
     from the one used in <a href="#references">[2]</a>, where the same vintage (01-2016)
     is used for both training and testing. In our view, our approach allows us to evaluate
-    the model in a more realistic scenario where on a given month we forecast next month's
+    the model in a more realistic scenario, as on a given month we forecast next month's
     inflation using as input the data available on that month, without taking into account
     any ex-post adjustment that could be applied to the data in the future.
     </p>
@@ -169,6 +170,7 @@ Data
 ******************************************
 Code
 ******************************************
+In this section, we provide and explain the Python code used for the analysis.
 
 ==========================================
 Set-Up
@@ -230,11 +232,11 @@ We start by importing the dependencies.
 
     <p>
     We then define a function for downloading and processing the training data.
-    In this function we download the FRED-MD dataset for the considered vintage,
+    In this function, we download the FRED-MD dataset for the considered vintage,
     transform the time series using the provided transformation codes (with the
     exception of the target time series, for which we use the first order
     logarithmic difference as in <a href="#references">[2]</a>) and define the
-    features as the first lag (i.e. the one-month lag) of the all the time series
+    features as the first lag (i.e. the previous month value) of all the time series
     (including the target time series). As in <a href="#references">[2]</a>,
     we use the data after January 1960, and we use only the time series without
     missing values.
@@ -304,7 +306,12 @@ We start by importing the dependencies.
     given that they are extracted from different vintages. The targets are extracted
     from the vintages between 03-2023 and 02-2024, while the features are extracted
     from the vintages between 02-2023 and 01-2024.
-    The following function extracts the target values.
+    </p>
+
+    <p>
+    The following function extracts the target values. It iterates across the selected
+    vintages, downloads the data for each vintage, transforms the target time series,
+    and returns its last value, i.e. its value on the last month of each vintage.
     </p>
 
 .. code:: python
@@ -372,11 +379,14 @@ We start by importing the dependencies.
 .. raw:: html
 
     <p>
-    The following function extracts the feature values. Note that we
-    shift back the dates of the dataset vintages by one month, and we
-    then correspondingly shift forward their time index also by one month,
-    such that the time index of the features data frame matches the time
-    index of the target data frame.
+    The following function extracts the feature values. Given that the model
+    uses the first lag of the features, i.e. their values on the previous month,
+    we shift back the dates of the dataset vintages by one month. We then
+    download the time series in each vintage, transform the time series,
+    and return their last values, i.e. their values on the last month of each vintage.
+    After that we shift the dates forward by one month, such that we can correctly map
+    the feature values observed on a given month to the corresponding target values
+    observed in the subsequent month.
     </p>
 
 .. code:: python
@@ -694,7 +704,7 @@ time series (i.e. without missing values) from February 1960 to January 2023.
 We then proceed to tuning the random forest hyperparameters
 by performing random search with `optuna <https://optuna.org/>`__. We use
 the last 12 months of the training set as validation set
-and we use the root mean squared error (RMSE) as objective function.
+and we use the RMSE as objective function.
 
 .. code:: python
 
@@ -734,7 +744,7 @@ on the same 110 variables from February 2023 to January 2024.
 
 We can finally train the random forest model using the identified best
 hyperparameters, generate the forecasts over the test set, and
-calculate the RMSE of the forecasts over the test set.
+calculate the RMSE of the forecasts.
 
 .. code:: python
 
@@ -766,8 +776,8 @@ We do the same for the AR(1) model.
         y_pred=ar1_forecasts
     )
 
-The RMSE of the random forest model forecasts is 0.001649,
-while the RMSE of the AR(1) model forecasts is 0.002023.
+The RMSE of the random forest model is 0.001649,
+while the RMSE of the AR(1) model is 0.002023.
 The reduction in RMSE provided by the random forest model is 18.5%.
 
 .. raw:: html
