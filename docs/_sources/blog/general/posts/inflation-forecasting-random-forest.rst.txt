@@ -119,7 +119,7 @@ Model
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/inflation-forecasting-random-forest/diagram_light.png
     />
 
-    <p class="blog-post-image-caption">Schematic representation of random forest regression algorithm, adapted from
+    <p class="blog-post-image-caption">Schematic representation of random forest algorithm, adapted from
     <a href="#references">[4]</a>.</p>
 
 ******************************************
