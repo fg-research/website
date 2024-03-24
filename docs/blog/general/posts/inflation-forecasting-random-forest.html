@@ -244,7 +244,9 @@ to the data in the vintage released on the subsequent month.
 As in <a href="#references">[2]</a>, we include among the features the first 4 principal
 components, which are estimated on all the time series, and the first 4 lags
 of all the time series, including the lags of the principal components and
-the lags of the target time series.
+the lags of the target time series. This results in approximately 500 features,
+even though the exact number of features changes over time,
+depending on how many time series are included in each vintage.
 </p>
 <img alt="US CPI index and corresponding month-over-month logarithmic change" class="blog-post-image" id="inflation-forecasting-random-forest-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inflation-forecasting-random-forest/time_series_light.png" style="width:80%"/>
 <p class="blog-post-image-caption">US CPI index (FRED: CPIAUCSL) and corresponding month-over-month
@@ -626,14 +628,6 @@ randomly selected features equal to 1 / 3, and the minimum number of samples in 
 terminal node or leaf equal to 5, as in <a href="#references">[2]</a>. For the autoregressive model,
 we set the number of lags equal to 4, which, as discussed above, is the same number of lags
 used by the random forest model.
-</p>
-<p>
-Note that the autoregressive model is a univariate model which
-uses only the lags of the target time series as features, while the random forest model
-also uses the lags of the other time series and the lags of the 4 principal components. While the
-autoregressive model has only 4 features (as the number of lags is equal to 4), the random
-forest model has approximately 500 features. The exact number of features of the random forest model changes
-over time, depending on how many indicators with complete time series are included in each vintage.
 </p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">forecasts</span> <span class="o">=</span> <span class="n">get_forecasts</span><span class="p">(</span>
 </span><span id="line-2">        <span class="n">params</span><span class="o">=</span><span class="p">{</span>
 </span><span id="line-3">            <span class="s2">"n_estimators"</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span>

@@ -153,7 +153,9 @@ Data
     As in <a href="#references">[2]</a>, we include among the features the first 4 principal
     components, which are estimated on all the time series, and the first 4 lags
     of all the time series, including the lags of the principal components and
-    the lags of the target time series.
+    the lags of the target time series. This results in approximately 500 features,
+    even though the exact number of features changes over time,
+    depending on how many time series are included in each vintage.
     </p>
 
     <img
@@ -584,15 +586,6 @@ We start by importing the dependencies.
     terminal node or leaf equal to 5, as in <a href="#references">[2]</a>. For the autoregressive model,
     we set the number of lags equal to 4, which, as discussed above, is the same number of lags
     used by the random forest model.
-    </p>
-
-    <p>
-    Note that the autoregressive model is a univariate model which
-    uses only the lags of the target time series as features, while the random forest model
-    also uses the lags of the other time series and the lags of the 4 principal components. While the
-    autoregressive model has only 4 features (as the number of lags is equal to 4), the random
-    forest model has approximately 500 features. The exact number of features of the random forest model changes
-    over time, depending on how many indicators with complete time series are included in each vintage.
     </p>
 
 .. code:: python
