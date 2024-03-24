@@ -55,7 +55,12 @@ window.setInterval(function(){
         'fred-md-inflation-indices',
         'inflation-forecasting-random-forest-diagram',
         'inflation-forecasting-random-forest-time-series',
-        'inflation-forecasting-random-forest-forecasts'
+        'inflation-forecasting-random-forest-forecasts-plot',
+        'inflation-forecasting-random-forest-forecasts-table-head',
+        'inflation-forecasting-random-forest-forecasts-table-tail',
+        'inflation-forecasting-random-forest-targets-table-head',
+        'inflation-forecasting-random-forest-targets-table-tail',
+        'inflation-forecasting-random-forest-errors-table'
     ];
     for (var i = 0; i < elements.length; i++) {
         var f = document.getElementById(elements[i]);

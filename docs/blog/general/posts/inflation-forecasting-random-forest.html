@@ -159,7 +159,8 @@ forest model for predicting next month's inflation based on the past values
 of all FRED-MD indicators, including the past inflation. We will evaluate the model using
 an expanding window approach: on each month we will train the model using all the data
 available up to that month, and generate the forecast for next month. We use the data
-from January 2015 to January 2024 for our analysis.
+from January 2015 to January 2024 for our analysis. Out findings indicate that the
+random forest model outperforms the AR model over the considered time period.
 </p><section id="model">
 <h2>Model<a class="headerlink" href="#model" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#model'">¶</a></h2>
 <p>
@@ -246,7 +247,7 @@ components, which are estimated on all the time series, and the first 4 lags
 of all the time series, including the lags of the principal components and
 the lags of the target time series. This results in approximately 500 features,
 even though the exact number of features changes over time,
-depending on how many time series are included in each vintage.
+depending on how many time series are included in the vintage.
 </p>
 <img alt="US CPI index and corresponding month-over-month logarithmic change" class="blog-post-image" id="inflation-forecasting-random-forest-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inflation-forecasting-random-forest/time_series_light.png" style="width:80%"/>
 <p class="blog-post-image-caption">US CPI index (FRED: CPIAUCSL) and corresponding month-over-month
@@ -324,7 +325,7 @@ In this function, we download the FRED-MD dataset for the considered vintage,
 transform the time series using the provided transformation codes (with the
 exception of the target time series, for which we use the first order
 logarithmic difference), derive the principal components, and take the
-lags of all the time series, as in <a href="#references">[2]</a>.
+lags of all the time series.
 </p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">target_name</span><span class="p">,</span> <span class="n">target_tcode</span><span class="p">,</span> <span class="n">n_lags</span><span class="p">,</span> <span class="n">n_components</span><span class="p">):</span>
 </span><span id="line-2"><span class="w">    </span><span class="sd">'''</span>
 </span><span id="line-3"><span class="sd">    Download and process the data.</span>
@@ -616,7 +617,7 @@ be the same as the current month's inflation, as in <a href="#references">[2]</a
 We are now ready to run the analysis.
 We start by defining the target name, which is the FRED name of the US CPI index ("CPIAUCSL"),
 the target transformation code, which is 5 for first order logarithmic difference, and the start
-and end dates of the vintages used in the analysis.
+and end dates of the vintages used for testing.
 </p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">target_name</span> <span class="o">=</span> <span class="s2">"CPIAUCSL"</span>
 </span><span id="line-2"><span class="n">target_tcode</span> <span class="o">=</span> <span class="mi">5</span>
 </span><span id="line-3"><span class="n">start_date</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s2">"2015-01-01"</span><span class="p">)</span>
@@ -647,9 +648,14 @@ used by the random forest model.
 </span><span id="line-15">    <span class="p">)</span>
 </span></code></pre></div>
 </div>
-<p>
-We now download the realized target values and calculate the error of
-the one-month-ahead forecasts.
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">forecasts</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<img alt="First 3 values of inflation forecasts" class="blog-post-image" id="inflation-forecasting-random-forest-forecasts-table-head" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inflation-forecasting-random-forest/forecasts_table_head_light.png" style="width:80%"/><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">forecasts</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<img alt="Last 3 values of inflation forecasts" class="blog-post-image" id="inflation-forecasting-random-forest-forecasts-table-tail" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inflation-forecasting-random-forest/forecasts_table_tail_light.png" style="width:80%"/><p>
+We now download the realized target values.
 </p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">targets</span> <span class="o">=</span> <span class="n">get_target</span><span class="p">(</span>
 </span><span id="line-2">    <span class="n">start_date</span><span class="o">=</span><span class="n">start_date</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">offsets</span><span class="o">.</span><span class="n">MonthBegin</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
 </span><span id="line-3">    <span class="n">end_date</span><span class="o">=</span><span class="n">end_date</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">offsets</span><span class="o">.</span><span class="n">MonthBegin</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
@@ -658,7 +664,17 @@ the one-month-ahead forecasts.
 </span><span id="line-6"><span class="p">)</span>
 </span></code></pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">errors</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">targets</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<img alt="First 3 values of realized inflation" class="blog-post-image" id="inflation-forecasting-random-forest-targets-table-head" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inflation-forecasting-random-forest/targets_table_head_light.png" style="width:80%"/><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">targets</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<img alt="Last 3 values of realized inflation" class="blog-post-image" id="inflation-forecasting-random-forest-targets-table-tail" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inflation-forecasting-random-forest/targets_table_tail_light.png" style="width:80%"/><p>
+Lastly, we calculate the forecast error. We use the root mean squared error (RMSE),
+the mean absolute error (MAE) and the median absolute deviation (MAD) as measures
+of forecast error.
+</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">errors</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
 </span><span id="line-2"><span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">forecasts</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
 </span><span id="line-3">    <span class="n">errors</span><span class="p">[</span><span class="n">model</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
 </span><span id="line-4">            <span class="n">root_mean_squared_error</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">targets</span><span class="p">[</span><span class="n">target_name</span><span class="p">],</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">forecasts</span><span class="p">[</span><span class="n">model</span><span class="p">]),</span>
@@ -668,12 +684,12 @@ the one-month-ahead forecasts.
 </span><span id="line-8"><span class="n">errors</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"RMSE"</span><span class="p">,</span> <span class="s2">"MAE"</span><span class="p">,</span> <span class="s2">"MAD"</span><span class="p">]</span>
 </span></code></pre></div>
 </div>
-<p>
+<img alt="Forecast errors" class="blog-post-image" id="inflation-forecasting-random-forest-errors-table" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inflation-forecasting-random-forest/errors_table_light.png" style="width:80%"/><p>
 We find that the random forest model outperforms both the AR model and the RW model
 in terms of all considered error metrics.
-</p><img alt="Month-over-month logarithmic change in the US CPI index with random forest (RF) and AR(1) forecasts" class="blog-post-image" id="inflation-forecasting-random-forest-forecasts" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inflation-forecasting-random-forest/forecasts_light.png" style="width:80%"/>
+</p><img alt="Month-over-month logarithmic change in the US CPI index with random forest (RF) and AR(1) forecasts" class="blog-post-image" id="inflation-forecasting-random-forest-forecasts-plot" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inflation-forecasting-random-forest/forecasts_plot_light.png" style="width:80%"/>
 <p class="blog-post-image-caption">Month-over-month logarithmic change in the US CPI index (FRED: CPIAUCSL)
-with random forest (RF) model and autoregressive (AR) model forecasts.</p><div class="admonition tip">
+with random forest (RF) model forecasts.</p><div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>A Python notebook with the full code is available in our
 <a class="reference external" href="https://github.com/fg-research/blog/blob/master/inflation-forecasting-random-forest/inflation-forecasting-random-forest.ipynb">GitHub repository</a>.</p>
