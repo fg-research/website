@@ -700,6 +700,10 @@ We start by importing the dependencies.
             ]
     errors.index = ["RMSE", "MAE", "MAD"]
 
+.. code:: python
+
+    errors
+
 .. raw:: html
 
     <img
