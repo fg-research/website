@@ -59,7 +59,7 @@ Model
     into different subsets, and generating a constant prediction for each subset.
     In the regression case, which is the one relevant to this post, the constant
     prediction is the average of the target values in the subset.
-    It follows that a decision tree can be seen as a nonparametric regression model,
+    A decision tree can be seen as a nonparametric regression model,
     where the regression function that links the target to the features is estimated
     using a piecewise constant approximation.
     </p>
@@ -247,8 +247,7 @@ We start by importing the dependencies.
 .. raw:: html
 
     <p>
-    We then define a function for downloading and processing the data
-    used by the model.
+    We then define a function for downloading and processing the data.
     In this function, we download the FRED-MD dataset for the considered vintage,
     transform the time series using the provided transformation codes (with the
     exception of the target time series, for which we use the first order
@@ -419,7 +418,7 @@ We start by importing the dependencies.
             The random forest hyperparameters.
 
         train_data: pandas.DataFrame.
-            Training dataset.
+            The training dataset.
 
         test_data: pandas.DataFrame.
             The inputs to the one-month-ahead forecasts.
@@ -467,7 +466,7 @@ We start by importing the dependencies.
             The number of autoregressive lags.
 
         train_data: pandas.DataFrame.
-            Training dataset.
+            The training dataset.
 
         test_data: pandas.DataFrame.
             The inputs to the one-month-ahead forecasts.
@@ -733,10 +732,14 @@ We start by importing the dependencies.
     <p class="blog-post-image-caption">Month-over-month logarithmic change in the US CPI index (FRED: CPIAUCSL)
     with random forest (RF) forecasts.</p>
 
-.. tip::
 
+    <p>
     A Python notebook with the full code is available in our
-    `GitHub repository <https://github.com/fg-research/blog/blob/master/inflation-forecasting-random-forest/inflation-forecasting-random-forest.ipynb>`__.
+    <a href="https://github.com/fg-research/blog/blob/master/inflation-forecasting-random-forest" target="_blank">GitHub</a>
+    repository.
+    The official R code from the authors of <a href="#references">[2]</a> is also available in
+    <a href="https://github.com/gabrielrvsc/ForecastingInflation" target="_blank">GitHub</a>
+    </p>
 
 ******************************************
 References
