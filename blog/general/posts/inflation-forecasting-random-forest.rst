@@ -250,7 +250,7 @@ We start by importing the dependencies.
     transform the time series using the provided transformation codes (with the
     exception of the target time series, for which we use the first order
     logarithmic difference), derive the principal components, and take the
-    lags of all time series, including the lags of the target time series and
+    lags of all the time series, including the lags of the target time series and
     the lags of the principal components, as in <a href="#references">[2]</a>.
     </p>
 

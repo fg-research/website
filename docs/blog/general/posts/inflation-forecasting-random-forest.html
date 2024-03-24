@@ -322,7 +322,7 @@ In this function, we download the FRED-MD dataset for the considered vintage,
 transform the time series using the provided transformation codes (with the
 exception of the target time series, for which we use the first order
 logarithmic difference), derive the principal components, and take the
-lags of all time series, including the lags of the target time series and
+lags of all the time series, including the lags of the target time series and
 the lags of the principal components, as in <a href="#references">[2]</a>.
 </p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">target_name</span><span class="p">,</span> <span class="n">target_tcode</span><span class="p">,</span> <span class="n">n_lags</span><span class="p">,</span> <span class="n">n_components</span><span class="p">):</span>
 </span><span id="line-2"><span class="w">    </span><span class="sd">'''</span>
