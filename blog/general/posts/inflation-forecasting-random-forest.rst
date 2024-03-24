@@ -129,7 +129,6 @@ Data
 .. raw:: html
 
     <p>
-    We use the FRED-MD dataset for developing and validating the random forest model.
     As discussed in <a href=https://fg-research.com/blog/general/posts/fred-md-overview.html
     target="_blank">our previous post</a>, FRED-MD is a large, open-source, dataset
     of monthly U.S. macroeconomic indicators maintained by the Federal Reserve Bank of St. Louis.
