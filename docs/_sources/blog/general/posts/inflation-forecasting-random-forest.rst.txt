@@ -245,7 +245,7 @@ We start by importing the dependencies.
 
     <p>
     We then define a function for downloading and processing the data
-    in the format required by the models.
+    used by the model.
     In this function, we download the FRED-MD dataset for the considered vintage,
     transform the time series using the provided transformation codes (with the
     exception of the target time series, for which we use the first order
