@@ -733,7 +733,7 @@ We start by importing the dependencies.
     />
 
     <p class="blog-post-image-caption">Month-over-month logarithmic change in the US CPI index (FRED: CPIAUCSL)
-    with random forest (RF) model forecasts.</p>
+    with random forest (RF) forecasts.</p>
 
 .. tip::
 
