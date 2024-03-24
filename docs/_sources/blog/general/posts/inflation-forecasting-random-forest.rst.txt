@@ -41,10 +41,9 @@ Forecasting US inflation with random forests
     For simplicity, we will consider only one-month-ahead forecasts. We will use the random
     forest model for predicting next month's inflation based on the past values
     of all FRED-MD indicators, including the past inflation. We will evaluate the model using
-    an expanding window approach: on each month we train the model using all the data
+    an expanding window approach: on each month we will train the model using all the data
     available up to that month, and generate the forecast for next month. We use the data
-    from January 2015 to January 2024 for our analysis. Our findings indicate that the
-    random forest model outperforms the AR model under all considered error metrics
+    from January 2015 to January 2024 for our analysis.
     </p>
 
 ******************************************
@@ -151,8 +150,10 @@ Data
     we train the model using the data in the vintage released on that month,
     and generate the forecast for the next month. We then compare the forecast
     to the data in the vintage released on the subsequent month.
-    As in <a href="#references">[2]</a>, we use as features the first 4 principal
-    components and the first 4 lags of all time series.
+    As in <a href="#references">[2]</a>, we include among the features the first 4 principal
+    components, which are estimated on all the time series, and the first 4 lags
+    of all the time series, including the lags of the principal components and
+    the lags of the target time series.
     </p>
 
     <img
