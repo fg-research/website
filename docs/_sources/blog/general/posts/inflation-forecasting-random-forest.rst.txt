@@ -31,7 +31,7 @@ Forecasting US inflation with random forests
 
     <p>
     In this post, we will focus on the random forest model introduced in <a href="#references">[2]</a>,
-    which was found to outperform both standard univariate forecasting models such as the AR(1) model
+    which was found to outperform both standard univariate forecasting models such as the autoregressive (AR) model
     and several other machine learning methods including Lasso, Ridge and Elastic Net regressions.
     We will use the random forest model for forecasting the US CPI monthly inflation, which we
     define as the month-over-month logarithmic change in the US CPI index as in <a href="#references">[2]</a>.
@@ -39,12 +39,12 @@ Forecasting US inflation with random forests
 
     <p>
     For simplicity, we will consider only one-month-ahead forecasts. We will use the random
-    forest model for predicting next month's inflation based on the current month's values
-    of all FRED-MD indicators, including the current month's inflation. We will train the
-    model on the FRED-MD time series up to January 2023, and generate the one-month-ahead
-    forecasts from February 2023 to January 2024. We find that the random forest model
-    outperforms the AR(1) model by almost 20% in terms of root mean squared error (RMSE)
-    of the forecasts.
+    forest model for predicting next month's inflation based on the past values
+    of all FRED-MD indicators, including the past inflation. We will evaluate the model using
+    an expanding window approach: on each month we train the model using all the data
+    available up to that month, and generate the forecast for next month. We use the data
+    from January 2015 to January 2024 for our analysis. Our findings indicate that the
+    random forest model outperforms the AR model under all considered error metrics
     </p>
 
 ******************************************
@@ -87,7 +87,7 @@ Model
     As the tree grows, finer and finer partitions of the feature space are created,
     reducing the error of the predictions. This process continues until a
     pre-specified condition is met, such as that all terminal nodes, referred to as
-    leaves, contain at least a given number of observations, or that the depth of
+    leaves, contain at least a given minimum number of observations, or that the depth of
     the tree, as determined by the number of nodes or recursive splits
     from the root node to the leaves, has reached a certain maximum value.
     </p>
@@ -147,13 +147,12 @@ Data
     </p>
 
     <p>
-    We use 02-2023 vintage for training and hyperparameter tuning, while we use the last
-    month in each vintage from 03-2023 to 02-2024 for testing. Our approach is different
-    from the one used in <a href="#references">[2]</a>, where the same vintage (01-2016)
-    is used for both training and testing. In our view, our approach allows us to evaluate
-    the model in a more realistic scenario, as on a given month we forecast next month's
-    inflation using as input the data available on that month, without taking into account
-    any ex-post adjustment that could be applied to the data in the future.
+    We use all vintages from 2025-01 to 2024-02 for our analysis. On each month,
+    we train the model using the data in the vintage released on that month,
+    and generate the forecast for the next month. We then compare the forecast
+    to the data in the vintage released on the subsequent month.
+    As in <a href="#references">[2]</a>, we use as features the first 4 principal
+    components and the first 4 lags of all time series.
     </p>
 
     <img
@@ -170,22 +169,21 @@ Data
 ******************************************
 Code
 ******************************************
-In this section, we provide and explain the Python code used for the analysis.
-
-==========================================
-Set-Up
-==========================================
 We start by importing the dependencies.
 
 .. code:: python
 
-    import optuna
     import pandas as pd
     import numpy as np
     import matplotlib.pyplot as plt
+    from tqdm import tqdm
     from sklearn.linear_model import LinearRegression
     from sklearn.ensemble import RandomForestRegressor
-    from sklearn.metrics import root_mean_squared_error
+    from sklearn.preprocessing import StandardScaler
+    from sklearn.decomposition import PCA
+    from sklearn.pipeline import Pipeline
+    from sklearn.metrics import root_mean_squared_error, mean_absolute_error
+    from scipy.stats import median_abs_deviation
 
 .. raw:: html
 
@@ -212,66 +210,87 @@ We start by importing the dependencies.
         '''
 
         if tcode == 1:
+            # no transformation
             return x
+
         elif tcode == 2:
+            # first order absolute difference
             return x.diff()
+
         elif tcode == 3:
+            # second order absolute difference
             return x.diff().diff()
+
         elif tcode == 4:
+            # logarithm
             return np.log(x)
+
         elif tcode == 5:
+            # first order logarithmic difference
             return np.log(x).diff()
+
         elif tcode == 6:
+            # second order logarithmic difference
             return np.log(x).diff().diff()
+
         elif tcode == 7:
+            # first order relative difference
             return x.pct_change()
+
         else:
             raise ValueError(f"unknown `tcode` {tcode}")
 
 .. raw:: html
 
     <p>
-    We then define a function for downloading and processing the training data.
+    We then define a function for downloading and processing the data
+    in the format required by the models.
     In this function, we download the FRED-MD dataset for the considered vintage,
     transform the time series using the provided transformation codes (with the
     exception of the target time series, for which we use the first order
-    logarithmic difference as in <a href="#references">[2]</a>) and define the
-    features as the first lag (i.e. the previous month value) of all the time series
-    (including the target time series). As in <a href="#references">[2]</a>,
-    we use the data after January 1960, and we use only the time series without
-    missing values.
+    logarithmic difference), derive the principal components, and take the
+    lags of all time series, including the lags of the target time series and
+    the lags of the principal components, as in <a href="#references">[2]</a>.
     </p>
 
 .. code:: python
 
-    def get_training_data(year, month, target_name, target_tcode):
+    def get_data(date, target_name, target_tcode, n_lags, n_components):
         '''
-        Download and process the training data.
+        Download and process the data.
 
         Parameters:
         ______________________________________________________________
-        year: int
-            The year of the dataset vintage.
-
-        month: int.
-            The month of the dataset vintage.
+        date: pandas.Timestamp.
+            The date of the dataset vintage.
 
         target_name: string.
             The name of the target time series.
 
         target_tcode: int.
             The transformation code of the target time series.
+
+        n_lags: int.
+            The number of autoregressive lags.
+
+        n_components: int.
+            The number of principal components.
+
+        Returns:
+        ______________________________________________________________
+        train_data: pandas.DataFrame.
+            The training dataset.
+
+        test_data: pandas.DataFrame.
+            The inputs to the one-month-ahead forecasts.
         '''
 
         # get the dataset URL
-        file = f"https://files.stlouisfed.org/files/htdocs/fred-md/monthly/{year}-{format(month, '02d')}.csv"
+        file = f"https://files.stlouisfed.org/files/htdocs/fred-md/monthly/{date.year}-{format(date.month, '02d')}.csv"
 
         # get the time series
         data = pd.read_csv(file, skiprows=[1], index_col=0)
         data.columns = [c.upper() for c in data.columns]
-
-        # move the target to the first column
-        data = data[[target_name] + data.columns.drop(target_name).tolist()]
 
         # process the dates
         data = data.loc[pd.notna(data.index), :]
@@ -290,69 +309,68 @@ We start by importing the dependencies.
         # select the data after January 1960
         data = data[data.index >= pd.Timestamp("1960-01-01")]
 
-        # select the time series without missing values
+        # drop the incomplete time series
         data = data.loc[:, data.isna().sum() == 0]
 
-        # lag the features
-        data = data[[target_name]].join(data.shift(periods=[1], suffix="_LAG"))
+        # add the principal components
+        pca = Pipeline([("scaling", StandardScaler()), ("decomposition", PCA(n_components=n_components))])
+        data[[f"PC{i}" for i in range(1, 1 + n_components)]] = pca.fit_transform(data)
 
-        # drop the missing value resulting from taking the lag
-        return data.iloc[1:]
+        # extract the training data; this includes the target time series and the lags of
+        # all time series; the missing values resulting from taking the lags are dropped
+        train_data = data[[target_name]].join(data.shift(periods=list(range(1, 1 + n_lags)), suffix="_LAG"))
+        train_data = train_data.iloc[n_lags:, :]
+
+        # extract the test data; this includes the last `n_lags` values (e.g. the last 4
+        # values) of all time series; the time index is shifted forward by one month to
+        # match the date for which the forecasts are generated
+        test_data = data.shift(periods=list(range(0, n_lags)), suffix="_LAG")
+        test_data = test_data.iloc[-1:, :]
+        test_data.index += pd.offsets.MonthBegin(1)
+        test_data.columns = [c.split("_LAG_")[0] + "_LAG_" + str(int(c.split("_LAG_")[1]) + 1) for c in test_data.columns]
+
+        return train_data, test_data
+
 
 .. raw:: html
 
     <p>
-    For the test data, we download and process the targets and features separately,
-    given that they are extracted from different vintages. The targets are extracted
-    from the vintages between 03-2023 and 02-2024, while the features are extracted
-    from the vintages between 02-2023 and 01-2024.
-    </p>
-
-    <p>
-    The following function extracts the target values. It iterates across the selected
-    vintages, downloads the data for each vintage, transforms the target time series,
-    and returns its last value, i.e. its value on the last month of each vintage.
+    We also define a function for downloading and processing the target time series.
+    We will use this function for obtaining the realized target values against
+    which we will compare the forecasts.
     </p>
 
 .. code:: python
 
-    def get_target(start_month, start_year, end_month, end_year, target_name, target_tcode):
+    def get_target(start_date, end_date, target_name, target_tcode):
         '''
         Extract the target time series from a range of dataset vintages.
 
         Parameters:
         ______________________________________________________________
-        start_month: int.
-            The month of the first vintage.
+        start_date: pandas.Timestamp.
+            The date of the first vintage.
 
-        start_year: int.
-            The year of the first vintage.
-
-        end_month: int.
-            The month of the last vintage.
-
-        end_year: int.
-            The year of the last vintage.
+        end_date: pandas.Timestamp.
+            The date of the last vintage.
 
         target_name: str.
             The name of the target time series.
 
         target_tcode: int.
             The transformation code of the target time series.
+
+        Returns:
+        ______________________________________________________________
+        targets: pandas.DataFrame.
+            The target time series between the start and end date.
         '''
 
-        # create a data frame for storing the target values
-        target = pd.DataFrame()
-
-        # define the date range of the dataset vintages
-        dates = pd.date_range(
-            start=f"{start_year}-{start_month}-01",
-            end=f"{end_year}-{end_month}-01",
-            freq="MS"
-        )
+        # create a list for storing the target values
+        targets = []
 
         # loop across the dataset vintages
-        for date in dates:
+        for date in tqdm(pd.date_range(start=start_date, end=end_date, freq="MS")):
 
             # get the dataset URL
             file = f"https://files.stlouisfed.org/files/htdocs/fred-md/monthly/{date.year}-{format(date.month, '02d')}.csv"
@@ -371,414 +389,264 @@ We start by importing the dependencies.
             # transform the target time series
             data[target_name] = transform_series(data[target_name], target_tcode)
 
-            # select the last value and save it in the data frame
-            target = pd.concat([target, data.iloc[-1:]], axis=0)
+            # select the last value
+            targets.append(data.iloc[-1:])
 
-        return target
+        # concatenate the target values in a data frame
+        targets = pd.concat(targets, axis=0)
 
-.. raw:: html
-
-    <p>
-    The following function extracts the feature values. Given that the model
-    uses the first lag of the features, i.e. their values on the previous month,
-    we shift back the dates of the dataset vintages by one month. We then
-    download the time series in each vintage, transform the time series,
-    and return their last values, i.e. their values on the last month of each vintage.
-    After that we shift the dates forward by one month, such that we can correctly map
-    the feature values observed on a given month to the corresponding target values
-    observed in the subsequent month.
-    </p>
-
-.. code:: python
-
-    def get_features(start_month, start_year, end_month, end_year, target_name, target_tcode, feature_names):
-        '''
-        Extract the feature time series from a range of dataset vintages.
-
-        Parameters:
-        ______________________________________________________________
-        start_month: int.
-            The month of the first vintage.
-
-        start_year: int.
-            The year of the first vintage.
-
-        end_month: int.
-            The month of the last vintage.
-
-        end_year: int.
-            The year of the last vintage.
-
-        target_name: str.
-            The name of the target time series.
-
-        target_tcode: int.
-            The transformation code of the target time series.
-
-        feature_names: list of str.
-            The names of the features time series.
-        '''
-
-        # create a data frame for storing the feature values
-        features = pd.DataFrame()
-
-        # define the date range of the dataset vintages
-        dates = pd.date_range(
-            start=f"{start_year}-{start_month}-01",
-            end=f"{end_year}-{end_month}-01",
-            freq="MS"
-        )
-
-        # loop across the dataset vintages
-        for date in dates:
-
-            # get the dataset URL
-            file = f"https://files.stlouisfed.org/files/htdocs/fred-md/monthly/{(date - pd.offsets.MonthBegin(1)).year}-{format((date - pd.offsets.MonthBegin(1)).month, '02d')}.csv"
-
-            # get the time series
-            data = pd.read_csv(file, skiprows=[1], index_col=0)
-            data.columns = [c.upper() for c in data.columns]
-
-            # process the dates
-            data = data.loc[pd.notna(data.index), :]
-            data.index = pd.date_range(start="1959-01-01", freq="MS", periods=len(data))
-
-            # get the transformation codes
-            tcodes = pd.read_csv(file, nrows=1, index_col=0)
-            tcodes.columns = [c.upper() for c in tcodes.columns]
-
-            # override the target's transformation code
-            tcodes[target_name] = target_tcode
-
-            # transform the time series
-            data = data.apply(lambda x: transform_series(x, tcodes[x.name].item()))
-
-            # rename the time series
-            data.columns = [c + "_LAG_1" for c in data.columns]
-
-            # drop any features that were not used for training
-            data = data[feature_names]
-
-            # forward fill any missing values
-            data = data.ffill()
-
-            # shift the dates one month forward
-            data.index += pd.offsets.MonthBegin(1)
-
-            # select the last values and save them in the data frame
-            features = pd.concat([features, data.iloc[-1:]], axis=0)
-
-        return features
+        return targets
 
 .. raw:: html
 
     <p>
-    The function below extract the target and features from the different
-    dataset vintages as outlined above, and merges them into a unique data frame.
-    </p>
-
-.. code:: python
-
-    def get_test_data(start_month, start_year, end_month, end_year, target_name, target_tcode, feature_names):
-        '''
-        Download and process the test data.
-
-        Parameters:
-        ______________________________________________________________
-        start_month: int.
-            The month of the first vintage.
-
-        start_year: int.
-            The year of the first vintage.
-
-        end_month: int.
-            The month of the last vintage.
-
-        end_year: int.
-            The year of the last vintage.
-
-        target_name: str.
-            The name of the target time series.
-
-        target_tcode: int.
-            The transformation code of the target time series.
-
-        feature_names: list of str.
-            The names of the features time series.
-        '''
-
-        # get the targets
-        target = get_target(
-            start_year=start_year,
-            start_month=start_month,
-            end_year=end_year,
-            end_month=end_month,
-            target_name=target_name,
-            target_tcode=target_tcode,
-        )
-
-        # get the features
-        features = get_features(
-            start_year=start_year,
-            start_month=start_month,
-            end_year=end_year,
-            end_month=end_month,
-            target_name=target_name,
-            target_tcode=target_tcode,
-            feature_names=feature_names
-        )
-
-        return target.join(features)
-
-.. raw:: html
-
-    <br>
     Finally, we define a function for training the random forest model
-    and generating the test set predictions.
-    <br>
+    and generating the one-month-ahead forecasts.
+    </p>
 
 .. code:: python
 
-    def run_random_forest_model(params, train_dataset, test_dataset, target_name):
+    def run_random_forest_model(params, train_data, test_data, target_name):
         '''
         Run the random forest model.
 
         Parameters:
         ______________________________________________________________
         params: dict.
-            The random forest hyperparameters
+            The random forest hyperparameters.
 
-        train_dataset: pandas.DataFrame.
+        train_data: pandas.DataFrame.
             Training dataset.
 
-        test_dataset: pandas.DataFrame.
-            Test dataset.
+        test_data: pandas.DataFrame.
+            The inputs to the one-month-ahead forecasts.
 
         target_name: str.
             The name of the target time series.
+
+        Returns:
+        ______________________________________________________________
+        forecasts: pandas.Series.
+            The one-month-ahead forecasts.
         '''
 
         # instantiate the model
         model = RandomForestRegressor(**params)
 
-        # fit the model to the training set
+        # fit the model
         model.fit(
-            X=train_dataset.drop([target_name], axis=1),
-            y=train_dataset[target_name]
+            X=train_data.drop(labels=[target_name], axis=1),
+            y=train_data[target_name]
         )
 
-        # generate the forecasts over the test set
-        return pd.Series(
-            data=model.predict(X=test_dataset.drop([target_name], axis=1)),
-            index=test_dataset.index
+        # generate the forecasts
+        forecasts = pd.Series(
+            data=model.predict(X=test_data),
+            index=test_data.index
         )
 
+        return forecasts
 .. raw:: html
 
-    <br>
-    We also define a similar function for the AR(1) model, which we will use as a benchmark.
-    <br>
+    <p>
+    We define a similar function for the AR model, which we will use as a benchmark.
+    </p>
 
 .. code:: python
 
-    def run_autoregressive_model(train_dataset, test_dataset, target_name):
+    def run_autoregressive_model(n_lags, train_data, test_data, target_name):
         '''
-        Run the AR(1) model.
+        Run the autoregressive model.
 
         Parameters:
         ______________________________________________________________
-        train_dataset: pandas.DataFrame.
+        n_lags: int.
+            The number of autoregressive lags.
+
+        train_data: pandas.DataFrame.
             Training dataset.
 
-        test_dataset: pandas.DataFrame.
-            Validation dataset.
+        test_data: pandas.DataFrame.
+            The inputs to the one-month-ahead forecasts.
 
         target_name: str.
             The name of the target time series.
+
+        Returns:
+        ______________________________________________________________
+        forecasts: pandas.Series.
+            The one-month-ahead forecasts.
         '''
 
         # instantiate the model
         model = LinearRegression(fit_intercept=True)
 
-        # fit the model to the training set
+        # fit the model
         model.fit(
-            X=train_dataset[[target_name + "_LAG_1"]],
-            y=train_dataset[target_name]
+            X=train_data[[f"{target_name}_LAG_{i}" for i in range(1, n_lags + 1)]],
+            y=train_data[target_name]
         )
 
-        # generate the forecasts over the test set
-        return pd.Series(
-            data=model.predict(X=test_dataset[[target_name + "_LAG_1"]]),
-            index=test_dataset.index
+        # generate the forecasts
+        forecasts = pd.Series(
+            data=model.predict(X=test_data[[f"{target_name}_LAG_{i}" for i in range(1, n_lags + 1)]]),
+            index=test_data.index
         )
 
-Lastly, we define an additional function which uses `optuna <https://optuna.org/>`__
-for tuning the main hyperparameters of the random forest model.
+        return forecasts
+
+.. raw:: html
+
+    <p>
+    Lastly, we define a function for iterating over the dataset vintages,
+    downloading and processing the data, fitting the random forest and AR models to the data,
+    and generating the one-month-ahead forecasts.
+    </p>
 
 .. code:: python
 
-    def tune_random_forest_model(train_dataset, valid_dataset, target_name, n_trials):
+    def get_forecasts(params, start_date, end_date, target_name, target_tcode, n_lags, n_components):
         '''
-        Tune the random forest hyperparameters.
+        Generate the forecasts over a range of dataset vintages.
 
         Parameters:
         ______________________________________________________________
-        train_dataset: pandas.DataFrame.
-            Training dataset.
+        params: dict.
+            The random forest hyperparameters.
 
-        valid_dataset: pandas.DataFrame.
-            Validation dataset.
+        start_date: pandas.Timestamp.
+            The date of the first vintage.
+
+        end_date: pandas.Timestamp.
+            The date of the last vintage.
 
         target_name: str.
             The name of the target time series.
 
-        n_trials: int.
-            The number of random search iterations.
+        target_tcode: int.
+            The transformation code of the target time series.
+
+        n_lags: int.
+            The number of autoregressive lags.
+
+        n_components: int.
+            The number of principal components.
+
+        Returns:
+        ______________________________________________________________
+        forecasts: pandas.DataFrame.
+            The forecasts between the start and end date.
         '''
 
-        # define the objective function
-        def objective(trial):
+        # create a list for storing the forecasts
+        forecasts = []
 
-            # sample the hyperparameters
-            params = {
-                "criterion": trial.suggest_categorical("criterion", choices=["absolute_error", "squared_error"]),
-                "n_estimators": trial.suggest_int("n_estimators", low=10, high=100),
-                "max_features": trial.suggest_float("max_features", low=0.6, high=1.0),
-                "max_samples": trial.suggest_float("max_samples", low=0.6, high=1.0),
-                "max_depth": trial.suggest_int("max_depth", low=1, high=100),
-                "random_state": trial.suggest_categorical("random_state", choices=[42]),
-                "n_jobs": trial.suggest_categorical("n_jobs", choices=[-1])
-            }
+        # loop across the dataset vintages
+        for date in tqdm(pd.date_range(start=start_date, end=end_date, freq="MS")):
 
-            # calculate the root mean squared error of the forecasts
-            return root_mean_squared_error(
-                y_true=valid_dataset[target_name],
-                y_pred=run_random_forest_model(
-                    params=params,
-                    train_dataset=train_dataset,
-                    test_dataset=valid_dataset,
-                    target_name=target_name
-                )
-            )
+            # get the data
+            train_data, test_data = get_data(date, target_name, target_tcode, n_lags, n_components)
 
-        # minimize the objective function
-        study = optuna.create_study(
-            sampler=optuna.samplers.RandomSampler(seed=42),
-            direction="minimize"
-        )
+            # generate the forecasts
+            forecasts.append(pd.DataFrame({
+                "RF": run_random_forest_model(params, train_data, test_data, target_name),
+                "AR": run_autoregressive_model(n_lags, train_data, test_data, target_name),
+                "RW": train_data[target_name].iloc[-1].item()
+            }))
 
-        study.optimize(
-            func=objective,
-            n_trials=n_trials
-        )
+        # concatenate the forecasts in a data frame
+        forecasts = pd.concat(forecasts, axis=0)
 
-        # return the best hyperparameters
-        return study.best_params
+        return forecasts
 
-==========================================
-Analysis
-==========================================
-We are now ready to run the analysis.
-We start by defining the target name, which is the FRED name of the US CPI index ("CPIAUCSL"),
-and the target transformation code, which is 5 for first order logarithmic difference.
+.. raw:: html
+
+    <p>
+    We are now ready to run the analysis.
+    We start by defining the target name, which is the FRED name of the US CPI index ("CPIAUCSL"),
+    the target transformation code, which is 5 for first order logarithmic difference, and the start
+    and end dates of the vintages used in the analysis.
+    </p>
 
 .. code:: python
 
     target_name = "CPIAUCSL"
     target_tcode = 5
+    start_date = pd.Timestamp("2015-01-01")
+    end_date = pd.Timestamp("2024-01-01")
 
-After that we load the training dataset, which contains 756 monthly observations
-on 110 variables. The variables include the target time series, the first lag of the target
-time series, and the first lag of 108 macroeconomic indicators with complete
-time series (i.e. without missing values) from February 1960 to January 2023.
+.. raw:: html
 
-.. code:: python
+    <p>
+    After that, we generate the one-month-ahead forecasts over the considered time window.
+    For the random forest model, we set the number of trees in the ensemble equal to 500, the maximum fraction of
+    randomly selected features equal to 1 / 3, and the minimum number of samples in a
+    terminal node or leaf equal to 5, as in <a href="#references">[2]</a>. For the autoregressive model,
+    we set the number of lags equal to 4, which, as discussed above, is the same number of lags
+    used by the random forest model.
+    </p>
 
-    train_dataset = get_training_data(
-        year=2023,
-        month=2,
-        target_name=target_name,
-        target_tcode=target_tcode
-    )
-
-We then proceed to tuning the random forest hyperparameters
-by performing random search with `optuna <https://optuna.org/>`__. We use
-the last 12 months of the training set as validation set
-and we use the RMSE as objective function.
-
-.. code:: python
-
-    params = tune_random_forest_model(
-        train_dataset=train_dataset.iloc[:-12],
-        valid_dataset=train_dataset.iloc[-12:],
-        target_name=target_name,
-        n_trials=30
-    )
-
-The identified best hyperparameters are reported below.
+    <p>
+    Note that the autoregressive model is a univariate model which
+    uses only the lags of the target time series as features, while the random forest model
+    also uses the lags of the other time series and the lags of the 4 principal components. While the
+    autoregressive model has only 4 features (as the number of lags is equal to 4), the random
+    forest model has approximately 500 features. The exact number of features of the random forest model changes
+    over time, depending on how many indicators with complete time series are included in each vintage.
+    </p>
 
 .. code:: python
 
-    {
-        'criterion': 'absolute_error',
-        'n_estimators': 12,
-        'max_features': 0.6431565707973218,
-        'max_samples': 0.6125716742746937,
-        'max_depth': 64
-    }
+    forecasts = get_forecasts(
+            params={
+                "n_estimators": 500,
+                "max_features": 1 / 3,
+                "min_samples_leaf": 5,
+                "random_state": 42,
+                "n_jobs": -1
+            },
+            start_date=start_date,
+            end_date=end_date,
+            target_name=target_name,
+            target_tcode=target_tcode,
+            n_lags=4,
+            n_components=4
+        )
 
-We now load the test dataset, which contains 12 monthly observations
-on the same 110 variables from February 2023 to January 2024.
+.. raw:: html
+
+    <p>
+    We now download the realized target values and calculate the error of
+    the one-month-ahead forecasts.
+    </p>
 
 .. code:: python
 
-    test_dataset = get_test_data(
-        start_year=2023,
-        start_month=3,
-        end_year=2024,
-        end_month=2,
+    targets = get_target(
+        start_date=start_date + pd.offsets.MonthBegin(1),
+        end_date=end_date + pd.offsets.MonthBegin(1),
         target_name=target_name,
         target_tcode=target_tcode,
-        feature_names=train_dataset.columns.drop(target_name).tolist()
     )
 
-We can finally train the random forest model using the identified best
-hyperparameters, generate the forecasts over the test set, and
-calculate the RMSE of the forecasts.
 
 .. code:: python
 
-    rf_forecasts = run_random_forest_model(
-        params=params,
-        train_dataset=train_dataset,
-        test_dataset=test_dataset,
-        target_name=target_name
-    )
+    errors = pd.DataFrame()
+    for model in forecasts.columns:
+        errors[model] = [
+                root_mean_squared_error(y_true=targets[target_name], y_pred=forecasts[model]),
+                mean_absolute_error(y_true=targets[target_name], y_pred=forecasts[model]),
+                median_abs_deviation(x=targets[target_name] - forecasts[model])
+            ]
+    errors.index = ["RMSE", "MAE", "MAD"]
 
-    rf_error = root_mean_squared_error(
-        y_true=forecasts[target_name],
-        y_pred=rf_forecasts
-    )
+.. raw:: html
 
-
-We do the same for the AR(1) model.
-
-.. code:: python
-
-    ar1_forecasts = run_autoregressive_model(
-        train_dataset=train_dataset,
-        test_dataset=test_dataset,
-        target_name=target_name,
-    )
-
-    ar1_error = root_mean_squared_error(
-        y_true=forecasts[target_name],
-        y_pred=ar1_forecasts
-    )
-
-The RMSE of the random forest model is 0.001649,
-while the RMSE of the AR(1) model is 0.002023.
-The reduction in RMSE provided by the random forest model is 18.5%.
+    <p>
+    We find that the random forest model outperforms both the AR model and the RW model
+    in terms of all considered error metrics.
+    </p>
 
 .. raw:: html
 
@@ -791,7 +659,7 @@ The reduction in RMSE provided by the random forest model is 18.5%.
     />
 
     <p class="blog-post-image-caption">Month-over-month logarithmic change in the US CPI index (FRED: CPIAUCSL)
-    with random forest (RF) and AR(1) forecasts.</p>
+    with random forest (RF) model and autoregressive (AR) model forecasts.</p>
 
 .. tip::
 
