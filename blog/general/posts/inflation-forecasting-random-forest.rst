@@ -156,7 +156,7 @@ Data
     of all the time series, including the lags of the principal components and
     the lags of the target time series. This results in approximately 500 features,
     even though the exact number of features changes over time,
-    depending on how many time series are included in the vintage.
+    depending on how many time series are included in each vintage.
     </p>
 
     <img
@@ -689,7 +689,7 @@ We start by importing the dependencies.
     of forecast error.
     </p>
 
-.. code:: python
+.. code-block:: python
 
     errors = pd.DataFrame()
     for model in forecasts.columns:
