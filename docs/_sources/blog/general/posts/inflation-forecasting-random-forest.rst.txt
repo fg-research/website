@@ -151,6 +151,9 @@ Data
     we train the model using the data in the vintage released on that month,
     and generate the forecast for the next month. We then compare the forecast
     to the data in the vintage released on the subsequent month.
+    </p>
+
+    <p>
     As in <a href="#references">[2]</a>, we include among the features the first 4 principal
     components, which are estimated on all the time series, and the first 4 lags
     of all the time series, including the lags of the principal components and
@@ -734,7 +737,7 @@ We start by importing the dependencies.
     <a href="https://github.com/fg-research/blog/blob/master/inflation-forecasting-random-forest" target="_blank">GitHub</a>
     repository.
     The official R code from the authors of <a href="#references">[2]</a> is also available in
-    <a href="https://github.com/gabrielrvsc/ForecastingInflation" target="_blank">GitHub</a>
+    <a href="https://github.com/gabrielrvsc/ForecastingInflation" target="_blank">GitHub</a>.
     </p>
 
 ******************************************
