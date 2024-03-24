@@ -148,9 +148,9 @@ Data
 
     <p>
     We use all vintages from 2025-01 to 2024-02 for our analysis, which is a
-    real-time forecasting exercise: on each month, we train the model using
+    real-time forecasting exercise. On each month, we train the model using
     the data in the vintage released on that month, and generate the forecast
-    for the next month; we then compare the forecast to the data in the vintage
+    for the next month. We then compare the forecast to the data in the vintage
     released on the subsequent month.
     </p>
 
