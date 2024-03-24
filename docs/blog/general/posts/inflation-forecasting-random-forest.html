@@ -618,8 +618,8 @@ be the same as the current month's inflation.
 <p>
 We are now ready to run the analysis.
 We start by defining the target name, which is the FRED name of the US CPI index ("CPIAUCSL"),
-the target transformation code, which is 5 for first order logarithmic difference, and the start
-and end dates of the vintages used for testing.
+the target transformation code, which is 5 for first order logarithmic difference, and the dates
+of the first and last vintages used for the analysis.
 </p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">target_name</span> <span class="o">=</span> <span class="s2">"CPIAUCSL"</span>
 </span><span id="line-2"><span class="n">target_tcode</span> <span class="o">=</span> <span class="mi">5</span>
 </span><span id="line-3"><span class="n">start_date</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s2">"2015-01-01"</span><span class="p">)</span>
