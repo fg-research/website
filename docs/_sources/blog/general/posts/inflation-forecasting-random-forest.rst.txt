@@ -505,7 +505,7 @@ We start by importing the dependencies.
     downloading and processing the data, fitting the random forest and AR models to the data,
     and generating the one-month-ahead forecasts. For comparison purposes, we also include
     the random walk (RW) model, which always predicts that next month's inflation will
-    be the same as the current month's inflation, as in <a href="#references">[2]</a>.
+    be the same as the current month's inflation.
     </p>
 
 .. code:: python

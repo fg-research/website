@@ -557,7 +557,7 @@ Lastly, we define a function for iterating over the dataset vintages,
 downloading and processing the data, fitting the random forest and AR models to the data,
 and generating the one-month-ahead forecasts. For comparison purposes, we also include
 the random walk (RW) model, which always predicts that next month's inflation will
-be the same as the current month's inflation, as in <a href="#references">[2]</a>.
+be the same as the current month's inflation.
 </p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">def</span> <span class="nf">get_forecasts</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">start_date</span><span class="p">,</span> <span class="n">end_date</span><span class="p">,</span> <span class="n">target_name</span><span class="p">,</span> <span class="n">target_tcode</span><span class="p">,</span> <span class="n">n_lags</span><span class="p">,</span> <span class="n">n_components</span><span class="p">):</span>
 </span><span id="line-2"><span class="w">    </span><span class="sd">'''</span>
 </span><span id="line-3"><span class="sd">    Generate the forecasts over a range of dataset vintages.</span>
