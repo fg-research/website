@@ -587,8 +587,7 @@ We start by importing the dependencies.
     For the random forest model, we set the number of trees in the ensemble equal to 500, the maximum fraction of
     randomly selected features equal to 1 / 3, and the minimum number of samples in a
     terminal node or leaf equal to 5, as in <a href="#references">[2]</a>. For the autoregressive model,
-    we set the number of lags equal to 4, which, as discussed above, is the same number of lags
-    used by the random forest model.
+    we use the same number of lags used by the random forest model which, as discussed above, is equal to 4.
     </p>
 
 .. code:: python
@@ -689,7 +688,7 @@ We start by importing the dependencies.
     of forecast error.
     </p>
 
-.. code-block:: python
+.. code:: python
 
     errors = pd.DataFrame()
     for model in forecasts.columns:

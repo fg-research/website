@@ -629,8 +629,7 @@ After that, we generate the one-month-ahead forecasts over the considered time w
 For the random forest model, we set the number of trees in the ensemble equal to 500, the maximum fraction of
 randomly selected features equal to 1 / 3, and the minimum number of samples in a
 terminal node or leaf equal to 5, as in <a href="#references">[2]</a>. For the autoregressive model,
-we set the number of lags equal to 4, which, as discussed above, is the same number of lags
-used by the random forest model.
+we use the same number of lags used by the random forest model which, as discussed above, is equal to 4.
 </p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">forecasts</span> <span class="o">=</span> <span class="n">get_forecasts</span><span class="p">(</span>
 </span><span id="line-2">        <span class="n">params</span><span class="o">=</span><span class="p">{</span>
 </span><span id="line-3">            <span class="s2">"n_estimators"</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span>
