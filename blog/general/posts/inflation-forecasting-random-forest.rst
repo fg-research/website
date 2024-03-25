@@ -59,10 +59,16 @@ Model
     into different subsets, and generating a constant prediction for each subset.
     In the regression case, which is the one relevant to this post, the constant
     prediction is the average of the target values in the subset.
+    </p>
+
+.. note::
+
     A decision tree can be seen as a nonparametric regression model,
     where the regression function that links the target to the features is estimated
     using a piecewise constant approximation.
-    </p>
+
+
+.. raw:: html
 
     <p>
     The partition of the feature space is determined in a recursive manner during the
@@ -733,13 +739,10 @@ We start by importing the dependencies.
     with random forest (RF) forecasts.</p>
 
 
-    <p>
-    A Python notebook with the full code is available in our
-    <a href="https://github.com/fg-research/blog/blob/master/inflation-forecasting-random-forest" target="_blank">GitHub</a>
-    repository.
-    The official R code from the authors of <a href="#references">[2]</a> is also available in
-    <a href="https://github.com/gabrielrvsc/ForecastingInflation" target="_blank">GitHub</a>.
-    </p>
+.. tip::
+
+    A Python notebook with the full code is available in our `GitHub <https://github.com/fg-research/blog/blob/master/inflation-forecasting-random-forest>`__
+    repository. The official R code from the authors of `[2] <#references>`__ is also available in `GitHub <https://github.com/gabrielrvsc/ForecastingInflation>`__.
 
 ******************************************
 References

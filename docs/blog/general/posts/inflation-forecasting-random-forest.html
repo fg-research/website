@@ -170,10 +170,12 @@ relationship between the target and the features by splitting the feature space
 into different subsets, and generating a constant prediction for each subset.
 In the regression case, which is the one relevant to this post, the constant
 prediction is the average of the target values in the subset.
-A decision tree can be seen as a nonparametric regression model,
+</p><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A decision tree can be seen as a nonparametric regression model,
 where the regression function that links the target to the features is estimated
-using a piecewise constant approximation.
-</p>
+using a piecewise constant approximation.</p>
+</div>
 <p>
 The partition of the feature space is determined in a recursive manner during the
 process of growing the tree. At the beginning of this process, the tree
@@ -690,14 +692,12 @@ We find that the random forest model outperforms both the AR model and the RW mo
 in terms of all considered error metrics.
 </p><img alt="Month-over-month logarithmic change in the US CPI index with random forest (RF) and AR(1) forecasts" class="blog-post-image" id="inflation-forecasting-random-forest-forecasts-plot" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inflation-forecasting-random-forest/forecasts_plot_light.png" style="width:80%"/>
 <p class="blog-post-image-caption">Month-over-month logarithmic change in the US CPI index (FRED: CPIAUCSL)
-with random forest (RF) forecasts.</p>
-<p>
-A Python notebook with the full code is available in our
-<a href="https://github.com/fg-research/blog/blob/master/inflation-forecasting-random-forest" target="_blank">GitHub</a>
-repository.
-The official R code from the authors of <a href="#references">[2]</a> is also available in
-<a href="https://github.com/gabrielrvsc/ForecastingInflation" target="_blank">GitHub</a>.
-</p></section>
+with random forest (RF) forecasts.</p><div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>A Python notebook with the full code is available in our <a class="reference external" href="https://github.com/fg-research/blog/blob/master/inflation-forecasting-random-forest">GitHub</a>
+repository. The official R code from the authors of <a class="reference external" href="#references">[2]</a> is also available in <a class="reference external" href="https://github.com/gabrielrvsc/ForecastingInflation">GitHub</a>.</p>
+</div>
+</section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#references'">¶</a></h2>
 <p>[1] McCracken, M. W., &amp; Ng, S. (2016). FRED-MD: A monthly database for macroeconomic research. <em>Journal of Business &amp; Economic Statistics</em>, 34(4), 574-589. <a class="reference external" href="https://doi.org/10.1080/07350015.2015.1086655">doi: 10.1080/07350015.2015.1086655</a>.</p>
