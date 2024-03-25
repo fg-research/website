@@ -170,12 +170,10 @@ relationship between the target and the features by splitting the feature space
 into different subsets, and generating a constant prediction for each subset.
 In the regression case, which is the one relevant to this post, the constant
 prediction is the average of the target values in the subset.
-</p><div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>A decision tree can be seen as a nonparametric regression model,
+A decision tree can be seen as a nonparametric regression model,
 where the regression function that links the target to the features is estimated
-using a piecewise constant approximation.</p>
-</div>
+using a piecewise constant approximation.
+</p>
 <p>
 The partition of the feature space is determined in a recursive manner during the
 process of growing the tree. At the beginning of this process, the tree
@@ -231,14 +229,14 @@ The FRED-MD dataset is updated on a monthly basis.
 The monthly releases are referred to as vintages. Each vintage includes the data
 from January 1959 up to the previous month. For instance, the 02-2024 vintage contains
 the data from January 1959 to January 2024.
-</p><div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>The vintages are subject to retrospective adjustments, such as seasonal adjustments,
+</p>
+<p>
+The vintages are subject to retrospective adjustments, such as seasonal adjustments,
 inflation adjustments and backfilling of missing values. For this reason, different
 vintages can potentially report different values for the same time series on the
 same date. Furthermore, different vintages can include different time series, as
-indicators are occasionally added and removed from the dataset.</p>
-</div>
+indicators are occasionally added and removed from the dataset.
+</p>
 <p>
 We use all vintages from 2025-01 to 2024-02 for our analysis, which is a
 real-time forecasting exercise. On each month, we train the model using

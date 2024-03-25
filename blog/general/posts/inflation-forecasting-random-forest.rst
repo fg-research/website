@@ -59,16 +59,10 @@ Model
     into different subsets, and generating a constant prediction for each subset.
     In the regression case, which is the one relevant to this post, the constant
     prediction is the average of the target values in the subset.
-    </p>
-
-.. note::
-
     A decision tree can be seen as a nonparametric regression model,
     where the regression function that links the target to the features is estimated
     using a piecewise constant approximation.
-
-
-.. raw:: html
+    </p>
 
     <p>
     The partition of the feature space is determined in a recursive manner during the
@@ -144,15 +138,13 @@ Data
     the data from January 1959 to January 2024.
     </p>
 
-.. warning::
-
+    <p>
     The vintages are subject to retrospective adjustments, such as seasonal adjustments,
     inflation adjustments and backfilling of missing values. For this reason, different
     vintages can potentially report different values for the same time series on the
     same date. Furthermore, different vintages can include different time series, as
     indicators are occasionally added and removed from the dataset.
-
-.. raw:: html
+    </p>
 
     <p>
     We use all vintages from 2025-01 to 2024-02 for our analysis, which is a
