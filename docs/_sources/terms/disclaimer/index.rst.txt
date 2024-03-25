@@ -20,10 +20,8 @@ the results presented in the blog might not always be reproducible due
 to releases of new product versions (such as upgrades to the latest Amazon SageMaker deep learning containers)
 or changes in the input data obtained from external sources (such as public APIs).
 
-The blog includes descriptions of applications of open-source machine learning algorithms
-as well as of our own products to financial and medical data.
-These do not represent financial or medical advice, and we make no warranty that these
-open-source machine learning algorithms and our products
+The blog includes descriptions of applications of machine learning algorithms to financial and medical data.
+These do not represent financial or medical advice, and we make no warranty that these machine learning algorithms
 are fit for purpose to be used as a basis for financial decisions or medical diagnoses.
 
 In no event will fg-research be liable for any loss or damage including without limitation,
