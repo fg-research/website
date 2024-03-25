@@ -41,8 +41,8 @@ Forecasting US inflation with random forests
     For simplicity, we will consider only one-month-ahead forecasts. We will use the random
     forest model for predicting next month's inflation based on the past values
     of all FRED-MD indicators, including the past inflation. We will evaluate the model using
-    an expanding window approach: on each month we will train the model using all the data
-    available up to that month, and generate the forecast for next month. We use the data
+    an expanding window approach: on each month we will train the model using all the available
+    data up to that month, and generate the forecast for next month. We use the data
     from January 2015 to January 2024 for our analysis. Our findings indicate that,
     over the considered time period, the random forest model outperforms the AR model
     under different measures of forecast error.
@@ -78,7 +78,7 @@ Model
     <p>
     The splits used for creating the nodes are determined through an optimization process
     which minimizes a given loss function under a number of constraints, such as
-    that each node should contain a certain minimum number of samples.
+    that each node should contain a minimum number of samples.
     A common loss function is the mean squared error of the node's prediction,
     which is equal to the variance of the target values in the node, and which therefore
     tends to result in nodes containing similar target values.
@@ -88,9 +88,9 @@ Model
     As the tree grows, finer and finer partitions of the feature space are created,
     reducing the error of the predictions. This process continues until a
     pre-specified condition is met, such as that all terminal nodes, referred to as
-    leaves, contain at least a given minimum number of observations, or that the depth of
+    leaves, contain at least a minimum number of observations, or that the depth of
     the tree, as determined by the number of nodes or recursive splits
-    from the root node to the leaves, has reached a certain maximum value.
+    from the root node to the leaves, has reached a maximum value.
     </p>
 
     <p>
