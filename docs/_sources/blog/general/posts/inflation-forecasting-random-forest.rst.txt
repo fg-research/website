@@ -94,7 +94,7 @@ Model
     </p>
 
     <p>
-    Decision trees are prone to overfitting. A deep-enough tree can potentially isolate
+    Decision trees are prone to overfitting. A deep enough tree can potentially isolate
     each target value in one leaf, in which case the model predictions exactly match
     the target values observed during training, but are unlikely to provide a good
     approximation for new unseen data that was not used for training. Decision trees
