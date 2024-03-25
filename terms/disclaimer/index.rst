@@ -26,7 +26,7 @@ are fit for purpose to be used as a basis for financial decisions or medical dia
 
 In no event will fg-research be liable for any loss or damage including without limitation,
 indirect or consequential loss or damage, or any loss or damage whatsoever arising
-from loss of data or profits arising out of, or in connection with, the use of this website.
+from loss of data or profits arising out of, or in connection with, the use of the contents of this website.
 
 This website links to other websites which are not under the control of fg-research.
 We have no control over the nature, content and availability of those sites.
