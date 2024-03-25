@@ -152,7 +152,6 @@ Data
     same date. Furthermore, different vintages can include different time series, as
     indicators are occasionally added and removed from the dataset.
 
-
 .. raw:: html
 
     <p>
