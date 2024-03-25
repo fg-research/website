@@ -571,7 +571,7 @@ We start by importing the dependencies.
 
     <p>
     We are now ready to run the analysis.
-    We start by defining the target name, which is the FRED name of the US CPI index ("CPIAUCSL"),
+    We start by defining the target name, which is the FRED name of the US CPI index (CPIAUCSL),
     the target transformation code, which is 5 for first order logarithmic difference, and the dates
     of the first and last vintages used for the analysis.
     </p>
