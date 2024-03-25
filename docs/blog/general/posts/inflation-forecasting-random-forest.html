@@ -231,14 +231,14 @@ The FRED-MD dataset is updated on a monthly basis.
 The monthly releases are referred to as vintages. Each vintage includes the data
 from January 1959 up to the previous month. For instance, the 02-2024 vintage contains
 the data from January 1959 to January 2024.
-</p>
-<p>
-The vintages are subject to retrospective adjustments, such as seasonal adjustments,
+</p><div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The vintages are subject to retrospective adjustments, such as seasonal adjustments,
 inflation adjustments and backfilling of missing values. For this reason, different
 vintages can potentially report different values for the same time series on the
 same date. Furthermore, different vintages can include different time series, as
-indicators are occasionally added and removed from the dataset.
-</p>
+indicators are occasionally added and removed from the dataset.</p>
+</div>
 <p>
 We use all vintages from 2025-01 to 2024-02 for our analysis, which is a
 real-time forecasting exercise. On each month, we train the model using

@@ -144,13 +144,16 @@ Data
     the data from January 1959 to January 2024.
     </p>
 
-    <p>
+.. warning::
+
     The vintages are subject to retrospective adjustments, such as seasonal adjustments,
     inflation adjustments and backfilling of missing values. For this reason, different
     vintages can potentially report different values for the same time series on the
     same date. Furthermore, different vintages can include different time series, as
     indicators are occasionally added and removed from the dataset.
-    </p>
+
+
+.. raw:: html
 
     <p>
     We use all vintages from 2025-01 to 2024-02 for our analysis, which is a
