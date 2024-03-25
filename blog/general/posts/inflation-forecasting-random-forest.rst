@@ -102,6 +102,16 @@ Model
     can potentially result in completely different tree structures.
     </p>
 
+    <p>
+    Random forests address these limitations by creating an ensemble of decision trees
+    which are trained on different random subsets of the training data (sample bagging) using
+    different random subsets of features (features bagging). The random forest predictions
+    are then obtained by averaging the individual predictions of the trees in the ensemble.
+    The mechanisms of sample bagging and feature bagging reduce the correlation between
+    the predictions of the different trees, making the overall ensemble more robust
+    and less prone to overfitting <a href="#references">[3]</a>.
+    </p>
+
     <img
         id="inflation-forecasting-random-forest-diagram"
         class="blog-post-image"
@@ -112,16 +122,6 @@ Model
 
     <p class="blog-post-image-caption">Schematic representation of random forest algorithm, adapted from
     <a href="#references">[4]</a>.</p>
-
-    <p>
-    Random forests address these limitations by creating an ensemble of decision trees
-    which are trained on different random subsets of the training data (sample bagging) using
-    different random subsets of features (features bagging). The random forest predictions
-    are then obtained by averaging the individual predictions of the trees in the ensemble.
-    The mechanisms of sample bagging and feature bagging reduce the correlation between
-    the predictions of the different trees, making the overall ensemble more robust
-    and less prone to overfitting <a href="#references">[3]</a>.
-    </p>
 
 ******************************************
 Data
