@@ -1,0 +1,44 @@
+.. meta::
+   :thumbnail: https://fg-research.com/_static/thumbnail.png
+   :description: Perform time series forecasting in Amazon SageMaker
+   :keywords: Amazon SageMaker, Time Series, Forecasting
+
+.. _time-series-forecasting-algorithms:
+
+########################################################
+Time Series Forecasting
+########################################################
+
+.. rst-class:: lead
+
+   Perform time series forecasting in Amazon SageMaker
+
+.. table::
+   :width: 100%
+
+   ============================================  ======================================== ======================================== ============================================ ================================================
+   SageMaker Algorithm                           CPU Training                             GPU Training                             Multi-GPU Training                           Incremental Training
+   ============================================  ======================================== ======================================== ============================================ ================================================
+   :ref:`CfC <cfc-sagemaker-algorithm>`          :octicon:`check;1rem;check-icon`         :octicon:`check;1rem;check-icon`          :octicon:`check;1rem;check-icon`             :octicon:`check;1rem;check-icon`
+   ============================================  ======================================== ======================================== ============================================ ================================================
+
+.. _cfc-sagemaker-algorithm:
+
+******************************************
+CfC SageMaker Algorithm
+******************************************
+.. raw:: html
+
+    <p>
+        The CfC SageMaker Algorithm performs time series forecasting with the <a href="https://doi.org/10.1038/s42256-022-00556-7" target="_blank">Closed-Form Continuous-Depth (CfC) network</a>.
+        CfCs are continuous-time recurrent neural networks which implement an approximate closed-form solution of the <a href="https://doi.org/10.1609/aaai.v35i9.16936" target="_blank">Liquid Time Constant (LTC)</a> ordinary differential equation.
+        CfCs are also referred to as <a href="https://news.mit.edu/2021/machine-learning-adapts-0128" target="_blank">Liquid Neural Networks</a>.
+        The algorithm can be used for both univariate and multivariate time series and supports the inclusion of external features.
+        For additional information, see the algorithm's
+        <a href="https://aws.amazon.com/marketplace/pp/prodview-7s4giphluwgta" target="_blank">AWS Marketplace</a>
+        listing page and
+        <a href="https://github.com/fg-research/cfc-tsf-sagemaker" target="_blank">GitHub</a>
+        repository.
+    </p>
+
+
