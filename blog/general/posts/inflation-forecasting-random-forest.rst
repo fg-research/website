@@ -256,7 +256,9 @@ We start by importing the dependencies.
     transform the time series using the provided transformation codes (with the
     exception of the target time series, for which we use the first order
     logarithmic difference), derive the principal components, and take the
-    lags of all the time series.
+    lags of all the time series. As in <a href="#references">[2]</a>,
+    we use the data after January 1960, and we only use the time
+    series without missing values.
     </p>
 
 .. code:: python
