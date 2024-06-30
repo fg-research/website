@@ -13,23 +13,24 @@ Forecasting Stock Returns with Liquid Neural Networks
     Stock return forecasting has been extensively studied by both academic researchers and
     industry practitioners. Numerous machine learning models have been proposed for this purpose,
     ranging from simple linear regressions to complex deep learning models <a href="#references">[1]</a>.
-    In this post, we examine the performance of liquid neural networks (<a href="#references">[4], [5]</a>),
+    In this post, we examine the performance of liquid neural networks <a href="#references">[4], [5]</a>,
     a new neural network architecture for sequential data.
     </p>
 
     <p>
-    We will use our own Amazon SageMaker implementation of liquid neural networks, the
-    <a href="file:///Users/flaviagiammarino/website/docs/algorithms/time-series-forecasting/index.html#cfc-sagemaker-algorithm"
-    target="_blank"> CfC SageMaker algorithm</a>, for forecasting the 30-day returns of the S&P 500
-    using as input the S&P 500 30-day realized volatility and several traded volatility indices,
-    similar to (<a href="#references">[2]</a>).
+    We will use our Amazon SageMaker implementation of liquid neural networks for probabilistic time series
+    forecasting, the <a href="file:///Users/flaviagiammarino/website/docs/algorithms/time-series-forecasting/index.html#cfc-sagemaker-algorithm"
+    target="_blank"> CfC SageMaker algorithm</a>. We will forecast the conditional mean and the
+    conditional standard deviation of the 30-day returns of the S&P 500 using as input the S&P 500
+    30-day realized volatility as well as several implied volatility indices, similar to (<a href="#references">[2]</a>).
     </p>
 
     <p>
-    We will download the daily close price time series from the 30<sup>st</sup> of June 2022 to
-    the 29<sup>th</sup> of June 2024 using the <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
+    We will use the daily close prices from the 30<sup>st</sup> of June 2022 to
+    the 29<sup>th</sup> of June 2024, which we will download using the <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
     After that we will train the model on the data up to the 8<sup>th</sup> of September 2023,
-    and use the trained model to forecast the subsequent returns up to the 29<sup>th</sup> of June 2024.
+    and use the trained model to predict the subsequent returns up to the 29<sup>th</sup> of June 2024.
+    We will find that the CfC SageMaker algorithm achieves a mean absolute error of 1.4% and directional accuracy of 97.5%.
     </p>
 
 ******************************************
