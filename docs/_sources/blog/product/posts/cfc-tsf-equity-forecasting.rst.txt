@@ -34,13 +34,16 @@ The hidden state :math:`x` of a CfC at time :math:`t` is given by
 
     x(t) = \sigma(-f(x, I; \theta_f)t) \odot g(x, I; \theta_g) + [1 - \sigma(-[f(x, I; \theta_f)]t)] \odot h(x, I; \theta_h)
 
-where $\odot$ is the Hadamard product, $\sigma$ is the sigmoid function, $I$ is the input sequence, while $f$, $g$ and $h$ are neural networks.
-The three neural networks $f$, $g$ and $h$ share a common backbone, which is a stack of fully-connected layers with non-linear activation.
+where :math:`\odot` is the Hadamard product, :math:`\sigma` is the sigmoid function, :math:`I`
+is the input sequence, while :math:`f`, :math:`g` and :math:`h` are neural networks. The three
+neural networks :math:`f`, :math:`g` and :math:`h` share a common backbone, which is a stack of
+fully-connected layers with non-linear activation.
 
-The backbone is followed by three separate neural network heads.
-The head of the $g$ and $h$ neural networks is a fully-connected layer with hyperbolic tangent activation.
-The head of the $f$ neural network is an affine function $b + a(\Delta t)$ where $\Delta t$ is the time span (or time increment) between consecutive time steps
-while the intercept $b$ and slope $a$ are the outputs of two fully-connected layers with linear activation.
+The backbone is followed by three separate neural network heads. The head of the :math:`g` and
+:math:`h` neural networks is a fully-connected layer with hyperbolic tangent activation. The head
+of the :math:`f` neural network is an affine function :math:`b + a(\Delta t)` where :math:`\Delta t`
+is the time span (or time increment) between consecutive time steps, while the intercept :math:`b`
+and slope :math:`a` are the outputs of two fully-connected layers with linear activation.
 
 ******************************************
 Data

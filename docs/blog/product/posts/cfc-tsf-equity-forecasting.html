@@ -136,12 +136,15 @@ faster training and inference performance than other CT-RNNs.
 </p><p>The hidden state <span class="math notranslate nohighlight">\(x\)</span> of a CfC at time <span class="math notranslate nohighlight">\(t\)</span> is given by</p>
 <div class="math notranslate nohighlight">
 \[x(t) = \sigma(-f(x, I; \theta_f)t) \odot g(x, I; \theta_g) + [1 - \sigma(-[f(x, I; \theta_f)]t)] \odot h(x, I; \theta_h)\]</div>
-<p>where $odot$ is the Hadamard product, $sigma$ is the sigmoid function, $I$ is the input sequence, while $f$, $g$ and $h$ are neural networks.
-The three neural networks $f$, $g$ and $h$ share a common backbone, which is a stack of fully-connected layers with non-linear activation.</p>
-<p>The backbone is followed by three separate neural network heads.
-The head of the $g$ and $h$ neural networks is a fully-connected layer with hyperbolic tangent activation.
-The head of the $f$ neural network is an affine function $b + a(Delta t)$ where $Delta t$ is the time span (or time increment) between consecutive time steps
-while the intercept $b$ and slope $a$ are the outputs of two fully-connected layers with linear activation.</p>
+<p>where <span class="math notranslate nohighlight">\(\odot\)</span> is the Hadamard product, <span class="math notranslate nohighlight">\(\sigma\)</span> is the sigmoid function, <span class="math notranslate nohighlight">\(I\)</span>
+is the input sequence, while <span class="math notranslate nohighlight">\(f\)</span>, <span class="math notranslate nohighlight">\(g\)</span> and <span class="math notranslate nohighlight">\(h\)</span> are neural networks. The three
+neural networks <span class="math notranslate nohighlight">\(f\)</span>, <span class="math notranslate nohighlight">\(g\)</span> and <span class="math notranslate nohighlight">\(h\)</span> share a common backbone, which is a stack of
+fully-connected layers with non-linear activation.</p>
+<p>The backbone is followed by three separate neural network heads. The head of the <span class="math notranslate nohighlight">\(g\)</span> and
+<span class="math notranslate nohighlight">\(h\)</span> neural networks is a fully-connected layer with hyperbolic tangent activation. The head
+of the <span class="math notranslate nohighlight">\(f\)</span> neural network is an affine function <span class="math notranslate nohighlight">\(b + a(\Delta t)\)</span> where <span class="math notranslate nohighlight">\(\Delta t\)</span>
+is the time span (or time increment) between consecutive time steps, while the intercept <span class="math notranslate nohighlight">\(b\)</span>
+and slope <span class="math notranslate nohighlight">\(a\)</span> are the outputs of two fully-connected layers with linear activation.</p>
 </section>
 <section id="data">
 <h2>Data<a class="headerlink" href="#data" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data'">¶</a></h2>
