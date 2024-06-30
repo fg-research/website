@@ -95,24 +95,23 @@ Inputs
 The model uses as input the previous 30-day returns of the S&P 500 as well as the past values
 of the following volatility indices:
 
-- *RVOL*: The realized volatility of the S&P 500, calculated as the 30-day rolling sample
+* *RVOL*: The realized volatility of the S&P 500, calculated as the 30-day rolling sample
 standard deviation of the S&P 500 daily log returns.
 
-- *VIX*: The `VIX index <https://www.cboe.com/us/indices/dashboard/vix/>`__ measures the
+* *VIX*: The `VIX index <https://www.cboe.com/us/indices/dashboard/vix/>`__ measures the
 30-day implied volatility of S&P 500 options.
 
-- *VVIX*: The `VVIX index <https://www.cboe.com/us/indices/dashboard/vvix/>`__
+* *VVIX*: The `VVIX index <https://www.cboe.com/us/indices/dashboard/vvix/>`__
 reflects the 30-day expected volatility of the VIX.
 
-- *VXN*: The `VXN index <https://www.cboe.com/us/indices/dashboard/vxn/>`__
+* *VXN*: The `VXN index <https://www.cboe.com/us/indices/dashboard/vxn/>`__
 measures the 30-day implied volatility of NASDAQ 100 options.
 
-- *GVZ*: The `GVZ index <https://www.cboe.com/us/indices/dashboard/gvz/>`__
+* *GVZ*: The `GVZ index <https://www.cboe.com/us/indices/dashboard/gvz/>`__
 measures the 30-day implied volatility of GLD options.
 
-- *OVX*: The `OVX index <https://www.cboe.com/us/indices/dashboard/ovx/>`__
+* *OVX*: The `OVX index <https://www.cboe.com/us/indices/dashboard/ovx/>`__
 measures the 30-day implied volatility of USO options.
-
 
 .. raw:: html
 
