@@ -22,7 +22,7 @@ Forecasting Stock Returns with Liquid Neural Networks
     forecasting, the <a href="file:///Users/flaviagiammarino/website/docs/algorithms/time-series-forecasting/index.html#cfc-sagemaker-algorithm"
     target="_blank"> CfC SageMaker algorithm</a>. We will forecast the conditional mean and the
     conditional standard deviation of the 30-day returns of the S&P 500 using as input the S&P 500
-    realized volatility as well as several implied volatility indices, similar to <a href="#references">[2]</a>.
+    realized volatility as well as several implied volatility indices, as in <a href="#references">[2]</a>.
     </p>
 
     <p>
@@ -30,7 +30,8 @@ Forecasting Stock Returns with Liquid Neural Networks
     the 29<sup>th</sup> of June 2024, which we will download using the <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
     We will train the model on the data up to the 8<sup>th</sup> of September 2023,
     and use the trained model to predict the subsequent data up to the 29<sup>th</sup> of June 2024.
-    We will find that the CfC SageMaker algorithm achieves a mean absolute error of 1.4% and directional accuracy of 97.5%.
+    We will find that the CfC SageMaker algorithm achieves a mean absolute error of 1.4% and
+    a directional accuracy of 97.5%.
     </p>
 
 ******************************************
@@ -90,6 +91,34 @@ for each day :math:`t`, where :math:`P(t)` is the close price of the S&P 500 on 
 ==========================================
 Inputs
 ==========================================
+
+The model uses as input the previous 30-day returns of the S&P 500 as well as the past values
+of the following volatility indices:
+
+- *RVOL*: The realized volatility of the S&P 500, calculated as the 30-day rolling sample
+standard deviation of the S&P 500 daily log returns.
+
+- *VIX*: The `VIX index <https://www.cboe.com/us/indices/dashboard/vix/>`__ measures the
+30-day implied volatility of S&P 500 options.
+
+- *VVIX*: The `VVIX index <https://www.cboe.com/us/indices/dashboard/vvix/>`__
+reflects the 30-day expected volatility of the VIX.
+
+- *VXN*: The `VXN index <https://www.cboe.com/us/indices/dashboard/vxn/>`__
+measures the 30-day implied volatility of NASDAQ 100 options.
+
+- *GVZ*: The `GVZ index <https://www.cboe.com/us/indices/dashboard/gvz/>`__
+measures the 30-day implied volatility of GLD options.
+
+- *OVX*: The `OVX index <https://www.cboe.com/us/indices/dashboard/ovx/>`__
+measures the 30-day implied volatility of USO options.
+
+.. warning::
+
+    .. raw:: html
+
+        Note that we use the same inputs as in <a href="#references">[2]</a>, with the exception of
+        the <i>PUTCALL</i> index, which we had to exclude as its historical time series is not publicly available.
 
 .. raw:: html
 
