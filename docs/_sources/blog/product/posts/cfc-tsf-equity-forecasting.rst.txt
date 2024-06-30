@@ -22,7 +22,7 @@ Forecasting Stock Returns with Liquid Neural Networks
     forecasting, the <a href="file:///Users/flaviagiammarino/website/docs/algorithms/time-series-forecasting/index.html#cfc-sagemaker-algorithm"
     target="_blank"> CfC SageMaker algorithm</a>. We will forecast the conditional mean and the
     conditional standard deviation of the 30-day returns of the S&P 500 using as input the S&P 500
-    30-day realized volatility as well as several implied volatility indices, similar to (<a href="#references">[2]</a>).
+    realized volatility as well as several implied volatility indices, similar to (<a href="#references">[2]</a>).
     </p>
 
     <p>
