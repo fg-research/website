@@ -93,7 +93,7 @@ Inputs
 ==========================================
 
 The model uses as input the previous 30-day returns of the S&P 500 as well as the past values
-of the following volatility indices:
+of the following volatility indicators:
 
 * *RVOL*: The realized volatility of the S&P 500, calculated as the 30-day rolling sample standard deviation of the S&P 500 daily log returns.
 
@@ -107,12 +107,10 @@ of the following volatility indices:
 
 * *OVX*: The `OVX index <https://www.cboe.com/us/indices/dashboard/ovx/>`__ measures the 30-day implied volatility of USO options.
 
+.. note::
 
-
-.. raw:: html
-
-    Note that we use the same inputs as in <a href="#references">[2]</a>, with the exception of
-    the <i>PUTCALL</i> index, which we had to exclude as its historical time series is not publicly available.
+    Note that we use the same inputs as in `[2] <file:///Users/flaviagiammarino/website/docs/blog/product/posts/cfc-tsf-equity-forecasting.html#references>`__, with the exception of
+    the *PUTCALL* index, which we had to exclude as its historical time series is not publicly available.
 
 .. raw:: html
 

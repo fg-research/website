@@ -178,7 +178,7 @@ and slope <span class="math notranslate nohighlight">\(a\)</span> are the output
 <section id="inputs">
 <h3>Inputs<a class="headerlink" href="#inputs" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#inputs'">¶</a></h3>
 <p>The model uses as input the previous 30-day returns of the S&amp;P 500 as well as the past values
-of the following volatility indices:</p>
+of the following volatility indicators:</p>
 <ul class="simple">
 <li><p><em>RVOL</em>: The realized volatility of the S&amp;P 500, calculated as the 30-day rolling sample standard deviation of the S&amp;P 500 daily log returns.</p></li>
 <li><p><em>VIX</em>: The <a class="reference external" href="https://www.cboe.com/us/indices/dashboard/vix/">VIX index</a> measures the 30-day implied volatility of S&amp;P 500 options.</p></li>
@@ -187,8 +187,12 @@ of the following volatility indices:</p>
 <li><p><em>GVZ</em>: The <a class="reference external" href="https://www.cboe.com/us/indices/dashboard/gvz/">GVZ index</a> measures the 30-day implied volatility of GLD options.</p></li>
 <li><p><em>OVX</em>: The <a class="reference external" href="https://www.cboe.com/us/indices/dashboard/ovx/">OVX index</a> measures the 30-day implied volatility of USO options.</p></li>
 </ul>
-Note that we use the same inputs as in <a href="#references">[2]</a>, with the exception of
-the <i>PUTCALL</i> index, which we had to exclude as its historical time series is not publicly available.<img alt="30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-29" class="blog-post-image" id="cfc-tsf-forecasting-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/time_series_light.png"/>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that we use the same inputs as in <a class="reference external" href="file:///Users/flaviagiammarino/website/docs/blog/product/posts/cfc-tsf-equity-forecasting.html#references">[2]</a>, with the exception of
+the <em>PUTCALL</em> index, which we had to exclude as its historical time series is not publicly available.</p>
+</div>
+<img alt="30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-29" class="blog-post-image" id="cfc-tsf-forecasting-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/time_series_light.png"/>
 <p class="blog-post-image-caption">30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-29.</p></section>
 </section>
 <section id="code">
