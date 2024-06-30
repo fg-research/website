@@ -7,6 +7,16 @@
 Forecasting Stock Returns with Liquid Neural Networks
 ######################################################################################
 
+.. raw:: html
+
+    <p>
+    Stock return forecasting has been extensively studied by both academic researchers and
+    industry practitioners. Numerous machine learning models have been proposed for this purpose,
+    ranging from simple linear regressions to complex deep learning models <a href="#references">[1]</a>.
+    In this post, we examine the performance of liquid neural networks, a new neural network architecture
+    for sequential data."
+    </p>
+
 ******************************************
 Model
 ******************************************
