@@ -20,9 +20,16 @@ Forecasting Stock Returns with Liquid Neural Networks
     <p>
     We will use our own Amazon SageMaker implementation of liquid neural networks, the
     <a href="file:///Users/flaviagiammarino/website/docs/algorithms/time-series-forecasting/index.html#cfc-sagemaker-algorithm"
-    target="_blank"> CfC SageMaker algorithm</a>, for forecasting the 30-day returns of the S\&P 500
-    using as input the S\&P 500 30-day realized volatility and several traded volatility indices,
+    target="_blank"> CfC SageMaker algorithm</a>, for forecasting the 30-day returns of the S&P 500
+    using as input the S&P 500 30-day realized volatility and several traded volatility indices,
     similar to (<a href="#references">[2]</a>).
+    </p>
+
+    <p>
+    We will download the daily close price time series from the 30<sup>st</sup> of June 2022 to
+    the 29<sup>th</sup> of June 2024 using the <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
+    After that we will train the model on the data up to the 8<sup>th</sup> of September 2023,
+    and use the trained model to forecast the subsequent returns up to the 29<sup>th</sup> of June 2024.
     </p>
 
 ******************************************
