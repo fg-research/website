@@ -133,7 +133,15 @@ derivative and the time constant of the hidden state are determined by a neural 
 Differently from other CT-RNNs (including LTCs), which use a numerical solver to find the
 ODE solution, CfCs use an approximate closed-form solution. As a results, CfCs achieve
 faster training and inference performance than other CT-RNNs.
-</p></section>
+</p><p>The hidden state $x$ of a CfC at time $t$ is given by</p>
+<p>$x(t) = sigma(-f(x, I; theta_f)t) odot g(x, I; theta_g) + [1 - sigma(-[f(x, I; theta_f)]t)] odot h(x, I; theta_h)$</p>
+<p>where $odot$ is the Hadamard product, $sigma$ is the sigmoid function, $I$ is the input sequence, while $f$, $g$ and $h$ are neural networks.
+The three neural networks $f$, $g$ and $h$ share a common backbone, which is a stack of fully-connected layers with non-linear activation.</p>
+<p>The backbone is followed by three separate neural network heads.
+The head of the $g$ and $h$ neural networks is a fully-connected layer with hyperbolic tangent activation.
+The head of the $f$ neural network is an affine function $b + a(Delta t)$ where $Delta t$ is the time span (or time increment) between consecutive time steps
+while the intercept $b$ and slope $a$ are the outputs of two fully-connected layers with linear activation.</p>
+</section>
 <section id="data">
 <h2>Data<a class="headerlink" href="#data" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data'">¶</a></h2>
 <img alt="30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-29" class="blog-post-image" id="cfc-tsf-forecasting-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/time_series_light.png"/>
