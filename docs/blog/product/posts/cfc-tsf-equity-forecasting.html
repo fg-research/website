@@ -154,6 +154,37 @@ and slope <span class="math notranslate nohighlight">\(a\)</span> are the output
 <h2>Code<a class="headerlink" href="#code" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#code'">¶</a></h2>
 <section id="environment-set-up">
 <h3>Environment Set-Up<a class="headerlink" href="#environment-set-up" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#environment-set-up'">¶</a></h3>
+<p>We start by importing all the dependencies and setting up the SageMaker environment.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>To be able to run the code below, you need to have an active
+subscription to the CfC SageMaker algorithm. You can subscribe to a free trial from
+the <a class="reference external" href="https://aws.amazon.com/marketplace/pp/prodview-7s4giphluwgta">AWS Marketplace</a>
+in order to get your Amazon Resource Name (ARN).
+In this post we use version 1.6 of the CfC SageMaker algorithm, which runs in the
+PyTorch 2.1.0 Python 3.10 deep learning container.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span> <span class="nn">io</span>
+</span><span id="line-2"><span class="kn">import</span> <span class="nn">sagemaker</span>
+</span><span id="line-3"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span><span id="line-4"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</span><span id="line-5"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</span><span id="line-6"><span class="kn">import</span> <span class="nn">yfinance</span> <span class="k">as</span> <span class="nn">yf</span>
+</span><span id="line-7"><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">root_mean_squared_error</span><span class="p">,</span> <span class="n">mean_absolute_error</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">f1_score</span>
+</span><span id="line-8">
+</span><span id="line-9"><span class="c1"># SageMaker session</span>
+</span><span id="line-10"><span class="n">sagemaker_session</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+</span><span id="line-11">
+</span><span id="line-12"><span class="c1"># SageMaker role</span>
+</span><span id="line-13"><span class="n">role</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">get_execution_role</span><span class="p">()</span>
+</span><span id="line-14">
+</span><span id="line-15"><span class="c1"># S3 bucket</span>
+</span><span id="line-16"><span class="n">bucket</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">default_bucket</span><span class="p">()</span>
+</span><span id="line-17">
+</span><span id="line-18"><span class="c1"># EC2 instance</span>
+</span><span id="line-19"><span class="n">instance_type</span> <span class="o">=</span> <span class="s2">"ml.m5.4xlarge"</span>
+</span></code></pre></div>
+</div>
 </section>
 <section id="data-preparation">
 <h3>Data Preparation<a class="headerlink" href="#data-preparation" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data-preparation'">¶</a></h3>

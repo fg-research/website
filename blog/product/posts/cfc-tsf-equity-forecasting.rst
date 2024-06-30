@@ -68,6 +68,39 @@ Code
 Environment Set-Up
 ==========================================
 
+We start by importing all the dependencies and setting up the SageMaker environment.
+
+.. warning::
+
+   To be able to run the code below, you need to have an active
+   subscription to the CfC SageMaker algorithm. You can subscribe to a free trial from
+   the `AWS Marketplace <https://aws.amazon.com/marketplace/pp/prodview-7s4giphluwgta>`__
+   in order to get your Amazon Resource Name (ARN).
+   In this post we use version 1.6 of the CfC SageMaker algorithm, which runs in the
+   PyTorch 2.1.0 Python 3.10 deep learning container.
+
+.. code:: python
+
+    import io
+    import sagemaker
+    import pandas as pd
+    import numpy as np
+    import matplotlib.pyplot as plt
+    import yfinance as yf
+    from sklearn.metrics import root_mean_squared_error, mean_absolute_error, accuracy_score, f1_score
+
+    # SageMaker session
+    sagemaker_session = sagemaker.Session()
+
+    # SageMaker role
+    role = sagemaker.get_execution_role()
+
+    # S3 bucket
+    bucket = sagemaker_session.default_bucket()
+
+    # EC2 instance
+    instance_type = "ml.m5.4xlarge"
+
 
 ==========================================
 Data Preparation
