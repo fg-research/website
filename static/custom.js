@@ -60,7 +60,10 @@ window.setInterval(function(){
         'inflation-forecasting-random-forest-forecasts-table-tail',
         'inflation-forecasting-random-forest-targets-table-head',
         'inflation-forecasting-random-forest-targets-table-tail',
-        'inflation-forecasting-random-forest-errors-table'
+        'inflation-forecasting-random-forest-errors-table',
+        'cfc-tsf-forecasting-time-series',
+        'cfc-tsf-forecasting-predictions',
+        'cfc-tsf-forecasting-forecasts'
     ];
     for (var i = 0; i < elements.length; i++) {
         var f = document.getElementById(elements[i]);
