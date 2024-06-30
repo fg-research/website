@@ -4,7 +4,7 @@
    :keywords: Amazon SageMaker, Time Series, Liquid Neural Networks, Forecasting
 
 ######################################################################################
-Forecasting Stock Returns with Liquid Neural Networks
+Forecasting Stock Returns with Liquid Neural Networks using the CfC SageMaker Algorithm
 ######################################################################################
 
 .. raw:: html
@@ -31,7 +31,7 @@ Forecasting Stock Returns with Liquid Neural Networks
     We will train the model on the data up to the 8<sup>th</sup> of September 2023,
     and use the trained model to predict the subsequent data up to the 29<sup>th</sup> of June 2024.
     We will find that the CfC SageMaker algorithm achieves a mean absolute error of 1.4% and
-    a directional accuracy of 97.5%.
+    a mean directional accuracy of 97.5%.
     </p>
 
 ******************************************
