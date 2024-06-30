@@ -83,7 +83,7 @@ The model outputs are the 30-day returns of the S&P 500, which are calculated as
 
 .. math::
 
-    y(t) = \ln{P(t) / P(t-30)}
+    y(t) = \ln{P(t)} - \ln{P(t-30)}
 
 for each day :math:`t`, where `P(t)` is the close price of the S&P 500 on day :math:`t`.
 
