@@ -79,7 +79,8 @@ h6 {
 #lstm-fcn-ecg-classification-include,
 #cnn-kmeans-control-chart-clustering-include,
 #lstm-ad-ecg-anomaly-detection-include,
-#inflation-forecasting-random-forest-include{
+#inflation-forecasting-random-forest-include,
+#cfc-tsf-equity-forecasting-include{
     font-weight: 300 !important;
 }
 
