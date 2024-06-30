@@ -113,12 +113,10 @@ measures the 30-day implied volatility of GLD options.
 - *OVX*: The `OVX index <https://www.cboe.com/us/indices/dashboard/ovx/>`__
 measures the 30-day implied volatility of USO options.
 
-.. warning::
+.. raw:: html
 
-    .. raw:: html
-
-        Note that we use the same inputs as in <a href="#references">[2]</a>, with the exception of
-        the <i>PUTCALL</i> index, which we had to exclude as its historical time series is not publicly available.
+    Note that we use the same inputs as in <a href="#references">[2]</a>, with the exception of
+    the <i>PUTCALL</i> index, which we had to exclude as its historical time series is not publicly available.
 
 .. raw:: html
 
