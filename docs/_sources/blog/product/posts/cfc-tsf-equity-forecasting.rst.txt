@@ -13,8 +13,16 @@ Forecasting Stock Returns with Liquid Neural Networks
     Stock return forecasting has been extensively studied by both academic researchers and
     industry practitioners. Numerous machine learning models have been proposed for this purpose,
     ranging from simple linear regressions to complex deep learning models <a href="#references">[1]</a>.
-    In this post, we examine the performance of liquid neural networks, a new neural network architecture
-    for sequential data.
+    In this post, we examine the performance of liquid neural networks (<a href="#references">[4], [5]</a>),
+    a new neural network architecture for sequential data.
+    </p>
+
+    <p>
+    We will use our own Amazon SageMaker implementation of liquid neural networks, the
+    <a href="file:///Users/flaviagiammarino/website/docs/algorithms/time-series-forecasting/index.html#cfc-sagemaker-algorithm"
+    target="_blank"> CfC SageMaker algorithm</a>, for forecasting the 30-day returns of the S\&P 500
+    using as input the S\&P 500 30-day realized volatility and several traded volatility indices,
+    similar to (<a href="#references">[2]</a>).
     </p>
 
 ******************************************
