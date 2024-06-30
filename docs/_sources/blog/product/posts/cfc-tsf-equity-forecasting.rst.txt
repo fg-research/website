@@ -7,12 +7,40 @@
 Forecasting Stock Returns with Liquid Neural Networks
 ######################################################################################
 
-
-
-
 ******************************************
 Model
 ******************************************
+
+.. raw:: html
+
+    <p>
+    The closed-form continuous-depth network (CfC) is a new neural network architecture for
+    sequential data <a href="#references">[3]</a>. CfCs belong to the class of continuous-time
+    recurrent neural networks (CT-RNNs) <a href="#references">[4]</a>, where the evolution of
+    the hidden state over time is described by an Ordinary Differential Equation (ODE).
+    </p>
+
+    <p>
+    CfCs use the Liquid Time Constant (LTC) ODE <a href="#references">[5]</a>, where both the
+    derivative and the time constant of the hidden state are determined by a neural network.
+    Differently from other CT-RNNs (including LTCs), which use a numerical solver to find the
+    ODE solution, CfCs use an approximate closed-form solution. As a results, CfCs achieve
+    faster training and inference performance than other CT-RNNs.
+    </p>
+
+.. raw:: latex
+
+    The hidden state $x$ of a CfC at time $t$ is given by
+
+    $x(t) = \sigma(-f(x, I; \theta_f)t) \odot g(x, I; \theta_g) + [1 - \sigma(-[f(x, I; \theta_f)]t)] \odot h(x, I; \theta_h)$
+
+    where $\odot$ is the Hadamard product, $\sigma$ is the sigmoid function, $I$ is the input sequence, while $f$, $g$ and $h$ are neural networks.
+    The three neural networks $f$, $g$ and $h$ share a common backbone, which is a stack of fully-connected layers with non-linear activation.
+
+    The backbone is followed by three separate neural network heads.
+    The head of the $g$ and $h$ neural networks is a fully-connected layer with hyperbolic tangent activation.
+    The head of the $f$ neural network is an affine function $b + a(\Delta t)$ where $\Delta t$ is the time span (or time increment) between consecutive time steps
+    while the intercept $b$ and slope $a$ are the outputs of two fully-connected layers with linear activation.
 
 ******************************************
 Data
@@ -89,10 +117,14 @@ A comparison of machine learning methods for predicting the direction of the US
 stock market on the basis of volatility indices. *International Journal of Forecasting*, 40(3), pp. 869-880.
 `doi: 10.1016/j.ijforecast.2023.07.002 <https://doi.org/10.1016/j.ijforecast.2023.07.002>`__.
 
-[3] Hasani, R., Lechner, M., Amini, A., Rus, D., & Grosu, R. (2021).
-Liquid time-constant networks. In *Proceedings of the AAAI Conference on Artificial Intelligence*, 35(9), pp. 7657-7666.
-`doi: 10.1609/aaai.v35i9.16936 <https://doi.org/10.1609/aaai.v35i9.16936>`__.
-
-[4] Hasani, R., Lechner, M., Amini, A., Liebenwein, L., Ray, A., Tschaikowski, M., Teschl, G. and Rus, D., (2022).
+[3] Hasani, R., Lechner, M., Amini, A., Liebenwein, L., Ray, A., Tschaikowski, M., Teschl, G. and Rus, D., (2022).
 Closed-form continuous-time neural networks. *Nature Machine Intelligence*, 4(11), pp. 992-1003.
 `doi: 10.1038/s42256-022-00556-7 <https://doi.org/10.1038/s42256-022-00556-7>`__.
+
+[4] Funahashi, K.I. and Nakamura, Y., (1993). Approximation of dynamical systems by continuous
+time recurrent neural networks. *Neural networks*, 6(6), pp.801-806.
+`doi: 10.1016/S0893-6080(05)80125-X <https://doi.org/10.1016/S0893-6080(05)80125-X>`__.
+
+[5] Hasani, R., Lechner, M., Amini, A., Rus, D., & Grosu, R. (2021).
+Liquid time-constant networks. In *Proceedings of the AAAI Conference on Artificial Intelligence*, 35(9), pp. 7657-7666.
+`doi: 10.1609/aaai.v35i9.16936 <https://doi.org/10.1609/aaai.v35i9.16936>`__.

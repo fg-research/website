@@ -121,7 +121,19 @@
 <h1>Forecasting Stock Returns with Liquid Neural Networks<a class="headerlink" href="#forecasting-stock-returns-with-liquid-neural-networks" title="Link to this heading">¶</a></h1>
 <section id="model">
 <h2>Model<a class="headerlink" href="#model" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#model'">¶</a></h2>
-</section>
+<p>
+The closed-form continuous-depth network (CfC) is a new neural network architecture for
+sequential data <a href="#references">[3]</a>. CfCs belong to the class of continuous-time
+recurrent neural networks (CT-RNNs) <a href="#references">[4]</a>, where the evolution of
+the hidden state over time is described by an Ordinary Differential Equation (ODE).
+</p>
+<p>
+CfCs use the Liquid Time Constant (LTC) ODE <a href="#references">[5]</a>, where both the
+derivative and the time constant of the hidden state are determined by a neural network.
+Differently from other CT-RNNs (including LTCs), which use a numerical solver to find the
+ODE solution, CfCs use an approximate closed-form solution. As a results, CfCs achieve
+faster training and inference performance than other CT-RNNs.
+</p></section>
 <section id="data">
 <h2>Data<a class="headerlink" href="#data" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data'">¶</a></h2>
 <img alt="30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-29" class="blog-post-image" id="cfc-tsf-forecasting-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/time_series_light.png"/>
@@ -153,12 +165,15 @@ Machine learning techniques and data for stock market forecasting: A literature 
 A comparison of machine learning methods for predicting the direction of the US
 stock market on the basis of volatility indices. <em>International Journal of Forecasting</em>, 40(3), pp. 869-880.
 <a class="reference external" href="https://doi.org/10.1016/j.ijforecast.2023.07.002">doi: 10.1016/j.ijforecast.2023.07.002</a>.</p>
-<p>[3] Hasani, R., Lechner, M., Amini, A., Rus, D., &amp; Grosu, R. (2021).
-Liquid time-constant networks. In <em>Proceedings of the AAAI Conference on Artificial Intelligence</em>, 35(9), pp. 7657-7666.
-<a class="reference external" href="https://doi.org/10.1609/aaai.v35i9.16936">doi: 10.1609/aaai.v35i9.16936</a>.</p>
-<p>[4] Hasani, R., Lechner, M., Amini, A., Liebenwein, L., Ray, A., Tschaikowski, M., Teschl, G. and Rus, D., (2022).
+<p>[3] Hasani, R., Lechner, M., Amini, A., Liebenwein, L., Ray, A., Tschaikowski, M., Teschl, G. and Rus, D., (2022).
 Closed-form continuous-time neural networks. <em>Nature Machine Intelligence</em>, 4(11), pp. 992-1003.
 <a class="reference external" href="https://doi.org/10.1038/s42256-022-00556-7">doi: 10.1038/s42256-022-00556-7</a>.</p>
+<p>[4] Funahashi, K.I. and Nakamura, Y., (1993). Approximation of dynamical systems by continuous
+time recurrent neural networks. <em>Neural networks</em>, 6(6), pp.801-806.
+<a class="reference external" href="https://doi.org/10.1016/S0893-6080(05)80125-X">doi: 10.1016/S0893-6080(05)80125-X</a>.</p>
+<p>[5] Hasani, R., Lechner, M., Amini, A., Rus, D., &amp; Grosu, R. (2021).
+Liquid time-constant networks. In <em>Proceedings of the AAAI Conference on Artificial Intelligence</em>, 35(9), pp. 7657-7666.
+<a class="reference external" href="https://doi.org/10.1609/aaai.v35i9.16936">doi: 10.1609/aaai.v35i9.16936</a>.</p>
 </section>
 </section>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
