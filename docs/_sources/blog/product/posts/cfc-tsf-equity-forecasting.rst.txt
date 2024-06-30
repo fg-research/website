@@ -22,12 +22,12 @@ Forecasting Stock Returns with Liquid Neural Networks
     forecasting, the <a href="file:///Users/flaviagiammarino/website/docs/algorithms/time-series-forecasting/index.html#cfc-sagemaker-algorithm"
     target="_blank"> CfC SageMaker algorithm</a>. We will forecast the conditional mean and the
     conditional standard deviation of the 30-day returns of the S&P 500 using as input the S&P 500
-    realized volatility as well as several implied volatility indices, as in <a href="#references">[2]</a>.
+    realized volatility as well as several implied volatility indices, similar to <a href="#references">[2]</a>.
     </p>
 
     <p>
     We will use the daily close prices from the 30<sup>th</sup> of June 2022 to
-    the 29<sup>th</sup> of June 2024, which we will download using the <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
+    the 29<sup>th</sup> of June 2024, which we will download with the <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
     We will train the model on the data up to the 8<sup>th</sup> of September 2023,
     and use the trained model to predict the subsequent data up to the 29<sup>th</sup> of June 2024.
     We will find that the CfC SageMaker algorithm achieves a mean absolute error of 1.4% and
@@ -157,11 +157,61 @@ We start by importing all the dependencies and setting up the SageMaker environm
     # EC2 instance
     instance_type = "ml.m5.4xlarge"
 
+After that we define the neural network's context length and prediction length.
+The context length is the number of past time steps used as input,
+while the prediction length is the number of future time steps to be predicted.
+We set both of them equal to 30 days, that is we use the previous 30 values
+of the inputs to predict the next 30 values of the output.
+
+.. code:: python
+
+    # number of time steps used as input
+    context_length = 30
+
+    # number of time steps to output
+    prediction_length = 30
 
 ==========================================
 Data Preparation
 ==========================================
+Next, we download the daily close price time series from the 30<sup>th</sup> of June 2022 to
+the 29<sup>th</sup> of June 2024 with the
+<a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
 
+.. code:: python
+
+    # download the data
+    tickers = ["^SPX", "^VIX", "^VVIX", "^VXN", "^GVZ", "^OVX"]
+    dataset = yf.download(" ".join(tickers), start="2022-06-30", end="2024-06-29")
+
+    # extract the close prices
+    dataset = dataset.loc[:, dataset.columns.get_level_values(0) == "Close"]
+    dataset.columns = dataset.columns.get_level_values(1)
+
+    # forward fill any missing values
+    dataset.ffill(inplace=True)
+
+We then calculate the S&P 500 30-day returns and 30-day realized volatility.
+
+.. code:: python
+
+    # calculate the returns
+    dataset["Return30"] = np.log(dataset["^SPX"]).diff(periods=30)
+
+    # calculate the realized volatility
+    dataset["RVOL"] = np.log(dataset["^SPX"]).diff(periods=1).rolling(window=30).std(ddof=1)
+
+    # drop the prices
+    dataset.drop(labels=["^SPX"], axis=1, inplace=True)
+
+    # drop the missing values
+    dataset.dropna(inplace=True)
+
+    # move the returns to the first column
+    dataset = dataset[["Return30"] + dataset.columns.drop("Return30").tolist()]
+
+The dataset contains 502 daily observations which, after dropping the missing values
+resulting from the calculation of the returns of the realized volatility, are reduced to 472.
 
 .. raw:: html
 
@@ -174,14 +224,102 @@ Data Preparation
 
     <p class="blog-post-image-caption">30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-29.</p>
 
+We now proceed to renaming the columns in the format required by the CfC SageMaker algorithm,
+where the output names should start with :code:`y` while the input names should start with :code:`x`.
+
+.. code:: python
+
+    dataset.columns = ["y"] + [f"x{i}" for i in range(dataset.shape[1] - 1)]
+
+.. note::
+
+    Note that the algorithm always uses the past values of the outputs as inputs,
+    and there is therefore no need to include the outputs among the inputs when preparing the data for the model.
+
+After that we split the data into a training set and a test set. The training set includes the first 70% of
+the data (270 observations), while the test set includes the last 30% of the data (202 observations).
+
+.. code:: python
+
+    # define the size of the test set
+    test_size = int(0.3 * len(dataset))
+
+    # extract the training data
+    training_dataset = dataset.iloc[:- test_size - context_length - prediction_length - 1]
+
+    # extract the test data
+    test_dataset = dataset.iloc[- test_size - context_length - prediction_length - 1:]
+
+.. note::
+
+    Note that the data is scaled internally by the algorithm, there is no need to scale the data beforehand.
 
 ==========================================
 Training
 ==========================================
+We now save the training data in S3, build the SageMaker estimator and run the training job.
+
+.. code:: python
+
+    # upload the training data to S3
+    training_data = sagemaker_session.upload_string_as_file_body(
+        body=training_dataset.to_csv(index=False),
+        bucket=bucket,
+        key="training_dataset.csv"
+    )
+
+    # create the estimator
+    estimator = sagemaker.algorithm.AlgorithmEstimator(
+        algorithm_arn=algo_arn,
+        role=role,
+        instance_count=1,
+        instance_type=instance_type,
+        input_mode="File",
+        sagemaker_session=sagemaker_session,
+        hyperparameters={
+            "context-length": context_length,
+            "prediction-length": prediction_length,
+            "sequence-stride": 1,
+            "hidden-size": 20,
+            "backbone-layers": 1,
+            "backbone-units": 40,
+            "backbone-activation": "lecun",
+            "backbone-dropout": 0,
+            "minimal": True,
+            "no-gate": True,
+            "use-mixed": False,
+            "use-ltc": False,
+            "batch-size": 32,
+            "lr": 0.0001,
+            "lr-decay": 0.9999,
+            "epochs": 800,
+        }
+    )
+
+    # run the training job
+    estimator.fit({"training": training_data})
+
+.. note::
+
+    Note that we are training a relatively small model with less than 5k parameters.
 
 ==========================================
 Inference
 ==========================================
+After the training job has been completed, we deploy the model to real-time endpoint that we can use for inference.
+
+.. code:: python
+
+    # define the endpoint inputs serializer
+    serializer = sagemaker.serializers.CSVSerializer(content_type="text/csv")
+
+    # define the endpoint outputs deserializer
+    deserializer = sagemaker.base_deserializers.PandasDeserializer(accept="text/csv")
+
+    predictor = estimator.deploy(
+        initial_instance_count=1,
+        instance_type=instance_type,
+    )
 
 .. raw:: html
 

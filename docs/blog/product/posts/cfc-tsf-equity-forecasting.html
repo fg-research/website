@@ -130,11 +130,11 @@ In this post, we examine the performance of liquid neural networks <a href="#ref
 We will use our Amazon SageMaker implementation of liquid neural networks for probabilistic time series
 forecasting, the <a href="file:///Users/flaviagiammarino/website/docs/algorithms/time-series-forecasting/index.html#cfc-sagemaker-algorithm" target="_blank"> CfC SageMaker algorithm</a>. We will forecast the conditional mean and the
 conditional standard deviation of the 30-day returns of the S&amp;P 500 using as input the S&amp;P 500
-realized volatility as well as several implied volatility indices, as in <a href="#references">[2]</a>.
+realized volatility as well as several implied volatility indices, similar to <a href="#references">[2]</a>.
 </p>
 <p>
 We will use the daily close prices from the 30<sup>th</sup> of June 2022 to
-the 29<sup>th</sup> of June 2024, which we will download using the <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
+the 29<sup>th</sup> of June 2024, which we will download with the <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
 We will train the model on the data up to the 8<sup>th</sup> of September 2023,
 and use the trained model to predict the subsequent data up to the 29<sup>th</sup> of June 2024.
 We will find that the CfC SageMaker algorithm achieves a mean absolute error of 1.4% and
@@ -232,16 +232,145 @@ PyTorch 2.1.0 Python 3.10 deep learning container.</p>
 </span><span id="line-19"><span class="n">instance_type</span> <span class="o">=</span> <span class="s2">"ml.m5.4xlarge"</span>
 </span></code></pre></div>
 </div>
+<p>After that we define the neural network’s context length and prediction length.
+The context length is the number of past time steps used as input,
+while the prediction length is the number of future time steps to be predicted.
+We set both of them equal to 30 days, that is we use the previous 30 values
+of the inputs to predict the next 30 values of the output.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># number of time steps used as input</span>
+</span><span id="line-2"><span class="n">context_length</span> <span class="o">=</span> <span class="mi">30</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="c1"># number of time steps to output</span>
+</span><span id="line-5"><span class="n">prediction_length</span> <span class="o">=</span> <span class="mi">30</span>
+</span></code></pre></div>
+</div>
 </section>
 <section id="data-preparation">
 <h3>Data Preparation<a class="headerlink" href="#data-preparation" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data-preparation'">¶</a></h3>
+<p>Next, we download the daily close price time series from the 30&lt;sup&gt;th&lt;/sup&gt; of June 2022 to
+the 29&lt;sup&gt;th&lt;/sup&gt; of June 2024 with the
+&lt;a href=”<a class="reference external" href="https://github.com/ranaroussi/yfinance">https://github.com/ranaroussi/yfinance</a>” target=”_blank”&gt;Yahoo! Finance Python API&lt;/a&gt;.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># download the data</span>
+</span><span id="line-2"><span class="n">tickers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"^SPX"</span><span class="p">,</span> <span class="s2">"^VIX"</span><span class="p">,</span> <span class="s2">"^VVIX"</span><span class="p">,</span> <span class="s2">"^VXN"</span><span class="p">,</span> <span class="s2">"^GVZ"</span><span class="p">,</span> <span class="s2">"^OVX"</span><span class="p">]</span>
+</span><span id="line-3"><span class="n">dataset</span> <span class="o">=</span> <span class="n">yf</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tickers</span><span class="p">),</span> <span class="n">start</span><span class="o">=</span><span class="s2">"2022-06-30"</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">"2024-06-29"</span><span class="p">)</span>
+</span><span id="line-4">
+</span><span id="line-5"><span class="c1"># extract the close prices</span>
+</span><span id="line-6"><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">==</span> <span class="s2">"Close"</span><span class="p">]</span>
+</span><span id="line-7"><span class="n">dataset</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="line-8">
+</span><span id="line-9"><span class="c1"># forward fill any missing values</span>
+</span><span id="line-10"><span class="n">dataset</span><span class="o">.</span><span class="n">ffill</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>We then calculate the S&amp;P 500 30-day returns and 30-day realized volatility.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># calculate the returns</span>
+</span><span id="line-2"><span class="n">dataset</span><span class="p">[</span><span class="s2">"Return30"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="s2">"^SPX"</span><span class="p">])</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">periods</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="c1"># calculate the realized volatility</span>
+</span><span id="line-5"><span class="n">dataset</span><span class="p">[</span><span class="s2">"RVOL"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="s2">"^SPX"</span><span class="p">])</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">periods</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="line-6">
+</span><span id="line-7"><span class="c1"># drop the prices</span>
+</span><span id="line-8"><span class="n">dataset</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s2">"^SPX"</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="line-9">
+</span><span id="line-10"><span class="c1"># drop the missing values</span>
+</span><span id="line-11"><span class="n">dataset</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="line-12">
+</span><span id="line-13"><span class="c1"># move the returns to the first column</span>
+</span><span id="line-14"><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[[</span><span class="s2">"Return30"</span><span class="p">]</span> <span class="o">+</span> <span class="n">dataset</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">"Return30"</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()]</span>
+</span></code></pre></div>
+</div>
+<p>The dataset contains 502 daily observations which, after dropping the missing values
+resulting from the calculation of the returns of the realized volatility, are reduced to 472.</p>
 <img alt="30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-29" class="blog-post-image" id="cfc-tsf-forecasting-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/time_series_light.png"/>
-<p class="blog-post-image-caption">30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-29.</p></section>
+<p class="blog-post-image-caption">30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-29.</p><p>We now proceed to renaming the columns in the format required by the CfC SageMaker algorithm,
+where the output names should start with <code class="code docutils literal notranslate"><span class="pre">y</span></code> while the input names should start with <code class="code docutils literal notranslate"><span class="pre">x</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">dataset</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"y"</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="sa">f</span><span class="s2">"x</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>
+</span></code></pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that the algorithm always uses the past values of the outputs as inputs,
+and there is therefore no need to include the outputs among the inputs when preparing the data for the model.</p>
+</div>
+<p>After that we split the data into a training set and a test set. The training set includes the first 70% of
+the data (270 observations), while the test set includes the last 30% of the data (202 observations).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># define the size of the test set</span>
+</span><span id="line-2"><span class="n">test_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.3</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">))</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="c1"># extract the training data</span>
+</span><span id="line-5"><span class="n">training_dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="o">-</span> <span class="n">test_size</span> <span class="o">-</span> <span class="n">context_length</span> <span class="o">-</span> <span class="n">prediction_length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+</span><span id="line-6">
+</span><span id="line-7"><span class="c1"># extract the test data</span>
+</span><span id="line-8"><span class="n">test_dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span> <span class="n">test_size</span> <span class="o">-</span> <span class="n">context_length</span> <span class="o">-</span> <span class="n">prediction_length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:]</span>
+</span></code></pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that the data is scaled internally by the algorithm, there is no need to scale the data beforehand.</p>
+</div>
+</section>
 <section id="training">
 <h3>Training<a class="headerlink" href="#training" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#training'">¶</a></h3>
+<p>We now save the training data in S3, build the SageMaker estimator and run the training job.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># upload the training data to S3</span>
+</span><span id="line-2"><span class="n">training_data</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">upload_string_as_file_body</span><span class="p">(</span>
+</span><span id="line-3">    <span class="n">body</span><span class="o">=</span><span class="n">training_dataset</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+</span><span id="line-4">    <span class="n">bucket</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span>
+</span><span id="line-5">    <span class="n">key</span><span class="o">=</span><span class="s2">"training_dataset.csv"</span>
+</span><span id="line-6"><span class="p">)</span>
+</span><span id="line-7">
+</span><span id="line-8"><span class="c1"># create the estimator</span>
+</span><span id="line-9"><span class="n">estimator</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">AlgorithmEstimator</span><span class="p">(</span>
+</span><span id="line-10">    <span class="n">algorithm_arn</span><span class="o">=</span><span class="n">algo_arn</span><span class="p">,</span>
+</span><span id="line-11">    <span class="n">role</span><span class="o">=</span><span class="n">role</span><span class="p">,</span>
+</span><span id="line-12">    <span class="n">instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+</span><span id="line-13">    <span class="n">instance_type</span><span class="o">=</span><span class="n">instance_type</span><span class="p">,</span>
+</span><span id="line-14">    <span class="n">input_mode</span><span class="o">=</span><span class="s2">"File"</span><span class="p">,</span>
+</span><span id="line-15">    <span class="n">sagemaker_session</span><span class="o">=</span><span class="n">sagemaker_session</span><span class="p">,</span>
+</span><span id="line-16">    <span class="n">hyperparameters</span><span class="o">=</span><span class="p">{</span>
+</span><span id="line-17">        <span class="s2">"context-length"</span><span class="p">:</span> <span class="n">context_length</span><span class="p">,</span>
+</span><span id="line-18">        <span class="s2">"prediction-length"</span><span class="p">:</span> <span class="n">prediction_length</span><span class="p">,</span>
+</span><span id="line-19">        <span class="s2">"sequence-stride"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+</span><span id="line-20">        <span class="s2">"hidden-size"</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+</span><span id="line-21">        <span class="s2">"backbone-layers"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+</span><span id="line-22">        <span class="s2">"backbone-units"</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span>
+</span><span id="line-23">        <span class="s2">"backbone-activation"</span><span class="p">:</span> <span class="s2">"lecun"</span><span class="p">,</span>
+</span><span id="line-24">        <span class="s2">"backbone-dropout"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span id="line-25">        <span class="s2">"minimal"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+</span><span id="line-26">        <span class="s2">"no-gate"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+</span><span id="line-27">        <span class="s2">"use-mixed"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+</span><span id="line-28">        <span class="s2">"use-ltc"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+</span><span id="line-29">        <span class="s2">"batch-size"</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span>
+</span><span id="line-30">        <span class="s2">"lr"</span><span class="p">:</span> <span class="mf">0.0001</span><span class="p">,</span>
+</span><span id="line-31">        <span class="s2">"lr-decay"</span><span class="p">:</span> <span class="mf">0.9999</span><span class="p">,</span>
+</span><span id="line-32">        <span class="s2">"epochs"</span><span class="p">:</span> <span class="mi">800</span><span class="p">,</span>
+</span><span id="line-33">    <span class="p">}</span>
+</span><span id="line-34"><span class="p">)</span>
+</span><span id="line-35">
+</span><span id="line-36"><span class="c1"># run the training job</span>
+</span><span id="line-37"><span class="n">estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">({</span><span class="s2">"training"</span><span class="p">:</span> <span class="n">training_data</span><span class="p">})</span>
+</span></code></pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that we are training a relatively small model with less than 5k parameters.</p>
+</div>
 </section>
 <section id="inference">
 <h3>Inference<a class="headerlink" href="#inference" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#inference'">¶</a></h3>
+<p>After the training job has been completed, we deploy the model to real-time endpoint that we can use for inference.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># define the endpoint inputs serializer</span>
+</span><span id="line-2"><span class="n">serializer</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">serializers</span><span class="o">.</span><span class="n">CSVSerializer</span><span class="p">(</span><span class="n">content_type</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">)</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="c1"># define the endpoint outputs deserializer</span>
+</span><span id="line-5"><span class="n">deserializer</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">base_deserializers</span><span class="o">.</span><span class="n">PandasDeserializer</span><span class="p">(</span><span class="n">accept</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">)</span>
+</span><span id="line-6">
+</span><span id="line-7"><span class="n">predictor</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">deploy</span><span class="p">(</span>
+</span><span id="line-8">    <span class="n">initial_instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+</span><span id="line-9">    <span class="n">instance_type</span><span class="o">=</span><span class="n">instance_type</span><span class="p">,</span>
+</span><span id="line-10"><span class="p">)</span>
+</span></code></pre></div>
+</div>
 <img alt="Actual and predicted 30-day returns from 2023-12-04 to 2024-06-28" class="blog-post-image" id="cfc-tsf-forecasting-predictions" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/predictions_light.png"/>
 <p class="blog-post-image-caption">Actual and predicted 30-day returns from 2023-12-04 to 2024-06-28.</p><img alt="30-day returns forecasts from 2024-06-29 to 2024-07-28" class="blog-post-image" id="cfc-tsf-forecasting-forecasts" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/forecasts_light.png"/>
 <p class="blog-post-image-caption">30-day returns forecasts from 2024-06-29 to 2024-07-28.</p></section>
