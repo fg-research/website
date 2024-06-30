@@ -116,17 +116,6 @@ expectation of what the volatility will be over the next 30 days.
     Note that we use the same inputs as in `[2] <file:///Users/flaviagiammarino/website/docs/blog/product/posts/cfc-tsf-equity-forecasting.html#references>`__, with the exception of
     the *PUTCALL* index, which we had to exclude as its historical time series is not publicly available.
 
-.. raw:: html
-
-    <img
-        id="cfc-tsf-forecasting-time-series"
-        class="blog-post-image"
-        alt="30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-29"
-        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/time_series_light.png
-    />
-
-    <p class="blog-post-image-caption">30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-29.</p>
-
 ******************************************
 Code
 ******************************************
@@ -172,6 +161,18 @@ We start by importing all the dependencies and setting up the SageMaker environm
 ==========================================
 Data Preparation
 ==========================================
+
+
+.. raw:: html
+
+    <img
+        id="cfc-tsf-forecasting-time-series"
+        class="blog-post-image"
+        alt="30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-29"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/time_series_light.png
+    />
+
+    <p class="blog-post-image-caption">30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-29.</p>
 
 
 ==========================================
