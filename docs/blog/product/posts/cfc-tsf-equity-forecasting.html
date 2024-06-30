@@ -130,20 +130,20 @@ In this post, we examine the performance of liquid neural networks <a href="#ref
 We will use our Amazon SageMaker implementation of liquid neural networks for probabilistic time series
 forecasting, the <a href="file:///Users/flaviagiammarino/website/docs/algorithms/time-series-forecasting/index.html#cfc-sagemaker-algorithm" target="_blank"> CfC SageMaker algorithm</a>. We will forecast the conditional mean and the
 conditional standard deviation of the 30-day returns of the S&amp;P 500 using as input the S&amp;P 500
-realized volatility as well as several implied volatility indices, similar to (<a href="#references">[2]</a>).
+realized volatility as well as several implied volatility indices, similar to <a href="#references">[2]</a>.
 </p>
 <p>
 We will use the daily close prices from the 30<sup>th</sup> of June 2022 to
 the 29<sup>th</sup> of June 2024, which we will download using the <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
 We will train the model on the data up to the 8<sup>th</sup> of September 2023,
-and use the trained model to predict the subsequent returns up to the 29<sup>th</sup> of June 2024.
+and use the trained model to predict the subsequent data up to the 29<sup>th</sup> of June 2024.
 We will find that the CfC SageMaker algorithm achieves a mean absolute error of 1.4% and directional accuracy of 97.5%.
 </p><section id="model">
 <h2>Model<a class="headerlink" href="#model" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#model'">¶</a></h2>
 <p>
 The closed-form continuous-depth network (CfC) is a new neural network architecture for
-sequential data <a href="#references">[3]</a>. CfCs belong to the class of continuous-time
-recurrent neural networks (CT-RNNs) <a href="#references">[4]</a>, where the evolution of
+sequential data <a href="#references">[4]</a>. CfCs belong to the class of continuous-time
+recurrent neural networks (CT-RNNs) <a href="#references">[3]</a>, where the evolution of
 the hidden state over time is described by an Ordinary Differential Equation (ODE).
 </p>
 <p>
@@ -167,8 +167,18 @@ and slope <span class="math notranslate nohighlight">\(a\)</span> are the output
 </section>
 <section id="data">
 <h2>Data<a class="headerlink" href="#data" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data'">¶</a></h2>
+<section id="outputs">
+<h3>Outputs<a class="headerlink" href="#outputs" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#outputs'">¶</a></h3>
+<p>The model outputs are the 30-day returns of the S&amp;P 500, which are calculated as follows</p>
+<div class="math notranslate nohighlight">
+\[y(t) = \ln{P(t) / P(t-30)}\]</div>
+<p>for each day <span class="math notranslate nohighlight">\(t\)</span>, where <cite>P(t)</cite> is the close price of the S&amp;P 500 on day <span class="math notranslate nohighlight">\(t\)</span>.</p>
+</section>
+<section id="inputs">
+<h3>Inputs<a class="headerlink" href="#inputs" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#inputs'">¶</a></h3>
 <img alt="30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-29" class="blog-post-image" id="cfc-tsf-forecasting-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/time_series_light.png"/>
 <p class="blog-post-image-caption">30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-29.</p></section>
+</section>
 <section id="code">
 <h2>Code<a class="headerlink" href="#code" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#code'">¶</a></h2>
 <section id="environment-set-up">
@@ -242,7 +252,11 @@ Liquid time-constant networks. In <em>Proceedings of the AAAI Conference on Arti
 <div class="sticky top-16 -mt-10 max-h-[calc(var(100vh)-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
 <li><a :data-current="activeSection === '#model'" class="reference internal" href="#model">Model</a></li>
-<li><a :data-current="activeSection === '#data'" class="reference internal" href="#data">Data</a></li>
+<li><a :data-current="activeSection === '#data'" class="reference internal" href="#data">Data</a><ul>
+<li><a :data-current="activeSection === '#outputs'" class="reference internal" href="#outputs">Outputs</a></li>
+<li><a :data-current="activeSection === '#inputs'" class="reference internal" href="#inputs">Inputs</a></li>
+</ul>
+</li>
 <li><a :data-current="activeSection === '#code'" class="reference internal" href="#code">Code</a><ul>
 <li><a :data-current="activeSection === '#environment-set-up'" class="reference internal" href="#environment-set-up">Environment Set-Up</a></li>
 <li><a :data-current="activeSection === '#data-preparation'" class="reference internal" href="#data-preparation">Data Preparation</a></li>

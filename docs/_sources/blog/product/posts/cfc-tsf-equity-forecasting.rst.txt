@@ -22,14 +22,14 @@ Forecasting Stock Returns with Liquid Neural Networks
     forecasting, the <a href="file:///Users/flaviagiammarino/website/docs/algorithms/time-series-forecasting/index.html#cfc-sagemaker-algorithm"
     target="_blank"> CfC SageMaker algorithm</a>. We will forecast the conditional mean and the
     conditional standard deviation of the 30-day returns of the S&P 500 using as input the S&P 500
-    realized volatility as well as several implied volatility indices, similar to (<a href="#references">[2]</a>).
+    realized volatility as well as several implied volatility indices, similar to <a href="#references">[2]</a>.
     </p>
 
     <p>
     We will use the daily close prices from the 30<sup>th</sup> of June 2022 to
     the 29<sup>th</sup> of June 2024, which we will download using the <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
     We will train the model on the data up to the 8<sup>th</sup> of September 2023,
-    and use the trained model to predict the subsequent returns up to the 29<sup>th</sup> of June 2024.
+    and use the trained model to predict the subsequent data up to the 29<sup>th</sup> of June 2024.
     We will find that the CfC SageMaker algorithm achieves a mean absolute error of 1.4% and directional accuracy of 97.5%.
     </p>
 
@@ -41,8 +41,8 @@ Model
 
     <p>
     The closed-form continuous-depth network (CfC) is a new neural network architecture for
-    sequential data <a href="#references">[3]</a>. CfCs belong to the class of continuous-time
-    recurrent neural networks (CT-RNNs) <a href="#references">[4]</a>, where the evolution of
+    sequential data <a href="#references">[4]</a>. CfCs belong to the class of continuous-time
+    recurrent neural networks (CT-RNNs) <a href="#references">[3]</a>, where the evolution of
     the hidden state over time is described by an Ordinary Differential Equation (ODE).
     </p>
 
@@ -74,6 +74,22 @@ and slope :math:`a` are the outputs of two fully-connected layers with linear ac
 ******************************************
 Data
 ******************************************
+
+==========================================
+Outputs
+==========================================
+
+The model outputs are the 30-day returns of the S&P 500, which are calculated as follows
+
+.. math::
+
+    y(t) = \ln{P(t) / P(t-30)}
+
+for each day :math:`t`, where `P(t)` is the close price of the S&P 500 on day :math:`t`.
+
+==========================================
+Inputs
+==========================================
 
 .. raw:: html
 
