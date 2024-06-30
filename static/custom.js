@@ -26,7 +26,8 @@ window.setInterval(function(){
         'fred-md-overview-toctree',
         'cnn-kmeans-control-chart-clustering-toctree',
         'lstm-ad-ecg-anomaly-detection-toctree',
-        'inflation-forecasting-random-forest-toctree'
+        'inflation-forecasting-random-forest-toctree',
+        'cfc-tsf-equity-forecasting-toctree'
     ];
     for (var i = 0; i < elements.length; i++) {
         var f = document.getElementById(elements[i]);

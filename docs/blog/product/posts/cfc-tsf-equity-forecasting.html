@@ -22,6 +22,8 @@
 <link href="../../../_static/favicon.ico" rel="icon"/>
 <link href="../../../search.html" rel="search" title="Search"/>
 <link href="../../../genindex.html" rel="index" title="Index"/>
+<link href="lstm-ad-ecg-anomaly-detection.html" rel="next" title="ECG anomaly detection with the LSTM-AD SageMaker Algorithm"/>
+<link href="../index.html" rel="prev" title="Product"/>
 <script>
     <!-- Prevent Flash of wrong theme -->
       const userPreference = localStorage.getItem('darkMode');
@@ -87,8 +89,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../algorithms/time-series-classification/index.html">Time Series Classification</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Blog</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../index.html">Product</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Product</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Terms and Conditions</span></p>
@@ -114,6 +116,7 @@
 <path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z"></path>
 </svg>
 </a>
+<div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="../index.html">Product</a>
 <div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Forecasting Stock Returns with Liquid Neural Networks</span>
 </nav>
 <div id="content" role="main">
@@ -365,14 +368,53 @@ the data (270 observations), while the test set includes the last 30% of the dat
 </span><span id="line-4"><span class="c1"># define the endpoint outputs deserializer</span>
 </span><span id="line-5"><span class="n">deserializer</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">base_deserializers</span><span class="o">.</span><span class="n">PandasDeserializer</span><span class="p">(</span><span class="n">accept</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">)</span>
 </span><span id="line-6">
-</span><span id="line-7"><span class="n">predictor</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">deploy</span><span class="p">(</span>
-</span><span id="line-8">    <span class="n">initial_instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-</span><span id="line-9">    <span class="n">instance_type</span><span class="o">=</span><span class="n">instance_type</span><span class="p">,</span>
-</span><span id="line-10"><span class="p">)</span>
+</span><span id="line-7"><span class="c1"># create the endpoint</span>
+</span><span id="line-8"><span class="n">predictor</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">deploy</span><span class="p">(</span>
+</span><span id="line-9">    <span class="n">initial_instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+</span><span id="line-10">    <span class="n">instance_type</span><span class="o">=</span><span class="n">instance_type</span><span class="p">,</span>
+</span><span id="line-11"><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>Once the endpoint has been created, we can generate the test set predictions.
+As we used rolling (or overlapping) returns, we are only interested in the last
+element of each predicted sequence (recall that we set the prediction length to 30 days,
+the same as the horizon of the returns).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># create a list for storing the predictions</span>
+</span><span id="line-2"><span class="n">predictions</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="c1"># loop across the dates</span>
+</span><span id="line-5"><span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">context_length</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_dataset</span><span class="p">)</span> <span class="o">-</span> <span class="n">prediction_length</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+</span><span id="line-6">
+</span><span id="line-7">    <span class="c1"># extract the data up to day t - 1</span>
+</span><span id="line-8">    <span class="n">payload</span> <span class="o">=</span> <span class="n">test_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">t</span> <span class="o">-</span> <span class="n">context_length</span><span class="p">:</span> <span class="n">t</span><span class="p">]</span>
+</span><span id="line-9">
+</span><span id="line-10">    <span class="c1"># predict all rolling 30-day returns from day t to day t + 30</span>
+</span><span id="line-11">    <span class="n">response</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">sagemaker_runtime_client</span><span class="o">.</span><span class="n">invoke_endpoint</span><span class="p">(</span>
+</span><span id="line-12">        <span class="n">EndpointName</span><span class="o">=</span><span class="n">predictor</span><span class="o">.</span><span class="n">endpoint_name</span><span class="p">,</span>
+</span><span id="line-13">        <span class="n">ContentType</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">,</span>
+</span><span id="line-14">        <span class="n">Body</span><span class="o">=</span><span class="n">payload</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span><span id="line-15">    <span class="p">)</span>
+</span><span id="line-16">    <span class="n">response</span> <span class="o">=</span> <span class="n">deserializer</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s2">"Body"</span><span class="p">],</span> <span class="n">content_type</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">)</span>
+</span><span id="line-17">
+</span><span id="line-18">    <span class="c1"># extract the predicted 30-day return from day t to day t + 30</span>
+</span><span id="line-19">    <span class="n">prediction</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span>
+</span><span id="line-20">
+</span><span id="line-21">    <span class="c1"># extract the date corresponding to day t + 30</span>
+</span><span id="line-22">    <span class="n">prediction</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="n">test_dataset</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">t</span> <span class="o">+</span> <span class="n">prediction_length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]]</span>
+</span><span id="line-23">
+</span><span id="line-24">    <span class="c1"># save the prediction</span>
+</span><span id="line-25">    <span class="n">predictions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prediction</span><span class="p">)</span>
+</span><span id="line-26">
+</span><span id="line-27"><span class="c1"># cast the predictions to data frame</span>
+</span><span id="line-28"><span class="n">predictions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
+</span><span id="line-29">
+</span><span id="line-30"><span class="c1"># add the actual values</span>
+</span><span id="line-31"><span class="n">predictions</span><span class="p">[</span><span class="s2">"y"</span><span class="p">]</span> <span class="o">=</span> <span class="n">test_dataset</span><span class="p">[</span><span class="s2">"y"</span><span class="p">]</span>
 </span></code></pre></div>
 </div>
 <img alt="Actual and predicted 30-day returns from 2023-12-04 to 2024-06-28" class="blog-post-image" id="cfc-tsf-forecasting-predictions" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/predictions_light.png"/>
-<p class="blog-post-image-caption">Actual and predicted 30-day returns from 2023-12-04 to 2024-06-28.</p><img alt="30-day returns forecasts from 2024-06-29 to 2024-07-28" class="blog-post-image" id="cfc-tsf-forecasting-forecasts" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/forecasts_light.png"/>
+<p class="blog-post-image-caption">Actual and predicted 30-day returns from 2023-12-04 to 2024-06-28.</p><p>We evaluate the test set predictions using the following metrics:</p>
+<img alt="30-day returns forecasts from 2024-06-29 to 2024-07-28" class="blog-post-image" id="cfc-tsf-forecasting-forecasts" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/forecasts_light.png"/>
 <p class="blog-post-image-caption">30-day returns forecasts from 2024-06-29 to 2024-07-28.</p></section>
 </section>
 <section id="references">
@@ -436,6 +478,6 @@ Amazon Web Services, AWS, Amazon SageMaker, AWS Marketplace and the AWS Marketpl
 <script src="../../../_static/design-tabs.js?v=36754332"></script>
 <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
 <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-<script src="../../../_static/custom.js?v=e283a98a"></script>
+<script src="../../../_static/custom.js?v=f9493bda"></script>
 </body>
 </html>

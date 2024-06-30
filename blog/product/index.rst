@@ -12,6 +12,40 @@ Product
 
    Learn about our time series algorithms
 
+
+.. card::
+    :width: 100%
+    :link: posts/cfc-tsf-equity-forecasting
+    :link-type: doc
+
+    .. _cfc-tsf-equity-forecasting-toctree:
+
+    .. toctree::
+        :titlesonly:
+
+        posts/cfc-tsf-equity-forecasting
+
+    .. _cfc-tsf-equity-forecasting-include:
+
+    Stock return forecasting has been extensively studied by both academic researchers and
+    industry practitioners. Numerous machine learning models have been proposed for this purpose,
+    ranging from simple linear regressions to complex deep learning models.
+    In this post, we examine the performance of liquid neural networks,
+    a new neural network architecture for sequential data.
+
+    .. grid:: 2
+        :margin: 0 3 auto auto
+
+        .. grid-item::
+            :class: sd-text-primary
+
+            :octicon:`graph;1rem;graph-icon` Forecasting
+
+        .. grid-item::
+            :class: sd-text-secondary
+
+            :octicon:`calendar;1rem;calendar-icon` June 30, 2024
+
 .. card::
     :width: 100%
     :link: posts/lstm-ad-ecg-anomaly-detection

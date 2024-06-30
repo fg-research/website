@@ -316,10 +316,51 @@ After the training job has been completed, we deploy the model to real-time endp
     # define the endpoint outputs deserializer
     deserializer = sagemaker.base_deserializers.PandasDeserializer(accept="text/csv")
 
+    # create the endpoint
     predictor = estimator.deploy(
         initial_instance_count=1,
         instance_type=instance_type,
     )
+
+Once the endpoint has been created, we can generate the test set predictions.
+As we used rolling (or overlapping) returns, we are only interested in the last
+element of each predicted sequence (recall that we set the prediction length to 30 days,
+the same as the horizon of the returns).
+
+.. code:: python
+
+    # create a list for storing the predictions
+    predictions = []
+
+    # loop across the dates
+    for t in range(context_length, len(test_dataset) - prediction_length + 1):
+
+        # extract the data up to day t - 1
+        payload = test_dataset.iloc[t - context_length: t]
+
+        # predict all rolling 30-day returns from day t to day t + 30
+        response = sagemaker_session.sagemaker_runtime_client.invoke_endpoint(
+            EndpointName=predictor.endpoint_name,
+            ContentType="text/csv",
+            Body=payload.to_csv(index=False)
+        )
+        response = deserializer.deserialize(response["Body"], content_type="text/csv")
+
+        # extract the predicted 30-day return from day t to day t + 30
+        prediction = response.iloc[-1:]
+
+        # extract the date corresponding to day t + 30
+        prediction.index = [test_dataset.index[t + prediction_length - 1]]
+
+        # save the prediction
+        predictions.append(prediction)
+
+    # cast the predictions to data frame
+    predictions = pd.concat(predictions)
+
+    # add the actual values
+    predictions["y"] = test_dataset["y"]
+
 
 .. raw:: html
 
@@ -331,6 +372,10 @@ After the training job has been completed, we deploy the model to real-time endp
     />
 
     <p class="blog-post-image-caption">Actual and predicted 30-day returns from 2023-12-04 to 2024-06-28.</p>
+
+We evaluate the test set predictions using the following metrics:
+
+
 
 
 .. raw:: html
