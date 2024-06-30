@@ -101,14 +101,11 @@ of the following volatility indices:
 
 * *VVIX*: The `VVIX index <https://www.cboe.com/us/indices/dashboard/vvix/>`__ reflects the 30-day expected volatility of the VIX.
 
-* *VXN*: The `VXN index <https://www.cboe.com/us/indices/dashboard/vxn/>`__
-measures the 30-day implied volatility of NASDAQ 100 options.
+* *VXN*: The `VXN index <https://www.cboe.com/us/indices/dashboard/vxn/>`__ measures the 30-day implied volatility of NASDAQ 100 options.
 
-* *GVZ*: The `GVZ index <https://www.cboe.com/us/indices/dashboard/gvz/>`__
-measures the 30-day implied volatility of GLD options.
+* *GVZ*: The `GVZ index <https://www.cboe.com/us/indices/dashboard/gvz/>`__ measures the 30-day implied volatility of GLD options.
 
-* *OVX*: The `OVX index <https://www.cboe.com/us/indices/dashboard/ovx/>`__
-measures the 30-day implied volatility of USO options.
+* *OVX*: The `OVX index <https://www.cboe.com/us/indices/dashboard/ovx/>`__ measures the 30-day implied volatility of USO options.
 
 .. raw:: html
 
