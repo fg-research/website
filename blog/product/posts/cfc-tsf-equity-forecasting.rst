@@ -28,11 +28,11 @@ Model
     faster training and inference performance than other CT-RNNs.
     </p>
 
+The hidden state :math:`x` of a CfC at time :math:`t` is given by
 
+.. math::
 
-The hidden state $x$ of a CfC at time $t$ is given by
-
-$x(t) = \sigma(-f(x, I; \theta_f)t) \odot g(x, I; \theta_g) + [1 - \sigma(-[f(x, I; \theta_f)]t)] \odot h(x, I; \theta_h)$
+    x(t) = \sigma(-f(x, I; \theta_f)t) \odot g(x, I; \theta_g) + [1 - \sigma(-[f(x, I; \theta_f)]t)] \odot h(x, I; \theta_h)
 
 where $\odot$ is the Hadamard product, $\sigma$ is the sigmoid function, $I$ is the input sequence, while $f$, $g$ and $h$ are neural networks.
 The three neural networks $f$, $g$ and $h$ share a common backbone, which is a stack of fully-connected layers with non-linear activation.

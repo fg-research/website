@@ -133,8 +133,9 @@ derivative and the time constant of the hidden state are determined by a neural 
 Differently from other CT-RNNs (including LTCs), which use a numerical solver to find the
 ODE solution, CfCs use an approximate closed-form solution. As a results, CfCs achieve
 faster training and inference performance than other CT-RNNs.
-</p><p>The hidden state $x$ of a CfC at time $t$ is given by</p>
-<p>$x(t) = sigma(-f(x, I; theta_f)t) odot g(x, I; theta_g) + [1 - sigma(-[f(x, I; theta_f)]t)] odot h(x, I; theta_h)$</p>
+</p><p>The hidden state <span class="math notranslate nohighlight">\(x\)</span> of a CfC at time <span class="math notranslate nohighlight">\(t\)</span> is given by</p>
+<div class="math notranslate nohighlight">
+\[x(t) = \sigma(-f(x, I; \theta_f)t) \odot g(x, I; \theta_g) + [1 - \sigma(-[f(x, I; \theta_f)]t)] \odot h(x, I; \theta_h)\]</div>
 <p>where $odot$ is the Hadamard product, $sigma$ is the sigmoid function, $I$ is the input sequence, while $f$, $g$ and $h$ are neural networks.
 The three neural networks $f$, $g$ and $h$ share a common backbone, which is a stack of fully-connected layers with non-linear activation.</p>
 <p>The backbone is followed by three separate neural network heads.
@@ -218,6 +219,8 @@ Amazon Web Services, AWS, Amazon SageMaker, AWS Marketplace and the AWS Marketpl
 <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
 <script defer="defer" src="../../../_static/theme.js?v=40b7bc71"></script>
 <script src="../../../_static/design-tabs.js?v=36754332"></script>
+<script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+<script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="../../../_static/custom.js?v=e283a98a"></script>
 </body>
 </html>
