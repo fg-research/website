@@ -81,12 +81,12 @@ References
 
 [1] Kumbure, M.M., Lohrmann, C., Luukka, P. and Porras, J., (2022).
 Machine learning techniques and data for stock market forecasting: A literature review.
-*Expert Systems with Applications*, 197, p.116659.
+*Expert Systems with Applications*, 197, p. 116659.
 `doi: 10.1016/j.eswa.2022.116659 <https://doi.org/10.1016/j.eswa.2022.116659>`__.
 
 [2] Campisi, G., Muzzioli, S. and De Baets, B., (2024).
 A comparison of machine learning methods for predicting the direction of the US
-stock market on the basis of volatility indices. *International Journal of Forecasting*, 40(3), pp.869-880.
+stock market on the basis of volatility indices. *International Journal of Forecasting*, 40(3), pp. 869-880.
 `doi: 10.1016/j.ijforecast.2023.07.002 <https://doi.org/10.1016/j.ijforecast.2023.07.002>`__.
 
 [3] Hasani, R., Lechner, M., Amini, A., Rus, D., & Grosu, R. (2021).
