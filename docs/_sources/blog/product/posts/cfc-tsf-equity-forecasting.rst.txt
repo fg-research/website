@@ -107,8 +107,8 @@ of the following volatility indicators:
 
 * *OVX*: The `OVX index <https://www.cboe.com/us/indices/dashboard/ovx/>`__ measures the 30-day implied volatility of USO options.
 
-Note that *RVOL* is a historical or backward-looking indicator, as it measures the volatility over the past 30 days,
-while *VIX*, *VVIX*, *VXN*, *GVZ*, and *OVX* are market-implied or forward-looking indicators, as they reflect the market's
+*RVOL* is a backward-looking indicator, as it measures the volatility over the past 30 days,
+while *VIX*, *VVIX*, *VXN*, *GVZ*, and *OVX* are forward-looking indicators, as they reflect the market's
 expectation of what the volatility will be over the next 30 days.
 
 .. note::
