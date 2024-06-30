@@ -14,7 +14,7 @@ Forecasting Stock Returns with Liquid Neural Networks
     industry practitioners. Numerous machine learning models have been proposed for this purpose,
     ranging from simple linear regressions to complex deep learning models <a href="#references">[1]</a>.
     In this post, we examine the performance of liquid neural networks, a new neural network architecture
-    for sequential data."
+    for sequential data.
     </p>
 
 ******************************************
@@ -163,13 +163,13 @@ A comparison of machine learning methods for predicting the direction of the US
 stock market on the basis of volatility indices. *International Journal of Forecasting*, 40(3), pp. 869-880.
 `doi: 10.1016/j.ijforecast.2023.07.002 <https://doi.org/10.1016/j.ijforecast.2023.07.002>`__.
 
-[3] Hasani, R., Lechner, M., Amini, A., Liebenwein, L., Ray, A., Tschaikowski, M., Teschl, G. and Rus, D., (2022).
-Closed-form continuous-time neural networks. *Nature Machine Intelligence*, 4(11), pp. 992-1003.
-`doi: 10.1038/s42256-022-00556-7 <https://doi.org/10.1038/s42256-022-00556-7>`__.
-
-[4] Funahashi, K.I. and Nakamura, Y., (1993). Approximation of dynamical systems by continuous
+[3] Funahashi, K.I. and Nakamura, Y., (1993). Approximation of dynamical systems by continuous
 time recurrent neural networks. *Neural networks*, 6(6), pp.801-806.
 `doi: 10.1016/S0893-6080(05)80125-X <https://doi.org/10.1016/S0893-6080(05)80125-X>`__.
+
+[4] Hasani, R., Lechner, M., Amini, A., Liebenwein, L., Ray, A., Tschaikowski, M., Teschl, G. and Rus, D., (2022).
+Closed-form continuous-time neural networks. *Nature Machine Intelligence*, 4(11), pp. 992-1003.
+`doi: 10.1038/s42256-022-00556-7 <https://doi.org/10.1038/s42256-022-00556-7>`__.
 
 [5] Hasani, R., Lechner, M., Amini, A., Rus, D., & Grosu, R. (2021).
 Liquid time-constant networks. In *Proceedings of the AAAI Conference on Artificial Intelligence*, 35(9), pp. 7657-7666.
