@@ -4,7 +4,7 @@
    :keywords: Amazon SageMaker, Time Series, Liquid Neural Networks, Forecasting
 
 ######################################################################################
-Forecasting Stock Returns with Liquid Neural Networks using the CfC SageMaker Algorithm
+Forecasting stock returns with liquid neural networks using the CfC SageMaker Algorithm
 ######################################################################################
 
 .. raw:: html
