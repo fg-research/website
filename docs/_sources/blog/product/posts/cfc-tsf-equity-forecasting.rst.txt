@@ -26,7 +26,7 @@ Forecasting Stock Returns with Liquid Neural Networks
     </p>
 
     <p>
-    We will use the daily close prices from the 30<sup>st</sup> of June 2022 to
+    We will use the daily close prices from the 30<sup>th</sup> of June 2022 to
     the 29<sup>th</sup> of June 2024, which we will download using the <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
     After that we will train the model on the data up to the 8<sup>th</sup> of September 2023,
     and use the trained model to predict the subsequent returns up to the 29<sup>th</sup> of June 2024.
