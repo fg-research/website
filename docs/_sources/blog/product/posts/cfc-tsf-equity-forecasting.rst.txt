@@ -305,7 +305,7 @@ We now save the training data in S3, build the SageMaker estimator and run the t
     # run the training job
     estimator.fit({"training": training_data})
 
-After the training job has been completed, we deploy the model to real-time endpoint that we can use for inference.
+After the training job has been completed, we deploy the model to a real-time endpoint that we can use for inference.
 
 .. code:: python
 

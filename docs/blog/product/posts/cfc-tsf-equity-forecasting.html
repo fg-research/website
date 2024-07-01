@@ -357,7 +357,7 @@ includes the last 30% of the data.</p>
 </span><span id="line-20"><span class="n">estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">({</span><span class="s2">"training"</span><span class="p">:</span> <span class="n">training_data</span><span class="p">})</span>
 </span></code></pre></div>
 </div>
-<p>After the training job has been completed, we deploy the model to real-time endpoint that we can use for inference.</p>
+<p>After the training job has been completed, we deploy the model to a real-time endpoint that we can use for inference.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># define the endpoint inputs serializer</span>
 </span><span id="line-2"><span class="n">serializer</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">serializers</span><span class="o">.</span><span class="n">CSVSerializer</span><span class="p">(</span><span class="n">content_type</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">)</span>
 </span><span id="line-3">
