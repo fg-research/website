@@ -262,8 +262,8 @@ Testing
 ==========================================
 
 For the purpose of validating the model, we split the data into a training set and a test set.
-The training set includes the first 70% of the data (270 observations), while the test set
-includes the last 30% of the data (202 observations).
+The training set includes the first 70% of the data, while the test set
+includes the last 30% of the data.
 
 .. code:: python
 
