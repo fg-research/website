@@ -13,27 +13,27 @@ Forecasting stock returns with liquid neural networks using the CfC SageMaker Al
     Stock return forecasting has been extensively studied by both academic researchers and
     industry practitioners. Numerous machine learning models have been proposed for this purpose,
     ranging from simple linear regressions to complex deep learning models <a href="#references">[1]</a>.
-    In this post, we examine the performance of liquid neural networks <a href="#references">[4]</a>,
+    In this post, we examine the performance of liquid neural networks (LNNs) <a href="#references">[4]</a>,
     a new neural network architecture for sequential data.
     </p>
 
     <p>
-    Liquid neural networks belong to the class of continuous-time recurrent neural networks (CT-RNNs)
+    LNNs belong to the class of continuous-time recurrent neural networks (CT-RNNs)
     <a href="#references">[3]</a>, where the evolution of the hidden state over time is described by
-    an Ordinary Differential Equation (ODE). Liquid neural networks use the Liquid Time Constant (LTC)
+    an Ordinary Differential Equation (ODE). LNNs use the Liquid Time Constant (LTC)
     ODE <a href="#references">[4]</a>, where both the derivative and the time constant of the hidden
     state are determined by a neural network.
     </p>
 
     <p>
-    In this post, we use the closed-form continuous-depth (CfC) <a href="#references">[5]</a>
-    implementation of the LTC ODE. Differently from other CT-RNNs (including LTCs), which use
-    a numerical solver to find the ODE solution, CfCs use an approximate closed-form solution.
-    As a results, CfCs achieve faster training and inference performance than other CT-RNNs.
+    In this post, we focus on the closed-form continuous-depth (CfC) network <a href="#references">[5]</a>
+    implementation of the LTC ODE. Differently from other CT-RNNs (including LTCs <a href="#references">[4]</a>),
+    which use a numerical solver to find the ODE solution, CfC networks use an approximate closed-form solution.
+    As a results, CfC networks achieve faster training and inference performance than other CT-RNNs.
     </p>
 
     <p>
-    We will use our Amazon SageMaker implementation of CfCs for probabilistic time series
+    We will use our Amazon SageMaker implementation of CfC networks for probabilistic time series
     forecasting, the <a href="file:///Users/flaviagiammarino/website/docs/algorithms/time-series-forecasting/index.html#cfc-sagemaker-algorithm" target="_blank"> CfC SageMaker algorithm</a>.
     We will forecast the conditional mean and the conditional standard deviation of the 30-day returns of
     the S&P 500 using as input the S&P 500 realized volatility as well as several implied volatility indices,
@@ -46,7 +46,7 @@ Forecasting stock returns with liquid neural networks using the CfC SageMaker Al
     We will train the model on the data up to the 8<sup>th</sup> of September 2023,
     and use the trained model to predict the subsequent data up to the 29<sup>th</sup> of June 2024.
     We will find that the CfC SageMaker algorithm achieves a mean absolute error of 1.4% and
-    a mean directional accuracy of 97.5%.
+    a mean directional accuracy of 95.8%.
     </p>
 
 ******************************************
@@ -64,25 +64,28 @@ The model outputs are the 30-day returns of the S&P 500, which are calculated as
     y(t) = \ln{P(t)} - \ln{P(t - 30)}
 
 for each day :math:`t`, where :math:`P(t)` is the close price of the S&P 500 on day :math:`t`.
+We will use a prediction length of 30 days, meaning that the model will output the 30-day returns
+over the subsequent 30 days. Given that we use overlapping (or rolling) returns, the predicted
+30-day return from day :math:`t` to day :math:`t + 30` is the last return in the output sequence.
 
 ==========================================
 Inputs
 ==========================================
 
-The model uses as input the previous 30-day returns of the S&P 500 as well as the past values
+The model uses as input the previous 30-day returns of the S&P 500, as well as the past values
 of the following volatility indicators:
 
 * *RVOL*: The realized volatility of the S&P 500, which is calculated as the 30-day rolling sample standard deviation of the S&P 500 daily log returns.
 
-* *VIX*: The `VIX index <https://www.cboe.com/us/indices/dashboard/vix/>`__, which measures the 30-day implied volatility of S&P 500 options.
+* *VIX*: The VIX index, which measures the 30-day implied volatility of S&P 500 options.
 
-* *VVIX*: The `VVIX index <https://www.cboe.com/us/indices/dashboard/vvix/>`__, which reflects the 30-day expected volatility of the VIX.
+* *VVIX*: The VVIX index, which reflects the 30-day expected volatility of the VIX.
 
-* *VXN*: The `VXN index <https://www.cboe.com/us/indices/dashboard/vxn/>`__, which measures the 30-day implied volatility of NASDAQ 100 options.
+* *VXN*: The VXN index, which measures the 30-day implied volatility of NASDAQ 100 options.
 
-* *GVZ*: The `GVZ index <https://www.cboe.com/us/indices/dashboard/gvz/>`__, which measures the 30-day implied volatility of GLD options.
+* *GVZ*: The GVZ index, which measures the 30-day implied volatility of SPDR Gold Shares ETF (GLD) options.
 
-* *OVX*: The `OVX index <https://www.cboe.com/us/indices/dashboard/ovx/>`__, which measures the 30-day implied volatility of USO options.
+* *OVX*: The OVX index, which measures the 30-day implied volatility of United States Oil Fund (USO) options.
 
 *RVOL* is a backward-looking indicator, as it estimates the volatility over the past 30 days,
 while *VIX*, *VVIX*, *VXN*, *GVZ*, and *OVX* are forward-looking indicators, as they reflect the market's
@@ -92,6 +95,9 @@ expectation of what the volatility will be over the next 30 days.
 
     Note that we use the same inputs as in `[2] <file:///Users/flaviagiammarino/website/docs/blog/product/posts/cfc-tsf-equity-forecasting.html#references>`__,
     with the exception of the *PUTCALL* index, which we had to exclude as its historical time series is not publicly available.
+
+We will use a context length of 30 days, meaning that the model will use as input the 30-day returns
+and the volatility indicators over the previous 30 days in order to predict the future 30-day returns.
 
 ******************************************
 Code
@@ -138,7 +144,7 @@ After that we define the neural network's context length and prediction length.
 The context length is the number of past time steps used as input,
 while the prediction length is the number of future time steps to be predicted.
 We set both of them equal to 30 days, that is we use the previous 30 values
-of the inputs to predict the next 30 values of the output.
+of the inputs and output to predict the subsequent 30 values of the output.
 
 .. code:: python
 
@@ -147,6 +153,31 @@ of the inputs to predict the next 30 values of the output.
 
     # number of time steps to output
     prediction_length = 30
+
+We also define all the remaining hyperparameters of the CfC network architecture.
+Note that we use a relatively small model with less than 5k parameters.
+
+.. code:: python
+
+    hyperparameters = {
+        "context-length": context_length,
+        "prediction-length": prediction_length,
+        "sequence-stride": 1,
+        "hidden-size": 20,
+        "backbone-layers": 1,
+        "backbone-units": 40,
+        "backbone-activation": "lecun",
+        "backbone-dropout": 0,
+        "minimal": True,
+        "no-gate": True,
+        "use-mixed": False,
+        "use-ltc": False,
+        "batch-size": 32,
+        "lr": 0.0001,
+        "lr-decay": 0.9999,
+        "epochs": 800,
+    }
+
 
 ==========================================
 Data Preparation
@@ -212,8 +243,9 @@ where the output names should start with :code:`"y"` while the input names shoul
 
 .. note::
 
-    Note that the algorithm always uses the past values of the outputs as inputs,
-    and there is therefore no need to include the outputs among the inputs when preparing the data for the model.
+    Note that the algorithm's code always includes the past values of the outputs among the inputs,
+    and there is therefore no need to add the shifted values of the outputs to the inputs when
+    preparing the data for the model.
 
 ==========================================
 Testing
@@ -245,7 +277,7 @@ We now save the training data in S3, build the SageMaker estimator and run the t
     training_data = sagemaker_session.upload_string_as_file_body(
         body=training_dataset.to_csv(index=False),
         bucket=bucket,
-        key="training_dataset.csv"
+        key="training_data.csv"
     )
 
     # create the estimator
@@ -256,32 +288,12 @@ We now save the training data in S3, build the SageMaker estimator and run the t
         instance_type=instance_type,
         input_mode="File",
         sagemaker_session=sagemaker_session,
-        hyperparameters={
-            "context-length": context_length,
-            "prediction-length": prediction_length,
-            "sequence-stride": 1,
-            "hidden-size": 20,
-            "backbone-layers": 1,
-            "backbone-units": 40,
-            "backbone-activation": "lecun",
-            "backbone-dropout": 0,
-            "minimal": True,
-            "no-gate": True,
-            "use-mixed": False,
-            "use-ltc": False,
-            "batch-size": 32,
-            "lr": 0.0001,
-            "lr-decay": 0.9999,
-            "epochs": 800,
-        }
+        hyperparameters=hyperparameters
     )
 
     # run the training job
     estimator.fit({"training": training_data})
 
-.. note::
-
-    Note that we are training a relatively small model with less than 5k parameters.
 
 After the training job has been completed, we deploy the model to real-time endpoint that we can use for inference.
 
@@ -315,12 +327,15 @@ the same as the horizon of the returns).
         # extract the data up to day t - 1
         payload = test_dataset.iloc[t - context_length: t]
 
-        # predict all rolling 30-day returns from day t to day t + 30
+        # invoke the endpoint with the data up to day t - 1
         response = sagemaker_session.sagemaker_runtime_client.invoke_endpoint(
             EndpointName=predictor.endpoint_name,
             ContentType="text/csv",
             Body=payload.to_csv(index=False)
         )
+
+        # deserialize the endpoint response to data frame; the response
+        # includes all predicted 30-day returns from day t to day t + 30
         response = deserializer.deserialize(response["Body"], content_type="text/csv")
 
         # extract the predicted 30-day return from day t to day t + 30
@@ -370,18 +385,93 @@ We evaluate the test set predictions using the following metrics:
 
     <p class="blog-post-image-caption">Performance metrics of predicted 30-day returns from 2023-12-04 to 2024-06-28.</p>
 
-We find that the model achieves a mean absolute error of 1.4% and
-a mean directional accuracy of 97.5%.
+We find that the model achieves a mean absolute error of 1.4% and a mean directional accuracy of 95.8%.
+
+We can now delete the endpoint and the underlying model.
+
+.. code:: python
+
+    # delete the model
+    predictor.delete_model()
+
+    # delete the endpoint
+    predictor.delete_endpoint(delete_endpoint_config=True)
 
 ==========================================
 Forecasting
 ==========================================
 
-We now generate the out-of-sample forecasts, that is we predict the 30-day returns
-over 30 days beyond the end of the data (from the 29<sup>th</sup> of June 2024 to
-the 28<sup>th</sup> of July 2024).
+.. raw:: html
 
+    We now retrain the model using all the available data, and generate the out-of-sample forecasts,
+    that is we predict the 30-day returns over 30 (business) days beyond the end of the data (from the
+    1<sup>st</sup> of July 2024 to the 9<sup>th</sup> of August 2024).
 
+.. code:: python
+
+    # upload the training data to S3
+    data = sagemaker_session.upload_string_as_file_body(
+        body=dataset.to_csv(index=False),
+        bucket=bucket,
+        key="dataset.csv"
+    )
+
+    # create the estimator
+    estimator = sagemaker.algorithm.AlgorithmEstimator(
+        algorithm_arn=algo_arn,
+        role=role,
+        instance_count=1,
+        instance_type=instance_type,
+        input_mode="File",
+        sagemaker_session=sagemaker_session,
+        hyperparameters=hyperparameters
+    )
+
+    # run the training job
+    estimator.fit({"training": data})
+
+Given that we only need a single predicted 30-day sequence, we use batch transform for generating the forecasts.
+
+.. code:: python
+
+    # upload the input data to S3
+    inputs = sagemaker_session.upload_string_as_file_body(
+        body=dataset.iloc[- context_length:].to_csv(index=False),
+        bucket=bucket,
+        key="inputs.csv"
+    )
+
+    # create the transformer
+    transformer = estimator.transformer(
+        instance_count=1,
+        instance_type=instance_type,
+    )
+
+    # run the transform job
+    transformer.transform(
+        data=inputs,
+        content_type="text/csv",
+    )
+
+After the batch transform job has been completed, we can load the forecasts from S3.
+
+.. code:: python
+
+    # download the forecasts from S3
+    forecasts = sagemaker_session.read_s3_file(
+        bucket=bucket,
+        key_prefix=f"{transformer.latest_transform_job.name}/inputs.csv.out"
+    )
+
+    # cast the forecasts to data frame
+    forecasts = pd.read_csv(io.StringIO(forecasts), dtype=float).dropna()
+
+    # add the forecast dates
+    forecasts.index = pd.date_range(
+        start=dataset.index[-1] + pd.Timedelta(days=1),
+        periods=prediction_length,
+        freq="B"
+    )
 
 .. raw:: html
 
@@ -394,15 +484,13 @@ the 28<sup>th</sup> of July 2024).
 
     <p class="blog-post-image-caption">30-day returns forecasts from 2024-06-29 to 2024-07-28.</p>
 
-After the analysis has been completed, we can delete the model and the endpoint.
+Finally, we delete the model created for running the batch transform job.
 
 .. code:: python
 
     # delete the model
-    predictor.delete_model()
+    transformer.delete_model()
 
-    # delete the endpoint
-    predictor.delete_endpoint(delete_endpoint_config=True)
 
 ******************************************
 References
