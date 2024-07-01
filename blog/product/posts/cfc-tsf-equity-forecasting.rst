@@ -363,7 +363,6 @@ the same as the horizon of the returns).
     # add the actual values
     predictions["y"] = test_dataset["y"]
 
-
 .. raw:: html
 
     <img
@@ -374,18 +373,6 @@ the same as the horizon of the returns).
     />
 
     <p class="blog-post-image-caption">Actual and predicted 30-day returns from 2023-12-04 to 2024-06-28.</p>
-
-
-.. raw:: html
-
-    <img
-        id="cfc-tsf-forecasting-forecasts"
-        class="blog-post-image"
-        alt="30-day returns forecasts from 2024-06-29 to 2024-07-28"
-        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/forecasts_light.png
-    />
-
-    <p class="blog-post-image-caption">30-day returns forecasts from 2024-06-29 to 2024-07-28.</p>
 
 We evaluate the test set predictions using the following metrics:
 
@@ -398,6 +385,33 @@ We evaluate the test set predictions using the following metrics:
 * *F1*: The F1 score of the predicted signs of the returns.
 
 
+
+We find that the model achieves a mean absolute error of 1.4% and
+a mean directional accuracy of 97.5%.
+
+.. raw:: html
+
+    We now generate the out-of-sample forecasts, that is we predict the 30-day returns
+    over 30 days beyond the end of the data (from the 29<sup>th</sup> of June 2024 to
+    the 28<sup>th</sup> of July 2024).
+
+.. note::
+
+    In a real-life setting, we would retrain the model on all the available data
+    (i.e. until the 28<sup>th</sup> of June 2024) before generating the out-of-sample
+    forecasts. To avoid running a new training job, we simply use the existing endpoint,
+    which uses the model trained on the data until the 8<sup>th</sup> of September 2023.
+
+.. raw:: html
+
+    <img
+        id="cfc-tsf-forecasting-forecasts"
+        class="blog-post-image"
+        alt="30-day returns forecasts from 2024-06-29 to 2024-07-28"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/forecasts_light.png
+    />
+
+    <p class="blog-post-image-caption">30-day returns forecasts from 2024-06-29 to 2024-07-28.</p>
 
 ******************************************
 References
