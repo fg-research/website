@@ -44,7 +44,7 @@ Product
         .. grid-item::
             :class: sd-text-secondary
 
-            :octicon:`calendar;1rem;calendar-icon` June 30, 2024
+            :octicon:`calendar;1rem;calendar-icon` June 29, 2024
 
 .. card::
     :width: 100%
