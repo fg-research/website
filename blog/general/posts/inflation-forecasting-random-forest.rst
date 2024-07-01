@@ -598,20 +598,20 @@ We start by importing the dependencies.
 .. code:: python
 
     forecasts = get_forecasts(
-            params={
-                "n_estimators": 500,
-                "max_features": 1 / 3,
-                "min_samples_leaf": 5,
-                "random_state": 42,
-                "n_jobs": -1
-            },
-            start_date=start_date,
-            end_date=end_date,
-            target_name=target_name,
-            target_tcode=target_tcode,
-            n_lags=4,
-            n_components=4
-        )
+        params={
+            "n_estimators": 500,
+            "max_features": 1 / 3,
+            "min_samples_leaf": 5,
+            "random_state": 42,
+            "n_jobs": -1
+        },
+        start_date=start_date,
+        end_date=end_date,
+        target_name=target_name,
+        target_tcode=target_tcode,
+        n_lags=4,
+        n_components=4
+    )
 
 .. code:: python
 
