@@ -19,10 +19,10 @@ Forecasting stock returns with liquid neural networks using the CfC SageMaker Al
 
     <p>
     We will use our Amazon SageMaker implementation of liquid neural networks for probabilistic time series
-    forecasting, the <a href="file:///Users/flaviagiammarino/website/docs/algorithms/time-series-forecasting/index.html#cfc-sagemaker-algorithm"
-    target="_blank"> CfC SageMaker algorithm</a>. We will forecast the conditional mean and the
-    conditional standard deviation of the 30-day returns of the S&P 500 using as input the S&P 500
-    realized volatility as well as several implied volatility indices, similar to <a href="#references">[2]</a>.
+    forecasting, the <a href="file:///Users/flaviagiammarino/website/docs/algorithms/time-series-forecasting/index.html#cfc-sagemaker-algorithm" target="_blank"> CfC SageMaker algorithm</a>.
+    We will forecast the conditional mean and the conditional standard deviation of the 30-day returns of
+    the S&P 500 using as input the S&P 500 realized volatility as well as several implied volatility indices,
+    similar to <a href="#references">[2]</a>.
     </p>
 
     <p>
@@ -113,8 +113,8 @@ expectation of what the volatility will be over the next 30 days.
 
 .. note::
 
-    Note that we use the same inputs as in `[2] <file:///Users/flaviagiammarino/website/docs/blog/product/posts/cfc-tsf-equity-forecasting.html#references>`__, with the exception of
-    the *PUTCALL* index, which we had to exclude as its historical time series is not publicly available.
+    Note that we use the same inputs as in `[2] <file:///Users/flaviagiammarino/website/docs/blog/product/posts/cfc-tsf-equity-forecasting.html#references>`__,
+    with the exception of the *PUTCALL* index, which we had to exclude as its historical time series is not publicly available.
 
 ******************************************
 Code
@@ -128,9 +128,9 @@ We start by importing all the dependencies and setting up the SageMaker environm
 
 .. warning::
 
-   To be able to run the code below, you need to have an active
-   subscription to the CfC SageMaker algorithm. You can subscribe to a free trial from
-   the `AWS Marketplace <https://aws.amazon.com/marketplace/pp/prodview-7s4giphluwgta>`__
+   To be able to run the code below, you need to have an active subscription to the
+   CfC SageMaker algorithm. You can subscribe to a free trial from the
+   `AWS Marketplace <https://aws.amazon.com/marketplace/pp/prodview-7s4giphluwgta>`__
    in order to get your Amazon Resource Name (ARN).
    In this post we use version 1.6 of the CfC SageMaker algorithm, which runs in the
    PyTorch 2.1.0 Python 3.10 deep learning container.
@@ -174,9 +174,11 @@ of the inputs to predict the next 30 values of the output.
 ==========================================
 Data Preparation
 ==========================================
-Next, we download the daily close price time series from the 30<sup>th</sup> of June 2022 to
-the 29<sup>th</sup> of June 2024 with the
-<a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
+.. raw:: html
+
+    Next, we download the daily close price time series from the 30<sup>th</sup> of June 2022 to
+    the 29<sup>th</sup> of June 2024 with the
+    <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
 
 .. code:: python
 
@@ -225,7 +227,7 @@ resulting from the calculation of the returns of the realized volatility, are re
     <p class="blog-post-image-caption">30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-29.</p>
 
 We now proceed to renaming the columns in the format required by the CfC SageMaker algorithm,
-where the output names should start with :code:`y` while the input names should start with :code:`x`.
+where the output names should start with :code:`"y"` while the input names should start with :code:`"x"`.
 
 .. code:: python
 
@@ -373,10 +375,6 @@ the same as the horizon of the returns).
 
     <p class="blog-post-image-caption">Actual and predicted 30-day returns from 2023-12-04 to 2024-06-28.</p>
 
-We evaluate the test set predictions using the following metrics:
-
-
-
 
 .. raw:: html
 
@@ -388,6 +386,17 @@ We evaluate the test set predictions using the following metrics:
     />
 
     <p class="blog-post-image-caption">30-day returns forecasts from 2024-06-29 to 2024-07-28.</p>
+
+We evaluate the test set predictions using the following metrics:
+
+* *RMSE*: The root mean squared error of the predicted values of the returns.
+
+* *MAE*: The mean absolute error of the predicted values of the returns.
+
+* *Accuracy*: The accuracy of the predicted signs of the returns.
+
+* *F1*: The F1 score of the predicted signs of the returns.
+
 
 
 ******************************************

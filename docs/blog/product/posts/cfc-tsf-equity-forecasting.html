@@ -131,9 +131,10 @@ In this post, we examine the performance of liquid neural networks <a href="#ref
 </p>
 <p>
 We will use our Amazon SageMaker implementation of liquid neural networks for probabilistic time series
-forecasting, the <a href="file:///Users/flaviagiammarino/website/docs/algorithms/time-series-forecasting/index.html#cfc-sagemaker-algorithm" target="_blank"> CfC SageMaker algorithm</a>. We will forecast the conditional mean and the
-conditional standard deviation of the 30-day returns of the S&amp;P 500 using as input the S&amp;P 500
-realized volatility as well as several implied volatility indices, similar to <a href="#references">[2]</a>.
+forecasting, the <a href="file:///Users/flaviagiammarino/website/docs/algorithms/time-series-forecasting/index.html#cfc-sagemaker-algorithm" target="_blank"> CfC SageMaker algorithm</a>.
+We will forecast the conditional mean and the conditional standard deviation of the 30-day returns of
+the S&amp;P 500 using as input the S&amp;P 500 realized volatility as well as several implied volatility indices,
+similar to <a href="#references">[2]</a>.
 </p>
 <p>
 We will use the daily close prices from the 30<sup>th</sup> of June 2022 to
@@ -195,8 +196,8 @@ while <em>VIX</em>, <em>VVIX</em>, <em>VXN</em>, <em>GVZ</em>, and <em>OVX</em> 
 expectation of what the volatility will be over the next 30 days.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Note that we use the same inputs as in <a class="reference external" href="file:///Users/flaviagiammarino/website/docs/blog/product/posts/cfc-tsf-equity-forecasting.html#references">[2]</a>, with the exception of
-the <em>PUTCALL</em> index, which we had to exclude as its historical time series is not publicly available.</p>
+<p>Note that we use the same inputs as in <a class="reference external" href="file:///Users/flaviagiammarino/website/docs/blog/product/posts/cfc-tsf-equity-forecasting.html#references">[2]</a>,
+with the exception of the <em>PUTCALL</em> index, which we had to exclude as its historical time series is not publicly available.</p>
 </div>
 </section>
 </section>
@@ -207,9 +208,9 @@ the <em>PUTCALL</em> index, which we had to exclude as its historical time serie
 <p>We start by importing all the dependencies and setting up the SageMaker environment.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>To be able to run the code below, you need to have an active
-subscription to the CfC SageMaker algorithm. You can subscribe to a free trial from
-the <a class="reference external" href="https://aws.amazon.com/marketplace/pp/prodview-7s4giphluwgta">AWS Marketplace</a>
+<p>To be able to run the code below, you need to have an active subscription to the
+CfC SageMaker algorithm. You can subscribe to a free trial from the
+<a class="reference external" href="https://aws.amazon.com/marketplace/pp/prodview-7s4giphluwgta">AWS Marketplace</a>
 in order to get your Amazon Resource Name (ARN).
 In this post we use version 1.6 of the CfC SageMaker algorithm, which runs in the
 PyTorch 2.1.0 Python 3.10 deep learning container.</p>
@@ -250,10 +251,9 @@ of the inputs to predict the next 30 values of the output.</p>
 </section>
 <section id="data-preparation">
 <h3>Data Preparation<a class="headerlink" href="#data-preparation" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data-preparation'">¶</a></h3>
-<p>Next, we download the daily close price time series from the 30&lt;sup&gt;th&lt;/sup&gt; of June 2022 to
-the 29&lt;sup&gt;th&lt;/sup&gt; of June 2024 with the
-&lt;a href=”<a class="reference external" href="https://github.com/ranaroussi/yfinance">https://github.com/ranaroussi/yfinance</a>” target=”_blank”&gt;Yahoo! Finance Python API&lt;/a&gt;.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># download the data</span>
+Next, we download the daily close price time series from the 30<sup>th</sup> of June 2022 to
+the 29<sup>th</sup> of June 2024 with the
+<a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># download the data</span>
 </span><span id="line-2"><span class="n">tickers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"^SPX"</span><span class="p">,</span> <span class="s2">"^VIX"</span><span class="p">,</span> <span class="s2">"^VVIX"</span><span class="p">,</span> <span class="s2">"^VXN"</span><span class="p">,</span> <span class="s2">"^GVZ"</span><span class="p">,</span> <span class="s2">"^OVX"</span><span class="p">]</span>
 </span><span id="line-3"><span class="n">dataset</span> <span class="o">=</span> <span class="n">yf</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tickers</span><span class="p">),</span> <span class="n">start</span><span class="o">=</span><span class="s2">"2022-06-30"</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">"2024-06-29"</span><span class="p">)</span>
 </span><span id="line-4">
@@ -286,7 +286,7 @@ the 29&lt;sup&gt;th&lt;/sup&gt; of June 2024 with the
 resulting from the calculation of the returns of the realized volatility, are reduced to 472.</p>
 <img alt="30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-29" class="blog-post-image" id="cfc-tsf-forecasting-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/time_series_light.png"/>
 <p class="blog-post-image-caption">30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-29.</p><p>We now proceed to renaming the columns in the format required by the CfC SageMaker algorithm,
-where the output names should start with <code class="code docutils literal notranslate"><span class="pre">y</span></code> while the input names should start with <code class="code docutils literal notranslate"><span class="pre">x</span></code>.</p>
+where the output names should start with <code class="code docutils literal notranslate"><span class="pre">"y"</span></code> while the input names should start with <code class="code docutils literal notranslate"><span class="pre">"x"</span></code>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">dataset</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"y"</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="sa">f</span><span class="s2">"x</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>
 </span></code></pre></div>
 </div>
@@ -413,9 +413,15 @@ the same as the horizon of the returns).</p>
 </span></code></pre></div>
 </div>
 <img alt="Actual and predicted 30-day returns from 2023-12-04 to 2024-06-28" class="blog-post-image" id="cfc-tsf-forecasting-predictions" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/predictions_light.png"/>
-<p class="blog-post-image-caption">Actual and predicted 30-day returns from 2023-12-04 to 2024-06-28.</p><p>We evaluate the test set predictions using the following metrics:</p>
-<img alt="30-day returns forecasts from 2024-06-29 to 2024-07-28" class="blog-post-image" id="cfc-tsf-forecasting-forecasts" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/forecasts_light.png"/>
-<p class="blog-post-image-caption">30-day returns forecasts from 2024-06-29 to 2024-07-28.</p></section>
+<p class="blog-post-image-caption">Actual and predicted 30-day returns from 2023-12-04 to 2024-06-28.</p><img alt="30-day returns forecasts from 2024-06-29 to 2024-07-28" class="blog-post-image" id="cfc-tsf-forecasting-forecasts" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/forecasts_light.png"/>
+<p class="blog-post-image-caption">30-day returns forecasts from 2024-06-29 to 2024-07-28.</p><p>We evaluate the test set predictions using the following metrics:</p>
+<ul class="simple">
+<li><p><em>RMSE</em>: The root mean squared error of the predicted values of the returns.</p></li>
+<li><p><em>MAE</em>: The mean absolute error of the predicted values of the returns.</p></li>
+<li><p><em>Accuracy</em>: The accuracy of the predicted signs of the returns.</p></li>
+<li><p><em>F1</em>: The F1 score of the predicted signs of the returns.</p></li>
+</ul>
+</section>
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#references'">¶</a></h2>
