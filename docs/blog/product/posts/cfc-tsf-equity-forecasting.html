@@ -132,15 +132,15 @@ a new neural network architecture for sequential data.
 <p>
 LNNs belong to the class of continuous-time recurrent neural networks (CT-RNNs)
 <a href="#references">[3]</a>, where the evolution of the hidden state over time is described by
-an Ordinary Differential Equation (ODE). LNNs use the Liquid Time Constant (LTC)
+an Ordinary Differential Equation (ODE). LNNs are based on the Liquid Time Constant (LTC)
 ODE <a href="#references">[4]</a>, where both the derivative and the time constant of the hidden
-state are determined by a neural network.
+state follow a neural network.
 </p>
 <p>
-In this post, we focus on the closed-form continuous-depth (CfC) network <a href="#references">[5]</a>
-implementation of the LTC ODE. Differently from other CT-RNNs (including LTCs <a href="#references">[4]</a>),
-which use a numerical solver to find the ODE solution, CfC networks use an approximate closed-form solution.
-As a results, CfC networks achieve faster training and inference performance than other CT-RNNs.
+In this post, we focus on the closed-form continuous-depth (CfC) network <a href="#references">[5]</a>.
+CfC networks implement an approximate closed-form solution of the LTC ODE and, as a result, achieve faster
+training and inference performance than other CT-RNNs (including LTCs <a href="#references">[4]</a>),
+which instead use a numerical solver to find the ODE solution.
 </p>
 <p>
 We will use our Amazon SageMaker implementation of CfC networks for probabilistic time series
@@ -151,7 +151,8 @@ similar to <a href="#references">[2]</a>.
 </p>
 <p>
 We will use the daily close prices from the 30<sup>th</sup> of June 2022 to
-the 29<sup>th</sup> of June 2024, which we will download with the <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
+the 29<sup>th</sup> of June 2024, which we will download from
+<a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>.
 We will train the model on the data up to the 8<sup>th</sup> of September 2023,
 and use the trained model to predict the subsequent data up to the 29<sup>th</sup> of June 2024.
 We will find that the CfC SageMaker algorithm achieves a mean absolute error of 1.4% and
@@ -183,13 +184,12 @@ of the following volatility indicators:</p>
 <p><em>RVOL</em> is a backward-looking indicator, as it estimates the volatility over the past 30 days,
 while <em>VIX</em>, <em>VVIX</em>, <em>VXN</em>, <em>GVZ</em>, and <em>OVX</em> are forward-looking indicators, as they reflect the market’s
 expectation of what the volatility will be over the next 30 days.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Note that we use the same inputs as in <a class="reference external" href="file:///Users/flaviagiammarino/website/docs/blog/product/posts/cfc-tsf-equity-forecasting.html#references">[2]</a>,
-with the exception of the <em>PUTCALL</em> index, which we had to exclude as its historical time series is not publicly available.</p>
-</div>
-<p>We will use a context length of 30 days, meaning that the model will use as input the 30-day returns
-and the volatility indicators over the previous 30 days in order to predict the future 30-day returns.</p>
+<p>
+Note that we use the same inputs as in <a href="#references">[2]</a>, with the exception of the
+*PUTCALL* index, which we had to exclude as its historical time series is not publicly available.
+</p><p>We will use a context length of 30 days, meaning that the model will use as input the 30-day returns
+and the volatility indicators over the previous 30 days in order to predict the 30-day returns over
+the subsequent 30 days.</p>
 </section>
 </section>
 <section id="code">
@@ -243,24 +243,25 @@ of the inputs and output to predict the subsequent 30 values of the output.</p>
 Note that we use a relatively small model with less than 5k parameters.
 A detailed description of the CfC network architecture and of its hyperparameters
 is available in our <a class="reference external" href="https://github.com/fg-research/cfc-tsf-sagemaker">GitHub repository</a>.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">hyperparameters</span> <span class="o">=</span> <span class="p">{</span>
-</span><span id="line-2">    <span class="s2">"context-length"</span><span class="p">:</span> <span class="n">context_length</span><span class="p">,</span>
-</span><span id="line-3">    <span class="s2">"prediction-length"</span><span class="p">:</span> <span class="n">prediction_length</span><span class="p">,</span>
-</span><span id="line-4">    <span class="s2">"sequence-stride"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-</span><span id="line-5">    <span class="s2">"hidden-size"</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
-</span><span id="line-6">    <span class="s2">"backbone-layers"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-</span><span id="line-7">    <span class="s2">"backbone-units"</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span>
-</span><span id="line-8">    <span class="s2">"backbone-activation"</span><span class="p">:</span> <span class="s2">"lecun"</span><span class="p">,</span>
-</span><span id="line-9">    <span class="s2">"backbone-dropout"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-</span><span id="line-10">    <span class="s2">"minimal"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-</span><span id="line-11">    <span class="s2">"no-gate"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-</span><span id="line-12">    <span class="s2">"use-mixed"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-</span><span id="line-13">    <span class="s2">"use-ltc"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-</span><span id="line-14">    <span class="s2">"batch-size"</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span>
-</span><span id="line-15">    <span class="s2">"lr"</span><span class="p">:</span> <span class="mf">0.0001</span><span class="p">,</span>
-</span><span id="line-16">    <span class="s2">"lr-decay"</span><span class="p">:</span> <span class="mf">0.9999</span><span class="p">,</span>
-</span><span id="line-17">    <span class="s2">"epochs"</span><span class="p">:</span> <span class="mi">800</span><span class="p">,</span>
-</span><span id="line-18"><span class="p">}</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># neural network hyperparameters</span>
+</span><span id="line-2"><span class="n">hyperparameters</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="line-3">    <span class="s2">"context-length"</span><span class="p">:</span> <span class="n">context_length</span><span class="p">,</span>
+</span><span id="line-4">    <span class="s2">"prediction-length"</span><span class="p">:</span> <span class="n">prediction_length</span><span class="p">,</span>
+</span><span id="line-5">    <span class="s2">"sequence-stride"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+</span><span id="line-6">    <span class="s2">"hidden-size"</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+</span><span id="line-7">    <span class="s2">"backbone-layers"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+</span><span id="line-8">    <span class="s2">"backbone-units"</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span>
+</span><span id="line-9">    <span class="s2">"backbone-activation"</span><span class="p">:</span> <span class="s2">"lecun"</span><span class="p">,</span>
+</span><span id="line-10">    <span class="s2">"backbone-dropout"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span id="line-11">    <span class="s2">"minimal"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+</span><span id="line-12">    <span class="s2">"no-gate"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+</span><span id="line-13">    <span class="s2">"use-mixed"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+</span><span id="line-14">    <span class="s2">"use-ltc"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+</span><span id="line-15">    <span class="s2">"batch-size"</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span>
+</span><span id="line-16">    <span class="s2">"lr"</span><span class="p">:</span> <span class="mf">0.0001</span><span class="p">,</span>
+</span><span id="line-17">    <span class="s2">"lr-decay"</span><span class="p">:</span> <span class="mf">0.9999</span><span class="p">,</span>
+</span><span id="line-18">    <span class="s2">"epochs"</span><span class="p">:</span> <span class="mi">800</span><span class="p">,</span>
+</span><span id="line-19"><span class="p">}</span>
 </span></code></pre></div>
 </div>
 </section>
@@ -268,8 +269,8 @@ is available in our <a class="reference external" href="https://github.com/fg-re
 <h3>Data Preparation<a class="headerlink" href="#data-preparation" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data-preparation'">¶</a></h3>
 <p>
 Next, we download the daily close price time series from the 30<sup>th</sup> of June 2022 to
-the 29<sup>th</sup> of June 2024 with the
-<a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
+the 29<sup>th</sup> of June 2024 from <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>
+using the <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
 </p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># download the data</span>
 </span><span id="line-2"><span class="n">tickers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"^SPX"</span><span class="p">,</span> <span class="s2">"^VIX"</span><span class="p">,</span> <span class="s2">"^VVIX"</span><span class="p">,</span> <span class="s2">"^VXN"</span><span class="p">,</span> <span class="s2">"^GVZ"</span><span class="p">,</span> <span class="s2">"^OVX"</span><span class="p">]</span>
 </span><span id="line-3"><span class="n">dataset</span> <span class="o">=</span> <span class="n">yf</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tickers</span><span class="p">),</span> <span class="n">start</span><span class="o">=</span><span class="s2">"2022-06-30"</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">"2024-06-29"</span><span class="p">)</span>
@@ -310,14 +311,15 @@ where the output names should start with <code class="code docutils literal notr
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Note that the algorithm’s code always includes the past values of the outputs among the inputs,
-and there is therefore no need to add the shifted values of the outputs to the inputs when
+and there is therefore no need to add the lagged values of the outputs to the inputs when
 preparing the data for the model.</p>
 </div>
 </section>
 <section id="testing">
 <h3>Testing<a class="headerlink" href="#testing" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#testing'">¶</a></h3>
-<p>For the purpose of validating the model, we split the data into a training set and a test set. The training set includes the first 70% of
-the data (270 observations), while the test set includes the last 30% of the data (202 observations).</p>
+<p>For the purpose of validating the model, we split the data into a training set and a test set.
+The training set includes the first 70% of the data (270 observations), while the test set
+includes the last 30% of the data (202 observations).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># define the size of the test set</span>
 </span><span id="line-2"><span class="n">test_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.3</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">))</span>
 </span><span id="line-3">
@@ -379,34 +381,33 @@ the same as the horizon of the returns).</p>
 </span><span id="line-4"><span class="c1"># loop across the dates</span>
 </span><span id="line-5"><span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">context_length</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_dataset</span><span class="p">)</span> <span class="o">-</span> <span class="n">prediction_length</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
 </span><span id="line-6">
-</span><span id="line-7">    <span class="c1"># extract the data up to day t - 1</span>
+</span><span id="line-7">    <span class="c1"># extract the inputs</span>
 </span><span id="line-8">    <span class="n">payload</span> <span class="o">=</span> <span class="n">test_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">t</span> <span class="o">-</span> <span class="n">context_length</span><span class="p">:</span> <span class="n">t</span><span class="p">]</span>
 </span><span id="line-9">
-</span><span id="line-10">    <span class="c1"># invoke the endpoint with the data up to day t - 1</span>
+</span><span id="line-10">    <span class="c1"># invoke the endpoint</span>
 </span><span id="line-11">    <span class="n">response</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">sagemaker_runtime_client</span><span class="o">.</span><span class="n">invoke_endpoint</span><span class="p">(</span>
 </span><span id="line-12">        <span class="n">EndpointName</span><span class="o">=</span><span class="n">predictor</span><span class="o">.</span><span class="n">endpoint_name</span><span class="p">,</span>
 </span><span id="line-13">        <span class="n">ContentType</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">,</span>
 </span><span id="line-14">        <span class="n">Body</span><span class="o">=</span><span class="n">payload</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </span><span id="line-15">    <span class="p">)</span>
 </span><span id="line-16">
-</span><span id="line-17">    <span class="c1"># deserialize the endpoint response to data frame; the response</span>
-</span><span id="line-18">    <span class="c1"># includes all predicted 30-day returns from day t to day t + 30</span>
-</span><span id="line-19">    <span class="n">response</span> <span class="o">=</span> <span class="n">deserializer</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s2">"Body"</span><span class="p">],</span> <span class="n">content_type</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">)</span>
-</span><span id="line-20">
-</span><span id="line-21">    <span class="c1"># extract the predicted 30-day return from day t to day t + 30</span>
-</span><span id="line-22">    <span class="n">prediction</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span>
-</span><span id="line-23">
-</span><span id="line-24">    <span class="c1"># extract the date corresponding to day t + 30</span>
-</span><span id="line-25">    <span class="n">prediction</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="n">test_dataset</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">t</span> <span class="o">+</span> <span class="n">prediction_length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]]</span>
-</span><span id="line-26">
-</span><span id="line-27">    <span class="c1"># save the prediction</span>
-</span><span id="line-28">    <span class="n">predictions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prediction</span><span class="p">)</span>
-</span><span id="line-29">
-</span><span id="line-30"><span class="c1"># cast the predictions to data frame</span>
-</span><span id="line-31"><span class="n">predictions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
-</span><span id="line-32">
-</span><span id="line-33"><span class="c1"># add the actual values</span>
-</span><span id="line-34"><span class="n">predictions</span><span class="p">[</span><span class="s2">"y"</span><span class="p">]</span> <span class="o">=</span> <span class="n">test_dataset</span><span class="p">[</span><span class="s2">"y"</span><span class="p">]</span>
+</span><span id="line-17">    <span class="c1"># deserialize the endpoint response</span>
+</span><span id="line-18">    <span class="n">response</span> <span class="o">=</span> <span class="n">deserializer</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s2">"Body"</span><span class="p">],</span> <span class="n">content_type</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">)</span>
+</span><span id="line-19">
+</span><span id="line-20">    <span class="c1"># extract the predicted 30-day return</span>
+</span><span id="line-21">    <span class="n">prediction</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span>
+</span><span id="line-22">
+</span><span id="line-23">    <span class="c1"># extract the date corresponding to the predicted 30-day return</span>
+</span><span id="line-24">    <span class="n">prediction</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="n">test_dataset</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">t</span> <span class="o">+</span> <span class="n">prediction_length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]]</span>
+</span><span id="line-25">
+</span><span id="line-26">    <span class="c1"># save the prediction</span>
+</span><span id="line-27">    <span class="n">predictions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prediction</span><span class="p">)</span>
+</span><span id="line-28">
+</span><span id="line-29"><span class="c1"># cast the predictions to data frame</span>
+</span><span id="line-30"><span class="n">predictions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
+</span><span id="line-31">
+</span><span id="line-32"><span class="c1"># add the actual values</span>
+</span><span id="line-33"><span class="n">predictions</span><span class="p">[</span><span class="s2">"y"</span><span class="p">]</span> <span class="o">=</span> <span class="n">test_dataset</span><span class="p">[</span><span class="s2">"y"</span><span class="p">]</span>
 </span></code></pre></div>
 </div>
 <img alt="Actual and predicted 30-day returns from 2023-12-04 to 2024-06-28" class="blog-post-image" id="cfc-tsf-forecasting-predictions" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/predictions_light.png"/>
@@ -418,7 +419,7 @@ the same as the horizon of the returns).</p>
 <li><p><em>F1</em>: The F1 score of the predicted signs of the returns.</p></li>
 </ul>
 <img alt="Performance metrics of predicted 30-day returns from 2023-12-04 to 2024-06-28" class="blog-post-image" id="cfc-tsf-forecasting-metrics" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/metrics_light.png"/>
-<p class="blog-post-image-caption">Performance metrics of predicted 30-day returns from 2023-12-04 to 2024-06-28.</p><p>We can now delete the endpoint and the underlying model.</p>
+<p class="blog-post-image-caption">Performance metrics of predicted 30-day returns from 2023-12-04 to 2024-06-28.</p><p>We can now delete the model and the endpoint.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># delete the model</span>
 </span><span id="line-2"><span class="n">predictor</span><span class="o">.</span><span class="n">delete_model</span><span class="p">()</span>
 </span><span id="line-3">
@@ -431,8 +432,7 @@ the same as the horizon of the returns).</p>
 <h3>Forecasting<a class="headerlink" href="#forecasting" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#forecasting'">¶</a></h3>
 <p>
 We now retrain the model using all the available data, and generate the out-of-sample forecasts,
-that is we predict the 30-day returns over 30 (business) days beyond the end of the data (from the
-1<sup>st</sup> of July 2024 to the 9<sup>th</sup> of August 2024).
+that is we predict the 30-day returns over 30 (business) days beyond the end of the data.
 </p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># upload the training data to S3</span>
 </span><span id="line-2"><span class="n">data</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">upload_string_as_file_body</span><span class="p">(</span>
 </span><span id="line-3">    <span class="n">body</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
@@ -494,8 +494,8 @@ that is we predict the 30-day returns over 30 (business) days beyond the end of 
 </span><span id="line-15"><span class="p">)</span>
 </span></code></pre></div>
 </div>
-<img alt="30-day returns forecasts from 2024-06-29 to 2024-07-28" class="blog-post-image" id="cfc-tsf-forecasting-forecasts" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/forecasts_light.png"/>
-<p class="blog-post-image-caption">30-day returns forecasts from 2024-06-29 to 2024-07-28.</p><p>Finally, we delete the model created for running the batch transform job.</p>
+<img alt="30-day returns forecasts from 2024-08-09 to 2024-07-01" class="blog-post-image" id="cfc-tsf-forecasting-forecasts" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/forecasts_light.png"/>
+<p class="blog-post-image-caption">30-day returns forecasts from 2024-08-09 to 2024-07-01.</p><p>We can now delete the model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># delete the model</span>
 </span><span id="line-2"><span class="n">transformer</span><span class="o">.</span><span class="n">delete_model</span><span class="p">()</span>
 </span></code></pre></div>

@@ -20,16 +20,16 @@ Forecasting stock returns with liquid neural networks using the CfC SageMaker Al
     <p>
     LNNs belong to the class of continuous-time recurrent neural networks (CT-RNNs)
     <a href="#references">[3]</a>, where the evolution of the hidden state over time is described by
-    an Ordinary Differential Equation (ODE). LNNs use the Liquid Time Constant (LTC)
+    an Ordinary Differential Equation (ODE). LNNs are based on the Liquid Time Constant (LTC)
     ODE <a href="#references">[4]</a>, where both the derivative and the time constant of the hidden
-    state are determined by a neural network.
+    state follow a neural network.
     </p>
 
     <p>
-    In this post, we focus on the closed-form continuous-depth (CfC) network <a href="#references">[5]</a>
-    implementation of the LTC ODE. Differently from other CT-RNNs (including LTCs <a href="#references">[4]</a>),
-    which use a numerical solver to find the ODE solution, CfC networks use an approximate closed-form solution.
-    As a results, CfC networks achieve faster training and inference performance than other CT-RNNs.
+    In this post, we focus on the closed-form continuous-depth (CfC) network <a href="#references">[5]</a>.
+    CfC networks implement an approximate closed-form solution of the LTC ODE and, as a result, achieve faster
+    training and inference performance than other CT-RNNs (including LTCs <a href="#references">[4]</a>),
+    which instead use a numerical solver to find the ODE solution.
     </p>
 
     <p>
@@ -42,7 +42,8 @@ Forecasting stock returns with liquid neural networks using the CfC SageMaker Al
 
     <p>
     We will use the daily close prices from the 30<sup>th</sup> of June 2022 to
-    the 29<sup>th</sup> of June 2024, which we will download with the <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
+    the 29<sup>th</sup> of June 2024, which we will download from
+    <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>.
     We will train the model on the data up to the 8<sup>th</sup> of September 2023,
     and use the trained model to predict the subsequent data up to the 29<sup>th</sup> of June 2024.
     We will find that the CfC SageMaker algorithm achieves a mean absolute error of 1.4% and
@@ -91,13 +92,16 @@ of the following volatility indicators:
 while *VIX*, *VVIX*, *VXN*, *GVZ*, and *OVX* are forward-looking indicators, as they reflect the market's
 expectation of what the volatility will be over the next 30 days.
 
-.. note::
+.. raw:: html
 
-    Note that we use the same inputs as in `[2] <file:///Users/flaviagiammarino/website/docs/blog/product/posts/cfc-tsf-equity-forecasting.html#references>`__,
-    with the exception of the *PUTCALL* index, which we had to exclude as its historical time series is not publicly available.
+    <p>
+    Note that we use the same inputs as in <a href="#references">[2]</a>, with the exception of the
+    *PUTCALL* index, which we had to exclude as its historical time series is not publicly available.
+    </p>
 
 We will use a context length of 30 days, meaning that the model will use as input the 30-day returns
-and the volatility indicators over the previous 30 days in order to predict the future 30-day returns.
+and the volatility indicators over the previous 30 days in order to predict the 30-day returns over
+the subsequent 30 days.
 
 ******************************************
 Code
@@ -161,6 +165,7 @@ is available in our `GitHub repository <https://github.com/fg-research/cfc-tsf-s
 
 .. code:: python
 
+    # neural network hyperparameters
     hyperparameters = {
         "context-length": context_length,
         "prediction-length": prediction_length,
@@ -189,8 +194,8 @@ Data Preparation
 
     <p>
     Next, we download the daily close price time series from the 30<sup>th</sup> of June 2022 to
-    the 29<sup>th</sup> of June 2024 with the
-    <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
+    the 29<sup>th</sup> of June 2024 from <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>
+    using the <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
     </p>
 
 .. code:: python
@@ -249,15 +254,16 @@ where the output names should start with :code:`"y"` while the input names shoul
 .. note::
 
     Note that the algorithm's code always includes the past values of the outputs among the inputs,
-    and there is therefore no need to add the shifted values of the outputs to the inputs when
+    and there is therefore no need to add the lagged values of the outputs to the inputs when
     preparing the data for the model.
 
 ==========================================
 Testing
 ==========================================
 
-For the purpose of validating the model, we split the data into a training set and a test set. The training set includes the first 70% of
-the data (270 observations), while the test set includes the last 30% of the data (202 observations).
+For the purpose of validating the model, we split the data into a training set and a test set.
+The training set includes the first 70% of the data (270 observations), while the test set
+includes the last 30% of the data (202 observations).
 
 .. code:: python
 
@@ -299,7 +305,6 @@ We now save the training data in S3, build the SageMaker estimator and run the t
     # run the training job
     estimator.fit({"training": training_data})
 
-
 After the training job has been completed, we deploy the model to real-time endpoint that we can use for inference.
 
 .. code:: python
@@ -329,24 +334,23 @@ the same as the horizon of the returns).
     # loop across the dates
     for t in range(context_length, len(test_dataset) - prediction_length + 1):
 
-        # extract the data up to day t - 1
+        # extract the inputs
         payload = test_dataset.iloc[t - context_length: t]
 
-        # invoke the endpoint with the data up to day t - 1
+        # invoke the endpoint
         response = sagemaker_session.sagemaker_runtime_client.invoke_endpoint(
             EndpointName=predictor.endpoint_name,
             ContentType="text/csv",
             Body=payload.to_csv(index=False)
         )
 
-        # deserialize the endpoint response to data frame; the response
-        # includes all predicted 30-day returns from day t to day t + 30
+        # deserialize the endpoint response
         response = deserializer.deserialize(response["Body"], content_type="text/csv")
 
-        # extract the predicted 30-day return from day t to day t + 30
+        # extract the predicted 30-day return
         prediction = response.iloc[-1:]
 
-        # extract the date corresponding to day t + 30
+        # extract the date corresponding to the predicted 30-day return
         prediction.index = [test_dataset.index[t + prediction_length - 1]]
 
         # save the prediction
@@ -390,7 +394,7 @@ We evaluate the test set predictions using the following metrics:
 
     <p class="blog-post-image-caption">Performance metrics of predicted 30-day returns from 2023-12-04 to 2024-06-28.</p>
 
-We can now delete the endpoint and the underlying model.
+We can now delete the model and the endpoint.
 
 .. code:: python
 
@@ -408,8 +412,7 @@ Forecasting
 
     <p>
     We now retrain the model using all the available data, and generate the out-of-sample forecasts,
-    that is we predict the 30-day returns over 30 (business) days beyond the end of the data (from the
-    1<sup>st</sup> of July 2024 to the 9<sup>th</sup> of August 2024).
+    that is we predict the 30-day returns over 30 (business) days beyond the end of the data.
     </p>
 
 .. code:: python
@@ -483,13 +486,13 @@ After the batch transform job has been completed, we can load the forecasts from
     <img
         id="cfc-tsf-forecasting-forecasts"
         class="blog-post-image"
-        alt="30-day returns forecasts from 2024-06-29 to 2024-07-28"
+        alt="30-day returns forecasts from 2024-08-09 to 2024-07-01"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/forecasts_light.png
     />
 
-    <p class="blog-post-image-caption">30-day returns forecasts from 2024-06-29 to 2024-07-28.</p>
+    <p class="blog-post-image-caption">30-day returns forecasts from 2024-08-09 to 2024-07-01.</p>
 
-Finally, we delete the model created for running the batch transform job.
+We can now delete the model.
 
 .. code:: python
 
