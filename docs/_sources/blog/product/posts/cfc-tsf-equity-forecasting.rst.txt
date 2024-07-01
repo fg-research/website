@@ -96,7 +96,7 @@ expectation of what the volatility will be over the next 30 days.
 
     <p>
     Note that we use the same inputs as in <a href="#references">[2]</a>, with the exception of the
-    *PUTCALL* index, which we had to exclude as its historical time series is not publicly available.
+    <i>PUTCALL</i> index, which we had to exclude as its historical time series is not publicly available.
     </p>
 
 We will use a context length of 30 days, meaning that the model will use as input the 30-day returns
