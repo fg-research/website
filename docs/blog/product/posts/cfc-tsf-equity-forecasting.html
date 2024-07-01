@@ -416,8 +416,7 @@ the same as the horizon of the returns).</p>
 <li><p><em>F1</em>: The F1 score of the predicted signs of the returns.</p></li>
 </ul>
 <img alt="Performance metrics of predicted 30-day returns from 2023-12-04 to 2024-06-28" class="blog-post-image" id="cfc-tsf-forecasting-metrics" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/metrics_light.png"/>
-<p class="blog-post-image-caption">Performance metrics of predicted 30-day returns from 2023-12-04 to 2024-06-28.</p><p>We find that the model achieves a mean absolute error of 1.4% and a mean directional accuracy of 95.8%.</p>
-<p>We can now delete the endpoint and the underlying model.</p>
+<p class="blog-post-image-caption">Performance metrics of predicted 30-day returns from 2023-12-04 to 2024-06-28.</p><p>We can now delete the endpoint and the underlying model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># delete the model</span>
 </span><span id="line-2"><span class="n">predictor</span><span class="o">.</span><span class="n">delete_model</span><span class="p">()</span>
 </span><span id="line-3">

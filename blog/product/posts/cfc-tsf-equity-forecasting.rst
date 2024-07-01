@@ -184,6 +184,7 @@ is available in our `GitHub repository <https://github.com/fg-research/cfc-tsf-s
 ==========================================
 Data Preparation
 ==========================================
+
 .. raw:: html
 
     Next, we download the daily close price time series from the 30<sup>th</sup> of June 2022 to
@@ -386,8 +387,6 @@ We evaluate the test set predictions using the following metrics:
     />
 
     <p class="blog-post-image-caption">Performance metrics of predicted 30-day returns from 2023-12-04 to 2024-06-28.</p>
-
-We find that the model achieves a mean absolute error of 1.4% and a mean directional accuracy of 95.8%.
 
 We can now delete the endpoint and the underlying model.
 
