@@ -402,6 +402,7 @@ We can now delete the endpoint and the underlying model.
 Forecasting
 ==========================================
 
+
 .. raw:: html
 
     We now retrain the model using all the available data, and generate the out-of-sample forecasts,
