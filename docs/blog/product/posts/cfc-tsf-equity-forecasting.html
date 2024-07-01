@@ -147,14 +147,14 @@ We will use our Amazon SageMaker implementation of CfC networks for probabilisti
 forecasting, the <a href="https://fg-research.com/algorithms/time-series-forecasting/index.html#cfc-sagemaker-algorithm" target="_blank"> CfC SageMaker algorithm</a>.
 We will forecast the conditional mean and the conditional standard deviation of the 30-day returns of
 the S&amp;P 500 using as input the S&amp;P 500 realized volatility as well as several implied volatility indices,
-similar to <a href="#references">[2]</a>.
+as in <a href="#references">[2]</a>.
 </p>
 <p>
 We will use the daily close prices from the 30<sup>th</sup> of June 2022 to
-the 29<sup>th</sup> of June 2024, which we will download from
+the 28<sup>th</sup> of June 2024, which we will download from
 <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>.
 We will train the model on the data up to the 8<sup>th</sup> of September 2023,
-and use the trained model to predict the subsequent data up to the 29<sup>th</sup> of June 2024.
+and use the trained model to predict the subsequent data up to the 28<sup>th</sup> of June 2024.
 We will find that the CfC SageMaker algorithm achieves a mean absolute error of 1.4% and
 a mean directional accuracy of 95.8%.
 </p><section id="data">
@@ -174,7 +174,7 @@ over the subsequent 30 days. Given that we use overlapping (or rolling) returns,
 <p>The model uses as input the previous 30-day returns of the S&amp;P 500, as well as the past values
 of the following volatility indicators:</p>
 <ul class="simple">
-<li><p><em>RVOL</em>: The realized volatility of the S&amp;P 500, which is calculated as the 30-day rolling sample standard deviation of the S&amp;P 500 daily log returns.</p></li>
+<li><p><em>RVOL</em>: The realized volatility of the S&amp;P 500, which is calculated as the 30-day rolling sample standard deviation of the S&amp;P 500 daily returns.</p></li>
 <li><p><em>VIX</em>: The VIX index, which measures the 30-day implied volatility of S&amp;P 500 options.</p></li>
 <li><p><em>VVIX</em>: The VVIX index, which reflects the 30-day expected volatility of the VIX.</p></li>
 <li><p><em>VXN</em>: The VXN index, which measures the 30-day implied volatility of NASDAQ 100 options.</p></li>
@@ -239,9 +239,9 @@ of the inputs and output to predict the subsequent 30 values of the output.</p>
 </span><span id="line-5"><span class="n">prediction_length</span> <span class="o">=</span> <span class="mi">30</span>
 </span></code></pre></div>
 </div>
-<p>We also define all the remaining hyperparameters of the CfC network architecture.
+<p>We also define all the remaining hyperparameters of the CfC network.
 Note that we use a relatively small model with less than 5k parameters.
-A detailed description of the CfC network architecture and of its hyperparameters
+A detailed description of the model architecture and of its hyperparameters
 is available in our <a class="reference external" href="https://github.com/fg-research/cfc-tsf-sagemaker">GitHub repository</a>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># neural network hyperparameters</span>
 </span><span id="line-2"><span class="n">hyperparameters</span> <span class="o">=</span> <span class="p">{</span>
@@ -269,7 +269,7 @@ is available in our <a class="reference external" href="https://github.com/fg-re
 <h3>Data Preparation<a class="headerlink" href="#data-preparation" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data-preparation'">¶</a></h3>
 <p>
 Next, we download the daily close price time series from the 30<sup>th</sup> of June 2022 to
-the 29<sup>th</sup> of June 2024 from <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>
+the 28<sup>th</sup> of June 2024 from <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>
 using the <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
 </p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># download the data</span>
 </span><span id="line-2"><span class="n">tickers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"^SPX"</span><span class="p">,</span> <span class="s2">"^VIX"</span><span class="p">,</span> <span class="s2">"^VVIX"</span><span class="p">,</span> <span class="s2">"^VXN"</span><span class="p">,</span> <span class="s2">"^GVZ"</span><span class="p">,</span> <span class="s2">"^OVX"</span><span class="p">]</span>
@@ -301,18 +301,18 @@ using the <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo
 </span></code></pre></div>
 </div>
 <p>The dataset contains 502 daily observations which, after dropping the missing values
-resulting from the calculation of the returns of the realized volatility, are reduced to 472.</p>
-<img alt="30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-29" class="blog-post-image" id="cfc-tsf-forecasting-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/time_series_light.png"/>
-<p class="blog-post-image-caption">30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-29.</p><p>We now proceed to renaming the columns in the format required by the CfC SageMaker algorithm,
-where the output names should start with <code class="code docutils literal notranslate"><span class="pre">"y"</span></code> while the input names should start with <code class="code docutils literal notranslate"><span class="pre">"x"</span></code>.</p>
+resulting from the calculation of the returns and of the realized volatility, are reduced to 472.</p>
+<img alt="30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-28" class="blog-post-image" id="cfc-tsf-forecasting-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/time_series_light.png"/>
+<p class="blog-post-image-caption">30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-28.</p><p>We now proceed to renaming the columns in the format expected by the CfC SageMaker algorithm,
+where the output names should start with <code class="code docutils literal notranslate"><span class="pre">"y"</span></code> and the input names should start with <code class="code docutils literal notranslate"><span class="pre">"x"</span></code>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">dataset</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"y"</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="sa">f</span><span class="s2">"x</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>
 </span></code></pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Note that the algorithm’s code always includes the past values of the outputs among the inputs,
-and there is therefore no need to add the lagged values of the outputs to the inputs when
-preparing the data for the model.</p>
+<p>Note that the algorithm’s code always includes the past values of the outputs
+among the inputs, and there is therefore no need to add the lagged values of
+the outputs when preparing the data for the model.</p>
 </div>
 </section>
 <section id="testing">
@@ -411,15 +411,27 @@ the same as the horizon of the returns).</p>
 </span></code></pre></div>
 </div>
 <img alt="Actual and predicted 30-day returns from 2023-12-04 to 2024-06-28" class="blog-post-image" id="cfc-tsf-forecasting-predictions" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/predictions_light.png"/>
-<p class="blog-post-image-caption">Actual and predicted 30-day returns from 2023-12-04 to 2024-06-28.</p><p>We evaluate the test set predictions using the following metrics:</p>
+<p class="blog-post-image-caption">Actual and predicted 30-day returns over the test set (from 2023-12-04 to 2024-06-28).</p><p>We evaluate the test set predictions using the following metrics:</p>
 <ul class="simple">
 <li><p><em>RMSE</em>: The root mean squared error of the predicted values of the returns.</p></li>
 <li><p><em>MAE</em>: The mean absolute error of the predicted values of the returns.</p></li>
 <li><p><em>Accuracy</em>: The accuracy of the predicted signs of the returns.</p></li>
 <li><p><em>F1</em>: The F1 score of the predicted signs of the returns.</p></li>
 </ul>
-<img alt="Performance metrics of predicted 30-day returns from 2023-12-04 to 2024-06-28" class="blog-post-image" id="cfc-tsf-forecasting-metrics" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/metrics_light.png"/>
-<p class="blog-post-image-caption">Performance metrics of predicted 30-day returns from 2023-12-04 to 2024-06-28.</p><p>We can now delete the model and the endpoint.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># calculate the model performance metrics</span>
+</span><span id="line-2"><span class="n">metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+</span><span id="line-3">    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"Metric"</span><span class="p">,</span> <span class="s2">"Value"</span><span class="p">],</span>
+</span><span id="line-4">    <span class="n">data</span><span class="o">=</span><span class="p">[</span>
+</span><span id="line-5">        <span class="p">{</span><span class="s2">"Metric"</span><span class="p">:</span> <span class="s2">"RMSE"</span><span class="p">,</span> <span class="s2">"Value"</span><span class="p">:</span> <span class="n">root_mean_squared_error</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="s2">"y"</span><span class="p">],</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="s2">"y_mean"</span><span class="p">])},</span>
+</span><span id="line-6">        <span class="p">{</span><span class="s2">"Metric"</span><span class="p">:</span> <span class="s2">"MAE"</span><span class="p">,</span> <span class="s2">"Value"</span><span class="p">:</span> <span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="s2">"y"</span><span class="p">],</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="s2">"y_mean"</span><span class="p">])},</span>
+</span><span id="line-7">        <span class="p">{</span><span class="s2">"Metric"</span><span class="p">:</span> <span class="s2">"Accuracy"</span><span class="p">,</span> <span class="s2">"Value"</span><span class="p">:</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="s2">"y"</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="s2">"y_mean"</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)},</span>
+</span><span id="line-8">        <span class="p">{</span><span class="s2">"Metric"</span><span class="p">:</span> <span class="s2">"F1"</span><span class="p">,</span> <span class="s2">"Value"</span><span class="p">:</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="s2">"y"</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="s2">"y_mean"</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)},</span>
+</span><span id="line-9">    <span class="p">]</span>
+</span><span id="line-10"><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<img alt="Performance metrics of predicted 30-day returns over the test set (from 2023-12-04 to 2024-06-28)" class="blog-post-image" id="cfc-tsf-forecasting-metrics" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/metrics_light.png"/>
+<p class="blog-post-image-caption">Performance metrics of predicted 30-day returns over the test set (from 2023-12-04 to 2024-06-28).</p><p>We can now delete the model and the endpoint.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># delete the model</span>
 </span><span id="line-2"><span class="n">predictor</span><span class="o">.</span><span class="n">delete_model</span><span class="p">()</span>
 </span><span id="line-3">
@@ -432,7 +444,7 @@ the same as the horizon of the returns).</p>
 <h3>Forecasting<a class="headerlink" href="#forecasting" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#forecasting'">¶</a></h3>
 <p>
 We now retrain the model using all the available data, and generate the out-of-sample forecasts,
-that is we predict the 30-day returns over 30 (business) days beyond the end of the data.
+that is we predict the 30-day returns over 30 (business) days beyond the current date (2024-06-28).
 </p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># upload the training data to S3</span>
 </span><span id="line-2"><span class="n">data</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">upload_string_as_file_body</span><span class="p">(</span>
 </span><span id="line-3">    <span class="n">body</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
@@ -494,8 +506,8 @@ that is we predict the 30-day returns over 30 (business) days beyond the end of 
 </span><span id="line-15"><span class="p">)</span>
 </span></code></pre></div>
 </div>
-<img alt="30-day returns forecasts from 2024-08-09 to 2024-07-01" class="blog-post-image" id="cfc-tsf-forecasting-forecasts" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/forecasts_light.png"/>
-<p class="blog-post-image-caption">30-day returns forecasts from 2024-08-09 to 2024-07-01.</p><p>We can now delete the model.</p>
+<img alt="30-day returns out-of-sample forecasts (from 2024-07-01 to 2024-08-09)" class="blog-post-image" id="cfc-tsf-forecasting-forecasts" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/forecasts_light.png"/>
+<p class="blog-post-image-caption">30-day returns out-of-sample forecasts (from 2024-07-01 to 2024-08-09).</p><p>We can now delete the model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># delete the model</span>
 </span><span id="line-2"><span class="n">transformer</span><span class="o">.</span><span class="n">delete_model</span><span class="p">()</span>
 </span></code></pre></div>

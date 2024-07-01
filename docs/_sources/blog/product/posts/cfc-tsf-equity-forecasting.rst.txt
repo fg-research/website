@@ -37,15 +37,15 @@ Forecasting stock returns with liquid neural networks using the CfC SageMaker Al
     forecasting, the <a href="https://fg-research.com/algorithms/time-series-forecasting/index.html#cfc-sagemaker-algorithm" target="_blank"> CfC SageMaker algorithm</a>.
     We will forecast the conditional mean and the conditional standard deviation of the 30-day returns of
     the S&P 500 using as input the S&P 500 realized volatility as well as several implied volatility indices,
-    similar to <a href="#references">[2]</a>.
+    as in <a href="#references">[2]</a>.
     </p>
 
     <p>
     We will use the daily close prices from the 30<sup>th</sup> of June 2022 to
-    the 29<sup>th</sup> of June 2024, which we will download from
+    the 28<sup>th</sup> of June 2024, which we will download from
     <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>.
     We will train the model on the data up to the 8<sup>th</sup> of September 2023,
-    and use the trained model to predict the subsequent data up to the 29<sup>th</sup> of June 2024.
+    and use the trained model to predict the subsequent data up to the 28<sup>th</sup> of June 2024.
     We will find that the CfC SageMaker algorithm achieves a mean absolute error of 1.4% and
     a mean directional accuracy of 95.8%.
     </p>
@@ -76,7 +76,7 @@ Inputs
 The model uses as input the previous 30-day returns of the S&P 500, as well as the past values
 of the following volatility indicators:
 
-* *RVOL*: The realized volatility of the S&P 500, which is calculated as the 30-day rolling sample standard deviation of the S&P 500 daily log returns.
+* *RVOL*: The realized volatility of the S&P 500, which is calculated as the 30-day rolling sample standard deviation of the S&P 500 daily returns.
 
 * *VIX*: The VIX index, which measures the 30-day implied volatility of S&P 500 options.
 
@@ -158,9 +158,9 @@ of the inputs and output to predict the subsequent 30 values of the output.
     # number of time steps to output
     prediction_length = 30
 
-We also define all the remaining hyperparameters of the CfC network architecture.
+We also define all the remaining hyperparameters of the CfC network.
 Note that we use a relatively small model with less than 5k parameters.
-A detailed description of the CfC network architecture and of its hyperparameters
+A detailed description of the model architecture and of its hyperparameters
 is available in our `GitHub repository <https://github.com/fg-research/cfc-tsf-sagemaker>`__.
 
 .. code:: python
@@ -194,7 +194,7 @@ Data Preparation
 
     <p>
     Next, we download the daily close price time series from the 30<sup>th</sup> of June 2022 to
-    the 29<sup>th</sup> of June 2024 from <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>
+    the 28<sup>th</sup> of June 2024 from <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>
     using the <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
     </p>
 
@@ -231,21 +231,21 @@ We then calculate the S&P 500 30-day returns and 30-day realized volatility.
     dataset = dataset[["Return30"] + dataset.columns.drop("Return30").tolist()]
 
 The dataset contains 502 daily observations which, after dropping the missing values
-resulting from the calculation of the returns of the realized volatility, are reduced to 472.
+resulting from the calculation of the returns and of the realized volatility, are reduced to 472.
 
 .. raw:: html
 
     <img
         id="cfc-tsf-forecasting-time-series"
         class="blog-post-image"
-        alt="30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-29"
+        alt="30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-28"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/time_series_light.png
     />
 
-    <p class="blog-post-image-caption">30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-29.</p>
+    <p class="blog-post-image-caption">30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-28.</p>
 
-We now proceed to renaming the columns in the format required by the CfC SageMaker algorithm,
-where the output names should start with :code:`"y"` while the input names should start with :code:`"x"`.
+We now proceed to renaming the columns in the format expected by the CfC SageMaker algorithm,
+where the output names should start with :code:`"y"` and the input names should start with :code:`"x"`.
 
 .. code:: python
 
@@ -253,9 +253,9 @@ where the output names should start with :code:`"y"` while the input names shoul
 
 .. note::
 
-    Note that the algorithm's code always includes the past values of the outputs among the inputs,
-    and there is therefore no need to add the lagged values of the outputs to the inputs when
-    preparing the data for the model.
+    Note that the algorithm's code always includes the past values of the outputs
+    among the inputs, and there is therefore no need to add the lagged values of
+    the outputs when preparing the data for the model.
 
 ==========================================
 Testing
@@ -371,7 +371,7 @@ the same as the horizon of the returns).
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/predictions_light.png
     />
 
-    <p class="blog-post-image-caption">Actual and predicted 30-day returns from 2023-12-04 to 2024-06-28.</p>
+    <p class="blog-post-image-caption">Actual and predicted 30-day returns over the test set (from 2023-12-04 to 2024-06-28).</p>
 
 We evaluate the test set predictions using the following metrics:
 
@@ -383,16 +383,29 @@ We evaluate the test set predictions using the following metrics:
 
 * *F1*: The F1 score of the predicted signs of the returns.
 
+.. code:: python
+
+    # calculate the model performance metrics
+    metrics = pd.DataFrame(
+        columns=["Metric", "Value"],
+        data=[
+            {"Metric": "RMSE", "Value": root_mean_squared_error(y_true=predictions["y"], y_pred=predictions["y_mean"])},
+            {"Metric": "MAE", "Value": mean_absolute_error(y_true=predictions["y"], y_pred=predictions["y_mean"])},
+            {"Metric": "Accuracy", "Value": accuracy_score(y_true=predictions["y"] > 0, y_pred=predictions["y_mean"] > 0)},
+            {"Metric": "F1", "Value": f1_score(y_true=predictions["y"] > 0, y_pred=predictions["y_mean"] > 0)},
+        ]
+    )
+
 .. raw:: html
 
     <img
         id="cfc-tsf-forecasting-metrics"
         class="blog-post-image"
-        alt="Performance metrics of predicted 30-day returns from 2023-12-04 to 2024-06-28"
+        alt="Performance metrics of predicted 30-day returns over the test set (from 2023-12-04 to 2024-06-28)"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/metrics_light.png
     />
 
-    <p class="blog-post-image-caption">Performance metrics of predicted 30-day returns from 2023-12-04 to 2024-06-28.</p>
+    <p class="blog-post-image-caption">Performance metrics of predicted 30-day returns over the test set (from 2023-12-04 to 2024-06-28).</p>
 
 We can now delete the model and the endpoint.
 
@@ -412,7 +425,7 @@ Forecasting
 
     <p>
     We now retrain the model using all the available data, and generate the out-of-sample forecasts,
-    that is we predict the 30-day returns over 30 (business) days beyond the end of the data.
+    that is we predict the 30-day returns over 30 (business) days beyond the current date (2024-06-28).
     </p>
 
 .. code:: python
@@ -486,11 +499,11 @@ After the batch transform job has been completed, we can load the forecasts from
     <img
         id="cfc-tsf-forecasting-forecasts"
         class="blog-post-image"
-        alt="30-day returns forecasts from 2024-08-09 to 2024-07-01"
+        alt="30-day returns out-of-sample forecasts (from 2024-07-01 to 2024-08-09)"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/forecasts_light.png
     />
 
-    <p class="blog-post-image-caption">30-day returns forecasts from 2024-08-09 to 2024-07-01.</p>
+    <p class="blog-post-image-caption">30-day returns out-of-sample forecasts (from 2024-07-01 to 2024-08-09).</p>
 
 We can now delete the model.
 
