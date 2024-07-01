@@ -187,6 +187,7 @@ Data Preparation
 
 .. raw:: html
 
+    <br>
     Next, we download the daily close price time series from the 30<sup>th</sup> of June 2022 to
     the 29<sup>th</sup> of June 2024 with the
     <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
@@ -402,9 +403,9 @@ We can now delete the endpoint and the underlying model.
 Forecasting
 ==========================================
 
-
 .. raw:: html
 
+    <br>
     We now retrain the model using all the available data, and generate the out-of-sample forecasts,
     that is we predict the 30-day returns over 30 (business) days beyond the end of the data (from the
     1<sup>st</sup> of July 2024 to the 9<sup>th</sup> of August 2024).

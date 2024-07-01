@@ -266,6 +266,7 @@ is available in our <a class="reference external" href="https://github.com/fg-re
 </section>
 <section id="data-preparation">
 <h3>Data Preparation<a class="headerlink" href="#data-preparation" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data-preparation'">¶</a></h3>
+<br/>
 Next, we download the daily close price time series from the 30<sup>th</sup> of June 2022 to
 the 29<sup>th</sup> of June 2024 with the
 <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># download the data</span>
@@ -427,6 +428,7 @@ the same as the horizon of the returns).</p>
 </section>
 <section id="forecasting">
 <h3>Forecasting<a class="headerlink" href="#forecasting" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#forecasting'">¶</a></h3>
+<br/>
 We now retrain the model using all the available data, and generate the out-of-sample forecasts,
 that is we predict the 30-day returns over 30 (business) days beyond the end of the data (from the
 1<sup>st</sup> of July 2024 to the 9<sup>th</sup> of August 2024).<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># upload the training data to S3</span>
