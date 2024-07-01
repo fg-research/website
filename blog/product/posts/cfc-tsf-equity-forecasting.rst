@@ -18,14 +18,22 @@ Forecasting stock returns with liquid neural networks using the CfC SageMaker Al
     </p>
 
     <p>
-    We will use our Amazon SageMaker implementation of liquid neural networks for probabilistic time series
+    Liquid neural networks belong to the class of continuous-time recurrent neural networks (CT-RNNs)
+    <a href="#references">[3]</a>, where the evolution of the hidden state over time is described by
+    an Ordinary Differential Equation (ODE). Liquid neural networks use the Liquid Time Constant (LTC)
+    ODE <a href="#references">[5]</a>, where both the derivative and the time constant of the hidden
+    state are determined by a neural network. In this post, we use the closed-form continuous-depth (CfC)
+    implementation of the LTC ODE. Differently from other CT-RNNs (including LTCs), which use a numerical
+    solver to find the ODE solution, CfCs use an approximate closed-form solution. As a results, CfCs achieve
+    faster training and inference performance than other CT-RNNs.
+    </p>
+
+    <p>
+    We will use our Amazon SageMaker implementation of CfCs for probabilistic time series
     forecasting, the <a href="file:///Users/flaviagiammarino/website/docs/algorithms/time-series-forecasting/index.html#cfc-sagemaker-algorithm" target="_blank"> CfC SageMaker algorithm</a>.
     We will forecast the conditional mean and the conditional standard deviation of the 30-day returns of
     the S&P 500 using as input the S&P 500 realized volatility as well as several implied volatility indices,
     similar to <a href="#references">[2]</a>.
-    </p>
-
-    <p>
     We will use the daily close prices from the 30<sup>th</sup> of June 2022 to
     the 29<sup>th</sup> of June 2024, which we will download with the <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
     We will train the model on the data up to the 8<sup>th</sup> of September 2023,
@@ -33,44 +41,6 @@ Forecasting stock returns with liquid neural networks using the CfC SageMaker Al
     We will find that the CfC SageMaker algorithm achieves a mean absolute error of 1.4% and
     a mean directional accuracy of 97.5%.
     </p>
-
-******************************************
-Model
-******************************************
-
-.. raw:: html
-
-    <p>
-    The closed-form continuous-depth network (CfC) is a new neural network architecture for
-    sequential data <a href="#references">[4]</a>. CfCs belong to the class of continuous-time
-    recurrent neural networks (CT-RNNs) <a href="#references">[3]</a>, where the evolution of
-    the hidden state over time is described by an Ordinary Differential Equation (ODE).
-    </p>
-
-    <p>
-    CfCs use the Liquid Time Constant (LTC) ODE <a href="#references">[5]</a>, where both the
-    derivative and the time constant of the hidden state are determined by a neural network.
-    Differently from other CT-RNNs (including LTCs), which use a numerical solver to find the
-    ODE solution, CfCs use an approximate closed-form solution. As a results, CfCs achieve
-    faster training and inference performance than other CT-RNNs.
-    </p>
-
-The hidden state :math:`x` of a CfC at time :math:`t` is given by
-
-.. math::
-
-    x(t) = \sigma(-f(x, I; \theta_f)t) \odot g(x, I; \theta_g) + [1 - \sigma(-[f(x, I; \theta_f)]t)] \odot h(x, I; \theta_h)
-
-where :math:`\odot` is the Hadamard product, :math:`\sigma` is the sigmoid function, :math:`I`
-is the input sequence, while :math:`f`, :math:`g` and :math:`h` are neural networks. The three
-neural networks :math:`f`, :math:`g` and :math:`h` share a common backbone, which is a stack of
-fully-connected layers with non-linear activation.
-
-The backbone is followed by three separate neural network heads. The head of the :math:`g` and
-:math:`h` neural networks is a fully-connected layer with hyperbolic tangent activation. The head
-of the :math:`f` neural network is an affine function :math:`b + a(\Delta t)` where :math:`\Delta t`
-is the time span (or time increment) between consecutive time steps, while the intercept :math:`b`
-and slope :math:`a` are the outputs of two fully-connected layers with linear activation.
 
 ******************************************
 Data
@@ -238,7 +208,11 @@ where the output names should start with :code:`"y"` while the input names shoul
     Note that the algorithm always uses the past values of the outputs as inputs,
     and there is therefore no need to include the outputs among the inputs when preparing the data for the model.
 
-After that we split the data into a training set and a test set. The training set includes the first 70% of
+==========================================
+Testing
+==========================================
+
+For the purpose of validating the model, we split the data into a training set and a test set. The training set includes the first 70% of
 the data (270 observations), while the test set includes the last 30% of the data (202 observations).
 
 .. code:: python
@@ -256,9 +230,6 @@ the data (270 observations), while the test set includes the last 30% of the dat
 
     Note that the data is scaled internally by the algorithm, there is no need to scale the data beforehand.
 
-==========================================
-Training
-==========================================
 We now save the training data in S3, build the SageMaker estimator and run the training job.
 
 .. code:: python
@@ -305,9 +276,6 @@ We now save the training data in S3, build the SageMaker estimator and run the t
 
     Note that we are training a relatively small model with less than 5k parameters.
 
-==========================================
-Inference
-==========================================
 After the training job has been completed, we deploy the model to real-time endpoint that we can use for inference.
 
 .. code:: python
@@ -398,18 +366,15 @@ We evaluate the test set predictions using the following metrics:
 We find that the model achieves a mean absolute error of 1.4% and
 a mean directional accuracy of 97.5%.
 
-.. raw:: html
+==========================================
+Forecasting
+==========================================
 
-    We now generate the out-of-sample forecasts, that is we predict the 30-day returns
-    over 30 days beyond the end of the data (from the 29<sup>th</sup> of June 2024 to
-    the 28<sup>th</sup> of July 2024).
+We now generate the out-of-sample forecasts, that is we predict the 30-day returns
+over 30 days beyond the end of the data (from the 29<sup>th</sup> of June 2024 to
+the 28<sup>th</sup> of July 2024).
 
-.. note::
 
-    In a real-life setting, we would retrain the model on all the available data
-    (i.e. until the 28<sup>th</sup> of June 2024) before generating the out-of-sample
-    forecasts. To avoid running a new training job, we simply use the existing endpoint,
-    which uses the model trained on the data until the 8<sup>th</sup> of September 2023.
 
 .. raw:: html
 
@@ -421,6 +386,16 @@ a mean directional accuracy of 97.5%.
     />
 
     <p class="blog-post-image-caption">30-day returns forecasts from 2024-06-29 to 2024-07-28.</p>
+
+After the analysis has been completed, we can delete the model and the endpoint.
+
+.. code:: python
+
+    # delete the model
+    predictor.delete_model()
+
+    # delete the endpoint
+    predictor.delete_endpoint(delete_endpoint_config=True)
 
 ******************************************
 References

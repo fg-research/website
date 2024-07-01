@@ -130,47 +130,28 @@ In this post, we examine the performance of liquid neural networks <a href="#ref
 <a href="#references">[5]</a>, a new neural network architecture for sequential data.
 </p>
 <p>
-We will use our Amazon SageMaker implementation of liquid neural networks for probabilistic time series
+Liquid neural networks belong to the class of continuous-time recurrent neural networks (CT-RNNs)
+<a href="#references">[3]</a>, where the evolution of the hidden state over time is described by
+an Ordinary Differential Equation (ODE). Liquid neural networks use the Liquid Time Constant (LTC)
+ODE <a href="#references">[5]</a>, where both the derivative and the time constant of the hidden
+state are determined by a neural network. In this post, we use the closed-form continuous-depth (CfC)
+implementation of the LTC ODE. Differently from other CT-RNNs (including LTCs), which use a numerical
+solver to find the ODE solution, CfCs use an approximate closed-form solution. As a results, CfCs achieve
+faster training and inference performance than other CT-RNNs.
+</p>
+<p>
+We will use our Amazon SageMaker implementation of CfCs for probabilistic time series
 forecasting, the <a href="file:///Users/flaviagiammarino/website/docs/algorithms/time-series-forecasting/index.html#cfc-sagemaker-algorithm" target="_blank"> CfC SageMaker algorithm</a>.
 We will forecast the conditional mean and the conditional standard deviation of the 30-day returns of
 the S&amp;P 500 using as input the S&amp;P 500 realized volatility as well as several implied volatility indices,
 similar to <a href="#references">[2]</a>.
-</p>
-<p>
 We will use the daily close prices from the 30<sup>th</sup> of June 2022 to
 the 29<sup>th</sup> of June 2024, which we will download with the <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
 We will train the model on the data up to the 8<sup>th</sup> of September 2023,
 and use the trained model to predict the subsequent data up to the 29<sup>th</sup> of June 2024.
 We will find that the CfC SageMaker algorithm achieves a mean absolute error of 1.4% and
 a mean directional accuracy of 97.5%.
-</p><section id="model">
-<h2>Model<a class="headerlink" href="#model" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#model'">¶</a></h2>
-<p>
-The closed-form continuous-depth network (CfC) is a new neural network architecture for
-sequential data <a href="#references">[4]</a>. CfCs belong to the class of continuous-time
-recurrent neural networks (CT-RNNs) <a href="#references">[3]</a>, where the evolution of
-the hidden state over time is described by an Ordinary Differential Equation (ODE).
-</p>
-<p>
-CfCs use the Liquid Time Constant (LTC) ODE <a href="#references">[5]</a>, where both the
-derivative and the time constant of the hidden state are determined by a neural network.
-Differently from other CT-RNNs (including LTCs), which use a numerical solver to find the
-ODE solution, CfCs use an approximate closed-form solution. As a results, CfCs achieve
-faster training and inference performance than other CT-RNNs.
-</p><p>The hidden state <span class="math notranslate nohighlight">\(x\)</span> of a CfC at time <span class="math notranslate nohighlight">\(t\)</span> is given by</p>
-<div class="math notranslate nohighlight">
-\[x(t) = \sigma(-f(x, I; \theta_f)t) \odot g(x, I; \theta_g) + [1 - \sigma(-[f(x, I; \theta_f)]t)] \odot h(x, I; \theta_h)\]</div>
-<p>where <span class="math notranslate nohighlight">\(\odot\)</span> is the Hadamard product, <span class="math notranslate nohighlight">\(\sigma\)</span> is the sigmoid function, <span class="math notranslate nohighlight">\(I\)</span>
-is the input sequence, while <span class="math notranslate nohighlight">\(f\)</span>, <span class="math notranslate nohighlight">\(g\)</span> and <span class="math notranslate nohighlight">\(h\)</span> are neural networks. The three
-neural networks <span class="math notranslate nohighlight">\(f\)</span>, <span class="math notranslate nohighlight">\(g\)</span> and <span class="math notranslate nohighlight">\(h\)</span> share a common backbone, which is a stack of
-fully-connected layers with non-linear activation.</p>
-<p>The backbone is followed by three separate neural network heads. The head of the <span class="math notranslate nohighlight">\(g\)</span> and
-<span class="math notranslate nohighlight">\(h\)</span> neural networks is a fully-connected layer with hyperbolic tangent activation. The head
-of the <span class="math notranslate nohighlight">\(f\)</span> neural network is an affine function <span class="math notranslate nohighlight">\(b + a(\Delta t)\)</span> where <span class="math notranslate nohighlight">\(\Delta t\)</span>
-is the time span (or time increment) between consecutive time steps, while the intercept <span class="math notranslate nohighlight">\(b\)</span>
-and slope <span class="math notranslate nohighlight">\(a\)</span> are the outputs of two fully-connected layers with linear activation.</p>
-</section>
-<section id="data">
+</p><section id="data">
 <h2>Data<a class="headerlink" href="#data" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data'">¶</a></h2>
 <section id="outputs">
 <h3>Outputs<a class="headerlink" href="#outputs" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#outputs'">¶</a></h3>
@@ -295,7 +276,10 @@ where the output names should start with <code class="code docutils literal notr
 <p>Note that the algorithm always uses the past values of the outputs as inputs,
 and there is therefore no need to include the outputs among the inputs when preparing the data for the model.</p>
 </div>
-<p>After that we split the data into a training set and a test set. The training set includes the first 70% of
+</section>
+<section id="testing">
+<h3>Testing<a class="headerlink" href="#testing" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#testing'">¶</a></h3>
+<p>For the purpose of validating the model, we split the data into a training set and a test set. The training set includes the first 70% of
 the data (270 observations), while the test set includes the last 30% of the data (202 observations).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># define the size of the test set</span>
 </span><span id="line-2"><span class="n">test_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.3</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">))</span>
@@ -311,9 +295,6 @@ the data (270 observations), while the test set includes the last 30% of the dat
 <p class="admonition-title">Note</p>
 <p>Note that the data is scaled internally by the algorithm, there is no need to scale the data beforehand.</p>
 </div>
-</section>
-<section id="training">
-<h3>Training<a class="headerlink" href="#training" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#training'">¶</a></h3>
 <p>We now save the training data in S3, build the SageMaker estimator and run the training job.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># upload the training data to S3</span>
 </span><span id="line-2"><span class="n">training_data</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">upload_string_as_file_body</span><span class="p">(</span>
@@ -358,9 +339,6 @@ the data (270 observations), while the test set includes the last 30% of the dat
 <p class="admonition-title">Note</p>
 <p>Note that we are training a relatively small model with less than 5k parameters.</p>
 </div>
-</section>
-<section id="inference">
-<h3>Inference<a class="headerlink" href="#inference" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#inference'">¶</a></h3>
 <p>After the training job has been completed, we deploy the model to real-time endpoint that we can use for inference.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># define the endpoint inputs serializer</span>
 </span><span id="line-2"><span class="n">serializer</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">serializers</span><span class="o">.</span><span class="n">CSVSerializer</span><span class="p">(</span><span class="n">content_type</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">)</span>
@@ -423,17 +401,22 @@ the same as the horizon of the returns).</p>
 <img alt="Performance metrics of predicted 30-day returns from 2023-12-04 to 2024-06-28" class="blog-post-image" id="cfc-tsf-forecasting-metrics" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/metrics_light.png"/>
 <p class="blog-post-image-caption">Performance metrics of predicted 30-day returns from 2023-12-04 to 2024-06-28.</p><p>We find that the model achieves a mean absolute error of 1.4% and
 a mean directional accuracy of 97.5%.</p>
-We now generate the out-of-sample forecasts, that is we predict the 30-day returns
-over 30 days beyond the end of the data (from the 29<sup>th</sup> of June 2024 to
-the 28<sup>th</sup> of July 2024).<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>In a real-life setting, we would retrain the model on all the available data
-(i.e. until the 28&lt;sup&gt;th&lt;/sup&gt; of June 2024) before generating the out-of-sample
-forecasts. To avoid running a new training job, we simply use the existing endpoint,
-which uses the model trained on the data until the 8&lt;sup&gt;th&lt;/sup&gt; of September 2023.</p>
-</div>
+</section>
+<section id="forecasting">
+<h3>Forecasting<a class="headerlink" href="#forecasting" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#forecasting'">¶</a></h3>
+<p>We now generate the out-of-sample forecasts, that is we predict the 30-day returns
+over 30 days beyond the end of the data (from the 29&lt;sup&gt;th&lt;/sup&gt; of June 2024 to
+the 28&lt;sup&gt;th&lt;/sup&gt; of July 2024).</p>
 <img alt="30-day returns forecasts from 2024-06-29 to 2024-07-28" class="blog-post-image" id="cfc-tsf-forecasting-forecasts" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/forecasts_light.png"/>
-<p class="blog-post-image-caption">30-day returns forecasts from 2024-06-29 to 2024-07-28.</p></section>
+<p class="blog-post-image-caption">30-day returns forecasts from 2024-06-29 to 2024-07-28.</p><p>After the analysis has been completed, we can delete the model and the endpoint.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># delete the model</span>
+</span><span id="line-2"><span class="n">predictor</span><span class="o">.</span><span class="n">delete_model</span><span class="p">()</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="c1"># delete the endpoint</span>
+</span><span id="line-5"><span class="n">predictor</span><span class="o">.</span><span class="n">delete_endpoint</span><span class="p">(</span><span class="n">delete_endpoint_config</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+</section>
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#references'">¶</a></h2>
@@ -459,7 +442,6 @@ Liquid time-constant networks. In <em>Proceedings of the AAAI Conference on Arti
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(var(100vh)-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
-<li><a :data-current="activeSection === '#model'" class="reference internal" href="#model">Model</a></li>
 <li><a :data-current="activeSection === '#data'" class="reference internal" href="#data">Data</a><ul>
 <li><a :data-current="activeSection === '#outputs'" class="reference internal" href="#outputs">Outputs</a></li>
 <li><a :data-current="activeSection === '#inputs'" class="reference internal" href="#inputs">Inputs</a></li>
@@ -468,8 +450,8 @@ Liquid time-constant networks. In <em>Proceedings of the AAAI Conference on Arti
 <li><a :data-current="activeSection === '#code'" class="reference internal" href="#code">Code</a><ul>
 <li><a :data-current="activeSection === '#environment-set-up'" class="reference internal" href="#environment-set-up">Environment Set-Up</a></li>
 <li><a :data-current="activeSection === '#data-preparation'" class="reference internal" href="#data-preparation">Data Preparation</a></li>
-<li><a :data-current="activeSection === '#training'" class="reference internal" href="#training">Training</a></li>
-<li><a :data-current="activeSection === '#inference'" class="reference internal" href="#inference">Inference</a></li>
+<li><a :data-current="activeSection === '#testing'" class="reference internal" href="#testing">Testing</a></li>
+<li><a :data-current="activeSection === '#forecasting'" class="reference internal" href="#forecasting">Forecasting</a></li>
 </ul>
 </li>
 <li><a :data-current="activeSection === '#references'" class="reference internal" href="#references">References</a></li>
