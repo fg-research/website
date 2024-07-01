@@ -19,7 +19,7 @@ Forecasting stock returns with liquid neural networks using the CfC SageMaker Al
 
     <p>
     LNNs belong to the class of continuous-time recurrent neural networks (CT-RNNs)
-    <a href="#references">[3]</a>, where the evolution of the hidden state over time is described by
+    <a href="#references">[3]</a>, where the evolution of the hidden state over time is modelled as
     an Ordinary Differential Equation (ODE). LNNs are based on the Liquid Time Constant (LTC)
     ODE <a href="#references">[4]</a>, where both the derivative and the time constant of the hidden
     state follow a neural network.
