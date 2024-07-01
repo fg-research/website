@@ -13,8 +13,8 @@ Forecasting stock returns with liquid neural networks using the CfC SageMaker Al
     Stock return forecasting has been extensively studied by both academic researchers and
     industry practitioners. Numerous machine learning models have been proposed for this purpose,
     ranging from simple linear regressions to complex deep learning models <a href="#references">[1]</a>.
-    In this post, we examine the performance of liquid neural networks (LNNs) <a href="#references">[4]</a>,
-    a new neural network architecture for sequential data.
+    In this post, we examine the performance of liquid neural networks (LNNs) <a href="#references">[4]</a>
+    <a href="#references">[5]</a>, a new neural network architecture for sequential data.
     </p>
 
     <p>
