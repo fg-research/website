@@ -13,19 +13,23 @@ Forecasting stock returns with liquid neural networks using the CfC SageMaker Al
     Stock return forecasting has been extensively studied by both academic researchers and
     industry practitioners. Numerous machine learning models have been proposed for this purpose,
     ranging from simple linear regressions to complex deep learning models <a href="#references">[1]</a>.
-    In this post, we examine the performance of liquid neural networks <a href="#references">[4]</a>
-    <a href="#references">[5]</a>, a new neural network architecture for sequential data.
+    In this post, we examine the performance of liquid neural networks <a href="#references">[4]</a>,
+    a new neural network architecture for sequential data.
     </p>
 
     <p>
     Liquid neural networks belong to the class of continuous-time recurrent neural networks (CT-RNNs)
     <a href="#references">[3]</a>, where the evolution of the hidden state over time is described by
     an Ordinary Differential Equation (ODE). Liquid neural networks use the Liquid Time Constant (LTC)
-    ODE <a href="#references">[5]</a>, where both the derivative and the time constant of the hidden
-    state are determined by a neural network. In this post, we use the closed-form continuous-depth (CfC)
-    implementation of the LTC ODE. Differently from other CT-RNNs (including LTCs), which use a numerical
-    solver to find the ODE solution, CfCs use an approximate closed-form solution. As a results, CfCs achieve
-    faster training and inference performance than other CT-RNNs.
+    ODE <a href="#references">[4]</a>, where both the derivative and the time constant of the hidden
+    state are determined by a neural network.
+    </p>
+
+    <p>
+    In this post, we use the closed-form continuous-depth (CfC) <a href="#references">[5]</a>
+    implementation of the LTC ODE. Differently from other CT-RNNs (including LTCs), which use
+    a numerical solver to find the ODE solution, CfCs use an approximate closed-form solution.
+    As a results, CfCs achieve faster training and inference performance than other CT-RNNs.
     </p>
 
     <p>
@@ -34,6 +38,9 @@ Forecasting stock returns with liquid neural networks using the CfC SageMaker Al
     We will forecast the conditional mean and the conditional standard deviation of the 30-day returns of
     the S&P 500 using as input the S&P 500 realized volatility as well as several implied volatility indices,
     similar to <a href="#references">[2]</a>.
+    </p>
+
+    <p>
     We will use the daily close prices from the 30<sup>th</sup> of June 2022 to
     the 29<sup>th</sup> of June 2024, which we will download with the <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
     We will train the model on the data up to the 8<sup>th</sup> of September 2023,
@@ -54,7 +61,7 @@ The model outputs are the 30-day returns of the S&P 500, which are calculated as
 
 .. math::
 
-    y(t) = \ln{P(t)} - \ln{P(t-30)}
+    y(t) = \ln{P(t)} - \ln{P(t - 30)}
 
 for each day :math:`t`, where :math:`P(t)` is the close price of the S&P 500 on day :math:`t`.
 
@@ -65,19 +72,19 @@ Inputs
 The model uses as input the previous 30-day returns of the S&P 500 as well as the past values
 of the following volatility indicators:
 
-* *RVOL*: The realized volatility of the S&P 500, calculated as the 30-day rolling sample standard deviation of the S&P 500 daily log returns.
+* *RVOL*: The realized volatility of the S&P 500, which is calculated as the 30-day rolling sample standard deviation of the S&P 500 daily log returns.
 
-* *VIX*: The `VIX index <https://www.cboe.com/us/indices/dashboard/vix/>`__ measures the 30-day implied volatility of S&P 500 options.
+* *VIX*: The `VIX index <https://www.cboe.com/us/indices/dashboard/vix/>`__, which measures the 30-day implied volatility of S&P 500 options.
 
-* *VVIX*: The `VVIX index <https://www.cboe.com/us/indices/dashboard/vvix/>`__ reflects the 30-day expected volatility of the VIX.
+* *VVIX*: The `VVIX index <https://www.cboe.com/us/indices/dashboard/vvix/>`__, which reflects the 30-day expected volatility of the VIX.
 
-* *VXN*: The `VXN index <https://www.cboe.com/us/indices/dashboard/vxn/>`__ measures the 30-day implied volatility of NASDAQ 100 options.
+* *VXN*: The `VXN index <https://www.cboe.com/us/indices/dashboard/vxn/>`__, which measures the 30-day implied volatility of NASDAQ 100 options.
 
-* *GVZ*: The `GVZ index <https://www.cboe.com/us/indices/dashboard/gvz/>`__ measures the 30-day implied volatility of GLD options.
+* *GVZ*: The `GVZ index <https://www.cboe.com/us/indices/dashboard/gvz/>`__, which measures the 30-day implied volatility of GLD options.
 
-* *OVX*: The `OVX index <https://www.cboe.com/us/indices/dashboard/ovx/>`__ measures the 30-day implied volatility of USO options.
+* *OVX*: The `OVX index <https://www.cboe.com/us/indices/dashboard/ovx/>`__, which measures the 30-day implied volatility of USO options.
 
-*RVOL* is a backward-looking indicator, as it measures the volatility over the past 30 days,
+*RVOL* is a backward-looking indicator, as it estimates the volatility over the past 30 days,
 while *VIX*, *VVIX*, *VXN*, *GVZ*, and *OVX* are forward-looking indicators, as they reflect the market's
 expectation of what the volatility will be over the next 30 days.
 
@@ -415,10 +422,10 @@ stock market on the basis of volatility indices. *International Journal of Forec
 time recurrent neural networks. *Neural networks*, 6(6), pp.801-806.
 `doi: 10.1016/S0893-6080(05)80125-X <https://doi.org/10.1016/S0893-6080(05)80125-X>`__.
 
-[4] Hasani, R., Lechner, M., Amini, A., Liebenwein, L., Ray, A., Tschaikowski, M., Teschl, G. and Rus, D., (2022).
-Closed-form continuous-time neural networks. *Nature Machine Intelligence*, 4(11), pp. 992-1003.
-`doi: 10.1038/s42256-022-00556-7 <https://doi.org/10.1038/s42256-022-00556-7>`__.
-
-[5] Hasani, R., Lechner, M., Amini, A., Rus, D., & Grosu, R. (2021).
+[4] Hasani, R., Lechner, M., Amini, A., Rus, D., & Grosu, R. (2021).
 Liquid time-constant networks. In *Proceedings of the AAAI Conference on Artificial Intelligence*, 35(9), pp. 7657-7666.
 `doi: 10.1609/aaai.v35i9.16936 <https://doi.org/10.1609/aaai.v35i9.16936>`__.
+
+[5] Hasani, R., Lechner, M., Amini, A., Liebenwein, L., Ray, A., Tschaikowski, M., Teschl, G. and Rus, D., (2022).
+Closed-form continuous-time neural networks. *Nature Machine Intelligence*, 4(11), pp. 992-1003.
+`doi: 10.1038/s42256-022-00556-7 <https://doi.org/10.1038/s42256-022-00556-7>`__.

@@ -126,18 +126,21 @@
 Stock return forecasting has been extensively studied by both academic researchers and
 industry practitioners. Numerous machine learning models have been proposed for this purpose,
 ranging from simple linear regressions to complex deep learning models <a href="#references">[1]</a>.
-In this post, we examine the performance of liquid neural networks <a href="#references">[4]</a>
-<a href="#references">[5]</a>, a new neural network architecture for sequential data.
+In this post, we examine the performance of liquid neural networks <a href="#references">[4]</a>,
+a new neural network architecture for sequential data.
 </p>
 <p>
 Liquid neural networks belong to the class of continuous-time recurrent neural networks (CT-RNNs)
 <a href="#references">[3]</a>, where the evolution of the hidden state over time is described by
 an Ordinary Differential Equation (ODE). Liquid neural networks use the Liquid Time Constant (LTC)
-ODE <a href="#references">[5]</a>, where both the derivative and the time constant of the hidden
-state are determined by a neural network. In this post, we use the closed-form continuous-depth (CfC)
-implementation of the LTC ODE. Differently from other CT-RNNs (including LTCs), which use a numerical
-solver to find the ODE solution, CfCs use an approximate closed-form solution. As a results, CfCs achieve
-faster training and inference performance than other CT-RNNs.
+ODE <a href="#references">[4]</a>, where both the derivative and the time constant of the hidden
+state are determined by a neural network.
+</p>
+<p>
+In this post, we use the closed-form continuous-depth (CfC) <a href="#references">[5]</a>
+implementation of the LTC ODE. Differently from other CT-RNNs (including LTCs), which use
+a numerical solver to find the ODE solution, CfCs use an approximate closed-form solution.
+As a results, CfCs achieve faster training and inference performance than other CT-RNNs.
 </p>
 <p>
 We will use our Amazon SageMaker implementation of CfCs for probabilistic time series
@@ -145,6 +148,8 @@ forecasting, the <a href="file:///Users/flaviagiammarino/website/docs/algorithms
 We will forecast the conditional mean and the conditional standard deviation of the 30-day returns of
 the S&amp;P 500 using as input the S&amp;P 500 realized volatility as well as several implied volatility indices,
 similar to <a href="#references">[2]</a>.
+</p>
+<p>
 We will use the daily close prices from the 30<sup>th</sup> of June 2022 to
 the 29<sup>th</sup> of June 2024, which we will download with the <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
 We will train the model on the data up to the 8<sup>th</sup> of September 2023,
@@ -157,7 +162,7 @@ a mean directional accuracy of 97.5%.
 <h3>Outputs<a class="headerlink" href="#outputs" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#outputs'">¶</a></h3>
 <p>The model outputs are the 30-day returns of the S&amp;P 500, which are calculated as follows</p>
 <div class="math notranslate nohighlight">
-\[y(t) = \ln{P(t)} - \ln{P(t-30)}\]</div>
+\[y(t) = \ln{P(t)} - \ln{P(t - 30)}\]</div>
 <p>for each day <span class="math notranslate nohighlight">\(t\)</span>, where <span class="math notranslate nohighlight">\(P(t)\)</span> is the close price of the S&amp;P 500 on day <span class="math notranslate nohighlight">\(t\)</span>.</p>
 </section>
 <section id="inputs">
@@ -165,14 +170,14 @@ a mean directional accuracy of 97.5%.
 <p>The model uses as input the previous 30-day returns of the S&amp;P 500 as well as the past values
 of the following volatility indicators:</p>
 <ul class="simple">
-<li><p><em>RVOL</em>: The realized volatility of the S&amp;P 500, calculated as the 30-day rolling sample standard deviation of the S&amp;P 500 daily log returns.</p></li>
-<li><p><em>VIX</em>: The <a class="reference external" href="https://www.cboe.com/us/indices/dashboard/vix/">VIX index</a> measures the 30-day implied volatility of S&amp;P 500 options.</p></li>
-<li><p><em>VVIX</em>: The <a class="reference external" href="https://www.cboe.com/us/indices/dashboard/vvix/">VVIX index</a> reflects the 30-day expected volatility of the VIX.</p></li>
-<li><p><em>VXN</em>: The <a class="reference external" href="https://www.cboe.com/us/indices/dashboard/vxn/">VXN index</a> measures the 30-day implied volatility of NASDAQ 100 options.</p></li>
-<li><p><em>GVZ</em>: The <a class="reference external" href="https://www.cboe.com/us/indices/dashboard/gvz/">GVZ index</a> measures the 30-day implied volatility of GLD options.</p></li>
-<li><p><em>OVX</em>: The <a class="reference external" href="https://www.cboe.com/us/indices/dashboard/ovx/">OVX index</a> measures the 30-day implied volatility of USO options.</p></li>
+<li><p><em>RVOL</em>: The realized volatility of the S&amp;P 500, which is calculated as the 30-day rolling sample standard deviation of the S&amp;P 500 daily log returns.</p></li>
+<li><p><em>VIX</em>: The <a class="reference external" href="https://www.cboe.com/us/indices/dashboard/vix/">VIX index</a>, which measures the 30-day implied volatility of S&amp;P 500 options.</p></li>
+<li><p><em>VVIX</em>: The <a class="reference external" href="https://www.cboe.com/us/indices/dashboard/vvix/">VVIX index</a>, which reflects the 30-day expected volatility of the VIX.</p></li>
+<li><p><em>VXN</em>: The <a class="reference external" href="https://www.cboe.com/us/indices/dashboard/vxn/">VXN index</a>, which measures the 30-day implied volatility of NASDAQ 100 options.</p></li>
+<li><p><em>GVZ</em>: The <a class="reference external" href="https://www.cboe.com/us/indices/dashboard/gvz/">GVZ index</a>, which measures the 30-day implied volatility of GLD options.</p></li>
+<li><p><em>OVX</em>: The <a class="reference external" href="https://www.cboe.com/us/indices/dashboard/ovx/">OVX index</a>, which measures the 30-day implied volatility of USO options.</p></li>
 </ul>
-<p><em>RVOL</em> is a backward-looking indicator, as it measures the volatility over the past 30 days,
+<p><em>RVOL</em> is a backward-looking indicator, as it estimates the volatility over the past 30 days,
 while <em>VIX</em>, <em>VVIX</em>, <em>VXN</em>, <em>GVZ</em>, and <em>OVX</em> are forward-looking indicators, as they reflect the market’s
 expectation of what the volatility will be over the next 30 days.</p>
 <div class="admonition note">
@@ -431,12 +436,12 @@ stock market on the basis of volatility indices. <em>International Journal of Fo
 <p>[3] Funahashi, K.I. and Nakamura, Y., (1993). Approximation of dynamical systems by continuous
 time recurrent neural networks. <em>Neural networks</em>, 6(6), pp.801-806.
 <a class="reference external" href="https://doi.org/10.1016/S0893-6080(05)80125-X">doi: 10.1016/S0893-6080(05)80125-X</a>.</p>
-<p>[4] Hasani, R., Lechner, M., Amini, A., Liebenwein, L., Ray, A., Tschaikowski, M., Teschl, G. and Rus, D., (2022).
-Closed-form continuous-time neural networks. <em>Nature Machine Intelligence</em>, 4(11), pp. 992-1003.
-<a class="reference external" href="https://doi.org/10.1038/s42256-022-00556-7">doi: 10.1038/s42256-022-00556-7</a>.</p>
-<p>[5] Hasani, R., Lechner, M., Amini, A., Rus, D., &amp; Grosu, R. (2021).
+<p>[4] Hasani, R., Lechner, M., Amini, A., Rus, D., &amp; Grosu, R. (2021).
 Liquid time-constant networks. In <em>Proceedings of the AAAI Conference on Artificial Intelligence</em>, 35(9), pp. 7657-7666.
 <a class="reference external" href="https://doi.org/10.1609/aaai.v35i9.16936">doi: 10.1609/aaai.v35i9.16936</a>.</p>
+<p>[5] Hasani, R., Lechner, M., Amini, A., Liebenwein, L., Ray, A., Tschaikowski, M., Teschl, G. and Rus, D., (2022).
+Closed-form continuous-time neural networks. <em>Nature Machine Intelligence</em>, 4(11), pp. 992-1003.
+<a class="reference external" href="https://doi.org/10.1038/s42256-022-00556-7">doi: 10.1038/s42256-022-00556-7</a>.</p>
 </section>
 </section>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
