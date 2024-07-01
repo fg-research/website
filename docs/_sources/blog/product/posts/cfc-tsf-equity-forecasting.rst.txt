@@ -156,6 +156,8 @@ of the inputs and output to predict the subsequent 30 values of the output.
 
 We also define all the remaining hyperparameters of the CfC network architecture.
 Note that we use a relatively small model with less than 5k parameters.
+A detailed description of the CfC network architecture and of its hyperparameters
+is available in our `GitHub repository <https://github.com/fg-research/cfc-tsf-sagemaker>`__.
 
 .. code:: python
 
@@ -491,6 +493,13 @@ Finally, we delete the model created for running the batch transform job.
     # delete the model
     transformer.delete_model()
 
+.. tip::
+
+    You can download the
+    `notebook <https://github.com/fg-research/cfc-tsf-sagemaker/blob/master/examples/SPX.ipynb>`__
+    with the full code from our
+    `GitHub <https://github.com/fg-research/cfc-tsf-sagemaker>`__
+    repository.
 
 ******************************************
 References
