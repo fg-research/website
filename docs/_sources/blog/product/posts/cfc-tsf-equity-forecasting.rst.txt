@@ -384,7 +384,16 @@ We evaluate the test set predictions using the following metrics:
 
 * *F1*: The F1 score of the predicted signs of the returns.
 
+.. raw:: html
 
+    <img
+        id="cfc-tsf-forecasting-metrics"
+        class="blog-post-image"
+        alt="Performance metrics of predicted 30-day returns from 2023-12-04 to 2024-06-28"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/metrics_light.png
+    />
+
+    <p class="blog-post-image-caption">Performance metrics of predicted 30-day returns from 2023-12-04 to 2024-06-28.</p>
 
 We find that the model achieves a mean absolute error of 1.4% and
 a mean directional accuracy of 97.5%.
