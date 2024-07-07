@@ -280,6 +280,7 @@ is provided in our <a class="reference external" href="https://github.com/fg-res
 Next, we download the daily close price time series from the 30<sup>th</sup> of June 2022 to
 the 28<sup>th</sup> of June 2024 from <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>
 using the <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
+The dataset contains 502 daily observations.
 </p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># download the data</span>
 </span><span id="line-2"><span class="n">tickers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"^SPX"</span><span class="p">,</span> <span class="s2">"^VIX"</span><span class="p">,</span> <span class="s2">"^VVIX"</span><span class="p">,</span> <span class="s2">"^VXN"</span><span class="p">,</span> <span class="s2">"^GVZ"</span><span class="p">,</span> <span class="s2">"^OVX"</span><span class="p">]</span>
 </span><span id="line-3"><span class="n">dataset</span> <span class="o">=</span> <span class="n">yf</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tickers</span><span class="p">),</span> <span class="n">start</span><span class="o">=</span><span class="s2">"2022-06-30"</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">"2024-06-29"</span><span class="p">)</span>
@@ -309,8 +310,8 @@ using the <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo
 </span><span id="line-14"><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[[</span><span class="s2">"Return30"</span><span class="p">]</span> <span class="o">+</span> <span class="n">dataset</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">"Return30"</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()]</span>
 </span></code></pre></div>
 </div>
-<p>The dataset contains 502 daily observations which, after dropping the missing values
-resulting from the calculation of the returns and of the realized volatility, are reduced to 472.</p>
+<p>After dropping the missing values resulting from the calculation of the returns and of the realized volatility,
+the number of daily observations is reduced to 472.</p>
 <img alt="30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-28" class="blog-post-image" id="cfc-tsf-forecasting-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/time_series_light.png"/>
 <p class="blog-post-image-caption">30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-28.</p><p>We now proceed to renaming the columns in the format expected by the CfC SageMaker algorithm,
 where the output names should start with <code class="code docutils literal notranslate"><span class="pre">"y"</span></code> and the input names should start with <code class="code docutils literal notranslate"><span class="pre">"x"</span></code>.</p>

@@ -205,6 +205,7 @@ Data Preparation
     Next, we download the daily close price time series from the 30<sup>th</sup> of June 2022 to
     the 28<sup>th</sup> of June 2024 from <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>
     using the <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
+    The dataset contains 502 daily observations.
     </p>
 
 .. code:: python
@@ -239,8 +240,8 @@ We then calculate the S&P 500 30-day returns and 30-day realized volatility.
     # move the returns to the first column
     dataset = dataset[["Return30"] + dataset.columns.drop("Return30").tolist()]
 
-The dataset contains 502 daily observations which, after dropping the missing values
-resulting from the calculation of the returns and of the realized volatility, are reduced to 472.
+After dropping the missing values resulting from the calculation of the returns and of the realized volatility,
+the number of daily observations is reduced to 472.
 
 .. raw:: html
 
