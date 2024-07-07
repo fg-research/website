@@ -19,8 +19,8 @@ Forecasting stock returns with liquid neural networks using the CfC SageMaker Al
 
     <p>
     LNNs belong to the class of continuous-time recurrent neural networks (CT-RNNs)
-    <a href="#references">[3]</a> <a href="#references">[4]</a>, where the evolution of the
-    hidden state over time follows an Ordinary Differential Equation (ODE).
+    <a href="#references">[3]</a> <a href="#references">[4]</a>, which assume that the
+    evolution of the hidden state over time follows an Ordinary Differential Equation (ODE).
     LNNs are based on the Liquid Time Constant (LTC) ODE <a href="#references">[5]</a>,
     where both the derivative and the time constant of the hidden state are determined
     by a neural network. LNNs can capture more complex patterns and relationships
@@ -31,10 +31,10 @@ Forecasting stock returns with liquid neural networks using the CfC SageMaker Al
     <p>
     LNNs were initially implemented as LTC networks or LTCs <a href="#references">[5]</a>.
     Similar to other CT-RNNs, LTCs use a numerical solver for finding the ODE solution,
-    resulting in slow training and inference performance.
+    which results in slow training and inference performance.
     In this post, we focus on the closed-form continuous-depth (CfC) implementation of LNNs
     <a href="#references">[6]</a>. CfCs implement an approximate closed-form solution
-    of the LTC ODE and are therefore significantly faster than LTCs and other CT-RNNs.
+    of the LTC ODE and, therefore, are significantly faster than LTCs and other CT-RNNs.
     </p>
 
     <p>
@@ -52,7 +52,7 @@ Forecasting stock returns with liquid neural networks using the CfC SageMaker Al
     We will train the model on the data up to the 8<sup>th</sup> of September 2023,
     and use the trained model to predict the subsequent data up to the 28<sup>th</sup> of June 2024.
     We will find that the CfC SageMaker algorithm achieves a mean absolute error of 1.4% and
-    a mean directional accuracy of 95.8%.
+    a mean directional accuracy of 95.8% over the considered time window.
     </p>
 
 ******************************************
@@ -138,6 +138,8 @@ We start by importing all the dependencies and setting up the SageMaker environm
     import numpy as np
     import matplotlib.pyplot as plt
     import yfinance as yf
+    from pandas.tseries.holiday import USFederalHolidayCalendar
+    from pandas.tseries.offsets import CustomBusinessDay
     from sklearn.metrics import root_mean_squared_error, mean_absolute_error, accuracy_score, f1_score
 
     # SageMaker session
@@ -203,7 +205,7 @@ Data Preparation
     <p>
     Next, we download the daily close price time series from the 30<sup>th</sup> of June 2022 to
     the 28<sup>th</sup> of June 2024 from <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>
-    using the <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
+    using its <a href="https://github.com/ranaroussi/yfinance" target="_blank">Python API</a>.
     The dataset contains 502 daily observations.
     </p>
 
@@ -328,6 +330,8 @@ After the training job has been completed, we deploy the model to a real-time en
     predictor = estimator.deploy(
         initial_instance_count=1,
         instance_type=instance_type,
+        serializer=serializer,
+        deserializer=deserializer,
     )
 
 Once the endpoint has been created, we can generate the test set predictions.
@@ -436,7 +440,7 @@ Forecasting
 
     <p>
     We now retrain the model using all the available data, and generate the out-of-sample forecasts,
-    that is we predict the 30-day returns over 30 (business) days beyond the current date (2024-06-28).
+    that is we predict the 30-day returns over 30 business days beyond the current date (2024-06-28).
     </p>
 
 .. code:: python
@@ -503,7 +507,7 @@ After the batch transform job has been completed, we can load the forecasts from
     forecasts.index = pd.date_range(
         start=dataset.index[-1] + pd.Timedelta(days=1),
         periods=prediction_length,
-        freq="B"
+        freq=CustomBusinessDay(calendar=USFederalHolidayCalendar())
     )
 
 .. raw:: html

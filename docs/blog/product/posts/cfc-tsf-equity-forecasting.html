@@ -131,8 +131,8 @@ In this post, we examine the performance of liquid neural networks (LNNs) <a hre
 </p>
 <p>
 LNNs belong to the class of continuous-time recurrent neural networks (CT-RNNs)
-<a href="#references">[3]</a> <a href="#references">[4]</a>, where the evolution of the
-hidden state over time follows an Ordinary Differential Equation (ODE).
+<a href="#references">[3]</a> <a href="#references">[4]</a>, which assume that the
+evolution of the hidden state over time follows an Ordinary Differential Equation (ODE).
 LNNs are based on the Liquid Time Constant (LTC) ODE <a href="#references">[5]</a>,
 where both the derivative and the time constant of the hidden state are determined
 by a neural network. LNNs can capture more complex patterns and relationships
@@ -142,10 +142,10 @@ on time-series prediction tasks.
 <p>
 LNNs were initially implemented as LTC networks or LTCs <a href="#references">[5]</a>.
 Similar to other CT-RNNs, LTCs use a numerical solver for finding the ODE solution,
-resulting in slow training and inference performance.
+which results in slow training and inference performance.
 In this post, we focus on the closed-form continuous-depth (CfC) implementation of LNNs
 <a href="#references">[6]</a>. CfCs implement an approximate closed-form solution
-of the LTC ODE and are therefore significantly faster than LTCs and other CT-RNNs.
+of the LTC ODE and, therefore, are significantly faster than LTCs and other CT-RNNs.
 </p>
 <p>
 We will use our Amazon SageMaker implementation of CfCs for probabilistic time series
@@ -161,7 +161,7 @@ the 28<sup>th</sup> of June 2024, which we will download from
 We will train the model on the data up to the 8<sup>th</sup> of September 2023,
 and use the trained model to predict the subsequent data up to the 28<sup>th</sup> of June 2024.
 We will find that the CfC SageMaker algorithm achieves a mean absolute error of 1.4% and
-a mean directional accuracy of 95.8%.
+a mean directional accuracy of 95.8% over the considered time window.
 </p><section id="data">
 <h2>Data<a class="headerlink" href="#data" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data'">¶</a></h2>
 <section id="outputs">
@@ -220,19 +220,21 @@ PyTorch 2.1.0 Python 3.10 deep learning container.</p>
 </span><span id="line-4"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 </span><span id="line-5"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 </span><span id="line-6"><span class="kn">import</span> <span class="nn">yfinance</span> <span class="k">as</span> <span class="nn">yf</span>
-</span><span id="line-7"><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">root_mean_squared_error</span><span class="p">,</span> <span class="n">mean_absolute_error</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">f1_score</span>
-</span><span id="line-8">
-</span><span id="line-9"><span class="c1"># SageMaker session</span>
-</span><span id="line-10"><span class="n">sagemaker_session</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
-</span><span id="line-11">
-</span><span id="line-12"><span class="c1"># SageMaker role</span>
-</span><span id="line-13"><span class="n">role</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">get_execution_role</span><span class="p">()</span>
-</span><span id="line-14">
-</span><span id="line-15"><span class="c1"># S3 bucket</span>
-</span><span id="line-16"><span class="n">bucket</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">default_bucket</span><span class="p">()</span>
-</span><span id="line-17">
-</span><span id="line-18"><span class="c1"># EC2 instance</span>
-</span><span id="line-19"><span class="n">instance_type</span> <span class="o">=</span> <span class="s2">"ml.m5.4xlarge"</span>
+</span><span id="line-7"><span class="kn">from</span> <span class="nn">pandas.tseries.holiday</span> <span class="kn">import</span> <span class="n">USFederalHolidayCalendar</span>
+</span><span id="line-8"><span class="kn">from</span> <span class="nn">pandas.tseries.offsets</span> <span class="kn">import</span> <span class="n">CustomBusinessDay</span>
+</span><span id="line-9"><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">root_mean_squared_error</span><span class="p">,</span> <span class="n">mean_absolute_error</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">f1_score</span>
+</span><span id="line-10">
+</span><span id="line-11"><span class="c1"># SageMaker session</span>
+</span><span id="line-12"><span class="n">sagemaker_session</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+</span><span id="line-13">
+</span><span id="line-14"><span class="c1"># SageMaker role</span>
+</span><span id="line-15"><span class="n">role</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">get_execution_role</span><span class="p">()</span>
+</span><span id="line-16">
+</span><span id="line-17"><span class="c1"># S3 bucket</span>
+</span><span id="line-18"><span class="n">bucket</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">default_bucket</span><span class="p">()</span>
+</span><span id="line-19">
+</span><span id="line-20"><span class="c1"># EC2 instance</span>
+</span><span id="line-21"><span class="n">instance_type</span> <span class="o">=</span> <span class="s2">"ml.m5.4xlarge"</span>
 </span></code></pre></div>
 </div>
 <p>After that we define the neural network’s <em>context length</em> and <em>prediction length</em>.
@@ -278,7 +280,7 @@ is provided in our <a class="reference external" href="https://github.com/fg-res
 <p>
 Next, we download the daily close price time series from the 30<sup>th</sup> of June 2022 to
 the 28<sup>th</sup> of June 2024 from <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>
-using the <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
+using its <a href="https://github.com/ranaroussi/yfinance" target="_blank">Python API</a>.
 The dataset contains 502 daily observations.
 </p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># download the data</span>
 </span><span id="line-2"><span class="n">tickers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"^SPX"</span><span class="p">,</span> <span class="s2">"^VIX"</span><span class="p">,</span> <span class="s2">"^VVIX"</span><span class="p">,</span> <span class="s2">"^VXN"</span><span class="p">,</span> <span class="s2">"^GVZ"</span><span class="p">,</span> <span class="s2">"^OVX"</span><span class="p">]</span>
@@ -377,7 +379,9 @@ includes the last 30% of the data.</p>
 </span><span id="line-8"><span class="n">predictor</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">deploy</span><span class="p">(</span>
 </span><span id="line-9">    <span class="n">initial_instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
 </span><span id="line-10">    <span class="n">instance_type</span><span class="o">=</span><span class="n">instance_type</span><span class="p">,</span>
-</span><span id="line-11"><span class="p">)</span>
+</span><span id="line-11">    <span class="n">serializer</span><span class="o">=</span><span class="n">serializer</span><span class="p">,</span>
+</span><span id="line-12">    <span class="n">deserializer</span><span class="o">=</span><span class="n">deserializer</span><span class="p">,</span>
+</span><span id="line-13"><span class="p">)</span>
 </span></code></pre></div>
 </div>
 <p>Once the endpoint has been created, we can generate the test set predictions.
@@ -454,7 +458,7 @@ the same as the horizon of the returns).</p>
 <h3>Forecasting<a class="headerlink" href="#forecasting" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#forecasting'">¶</a></h3>
 <p>
 We now retrain the model using all the available data, and generate the out-of-sample forecasts,
-that is we predict the 30-day returns over 30 (business) days beyond the current date (2024-06-28).
+that is we predict the 30-day returns over 30 business days beyond the current date (2024-06-28).
 </p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># upload the training data to S3</span>
 </span><span id="line-2"><span class="n">data</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">upload_string_as_file_body</span><span class="p">(</span>
 </span><span id="line-3">    <span class="n">body</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
@@ -513,7 +517,7 @@ The forecasts are saved to a CSV file in S3 with the same name as the input CSV 
 </span><span id="line-11"><span class="n">forecasts</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span>
 </span><span id="line-12">    <span class="n">start</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
 </span><span id="line-13">    <span class="n">periods</span><span class="o">=</span><span class="n">prediction_length</span><span class="p">,</span>
-</span><span id="line-14">    <span class="n">freq</span><span class="o">=</span><span class="s2">"B"</span>
+</span><span id="line-14">    <span class="n">freq</span><span class="o">=</span><span class="n">CustomBusinessDay</span><span class="p">(</span><span class="n">calendar</span><span class="o">=</span><span class="n">USFederalHolidayCalendar</span><span class="p">())</span>
 </span><span id="line-15"><span class="p">)</span>
 </span></code></pre></div>
 </div>
