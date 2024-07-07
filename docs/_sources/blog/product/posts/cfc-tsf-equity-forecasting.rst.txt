@@ -23,10 +23,9 @@ Forecasting stock returns with liquid neural networks using the CfC SageMaker Al
     hidden state over time follows an Ordinary Differential Equation (ODE).
     LNNs are based on the Liquid Time Constant (LTC) ODE <a href="#references">[5]</a>,
     where both the derivative and the time constant of the hidden state are determined
-    by a neural network. As a result of their higher flexibility and expressiveness,
-    LNNs can capture more complex patterns and relationships within
-    the data than other RNNs and, as a result, often
-    outperform modern deep learning models on time-series prediction tasks.
+    by a neural network. LNNs can capture more complex patterns and relationships
+    than other RNNs and, as a result, often outperform modern deep learning models
+    on time-series prediction tasks.
     </p>
 
     <p>
@@ -35,7 +34,7 @@ Forecasting stock returns with liquid neural networks using the CfC SageMaker Al
     resulting in slow training and inference performance.
     In this post, we focus on the closed-form continuous-depth (CfC) implementation of LNNs
     <a href="#references">[6]</a>. CfCs implement an approximate closed-form solution
-    of the LTC ODE and, as a result, are significantly faster than LTCs and other CT-RNNs.
+    of the LTC ODE and are therefore significantly faster than LTCs and other CT-RNNs.
     </p>
 
     <p>
