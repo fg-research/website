@@ -82,28 +82,27 @@ Inputs
 The model uses as input the previous 30-day returns of the S&P 500, as well as the past values
 of the following volatility indicators:
 
-* *RVOL*: The realized volatility of the S&P 500, which is calculated as the 30-day rolling sample standard deviation of the S&P 500 daily returns.
+* The realized volatility of the S&P 500 (*RVOL*), which is calculated as the 30-day rolling sample standard deviation of the S&P 500 daily returns.
 
-* *VIX*: The VIX index, which measures the 30-day implied volatility of S&P 500 options.
+* The *VIX* index, which measures the 30-day implied volatility of S&P 500 options.
 
-* *VVIX*: The VVIX index, which reflects the 30-day expected volatility of the VIX.
+* The *VVIX* index, which reflects the 30-day expected volatility of the VIX.
 
-* *VXN*: The VXN index, which measures the 30-day implied volatility of NASDAQ 100 options.
+* The *VXN* index, which measures the 30-day implied volatility of NASDAQ 100 options.
 
-* *GVZ*: The GVZ index, which measures the 30-day implied volatility of SPDR Gold Shares ETF (GLD) options.
+* The *GVZ* index, which measures the 30-day implied volatility of SPDR Gold Shares ETF (GLD) options.
 
-* *OVX*: The OVX index, which measures the 30-day implied volatility of United States Oil Fund (USO) options.
+* The *OVX* index, which measures the 30-day implied volatility of United States Oil Fund (USO) options.
 
 *RVOL* is a backward-looking indicator, as it estimates the volatility over the past 30 days,
 while *VIX*, *VVIX*, *VXN*, *GVZ*, and *OVX* are forward-looking indicators, as they reflect the market's
 expectation of what the volatility will be over the next 30 days.
 
-.. raw:: html
-
-    <p>
-    Note that we use the same inputs as in <a href="#references">[2]</a>, with the exception of the
-    <i>PUTCALL</i> index, which we had to exclude as its historical time series is not publicly available.
-    </p>
+Note that we use the same inputs as in <a href="#references">[2]</a>, with the exception of the
+<i>PUTCALL</i> index, which we had to exclude as its historical time series is not publicly available.
+Note also that, as discussed in <a href="#references">[2]</a>, we exclude the (short-term) term
+structure of the VIX index (VIX9D, VIX3M, VIX6M) as the different tenor points are highly correlated
+with each other and with the VIX index, resulting in high multi-collinearity and low predictive power.
 
 We will use a context length of 30 days, meaning that the model will use as input the 30-day returns
 and the volatility indicators over the previous 30 days in order to predict the 30-day returns over

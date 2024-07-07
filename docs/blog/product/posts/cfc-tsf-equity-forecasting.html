@@ -180,20 +180,22 @@ over the subsequent 30 days. Given that we use overlapping (or rolling) returns,
 <p>The model uses as input the previous 30-day returns of the S&amp;P 500, as well as the past values
 of the following volatility indicators:</p>
 <ul class="simple">
-<li><p><em>RVOL</em>: The realized volatility of the S&amp;P 500, which is calculated as the 30-day rolling sample standard deviation of the S&amp;P 500 daily returns.</p></li>
-<li><p><em>VIX</em>: The VIX index, which measures the 30-day implied volatility of S&amp;P 500 options.</p></li>
-<li><p><em>VVIX</em>: The VVIX index, which reflects the 30-day expected volatility of the VIX.</p></li>
-<li><p><em>VXN</em>: The VXN index, which measures the 30-day implied volatility of NASDAQ 100 options.</p></li>
-<li><p><em>GVZ</em>: The GVZ index, which measures the 30-day implied volatility of SPDR Gold Shares ETF (GLD) options.</p></li>
-<li><p><em>OVX</em>: The OVX index, which measures the 30-day implied volatility of United States Oil Fund (USO) options.</p></li>
+<li><p>The realized volatility of the S&amp;P 500 (<em>RVOL</em>), which is calculated as the 30-day rolling sample standard deviation of the S&amp;P 500 daily returns.</p></li>
+<li><p>The <em>VIX</em> index, which measures the 30-day implied volatility of S&amp;P 500 options.</p></li>
+<li><p>The <em>VVIX</em> index, which reflects the 30-day expected volatility of the VIX.</p></li>
+<li><p>The <em>VXN</em> index, which measures the 30-day implied volatility of NASDAQ 100 options.</p></li>
+<li><p>The <em>GVZ</em> index, which measures the 30-day implied volatility of SPDR Gold Shares ETF (GLD) options.</p></li>
+<li><p>The <em>OVX</em> index, which measures the 30-day implied volatility of United States Oil Fund (USO) options.</p></li>
 </ul>
 <p><em>RVOL</em> is a backward-looking indicator, as it estimates the volatility over the past 30 days,
 while <em>VIX</em>, <em>VVIX</em>, <em>VXN</em>, <em>GVZ</em>, and <em>OVX</em> are forward-looking indicators, as they reflect the market’s
 expectation of what the volatility will be over the next 30 days.</p>
-<p>
-Note that we use the same inputs as in <a href="#references">[2]</a>, with the exception of the
-<i>PUTCALL</i> index, which we had to exclude as its historical time series is not publicly available.
-</p><p>We will use a context length of 30 days, meaning that the model will use as input the 30-day returns
+<p>Note that we use the same inputs as in &lt;a href=”#references”&gt;[2]&lt;/a&gt;, with the exception of the
+&lt;i&gt;PUTCALL&lt;/i&gt; index, which we had to exclude as its historical time series is not publicly available.
+Note also that, as discussed in &lt;a href=”#references”&gt;[2]&lt;/a&gt;, we exclude the (short-term) term
+structure of the VIX index (VIX9D, VIX3M, VIX6M) as the different tenor points are highly correlated
+with each other and with the VIX index, resulting in high multi-collinearity and low predictive power.</p>
+<p>We will use a context length of 30 days, meaning that the model will use as input the 30-day returns
 and the volatility indicators over the previous 30 days in order to predict the 30-day returns over
 the subsequent 30 days.</p>
 </section>
