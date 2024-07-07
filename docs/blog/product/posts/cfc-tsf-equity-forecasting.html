@@ -236,7 +236,7 @@ PyTorch 2.1.0 Python 3.10 deep learning container.</p>
 </span><span id="line-19"><span class="n">instance_type</span> <span class="o">=</span> <span class="s2">"ml.m5.4xlarge"</span>
 </span></code></pre></div>
 </div>
-<p>After that we define the neural network’s context length and prediction length.
+<p>After that we define the neural network’s <em>context length</em> and <em>prediction length</em>.
 The context length is the number of past time steps used as input,
 while the prediction length is the number of future time steps to be predicted.
 We set both of them equal to 30 days, that is we use the previous 30 values
@@ -424,8 +424,8 @@ the same as the horizon of the returns).</p>
 <ul class="simple">
 <li><p>The root mean squared error (<em>RMSE</em>) of the predicted values of the returns.</p></li>
 <li><p>The mean absolute error (<em>MAE</em>) of the predicted values of the returns.</p></li>
-<li><p>The accuracy of the predicted signs of the returns.</p></li>
-<li><p>The F1 score of the predicted signs of the returns.</p></li>
+<li><p>The <em>accuracy</em> of the predicted signs of the returns.</p></li>
+<li><p>The <em>F1</em> score of the predicted signs of the returns.</p></li>
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># calculate the model performance metrics</span>
 </span><span id="line-2"><span class="n">metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>

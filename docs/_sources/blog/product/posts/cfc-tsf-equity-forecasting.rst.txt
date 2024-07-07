@@ -153,7 +153,7 @@ We start by importing all the dependencies and setting up the SageMaker environm
     # EC2 instance
     instance_type = "ml.m5.4xlarge"
 
-After that we define the neural network's context length and prediction length.
+After that we define the neural network's *context length* and *prediction length*.
 The context length is the number of past time steps used as input,
 while the prediction length is the number of future time steps to be predicted.
 We set both of them equal to 30 days, that is we use the previous 30 values
@@ -388,9 +388,9 @@ We evaluate the test set predictions using the following metrics:
 
 * The mean absolute error (*MAE*) of the predicted values of the returns.
 
-* The accuracy of the predicted signs of the returns.
+* The *accuracy* of the predicted signs of the returns.
 
-* The F1 score of the predicted signs of the returns.
+* The *F1* score of the predicted signs of the returns.
 
 .. code:: python
 
