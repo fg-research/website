@@ -515,11 +515,11 @@ After the batch transform job has been completed, we can load the forecasts from
     <img
         id="cfc-tsf-forecasting-forecasts"
         class="blog-post-image"
-        alt="30-day returns out-of-sample forecasts (from 2024-07-01 to 2024-08-09)"
+        alt="30-day returns out-of-sample forecasts (from 2024-07-01 to 2024-08-12)"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/forecasts_light.png
     />
 
-    <p class="blog-post-image-caption">30-day returns out-of-sample forecasts (from 2024-07-01 to 2024-08-09).</p>
+    <p class="blog-post-image-caption">30-day returns out-of-sample forecasts (from 2024-07-01 to 2024-08-12).</p>
 
 We can now delete the model.
 
