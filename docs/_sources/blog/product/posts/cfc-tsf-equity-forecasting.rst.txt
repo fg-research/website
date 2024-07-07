@@ -468,7 +468,7 @@ Forecasting
     estimator.fit({"training": data})
 
 Given that we only need a single predicted 30-day sequence, we use batch transform for generating the forecasts.
-The forecasts are saved to a CSV file in S3 with the same name as the input CSV file but with the `".out"` file extension.
+The forecasts are saved to a CSV file in S3 with the same name as the input CSV file but with the :code:`".out"` file extension.
 
 .. code:: python
 

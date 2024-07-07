@@ -483,7 +483,7 @@ that is we predict the 30-day returns over 30 business days beyond the current d
 </span></code></pre></div>
 </div>
 <p>Given that we only need a single predicted 30-day sequence, we use batch transform for generating the forecasts.
-The forecasts are saved to a CSV file in S3 with the same name as the input CSV file but with the <cite>“.out”</cite> file extension.</p>
+The forecasts are saved to a CSV file in S3 with the same name as the input CSV file but with the <code class="code docutils literal notranslate"><span class="pre">".out"</span></code> file extension.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># upload the input data to S3</span>
 </span><span id="line-2"><span class="n">inputs</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">upload_string_as_file_body</span><span class="p">(</span>
 </span><span id="line-3">    <span class="n">body</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span> <span class="n">context_length</span><span class="p">:]</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
