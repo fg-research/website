@@ -134,21 +134,21 @@ LNNs belong to the class of continuous-time recurrent neural networks (CT-RNNs)
 <a href="#references">[3]</a> <a href="#references">[4]</a>, where the evolution of the
 hidden state over time follows an Ordinary Differential Equation (ODE).
 LNNs are based on the Liquid Time Constant (LTC) ODE <a href="#references">[5]</a>,
-where both the derivative and the time constant of the hidden state are modelled by
-a neural network. LNNs can capture complex patterns and relationships within the data
-than standard RNNs and, as a result, often outperform modern deep learning models on
-time-series prediction tasks.
+where both the derivative and the time constant of the hidden state are determined
+by a neural network. As a result, LNNs can capture more complex patterns and
+relationships within the data than other time-continuous models, and often
+outperform modern deep learning models on time-series prediction tasks.
 </p>
 <p>
 LNNs were initially implemented as LTC networks or LTCs <a href="#references">[5]</a>.
 Similar to other CT-RNNs, LTCs used a numerical solver for finding the ODE solution,
 resulting in slow training and inference performance.
 In this post, we focus on the closed-form continuous-depth (CfC) implementation of LNNs
-<a href="#references">[6]</a>. CfC networks implement an approximate closed-form solution
+<a href="#references">[6]</a>. CfCs implement an approximate closed-form solution
 of the LTC ODE and, as a result, are significantly faster than LTCs and other CT-RNNs.
 </p>
 <p>
-We will use our Amazon SageMaker implementation of CfC networks for probabilistic time series
+We will use our Amazon SageMaker implementation of CfCs for probabilistic time series
 forecasting, the <a href="https://fg-research.com/algorithms/time-series-forecasting/index.html#cfc-sagemaker-algorithm" target="_blank"> CfC SageMaker algorithm</a>.
 We will forecast the conditional mean and the conditional standard deviation of the 30-day returns of
 the S&amp;P 500 using as input the S&amp;P 500 realized volatility as well as different implied volatility indices,
