@@ -13,23 +13,28 @@ Forecasting stock returns with liquid neural networks using the CfC SageMaker Al
     Stock return forecasting has been extensively studied by both academic researchers and
     industry practitioners. Numerous machine learning models have been proposed for this purpose,
     ranging from simple linear regressions to complex deep learning models <a href="#references">[1]</a>.
-    In this post, we examine the performance of liquid neural networks (LNNs) <a href="#references">[4]</a>
-    <a href="#references">[5]</a>, a new neural network architecture for sequential data.
+    In this post, we examine the performance of liquid neural networks (LNNs) <a href="#references">[5]</a>
+    <a href="#references">[6]</a>, a new neural network architecture for sequential data.
     </p>
 
     <p>
     LNNs belong to the class of continuous-time recurrent neural networks (CT-RNNs)
-    <a href="#references">[3]</a>, where the evolution of the hidden state over time is modelled as
-    an Ordinary Differential Equation (ODE). LNNs are based on the Liquid Time Constant (LTC)
-    ODE <a href="#references">[4]</a>, where both the derivative and the time constant of the hidden
-    state follow a neural network.
+    <a href="#references">[3]</a> <a href="#references">[4]</a>, where the evolution of the
+    hidden state over time follows an Ordinary Differential Equation (ODE).
+    LNNs are based on the Liquid Time Constant (LTC) ODE <a href="#references">[5]</a>,
+    where both the derivative and the time constant of the hidden state are modelled by
+    a neural network. LNNs can capture complex patterns and relationships within the data
+    than standard RNNs and, as a result, often outperform modern deep learning models on
+    time-series prediction tasks.
     </p>
 
     <p>
-    In this post, we focus on the closed-form continuous-depth (CfC) network <a href="#references">[5]</a>.
-    CfC networks implement an approximate closed-form solution of the LTC ODE and, as a result, achieve faster
-    training and inference performance than other CT-RNNs (including LTCs <a href="#references">[4]</a>),
-    which instead use a numerical solver to find the ODE solution.
+    LNNs were initially implemented as LTC networks or LTCs <a href="#references">[5]</a>.
+    Similar to other CT-RNNs, LTCs used a numerical solver for finding the ODE solution,
+    resulting in slow training and inference performance.
+    In this post, we focus on the closed-form continuous-depth (CfC) implementation of LNNs
+    <a href="#references">[6]</a>. CfC networks implement an approximate closed-form solution
+    of the LTC ODE and, as a result, are significantly faster than LTCs and other CT-RNNs.
     </p>
 
     <p>
@@ -534,14 +539,18 @@ A comparison of machine learning methods for predicting the direction of the US
 stock market on the basis of volatility indices. *International Journal of Forecasting*, 40(3), pp. 869-880.
 `doi: 10.1016/j.ijforecast.2023.07.002 <https://doi.org/10.1016/j.ijforecast.2023.07.002>`__.
 
-[3] Funahashi, K.I. and Nakamura, Y., (1993). Approximation of dynamical systems by continuous
+[3] Chow, T.W. and Li, X.D., 2000. Modeling of continuous time dynamical systems with input by
+recurrent neural networks. *IEEE Transactions on Circuits and Systems I: Fundamental Theory and Applications*,
+47(4), pp.575-578. `doi: 10.1109/81.841860 <https://doi.org/10.1109/81.841860>`__.
+
+[4] Funahashi, K.I. and Nakamura, Y., (1993). Approximation of dynamical systems by continuous
 time recurrent neural networks. *Neural networks*, 6(6), pp.801-806.
 `doi: 10.1016/S0893-6080(05)80125-X <https://doi.org/10.1016/S0893-6080(05)80125-X>`__.
 
-[4] Hasani, R., Lechner, M., Amini, A., Rus, D., & Grosu, R. (2021).
+[5] Hasani, R., Lechner, M., Amini, A., Rus, D., & Grosu, R. (2021).
 Liquid time-constant networks. In *Proceedings of the AAAI Conference on Artificial Intelligence*, 35(9), pp. 7657-7666.
 `doi: 10.1609/aaai.v35i9.16936 <https://doi.org/10.1609/aaai.v35i9.16936>`__.
 
-[5] Hasani, R., Lechner, M., Amini, A., Liebenwein, L., Ray, A., Tschaikowski, M., Teschl, G. and Rus, D., (2022).
+[6] Hasani, R., Lechner, M., Amini, A., Liebenwein, L., Ray, A., Tschaikowski, M., Teschl, G. and Rus, D., (2022).
 Closed-form continuous-time neural networks. *Nature Machine Intelligence*, 4(11), pp. 992-1003.
 `doi: 10.1038/s42256-022-00556-7 <https://doi.org/10.1038/s42256-022-00556-7>`__.
