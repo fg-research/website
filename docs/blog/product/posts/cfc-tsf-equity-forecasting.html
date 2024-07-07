@@ -250,7 +250,7 @@ of the inputs and output to predict the subsequent 30 values of the output.</p>
 <p>We also define all the remaining hyperparameters of the CfC network.
 Note that we use a relatively small model with less than 5k parameters.
 A detailed description of the model architecture and of its hyperparameters
-is available in our <a class="reference external" href="https://github.com/fg-research/cfc-tsf-sagemaker">GitHub repository</a>.</p>
+is provided in our <a class="reference external" href="https://github.com/fg-research/cfc-tsf-sagemaker">GitHub repository</a>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># neural network hyperparameters</span>
 </span><span id="line-2"><span class="n">hyperparameters</span> <span class="o">=</span> <span class="p">{</span>
 </span><span id="line-3">    <span class="s2">"context-length"</span><span class="p">:</span> <span class="n">context_length</span><span class="p">,</span>
@@ -319,7 +319,7 @@ where the output names should start with <code class="code docutils literal notr
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Note that the algorithm’s code always includes the past values of the outputs
-among the inputs, and there is therefore no need to add the lagged values of
+among the inputs and, therefore, there is no need to add the lagged values of
 the outputs when preparing the data for the model.</p>
 </div>
 </section>
@@ -380,8 +380,8 @@ includes the last 30% of the data.</p>
 </span></code></pre></div>
 </div>
 <p>Once the endpoint has been created, we can generate the test set predictions.
-As we used rolling (or overlapping) returns, we are only interested in the last
-element of each predicted sequence (recall that we set the prediction length to 30 days,
+Given that the returns are overlapping, we are only interested in the last
+element of each predicted sequence (recall that the prediction length is 30 days,
 the same as the horizon of the returns).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># create a list for storing the predictions</span>
 </span><span id="line-2"><span class="n">predictions</span> <span class="o">=</span> <span class="p">[]</span>
@@ -421,10 +421,10 @@ the same as the horizon of the returns).</p>
 <img alt="Actual and predicted 30-day returns from 2023-12-04 to 2024-06-28" class="blog-post-image" id="cfc-tsf-forecasting-predictions" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/predictions_light.png"/>
 <p class="blog-post-image-caption">Actual and predicted 30-day returns over the test set (from 2023-12-04 to 2024-06-28).</p><p>We evaluate the test set predictions using the following metrics:</p>
 <ul class="simple">
-<li><p><em>RMSE</em>: The root mean squared error of the predicted values of the returns.</p></li>
-<li><p><em>MAE</em>: The mean absolute error of the predicted values of the returns.</p></li>
-<li><p><em>Accuracy</em>: The accuracy of the predicted signs of the returns.</p></li>
-<li><p><em>F1</em>: The F1 score of the predicted signs of the returns.</p></li>
+<li><p>The root mean squared error (<em>RMSE</em>) of the predicted values of the returns.</p></li>
+<li><p>The mean absolute error (<em>MAE</em>) of the predicted values of the returns.</p></li>
+<li><p>The accuracy of the predicted signs of the returns.</p></li>
+<li><p>The F1 score of the predicted signs of the returns.</p></li>
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># calculate the model performance metrics</span>
 </span><span id="line-2"><span class="n">metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
@@ -438,6 +438,7 @@ the same as the horizon of the returns).</p>
 </span><span id="line-10"><span class="p">)</span>
 </span></code></pre></div>
 </div>
+<p>We find that the model achieves a mean absolute error of 1.4% and a mean directional accuracy of 95.8% on the test set.</p>
 <img alt="Performance metrics of predicted 30-day returns over the test set (from 2023-12-04 to 2024-06-28)" class="blog-post-image" id="cfc-tsf-forecasting-metrics" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/metrics_light.png"/>
 <p class="blog-post-image-caption">Performance metrics of predicted 30-day returns over the test set (from 2023-12-04 to 2024-06-28).</p><p>We can now delete the model and the endpoint.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># delete the model</span>
@@ -475,7 +476,8 @@ that is we predict the 30-day returns over 30 (business) days beyond the current
 </span><span id="line-20"><span class="n">estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">({</span><span class="s2">"training"</span><span class="p">:</span> <span class="n">data</span><span class="p">})</span>
 </span></code></pre></div>
 </div>
-<p>Given that we only need a single predicted 30-day sequence, we use batch transform for generating the forecasts.</p>
+<p>Given that we only need a single predicted 30-day sequence, we use batch transform for generating the forecasts.
+The forecasts are saved to a CSV file in S3 with the same name as the input CSV file but with the <cite>“.out”</cite> file extension.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># upload the input data to S3</span>
 </span><span id="line-2"><span class="n">inputs</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">upload_string_as_file_body</span><span class="p">(</span>
 </span><span id="line-3">    <span class="n">body</span><span class="o">=</span><span class="n">dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span> <span class="n">context_length</span><span class="p">:]</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>

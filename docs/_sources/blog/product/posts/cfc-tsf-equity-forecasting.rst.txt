@@ -166,7 +166,7 @@ of the inputs and output to predict the subsequent 30 values of the output.
 We also define all the remaining hyperparameters of the CfC network.
 Note that we use a relatively small model with less than 5k parameters.
 A detailed description of the model architecture and of its hyperparameters
-is available in our `GitHub repository <https://github.com/fg-research/cfc-tsf-sagemaker>`__.
+is provided in our `GitHub repository <https://github.com/fg-research/cfc-tsf-sagemaker>`__.
 
 .. code:: python
 
@@ -259,7 +259,7 @@ where the output names should start with :code:`"y"` and the input names should 
 .. note::
 
     Note that the algorithm's code always includes the past values of the outputs
-    among the inputs, and there is therefore no need to add the lagged values of
+    among the inputs and, therefore, there is no need to add the lagged values of
     the outputs when preparing the data for the model.
 
 ==========================================
@@ -327,8 +327,8 @@ After the training job has been completed, we deploy the model to a real-time en
     )
 
 Once the endpoint has been created, we can generate the test set predictions.
-As we used rolling (or overlapping) returns, we are only interested in the last
-element of each predicted sequence (recall that we set the prediction length to 30 days,
+Given that the returns are overlapping, we are only interested in the last
+element of each predicted sequence (recall that the prediction length is 30 days,
 the same as the horizon of the returns).
 
 .. code:: python
@@ -380,13 +380,13 @@ the same as the horizon of the returns).
 
 We evaluate the test set predictions using the following metrics:
 
-* *RMSE*: The root mean squared error of the predicted values of the returns.
+* The root mean squared error (*RMSE*) of the predicted values of the returns.
 
-* *MAE*: The mean absolute error of the predicted values of the returns.
+* The mean absolute error (*MAE*) of the predicted values of the returns.
 
-* *Accuracy*: The accuracy of the predicted signs of the returns.
+* The accuracy of the predicted signs of the returns.
 
-* *F1*: The F1 score of the predicted signs of the returns.
+* The F1 score of the predicted signs of the returns.
 
 .. code:: python
 
@@ -400,6 +400,8 @@ We evaluate the test set predictions using the following metrics:
             {"Metric": "F1", "Value": f1_score(y_true=predictions["y"] > 0, y_pred=predictions["y_mean"] > 0)},
         ]
     )
+
+We find that the model achieves a mean absolute error of 1.4% and a mean directional accuracy of 95.8% on the test set.
 
 .. raw:: html
 
@@ -457,6 +459,7 @@ Forecasting
     estimator.fit({"training": data})
 
 Given that we only need a single predicted 30-day sequence, we use batch transform for generating the forecasts.
+The forecasts are saved to a CSV file in S3 with the same name as the input CSV file but with the `".out"` file extension.
 
 .. code:: python
 
