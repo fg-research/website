@@ -85,7 +85,7 @@ of the following volatility indicators:
 
 * The *VIX* index, which measures the 30-day implied volatility of S&P 500 options.
 
-* The *VVIX* index, which reflects the 30-day expected volatility of the VIX.
+* The *VVIX* index, which reflects the 30-day expected volatility of the *VIX*.
 
 * The *VXN* index, which measures the 30-day implied volatility of NASDAQ 100 options.
 
