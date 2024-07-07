@@ -98,11 +98,15 @@ of the following volatility indicators:
 while *VIX*, *VVIX*, *VXN*, *GVZ*, and *OVX* are forward-looking indicators, as they reflect the market's
 expectation of what the volatility will be over the next 30 days.
 
-Note that we use the same inputs as in <a href="#references">[2]</a>, with the exception of the
-<i>PUTCALL</i> index, which we had to exclude as its historical time series is not publicly available.
-Note also that, as discussed in <a href="#references">[2]</a>, we exclude the (short-term) term
-structure of the VIX index (VIX9D, VIX3M, VIX6M) as the different tenor points are highly correlated
-with each other and with the VIX index, resulting in high multi-collinearity and low predictive power.
+.. raw:: html
+
+    <p>
+    Note that we use the same inputs as in <a href="#references">[2]</a>, with the exception of the
+    <i>PUTCALL</i> index, which we had to exclude as its historical time series is not publicly available.
+    Note also that, as discussed in <a href="#references">[2]</a>, we exclude the (short-term) term
+    structure of the VIX index (VIX9D, VIX3M, VIX6M) as the different tenor points are highly correlated
+    with each other and with the VIX index, resulting in high multi-collinearity and low predictive power.
+    </p>
 
 We will use a context length of 30 days, meaning that the model will use as input the 30-day returns
 and the volatility indicators over the previous 30 days in order to predict the 30-day returns over
