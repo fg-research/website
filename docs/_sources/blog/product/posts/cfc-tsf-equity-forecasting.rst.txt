@@ -204,8 +204,8 @@ Data Preparation
 
     <p>
     Next, we download the daily close price time series from the 30<sup>th</sup> of June 2022 to
-    the 28<sup>th</sup> of June 2024 from <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>
-    using its <a href="https://github.com/ranaroussi/yfinance" target="_blank">Python API</a>.
+    the 28<sup>th</sup> of June 2024 using the
+    <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
     The dataset contains 502 daily observations.
     </p>
 
