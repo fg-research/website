@@ -31,7 +31,7 @@ Forecasting stock returns with liquid neural networks using the CfC SageMaker Al
 
     <p>
     LNNs were initially implemented as LTC networks or LTCs <a href="#references">[5]</a>.
-    Similar to other CT-RNNs, LTCs used a numerical solver for finding the ODE solution,
+    Similar to other CT-RNNs, LTCs use a numerical solver for finding the ODE solution,
     resulting in slow training and inference performance.
     In this post, we focus on the closed-form continuous-depth (CfC) implementation of LNNs
     <a href="#references">[6]</a>. CfCs implement an approximate closed-form solution
