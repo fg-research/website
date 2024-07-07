@@ -52,7 +52,7 @@ Forecasting stock returns with liquid neural networks using the CfC SageMaker Al
     We will train the model on the data up to the 8<sup>th</sup> of September 2023,
     and use the trained model to predict the subsequent data up to the 28<sup>th</sup> of June 2024.
     We will find that the CfC SageMaker algorithm achieves a mean absolute error of 1.4% and
-    a mean directional accuracy of 95.8% over the considered time window.
+    a mean directional accuracy of 95.8% over the considered time period.
     </p>
 
 ******************************************
