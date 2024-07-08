@@ -25,7 +25,7 @@ Forecasting stock returns with liquid neural networks using the CfC SageMaker Al
     where both the derivative and the time constant of the hidden state are determined
     by a neural network. LNNs can capture more complex patterns and relationships
     than other RNNs and, as a result, often outperform modern deep learning models
-    on time-series prediction tasks.
+    on time series prediction tasks.
     </p>
 
     <p>
