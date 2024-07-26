@@ -80,7 +80,9 @@ h6 {
 #cnn-kmeans-control-chart-clustering-include,
 #lstm-ad-ecg-anomaly-detection-include,
 #inflation-forecasting-random-forest-include,
-#cfc-tsf-equity-forecasting-include{
+#cfc-tsf-equity-forecasting-include,
+#commodity-forecasting-forgan-include,
+{
     font-weight: 300 !important;
 }
 

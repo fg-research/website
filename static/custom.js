@@ -27,7 +27,8 @@ window.setInterval(function(){
         'cnn-kmeans-control-chart-clustering-toctree',
         'lstm-ad-ecg-anomaly-detection-toctree',
         'inflation-forecasting-random-forest-toctree',
-        'cfc-tsf-equity-forecasting-toctree'
+        'cfc-tsf-equity-forecasting-toctree',
+        'commodity-forecasting-forgan-toctree'
     ];
     for (var i = 0; i < elements.length; i++) {
         var f = document.getElementById(elements[i]);
@@ -65,7 +66,10 @@ window.setInterval(function(){
         'cfc-tsf-forecasting-time-series',
         'cfc-tsf-forecasting-predictions',
         'cfc-tsf-forecasting-forecasts',
-        'cfc-tsf-forecasting-metrics'
+        'cfc-tsf-forecasting-metrics',
+        'commodity-forecasting-forgan-time-series',
+        'commodity-forecasting-forgan-predictions',
+        'commodity-forecasting-forgan-metrics'
     ];
     for (var i = 0; i < elements.length; i++) {
         var f = document.getElementById(elements[i]);
