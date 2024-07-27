@@ -14,37 +14,6 @@ General
 
 .. card::
     :width: 100%
-    :link: posts/commodity-forecasting-forgan
-    :link-type: doc
-
-    .. _commodity-forecasting-forgan-toctree:
-
-    .. toctree::
-        :titlesonly:
-
-        posts/commodity-forecasting-forgan
-
-    .. _commodity-forecasting-forgan-include:
-
-    ...
-
-
-
-    .. grid:: 2
-        :margin: 0 3 auto auto
-
-        .. grid-item::
-            :class: sd-text-primary
-
-            :octicon:`graph;1rem;graph-icon` Forecasting
-
-        .. grid-item::
-            :class: sd-text-secondary
-
-            :octicon:`calendar;1rem;calendar-icon` July 26, 2024
-
-.. card::
-    :width: 100%
     :link: posts/inflation-forecasting-random-forest
     :link-type: doc
 

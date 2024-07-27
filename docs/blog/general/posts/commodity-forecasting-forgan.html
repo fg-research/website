@@ -22,8 +22,6 @@
 <link href="../../../_static/favicon.ico" rel="icon"/>
 <link href="../../../search.html" rel="search" title="Search"/>
 <link href="../../../genindex.html" rel="index" title="Index"/>
-<link href="inflation-forecasting-random-forest.html" rel="next" title="Forecasting US inflation with random forests"/>
-<link href="../index.html" rel="prev" title="General"/>
 <script>
     <!-- Prevent Flash of wrong theme -->
       const userPreference = localStorage.getItem('darkMode');
@@ -89,9 +87,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../algorithms/time-series-classification/index.html">Time Series Classification</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Blog</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../product/index.html">Product</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../index.html">General</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">General</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Terms and Conditions</span></p>
 <ul>
@@ -116,7 +114,6 @@
 <path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z"></path>
 </svg>
 </a>
-<div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="../index.html">General</a>
 <div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Forecasting commodity prices with generative adversarial networks</span>
 </nav>
 <div id="content" role="main">
@@ -125,8 +122,8 @@
 <p>
 </p><section id="data">
 <h2>Data<a class="headerlink" href="#data" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data'">¶</a></h2>
-<img alt="Bloomberg Commodity Index from 2022-07-27 to 2024-07-25" class="blog-post-image" id="commodity-forecasting-forgan-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/commodity-forecasting-forgan/time_series_light.png"/>
-<p class="blog-post-image-caption">Bloomberg Commodity Index from 2022-07-27 to 2024-07-25.</p></section>
+<img alt="Bloomberg Commodity Index from 2022-07-28 to 2024-07-26" class="blog-post-image" id="commodity-forecasting-forgan-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/commodity-forecasting-forgan/time_series_light.png"/>
+<p class="blog-post-image-caption">Bloomberg Commodity Index from 2022-07-28 to 2024-07-26.</p></section>
 <section id="code">
 <h2>Code<a class="headerlink" href="#code" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#code'">¶</a></h2>
 <section id="set-up">
@@ -372,13 +369,13 @@
 <h3>Analysis<a class="headerlink" href="#analysis" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#analysis'">¶</a></h3>
 <p>
 Next, we download the daily close price time series of Bloomberg Commodity Index
-from the 27<sup>th</sup> of July 2022 to the 25<sup>th</sup> of July 2024 using the
+from the 28<sup>th</sup> of July 2022 to the 26<sup>th</sup> of July 2024 using the
 <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
 The dataset contains 502 daily observations.
 </p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">ticker</span> <span class="o">=</span> <span class="s2">"^BCOM"</span>
 </span></code></pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">dataset</span> <span class="o">=</span> <span class="n">yf</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">ticker</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">"2022-07-27"</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">"2024-07-26"</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">dataset</span> <span class="o">=</span> <span class="n">yf</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">ticker</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">"2022-07-28"</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">"2024-07-27"</span><span class="p">)</span>
 </span><span id="line-2"><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[[</span><span class="s2">"Close"</span><span class="p">]]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">"Close"</span><span class="p">:</span> <span class="n">ticker</span><span class="p">})</span>
 </span></code></pre></div>
 </div>
@@ -425,8 +422,8 @@ For convenience, we include the actual values of the time series in the same dat
 </span><span id="line-11"><span class="p">)</span>
 </span></code></pre></div>
 </div>
-<img alt="Actual and predicted prices from 2024-06-12 to 2024-07-25" class="blog-post-image" id="commodity-forecasting-forgan-predictions" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/commodity-forecasting-forgan/predictions_light.png"/>
-<p class="blog-post-image-caption">Actual and predicted prices over the test set (from 2024-06-12 to 2024-07-25).</p><p>Finally, we calculate the root mean squared error (RMSE), mean absolute error (MAE) and
+<img alt="Actual and predicted prices from 2024-06-13 to 2024-07-26" class="blog-post-image" id="commodity-forecasting-forgan-predictions" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/commodity-forecasting-forgan/predictions_light.png"/>
+<p class="blog-post-image-caption">Actual and predicted prices over the test set (from 2024-06-13 to 2024-07-26).</p><p>Finally, we calculate the root mean squared error (RMSE), mean absolute error (MAE) and
 mean absolute percentage error (MAPE) of the one-step-ahead predictions over the test set.
 Note that we use the predicted median as point forecast.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
@@ -434,14 +431,14 @@ Note that we use the predicted median as point forecast.</p>
 </span><span id="line-3">    <span class="n">data</span><span class="o">=</span><span class="p">[</span>
 </span><span id="line-4">        <span class="p">{</span><span class="s2">"Metric"</span><span class="p">:</span> <span class="s2">"RMSE"</span><span class="p">,</span> <span class="s2">"Value"</span><span class="p">:</span> <span class="nb">format</span><span class="p">(</span><span class="n">root_mean_squared_error</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="s2">"actual"</span><span class="p">],</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="s2">"median"</span><span class="p">]),</span> <span class="s2">".4f"</span><span class="p">)},</span>
 </span><span id="line-5">        <span class="p">{</span><span class="s2">"Metric"</span><span class="p">:</span> <span class="s2">"MAE"</span><span class="p">,</span> <span class="s2">"Value"</span><span class="p">:</span> <span class="nb">format</span><span class="p">(</span><span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="s2">"actual"</span><span class="p">],</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="s2">"median"</span><span class="p">]),</span> <span class="s2">".4f"</span><span class="p">)},</span>
-</span><span id="line-6">        <span class="p">{</span><span class="s2">"Metric"</span><span class="p">:</span> <span class="s2">"MAPE"</span><span class="p">,</span> <span class="s2">"Value"</span><span class="p">:</span> <span class="nb">format</span><span class="p">(</span><span class="n">mean_absolute_percentage_error</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="s2">"actual"</span><span class="p">],</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="s2">"median"</span><span class="p">]),</span> <span class="s2">".2%"</span><span class="p">)},</span>
+</span><span id="line-6">        <span class="p">{</span><span class="s2">"Metric"</span><span class="p">:</span> <span class="s2">"MAPE"</span><span class="p">,</span> <span class="s2">"Value"</span><span class="p">:</span> <span class="nb">format</span><span class="p">(</span><span class="n">mean_absolute_percentage_error</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="s2">"actual"</span><span class="p">],</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="s2">"median"</span><span class="p">]),</span> <span class="s2">".4f"</span><span class="p">)},</span>
 </span><span id="line-7">    <span class="p">]</span>
 </span><span id="line-8"><span class="p">)</span>
 </span></code></pre></div>
 </div>
 <p>We find that the model achieves a MAPE of less than 1% over the test set.</p>
-<img alt="Performance metrics of predicted prices over the test set (from 2024-06-12 to 2024-07-25)" class="blog-post-image" id="commodity-forecasting-forgan-metrics" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/commodity-forecasting-forgan/metrics_light.png"/>
-<p class="blog-post-image-caption">Performance metrics of predicted prices over the test set (from 2024-06-12 to 2024-07-25).</p></section>
+<img alt="Performance metrics of predicted prices over the test set (from 2024-06-13 to 2024-07-26)" class="blog-post-image" id="commodity-forecasting-forgan-metrics" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/commodity-forecasting-forgan/metrics_light.png"/>
+<p class="blog-post-image-caption">Performance metrics of predicted prices over the test set (from 2024-06-13 to 2024-07-26).</p></section>
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#references'">¶</a></h2>

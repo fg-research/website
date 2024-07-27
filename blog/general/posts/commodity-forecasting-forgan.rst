@@ -23,11 +23,11 @@ Data
     <img
         id="commodity-forecasting-forgan-time-series"
         class="blog-post-image"
-        alt="Bloomberg Commodity Index from 2022-07-27 to 2024-07-25"
+        alt="Bloomberg Commodity Index from 2022-07-28 to 2024-07-26"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/commodity-forecasting-forgan/time_series_light.png
     />
 
-    <p class="blog-post-image-caption">Bloomberg Commodity Index from 2022-07-27 to 2024-07-25.</p>
+    <p class="blog-post-image-caption">Bloomberg Commodity Index from 2022-07-28 to 2024-07-26.</p>
 
 
 ******************************************
@@ -291,7 +291,7 @@ Analysis
 
     <p>
     Next, we download the daily close price time series of Bloomberg Commodity Index
-    from the 27<sup>th</sup> of July 2022 to the 25<sup>th</sup> of July 2024 using the
+    from the 28<sup>th</sup> of July 2022 to the 26<sup>th</sup> of July 2024 using the
     <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
     The dataset contains 502 daily observations.
     </p>
@@ -302,7 +302,7 @@ Analysis
 
 .. code:: python
 
-    dataset = yf.download(ticker, start="2022-07-27", end="2024-07-26")
+    dataset = yf.download(ticker, start="2022-07-28", end="2024-07-27")
     dataset = dataset[["Close"]].rename(columns={"Close": ticker})
 
 We set aside the last 30 days for testing, and use all the previous data for training.
@@ -360,11 +360,11 @@ For convenience, we include the actual values of the time series in the same dat
     <img
         id="commodity-forecasting-forgan-predictions"
         class="blog-post-image"
-        alt="Actual and predicted prices from 2024-06-12 to 2024-07-25"
+        alt="Actual and predicted prices from 2024-06-13 to 2024-07-26"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/commodity-forecasting-forgan/predictions_light.png
     />
 
-    <p class="blog-post-image-caption">Actual and predicted prices over the test set (from 2024-06-12 to 2024-07-25).</p>
+    <p class="blog-post-image-caption">Actual and predicted prices over the test set (from 2024-06-13 to 2024-07-26).</p>
 
 Finally, we calculate the root mean squared error (RMSE), mean absolute error (MAE) and
 mean absolute percentage error (MAPE) of the one-step-ahead predictions over the test set.
@@ -377,7 +377,7 @@ Note that we use the predicted median as point forecast.
         data=[
             {"Metric": "RMSE", "Value": format(root_mean_squared_error(y_true=predictions["actual"], y_pred=predictions["median"]), ".4f")},
             {"Metric": "MAE", "Value": format(mean_absolute_error(y_true=predictions["actual"], y_pred=predictions["median"]), ".4f")},
-            {"Metric": "MAPE", "Value": format(mean_absolute_percentage_error(y_true=predictions["actual"], y_pred=predictions["median"]), ".2%")},
+            {"Metric": "MAPE", "Value": format(mean_absolute_percentage_error(y_true=predictions["actual"], y_pred=predictions["median"]), ".4f")},
         ]
     )
 
@@ -388,11 +388,11 @@ We find that the model achieves a MAPE of less than 1% over the test set.
     <img
         id="commodity-forecasting-forgan-metrics"
         class="blog-post-image"
-        alt="Performance metrics of predicted prices over the test set (from 2024-06-12 to 2024-07-25)"
+        alt="Performance metrics of predicted prices over the test set (from 2024-06-13 to 2024-07-26)"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/commodity-forecasting-forgan/metrics_light.png
     />
 
-    <p class="blog-post-image-caption">Performance metrics of predicted prices over the test set (from 2024-06-12 to 2024-07-25).</p>
+    <p class="blog-post-image-caption">Performance metrics of predicted prices over the test set (from 2024-06-13 to 2024-07-26).</p>
 
 
 ******************************************
