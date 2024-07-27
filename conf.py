@@ -26,7 +26,6 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx_sitemap',
     'sphinx_design',
-    'sphinxawesome_theme.highlighting',
     'myst_parser',
     'sphinx.ext.mathjax'
 ]

@@ -1,0 +1,176 @@
+.headerlink{
+    display: none !important;
+}
+
+h1 {
+    font-size: 2rem !important;
+}
+
+h2 {
+    font-size: 1.6rem !important;
+}
+
+h3 {
+    font-size: 1.4rem !important;
+}
+
+h4 {
+    font-size: 1.3rem !important;
+}
+
+h5 {
+    font-size: 1.2rem !important;
+}
+
+h6 {
+    font-size: 1.1rem !important;
+}
+
+#right-sidebar a {
+    font-size: 90% !important;
+}
+
+#left-sidebar a {
+    font-size: 90% !important;
+}
+
+.dark .dark\:invert {
+    --tw-invert: none !important;
+    filter: none !important;
+}
+
+.check-icon{
+    color: #28A745 !important;
+}
+
+.x-icon{
+    color: #DC3545 !important;
+}
+
+.calendar-icon{
+    margin-top: -0.2rem !important;
+    margin-right: 0.2rem !important;
+}
+
+.graph-icon{
+    margin-top: -0.1rem !important;
+    margin-right: 0.2rem !important;
+}
+
+.sd-card-body{
+    margin: 0rem 1.5rem 0 1.5rem !important;
+    padding: 0 !important;
+}
+
+.sd-card-text{
+    margin: 0.75rem 0 0.75rem 0 !important;
+    font-size: 0.875rem !important;
+    line-height: 1.25rem !important;
+    font-weight: 500 !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis !important;
+}
+
+#lstm-ae-oil-price-anomaly-detection-include,
+#fred-md-overview-include,
+#lstm-fcn-ecg-classification-include,
+#cnn-kmeans-control-chart-clustering-include,
+#lstm-ad-ecg-anomaly-detection-include,
+#inflation-forecasting-random-forest-include,
+#cfc-tsf-equity-forecasting-include,
+#commodity-forecasting-forgan-include
+{
+    font-weight: 300 !important;
+}
+
+.sd-container, .sd-container-fluid, .sd-container-lg,
+.sd-container-md, .sd-container-sm, .sd-container-xl {
+    padding: 0 !important;
+}
+
+.sd-card-body .toctree-wrapper ul li a.reference{
+    font-weight: 500 !important;
+    font-size: 1rem !important;
+}
+
+#content ol p, #content ol>li {
+    margin-top: 0.25rem !important;
+}
+
+.blog-post-image{
+    width: 80%;
+}
+
+.blog-post-image-caption{
+    width: 80%;
+    font-style: italic;
+}
+
+.leading-loose{
+    font-size: 70% !important;
+    text-align: center !important;
+    margin: auto !important;
+    max-width: 70% !important;
+}
+
+#aws-marketplace-logo{
+    width: 35%;
+}
+
+@media (max-width:750px) {
+
+    .sd-card-text{
+        margin: 0.75rem 0 0.75rem 0 !important;
+        font-size: 0.675rem !important;
+        line-height: 1.25rem !important;
+        font-weight: 500 !important;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis !important;
+    }
+
+    .sd-row .sd-col .toctree-wrapper .caption .caption-text,
+    .sd-row .sd-col .toctree-wrapper ul li a.reference{
+        font-size: 52.5% !important;
+    }
+
+    .sd-row .sd-col .toctree-wrapper{
+        line-height: 0.75rem !important;
+    }
+
+    .sd-row .sd-col ul > li,
+    .sd-row .sd-col .toctree-wrapper .caption{
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+    }
+
+    table th, table tr {
+        font-size: 90% !important;
+    }
+
+    .blog-post-image{
+        width: 100%;
+    }
+
+    .blog-post-image-caption{
+        width: 100%;
+        font-style: italic;
+    }
+
+    .leading-loose{
+        font-size: 70% !important;
+        text-align: center !important;
+        margin: auto !important;
+        max-width: 100% !important;
+    }
+
+    #aws-marketplace-logo{
+        width: 55%;
+    }
+
+}
