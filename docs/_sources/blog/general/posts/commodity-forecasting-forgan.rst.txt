@@ -48,10 +48,6 @@ Data
 Code
 ******************************************
 
-==========================================
-Set-Up
-==========================================
-
 We start by importing all the dependencies.
 
 .. code:: python
@@ -69,7 +65,7 @@ We start by importing all the dependencies.
     from tqdm import tqdm
     from sklearn.metrics import root_mean_squared_error, mean_absolute_error, mean_absolute_percentage_error
 
-After that we define a function for fixing all random seeds, to ensure that the results are reproducible.
+After that we define a function for fixing all random seeds, to ensure reproducibility.
 
 .. code:: python
 
@@ -164,7 +160,7 @@ We then define the generator and discriminator architectures.
 
             return probability
 
-Finally, we define a custom class for training the model and generating the distributional forecasts.
+We also define a custom class for training the model and generating the distributional forecasts.
 
 .. code:: python
 
@@ -297,10 +293,6 @@ Finally, we define a custom class for training the model and generating the dist
 
             return simulation
 
-==========================================
-Analysis
-==========================================
-
 .. raw:: html
 
     <p>
@@ -382,7 +374,7 @@ For convenience, we include the actual values of the time series in the same dat
 
 Finally, we calculate the root mean squared error (RMSE), mean absolute error (MAE) and
 mean absolute percentage error (MAPE) of the one-step-ahead predictions over the test set.
-Note that we use the predicted median as point forecast.
+Note that we use the median as point forecast.
 
 .. code:: python
 
@@ -408,6 +400,10 @@ We find that the model achieves a MAPE of less than 1% over the test set.
 
     <p class="blog-post-image-caption">Performance metrics of predicted prices over the test set (from 2024-06-13 to 2024-07-26).</p>
 
+.. tip::
+
+    A Python notebook with the full code is available in our `GitHub <https://github.com/fg-research/blog/blob/master/commodity-forecasting-forgan>`__
+    repository.
 
 ******************************************
 References

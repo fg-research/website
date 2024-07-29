@@ -130,8 +130,6 @@
 <p class="blog-post-image-caption">Bloomberg Commodity Index from 2022-07-28 to 2024-07-26.</p></section>
 <section id="code">
 <h2>Code<a class="headerlink" href="#code" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#code'">¶</a></h2>
-<section id="set-up">
-<h3>Set-Up<a class="headerlink" href="#set-up" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#set-up'">¶</a></h3>
 <p>We start by importing all the dependencies.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span> <span class="nn">warnings</span>
 </span><span id="line-2"><span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">"ignore"</span><span class="p">)</span>
@@ -147,7 +145,7 @@
 </span><span id="line-12"><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">root_mean_squared_error</span><span class="p">,</span> <span class="n">mean_absolute_error</span><span class="p">,</span> <span class="n">mean_absolute_percentage_error</span>
 </span></code></pre></div>
 </div>
-<p>After that we define a function for fixing all random seeds, to ensure that the results are reproducible.</p>
+<p>After that we define a function for fixing all random seeds, to ensure reproducibility.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">def</span> <span class="nf">set_seeds</span><span class="p">(</span><span class="n">seed</span><span class="p">):</span>
 </span><span id="line-2"><span class="w">    </span><span class="sd">'''</span>
 </span><span id="line-3"><span class="sd">    Fix the random seeds.</span>
@@ -237,7 +235,7 @@
 </span><span id="line-29">        <span class="k">return</span> <span class="n">probability</span>
 </span></code></pre></div>
 </div>
-<p>Finally, we define a custom class for training the model and generating the distributional forecasts.</p>
+<p>We also define a custom class for training the model and generating the distributional forecasts.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">class</span> <span class="nc">ForGAN</span><span class="p">():</span>
 </span><span id="line-2"><span class="w">    </span><span class="sd">'''</span>
 </span><span id="line-3"><span class="sd">    ForGAN model.</span>
@@ -368,9 +366,6 @@
 </span><span id="line-128">        <span class="k">return</span> <span class="n">simulation</span>
 </span></code></pre></div>
 </div>
-</section>
-<section id="analysis">
-<h3>Analysis<a class="headerlink" href="#analysis" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#analysis'">¶</a></h3>
 <p>
 Next, we download the daily close price time series of Bloomberg Commodity Index
 from the 28<sup>th</sup> of July 2022 to the 26<sup>th</sup> of July 2024 using the
@@ -429,7 +424,7 @@ For convenience, we include the actual values of the time series in the same dat
 <img alt="Actual and predicted prices from 2024-06-13 to 2024-07-26" class="blog-post-image" id="commodity-forecasting-forgan-predictions" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/commodity-forecasting-forgan/predictions_light.png"/>
 <p class="blog-post-image-caption">Actual and predicted prices over the test set (from 2024-06-13 to 2024-07-26).</p><p>Finally, we calculate the root mean squared error (RMSE), mean absolute error (MAE) and
 mean absolute percentage error (MAPE) of the one-step-ahead predictions over the test set.
-Note that we use the predicted median as point forecast.</p>
+Note that we use the median as point forecast.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
 </span><span id="line-2">    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"Metric"</span><span class="p">,</span> <span class="s2">"Value"</span><span class="p">],</span>
 </span><span id="line-3">    <span class="n">data</span><span class="o">=</span><span class="p">[</span>
@@ -442,7 +437,11 @@ Note that we use the predicted median as point forecast.</p>
 </div>
 <p>We find that the model achieves a MAPE of less than 1% over the test set.</p>
 <img alt="Performance metrics of predicted prices over the test set (from 2024-06-13 to 2024-07-26)" class="blog-post-image" id="commodity-forecasting-forgan-metrics" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/commodity-forecasting-forgan/metrics_light.png"/>
-<p class="blog-post-image-caption">Performance metrics of predicted prices over the test set (from 2024-06-13 to 2024-07-26).</p></section>
+<p class="blog-post-image-caption">Performance metrics of predicted prices over the test set (from 2024-06-13 to 2024-07-26).</p><div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>A Python notebook with the full code is available in our <a class="reference external" href="https://github.com/fg-research/blog/blob/master/commodity-forecasting-forgan">GitHub</a>
+repository.</p>
+</div>
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#references'">¶</a></h2>
@@ -456,11 +455,7 @@ Probabilistic forecasting of sensory data with generative adversarial networks �
 <ul>
 <li><a :data-current="activeSection === '#model'" class="reference internal" href="#model">Model</a></li>
 <li><a :data-current="activeSection === '#data'" class="reference internal" href="#data">Data</a></li>
-<li><a :data-current="activeSection === '#code'" class="reference internal" href="#code">Code</a><ul>
-<li><a :data-current="activeSection === '#set-up'" class="reference internal" href="#set-up">Set-Up</a></li>
-<li><a :data-current="activeSection === '#analysis'" class="reference internal" href="#analysis">Analysis</a></li>
-</ul>
-</li>
+<li><a :data-current="activeSection === '#code'" class="reference internal" href="#code">Code</a></li>
 <li><a :data-current="activeSection === '#references'" class="reference internal" href="#references">References</a></li>
 </ul>
 </div>
