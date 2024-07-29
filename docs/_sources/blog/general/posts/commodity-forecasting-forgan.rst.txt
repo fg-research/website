@@ -13,6 +13,20 @@ Forecasting commodity prices with generative adversarial networks
 
     </p>
 
+******************************************
+Model
+******************************************
+
+.. raw:: html
+
+    <img
+        id="commodity-forecasting-forgan-diagram"
+        class="blog-post-image"
+        alt="ForGAN architecture"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/commodity-forecasting-forgan/diagram_light.png
+    />
+
+    <p class="blog-post-image-caption">ForGAN architecture.</p>
 
 ******************************************
 Data

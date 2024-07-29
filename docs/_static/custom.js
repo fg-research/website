@@ -69,7 +69,8 @@ window.setInterval(function(){
         'cfc-tsf-forecasting-metrics',
         'commodity-forecasting-forgan-time-series',
         'commodity-forecasting-forgan-predictions',
-        'commodity-forecasting-forgan-metrics'
+        'commodity-forecasting-forgan-metrics',
+        'commodity-forecasting-forgan-diagram'
     ];
     for (var i = 0; i < elements.length; i++) {
         var f = document.getElementById(elements[i]);
