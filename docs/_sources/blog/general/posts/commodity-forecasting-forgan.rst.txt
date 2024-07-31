@@ -370,7 +370,7 @@ The class has two methods: :code:`.fit()` and :code:`.predict()`:
 We set aside the last 30 days for testing, and use all the previous data for training.
 We set the number of hidden units of the LSTM layer equal to 256 for the generator and to 64 for the discriminator.
 We use a context window of 5 days, meaning that we use the last 5 prices as input to forecast the next day's price.
-The length of the noise vector is set equal to 10.
+We set the length of the generated noise vectors equal to 10.
 
 .. code:: python
 

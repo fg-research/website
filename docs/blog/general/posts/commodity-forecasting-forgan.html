@@ -431,7 +431,7 @@ The dataset contains 502 daily observations.
 <p class="blog-post-image-caption">Bloomberg Commodity Index from 2022-07-28 to 2024-07-26.</p><p>We set aside the last 30 days for testing, and use all the previous data for training.
 We set the number of hidden units of the LSTM layer equal to 256 for the generator and to 64 for the discriminator.
 We use a context window of 5 days, meaning that we use the last 5 prices as input to forecast the next day’s price.
-The length of the noise vector is set equal to 10.</p>
+We set the length of the generated noise vectors equal to 10.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">test_size</span> <span class="o">=</span> <span class="mi">30</span>
 </span></code></pre></div>
 </div>
