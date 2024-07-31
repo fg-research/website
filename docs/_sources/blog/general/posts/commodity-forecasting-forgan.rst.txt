@@ -433,16 +433,16 @@ Forecasting commodity prices: empirical evidence using deep learning tools. *Ann
 Generative adversarial networks. *Communications of the ACM*, 63(11), pp. 139-144.
 `doi: 10.1145/3422622 <https://doi.org/10.1145/3422622>`__.
 
-[3] Mirza, M., & Osindero, S. (2014). Conditional generative adversarial nets. *arXiv preprint*.
-`doi: 10.48550/arXiv.1411.1784 <https://doi.org/10.48550/arXiv.1411.1784>`__.
-
-[4] Brophy, E., Wang, Z., She, Q., & Ward, T. (2021).
+[3] Brophy, E., Wang, Z., She, Q., & Ward, T. (2021).
 Generative adversarial networks in time series: A survey and taxonomy. *arXiv preprint*.
 `doi: 10.48550/arXiv.2107.11098 <https://doi.org/10.48550/arXiv.2107.11098>`__.
 
-[5] Koochali, A., Schichtel, P., Dengel, A., & Ahmed, S. (2019).
+[4] Koochali, A., Schichtel, P., Dengel, A., & Ahmed, S. (2019).
 Probabilistic forecasting of sensory data with generative adversarial networks – ForGAN. *IEEE Access*, 7, pp. 63868-63880.
 `doi: 10.1109/ACCESS.2019.2915544 <https://doi.org/10.1109/ACCESS.2019.2915544>`__.
+
+[5] Mirza, M., & Osindero, S. (2014). Conditional generative adversarial nets. *arXiv preprint*.
+`doi: 10.48550/arXiv.1411.1784 <https://doi.org/10.48550/arXiv.1411.1784>`__.
 
 [6] Vuletić, M., Prenzel, F., & Cucuringu, M. (2024).
 Fin-GAN: Forecasting and classifying financial time series via generative adversarial networks.
