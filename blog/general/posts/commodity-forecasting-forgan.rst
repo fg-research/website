@@ -318,7 +318,7 @@ The class has two methods: :code:`.fit()` and :code:`.predict()`:
             condition = np.array(condition)
 
             # generate the predicted target values
-            simulation = []
+            predictions = []
 
             # loop across the number of samples to be generated
             for _ in range(samples):
@@ -333,12 +333,12 @@ The class has two methods: :code:`.fit()` and :code:`.predict()`:
                 prediction = self.mu + self.sigma * prediction
 
                 # save the predicted target values
-                simulation.append(prediction)
+                predictions.append(prediction)
 
             # cast the predicted target values to array
-            simulation = np.concatenate(simulation, axis=1)
+            predictions = np.concatenate(predictions, axis=1)
 
-            return simulation
+            return predictions
 
 .. raw:: html
 
@@ -415,7 +415,7 @@ We generate 100 prices for each of the 30 days in the test set.
 .. code:: python
 
     # generate the model predictions
-    simulations = model.predict(x=test_dataset, samples=100)
+    predictions = model.predict(x=test_dataset, samples=100)
 
 We then summarize the 100 generated prices by calculating different quantiles.
 For convenience, we include the actual values of the time series in the same data frame.
@@ -426,11 +426,11 @@ For convenience, we include the actual values of the time series in the same dat
     predictions = pd.DataFrame(
         data={
             "actual": dataset.iloc[- test_size:].values.flatten(),
-            "median": np.median(simulations, axis=1),
-            "q005": np.quantile(simulations, 0.005, axis=1),
-            "q995": np.quantile(simulations, 0.995, axis=1),
-            "q10": np.quantile(simulations, 0.10, axis=1),
-            "q90": np.quantile(simulations, 0.90, axis=1),
+            "median": np.median(predictions, axis=1),
+            "q005": np.quantile(predictions, 0.005, axis=1),
+            "q995": np.quantile(predictions, 0.995, axis=1),
+            "q10": np.quantile(predictions, 0.10, axis=1),
+            "q90": np.quantile(predictions, 0.90, axis=1),
         },
         index=dataset.index[- test_size:]
     )
