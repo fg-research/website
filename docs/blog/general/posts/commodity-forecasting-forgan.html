@@ -277,17 +277,9 @@ is real (i.e. an actual value from the dataset) or synthetic (i.e. a predicted v
 <p>We also define a custom class for training the model and generating the probabilistic forecasts.
 The class has two methods: <code class="code docutils literal notranslate"><span class="pre">.fit()</span></code> and <code class="code docutils literal notranslate"><span class="pre">.predict()</span></code>:</p>
 <ul class="simple">
-<li><p>The <code class="code docutils literal notranslate"><span class="pre">.fit()</span></code> method scales the time series, splits the time series into condition sequences</p></li>
+<li><p>The <code class="code docutils literal notranslate"><span class="pre">.fit()</span></code> method scales the time series, splits the time series into condition sequences and target values, and trains the generator and discriminator models using the standard adversarial training procedure.</p></li>
+<li><p>The <code class="code docutils literal notranslate"><span class="pre">.predict()</span></code> method scales the time series, extracts the last condition sequence, passes it through the generator together with a randomly generated noise vector in order to obtain the predicted next value of the time series, and transforms the predicted next value of the time series back to the original scale. This procedure is repeated several times using different randomly generated noise vectors in order to obtain multiple predictions.</p></li>
 </ul>
-<p>and target values, and trains the generator and discriminator models using the standard adversarial
-training procedure.</p>
-<ul class="simple">
-<li><p>The <code class="code docutils literal notranslate"><span class="pre">.predict()</span></code> method scales the time series, extracts the last condition sequence, passes</p></li>
-</ul>
-<p>it through the generator together with a randomly generated noise vector in order to obtain the
-predicted next value of the time series, and transforms the predicted next value of the time series
-back to the original scale. This procedure is repeated several times using different randomly generated
-noise vectors in order to obtain multiple predictions.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">class</span> <span class="nc">ForGAN</span><span class="p">():</span>
 </span><span id="line-2"><span class="w">    </span><span class="sd">'''</span>
 </span><span id="line-3"><span class="sd">    ForGAN model.</span>

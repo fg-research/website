@@ -191,17 +191,9 @@ We then define the generator and discriminator models, where we use LSTM layers 
 We also define a custom class for training the model and generating the probabilistic forecasts.
 The class has two methods: :code:`.fit()` and :code:`.predict()`:
 
-* The :code:`.fit()` method scales the time series, splits the time series into condition sequences
-and target values, and trains the generator and discriminator models using the standard adversarial
-training procedure.
+* The :code:`.fit()` method scales the time series, splits the time series into condition sequences and target values, and trains the generator and discriminator models using the standard adversarial training procedure.
 
-
-* The :code:`.predict()` method scales the time series, extracts the last condition sequence, passes
-it through the generator together with a randomly generated noise vector in order to obtain the
-predicted next value of the time series, and transforms the predicted next value of the time series
-back to the original scale. This procedure is repeated several times using different randomly generated
-noise vectors in order to obtain multiple predictions.
-
+* The :code:`.predict()` method scales the time series, extracts the last condition sequence, passes it through the generator together with a randomly generated noise vector in order to obtain the predicted next value of the time series, and transforms the predicted next value of the time series back to the original scale. This procedure is repeated several times using different randomly generated noise vectors in order to obtain multiple predictions.
 
 .. code:: python
 
