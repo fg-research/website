@@ -16,7 +16,7 @@
 <link href="../../../_static/pygments.css?v=8d216cef" rel="stylesheet" type="text/css"/>
 <link href="../../../_static/theme.css?v=ecdfb4fc" rel="stylesheet" type="text/css"/>
 <link href="../../../_static/sphinx-design.min.css?v=87e54e7c" rel="stylesheet" type="text/css"/>
-<link href="../../../_static/custom.css?v=b3f5cfd0" rel="stylesheet" type="text/css"/>
+<link href="../../../_static/custom.css?v=b132efea" rel="stylesheet" type="text/css"/>
 <link href="../../../_static/awesome-sphinx-design.css?v=a54cf077" rel="stylesheet" type="text/css"/>
 <link href="https://fg-research.com/blog/general/posts/commodity-forecasting-forgan.html" rel="canonical"/>
 <link href="../../../_static/favicon.ico" rel="icon"/>
@@ -280,7 +280,7 @@ The class has two methods: <code class="code docutils literal notranslate"><span
 and target values, and trains the generator and discriminator models using the standard adversarial
 training procedure.</li>
 <li>The <code>.predict()</code> method scales the time series, extracts the last context window,
-passes it through the generator together with different randomly generated noise vectors in order
+passes it through the generator together with different randomly generated noise vectors
 to obtain multiple predictions for the next value of the time series, and transforms each prediction
 back to the original scale.</li>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">class</span> <span class="nc">ForGAN</span><span class="p">():</span>
