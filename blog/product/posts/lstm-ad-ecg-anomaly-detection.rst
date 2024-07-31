@@ -40,6 +40,8 @@ Model
     The LSTM-AD model predicts the future values of the time series with a stacked LSTM model.
     The model parameters are learned on a training set containing only normal data (i.e. without anomalies)
     by minimizing the Mean Squared Error (MSE) between the actual and predicted values of the time series.
+    After the model has been trained, a Gaussian distribution is fitted to the model’s prediction errors
+    on an independent validation set (also without anomalies) using Maximum Likelihood Estimation (MLE).
     </p>
 
     <img
@@ -50,11 +52,6 @@ Model
     />
 
     <p class="blog-post-image-caption">LSTM-AD architecture.</p>
-
-    <p>
-    After the model has been trained, a Gaussian distribution is fitted to the model’s prediction errors
-    on an independent validation set (also without anomalies) using Maximum Likelihood Estimation (MLE).
-    </p>
 
     <p>
     At inference time, the model predicts the values of the time series (which can now include anomalies)
