@@ -163,7 +163,7 @@ The output of the generator is the predicted next value of the time series.</p>
 After that, the extended context window is passed through an RNN layer which produces an embedding vector.
 The embedding vector is then passed to a final sigmoid output layer with a single hidden unit.
 The output of the discriminator is the probability that the next value of the time series provided as input
-is real (i.e. an actual value from the dataset) or synthetic (i.e. a predicted value from the generator).</p>
+is real (i.e. an actual value from the dataset), as opposed to synthetic (i.e. a predicted value from the generator).</p>
 <img alt="ForGAN architecture" class="blog-post-image" id="commodity-forecasting-forgan-diagram" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/commodity-forecasting-forgan/diagram_light.png"/>
 <p class="blog-post-image-caption">ForGAN architecture.</p></section>
 <section id="code">

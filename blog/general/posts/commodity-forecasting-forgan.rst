@@ -58,7 +58,7 @@ In the discriminator, the context window is extended with the actual or predicte
 After that, the extended context window is passed through an RNN layer which produces an embedding vector.
 The embedding vector is then passed to a final sigmoid output layer with a single hidden unit.
 The output of the discriminator is the probability that the next value of the time series provided as input
-is real (i.e. an actual value from the dataset) or synthetic (i.e. a predicted value from the generator).
+is real (i.e. an actual value from the dataset), as opposed to synthetic (i.e. a predicted value from the generator).
 
 .. raw:: html
 
