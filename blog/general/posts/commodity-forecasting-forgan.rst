@@ -189,7 +189,7 @@ We then define the generator and discriminator models, where we use LSTM layers 
             return probability
 
 We also define a custom class for training the model and generating the probabilistic forecasts.
-The class has two methods: :code:`.fit()` and :code:`.predict()`.
+The class has two methods: :code:`.fit()` and :code:`.predict()`:
 
 * The :code:`.fit()` method scales the time series, splits the time series into condition sequences
 and target values, and trains the generator and discriminator models using the standard adversarial
