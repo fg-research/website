@@ -274,7 +274,7 @@ is real (i.e. an actual value from the dataset) or synthetic (i.e. a predicted v
 </span><span id="line-29">        <span class="k">return</span> <span class="n">probability</span>
 </span></code></pre></div>
 </div>
-<p>We also define a custom class for training the model and generating the probabilistic forecasts.
+<p>We also define a custom class for training the ForGAN model and generating the probabilistic forecasts.
 The class has two methods: <code class="code docutils literal notranslate"><span class="pre">.fit()</span></code> and <code class="code docutils literal notranslate"><span class="pre">.predict()</span></code>:</p>
 <ul class="simple">
 <li><p>The <code class="code docutils literal notranslate"><span class="pre">.fit()</span></code> method scales the time series, splits the time series into condition sequences and target values, and trains the generator and discriminator models using the standard adversarial training procedure.</p></li>
