@@ -13,7 +13,7 @@ Forecasting commodity prices with generative adversarial networks
     Forecasting commodity prices is a particularly challenging task due to the intricate interplay of
     supply and demand dynamics, geopolitical factors, and market sentiment fluctuations.
     Deep learning models have been shown to be more effective than traditional statistical models at
-    capturing the complex and non-linear relationships inherent in commodity markets.
+    capturing the complex and non-linear relationships inherent in commodity markets
     <a href="#references">[1]</a>.
     </p>
 
@@ -429,15 +429,22 @@ References
 Forecasting commodity prices: empirical evidence using deep learning tools. *Annals of Operations Research*, 339, pp. 349–367.
 `doi: 10.1007/s10479-022-05076-6 <https://doi.org/10.1007/s10479-022-05076-6>`__.
 
-[2] Brophy, E., Wang, Z., She, Q., & Ward, T. (2021).
+[2] Goodfellow, I., Pouget-Abadie, J., Mirza, M., Xu, B., Warde-Farley, D., Ozair, S., Courville, A., & Bengio, Y. (2020).
+Generative adversarial networks. *Communications of the ACM*, 63(11), pp. 139-144.
+`doi: 10.1145/3422622 <https://doi.org/10.1145/3422622>`__.
+
+[3] Mirza, M., & Osindero, S. (2014). Conditional generative adversarial nets. *arXiv preprint*.
+`doi: 10.48550/arXiv.1411.1784 <https://doi.org/10.48550/arXiv.1411.1784>`__.
+
+[4] Brophy, E., Wang, Z., She, Q., & Ward, T. (2021).
 Generative adversarial networks in time series: A survey and taxonomy. *arXiv preprint*.
 `doi: 10.48550/arXiv.2107.11098 <https://doi.org/10.48550/arXiv.2107.11098>`__.
 
-[3] Koochali, A., Schichtel, P., Dengel, A., & Ahmed, S. (2019).
+[5] Koochali, A., Schichtel, P., Dengel, A., & Ahmed, S. (2019).
 Probabilistic forecasting of sensory data with generative adversarial networks – ForGAN. *IEEE Access*, 7, pp. 63868-63880.
 `doi: 10.1109/ACCESS.2019.2915544 <https://doi.org/10.1109/ACCESS.2019.2915544>`__.
 
-[4] Vuletić, M., Prenzel, F., & Cucuringu, M. (2024).
+[6] Vuletić, M., Prenzel, F., & Cucuringu, M. (2024).
 Fin-GAN: Forecasting and classifying financial time series via generative adversarial networks.
 *Quantitative Finance*, 24(2), pp. 175-199.
 `doi: 10.1080/14697688.2023.2299466 <https://doi.org/10.1080/14697688.2023.2299466>`__.
