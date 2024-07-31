@@ -55,7 +55,9 @@ Model
     <p>
     After the model has been trained, a Gaussian distribution is fitted to the model’s prediction errors
     on an independent validation set (also without anomalies) using Maximum Likelihood Estimation (MLE).
-    <br>
+    </p>
+
+    <p>
     At inference time, the model predicts the values of the time series (which can now include anomalies)
     at each time step, and calculates the likelihood of the model’s prediction errors under the fitted
     Gaussian distribution.
