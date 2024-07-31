@@ -199,10 +199,10 @@ The class has two methods: :code:`.fit()` and :code:`.predict()`:
     training procedure.</li>
 
     <li>The <code>.predict()</code> method scales the time series, extracts the last context window,
-    passes it through the generator together with different randomly generated noise vectors
-    to obtain multiple predictions for the next value of the time series, and transforms each prediction
-    back to the original scale.</li>
-
+    and then passes it through the generator together with different randomly generated noise vectors.
+    Each different noise vector results in a different prediction, where the number of predictions to
+    be generated is controlled by the <code>samples</code> parameter. Each prediction is transformed
+    back to the original scale before being returned as an output.</li>
     </ul>
 
 .. code:: python

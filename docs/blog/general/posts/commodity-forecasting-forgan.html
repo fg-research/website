@@ -280,9 +280,10 @@ The class has two methods: <code class="code docutils literal notranslate"><span
 and target values, and trains the generator and discriminator models using the standard adversarial
 training procedure.</li>
 <li>The <code>.predict()</code> method scales the time series, extracts the last context window,
-passes it through the generator together with different randomly generated noise vectors
-to obtain multiple predictions for the next value of the time series, and transforms each prediction
-back to the original scale.</li>
+and then passes it through the generator together with different randomly generated noise vectors.
+Each different noise vector results in a different prediction, where the number of predictions to
+be generated is controlled by the <code>samples</code> parameter. Each prediction is transformed
+back to the original scale before being returned as an output.</li>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">class</span> <span class="nc">ForGAN</span><span class="p">():</span>
 </span><span id="line-2"><span class="w">    </span><span class="sd">'''</span>
 </span><span id="line-3"><span class="sd">    ForGAN model.</span>
