@@ -466,12 +466,6 @@ We use the model for generating 100 prices for each of the 30 days in the test s
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">simulations</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">test_dataset</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">simulations</span><span class="o">.</span><span class="n">shape</span>
-</span></code></pre></div>
-</div>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp gp-VirtualEnv">(30, 100)</span>
-</span></code></pre></div>
-</div>
 <p>We then summarize the 100 generated prices by calculating different quantiles.
 For convenience, we include the actual values of the time series in the same data frame.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">predictions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>

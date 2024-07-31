@@ -410,14 +410,6 @@ We use the model for generating 100 prices for each of the 30 days in the test s
 
     simulations = model.predict(x=test_dataset, samples=100)
 
-.. code:: python
-
-    simulations.shape
-
-.. code-block:: console
-
-    (30, 100)
-
 We then summarize the 100 generated prices by calculating different quantiles.
 For convenience, we include the actual values of the time series in the same data frame.
 
