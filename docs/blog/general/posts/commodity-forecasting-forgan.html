@@ -133,7 +133,7 @@ capturing the complex and non-linear relationships inherent in commodity markets
 Generative Adversarial Networks (GANs) <a href="#references">[2]</a>, which have led to substantial
 advancements in natural language processing and computer vision, have also found several use cases
 in the time series domain <a href="#references">[3]</a>. The application of GANs to time series is not
-restricted to data generation for augmentation or anonymization purposes, but also extends to numerous
+restricted to data generation for augmentation or anonymization purposes, but extends to numerous
 other tasks, including, but not limited to, time series forecasting.
 </p>
 <p>
@@ -208,7 +208,7 @@ is real (i.e. an actual value from the dataset) or synthetic (i.e. a predicted v
 </span><span id="line-21">    <span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">threading</span><span class="o">.</span><span class="n">set_intra_op_parallelism_threads</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
-<p>We then define the generator and discriminator architectures.</p>
+<p>We then define the generator and discriminator models, where we use LSTM layers as recurrent layers.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">class</span> <span class="nc">Generator</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
 </span><span id="line-2"><span class="w">    </span><span class="sd">'''</span>
 </span><span id="line-3"><span class="sd">    Generator model.</span>
@@ -274,7 +274,20 @@ is real (i.e. an actual value from the dataset) or synthetic (i.e. a predicted v
 </span><span id="line-29">        <span class="k">return</span> <span class="n">probability</span>
 </span></code></pre></div>
 </div>
-<p>We also define a custom class for training the model and generating the distributional forecasts.</p>
+<p>We also define a custom class for training the model and generating the probabilistic forecasts.
+The class has two methods: <code class="code docutils literal notranslate"><span class="pre">.fit()</span></code> and <code class="code docutils literal notranslate"><span class="pre">.predict()</span></code>.</p>
+<ul class="simple">
+<li><p>The <code class="code docutils literal notranslate"><span class="pre">.fit()</span></code> method scales the time series, splits the time series into condition sequences</p></li>
+</ul>
+<p>and target values, and trains the generator and discriminator models using the standard adversarial
+training procedure.</p>
+<ul class="simple">
+<li><p>The <code class="code docutils literal notranslate"><span class="pre">.predict()</span></code> method scales the time series, extracts the last condition sequence, passes</p></li>
+</ul>
+<p>it through the generator together with a randomly generated noise vector in order to obtain the
+predicted next value of the time series, and transforms the predicted next value of the time series
+back to the original scale. This procedure is repeated several times using different randomly generated
+noise vectors in order to obtain multiple predictions.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">class</span> <span class="nc">ForGAN</span><span class="p">():</span>
 </span><span id="line-2"><span class="w">    </span><span class="sd">'''</span>
 </span><span id="line-3"><span class="sd">    ForGAN model.</span>
@@ -393,10 +406,10 @@ is real (i.e. an actual value from the dataset) or synthetic (i.e. a predicted v
 </span><span id="line-116">            <span class="c1"># generate the next target value</span>
 </span><span id="line-117">            <span class="n">prediction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generator_model</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">[</span><span class="n">condition</span><span class="p">,</span> <span class="n">noise</span><span class="p">])</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
 </span><span id="line-118">
-</span><span id="line-119">            <span class="c1"># transform the generated target values back to the original scale</span>
+</span><span id="line-119">            <span class="c1"># transform the generated target value back to the original scale</span>
 </span><span id="line-120">            <span class="n">prediction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma</span> <span class="o">*</span> <span class="n">prediction</span>
 </span><span id="line-121">
-</span><span id="line-122">            <span class="c1"># save the generated target values</span>
+</span><span id="line-122">            <span class="c1"># save the generated target value</span>
 </span><span id="line-123">            <span class="n">simulation</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prediction</span><span class="p">)</span>
 </span><span id="line-124">
 </span><span id="line-125">        <span class="c1"># cast the generated target values to array</span>

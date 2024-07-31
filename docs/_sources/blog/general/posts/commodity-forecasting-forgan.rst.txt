@@ -21,7 +21,7 @@ Forecasting commodity prices with generative adversarial networks
     Generative Adversarial Networks (GANs) <a href="#references">[2]</a>, which have led to substantial
     advancements in natural language processing and computer vision, have also found several use cases
     in the time series domain <a href="#references">[3]</a>. The application of GANs to time series is not
-    restricted to data generation for augmentation or anonymization purposes, but also extends to numerous
+    restricted to data generation for augmentation or anonymization purposes, but extends to numerous
     other tasks, including, but not limited to, time series forecasting.
     </p>
 
@@ -119,7 +119,7 @@ After that we define a function for fixing all random seeds, to ensure reproduci
         tf.config.threading.set_inter_op_parallelism_threads(1)
         tf.config.threading.set_intra_op_parallelism_threads(1)
 
-We then define the generator and discriminator architectures.
+We then define the generator and discriminator models, where we use LSTM layers as recurrent layers.
 
 .. code:: python
 
@@ -188,7 +188,18 @@ We then define the generator and discriminator architectures.
 
             return probability
 
-We also define a custom class for training the model and generating the distributional forecasts.
+We also define a custom class for training the model and generating the probabilistic forecasts.
+The class has two methods: :code:`.fit()` and :code:`.predict()`.
+
+* The :code:`.fit()` method scales the time series, splits the time series into condition sequences
+and target values, and trains the generator and discriminator models using the standard adversarial
+training procedure.
+
+* The :code:`.predict()` method scales the time series, extracts the last condition sequence, passes
+it through the generator together with a randomly generated noise vector in order to obtain the
+predicted next value of the time series, and transforms the predicted next value of the time series
+back to the original scale. This procedure is repeated several times using different randomly generated
+noise vectors in order to obtain multiple predictions.
 
 .. code:: python
 
@@ -310,10 +321,10 @@ We also define a custom class for training the model and generating the distribu
                 # generate the next target value
                 prediction = self.generator_model(inputs=[condition, noise]).numpy()
 
-                # transform the generated target values back to the original scale
+                # transform the generated target value back to the original scale
                 prediction = self.mu + self.sigma * prediction
 
-                # save the generated target values
+                # save the generated target value
                 simulation.append(prediction)
 
             # cast the generated target values to array
