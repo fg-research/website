@@ -19,44 +19,45 @@ Forecasting commodity prices with generative adversarial networks
 
     <p>
     Generative Adversarial Networks (GANs) <a href="#references">[2]</a>, which have led to substantial
-    advancements in natural language processing and computer visions, have also found several applications
+    advancements in natural language processing and computer vision, have also found several applications
     in the time series domain <a href="#references">[3]</a>. The application of GANs to time series is not
-    restricted to data generation for augmentation purposes, but also extends to numerous
+    restricted to data generation for augmentation or anonymization purposes, but also extends to numerous
     other tasks, including, but not limited to, time series forecasting.
     </p>
 
     <p>
     In this post, we will focus on the ForGAN model introduced in <a href="#references">[4]</a>,
     a conditional GAN (CGAN) <a href="#references">[5]</a> for probabilistic one-step-ahead forecasting
-    of univariate time series. We will use the ForGAN model for forecasting the daily prices of
-    Bloomberg Commodity Index (BCOM), a leading commodities benchmark.
+    of univariate time series. We will implement the ForGAN model in TensorFlow, and use it for forecasting
+    the daily prices of Bloomberg Commodity Index (BCOM), a leading commodities benchmark.
     </p>
 
     <p>
     We will download the daily close prices of Bloomberg Commodity Index from the 28<sup>th</sup> of July 2022 to
     the 26<sup>th</sup> of July 2024 from <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>.
     We will train the model on the data up to the 12<sup>th</sup> of June 2024,
-    and use the trained model to predict the subsequent data up to the 26<sup>th</sup> of July 2024.
-    We will find that the ForGAN model achieves a mean absolute percentage error of
-    less than 1% over the considered time period.
+    and use the trained model to predict the subsequent 30 days of data up to the 26<sup>th</sup> of July 2024.
+    We will find that the ForGAN model achieves a mean absolute error of 0.51 and mean absolute percentage error of
+    0.5% over the considered 30-days period.
     </p>
 
 ******************************************
 Model
 ******************************************
-Both the generator and discriminator of the ForGAN model are based on recurrent neural networks (RNNs).
-As ForGAN is a CGAN, both the generator and discriminator take as input a *condition*, which is defined as
+Both the generator and the discriminator of the ForGAN model are based on recurrent neural networks (RNNs).
+Given that ForGAN is a CGAN, both the generator and the discriminator take as input a *condition*, which is defined as
 fixed-length vector containing the most recent values of the time series, i.e. the condition is a context window.
 
 In the generator, the context window is passed through an RNN layer which produces an embedding vector.
 After that, the embedding vector is concatenated with a noise vector, which is sampled from the standard normal distribution.
 The concatenated embedding and noise vectors are then passed through a dense layer with ReLU activation,
-and to a final linear layer with a single hidden unit which outputs the generated next value of the time series.
+and to a final linear layer with a single hidden unit which outputs the predicted next value of the time series.
 
-In the discriminator, the context window is extended with the actual or generated next value of the time series.
+In the discriminator, the context window is extended with the actual or predicted next value of the time series.
 After that, the extended context window is passed through an RNN layer which produces an embedding vector.
 The embedding vector is then passed to a final sigmoid layer with a single hidden unit which outputs the
-probability that the next value of the time series provided as input is actual (real) or generated (fake).
+probability that the next value of the time series provided as input is real (i.e. an actual value from the dataset)
+or synthetic (i.e. a predicted value from the generator).
 
 .. raw:: html
 
@@ -68,22 +69,6 @@ probability that the next value of the time series provided as input is actual (
     />
 
     <p class="blog-post-image-caption">ForGAN architecture.</p>
-
-******************************************
-Data
-******************************************
-
-.. raw:: html
-
-    <img
-        id="commodity-forecasting-forgan-time-series"
-        class="blog-post-image"
-        alt="Bloomberg Commodity Index from 2022-07-28 to 2024-07-26"
-        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/commodity-forecasting-forgan/time_series_light.png
-    />
-
-    <p class="blog-post-image-caption">Bloomberg Commodity Index from 2022-07-28 to 2024-07-26.</p>
-
 
 ******************************************
 Code
@@ -351,6 +336,17 @@ We also define a custom class for training the model and generating the distribu
 
     dataset = yf.download(ticker, start="2022-07-28", end="2024-07-27")
     dataset = dataset[["Close"]].rename(columns={"Close": ticker})
+
+.. raw:: html
+
+    <img
+        id="commodity-forecasting-forgan-time-series"
+        class="blog-post-image"
+        alt="Bloomberg Commodity Index from 2022-07-28 to 2024-07-26"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/commodity-forecasting-forgan/time_series_light.png
+    />
+
+    <p class="blog-post-image-caption">Bloomberg Commodity Index from 2022-07-28 to 2024-07-26.</p>
 
 We set aside the last 30 days for testing, and use all the previous data for training.
 

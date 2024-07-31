@@ -46,7 +46,6 @@ Model
         id="lstm-ad-ecg-anomaly-detection-diagram"
         class="blog-post-image"
         alt="LSTM-AD architecture."
-        style="width:55%"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/ecg-anomaly-detection/diagram_light.png
     />
 
