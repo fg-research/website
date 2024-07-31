@@ -48,10 +48,11 @@ Model
         id="lstm-ad-ecg-anomaly-detection-diagram"
         class="blog-post-image"
         alt="LSTM-AD architecture."
+        style="width:60%"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/ecg-anomaly-detection/diagram_light.png
     />
 
-    <p class="LSTM-AD architecture.</p>
+    <p class="blog-post-image-caption">LSTM-AD architecture.</p>
 
     <p>
     At inference time, the model predicts the values of the time series (which can now include anomalies)

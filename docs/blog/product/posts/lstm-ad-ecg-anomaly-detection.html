@@ -149,13 +149,20 @@ by minimizing the Mean Squared Error (MSE) between the actual and predicted valu
 After the model has been trained, a Gaussian distribution is fitted to the model’s prediction errors
 on an independent validation set (also without anomalies) using Maximum Likelihood Estimation (MLE).
 </p>
-<img alt="LSTM-AD architecture." class="blog-post-image" id="lstm-ad-ecg-anomaly-detection-diagram" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/ecg-anomaly-detection/diagram_light.png"/>
-<p admonition="" class="LSTM-AD architecture.&lt;/p&gt; &lt;p&gt; At inference time, the model predicts the values of the time series (which can now include anomalies) at each time step, and calculates the likelihood of the model’s prediction errors under the fitted Gaussian distribution. The computed Gaussian likelihood is then used as a normality score: the lower the Gaussian likelihood at a given a time step, the more likely the time step is to be an anomaly. &lt;/p&gt;&lt;div class=" note"="">
+<img alt="LSTM-AD architecture." class="blog-post-image" id="lstm-ad-ecg-anomaly-detection-diagram" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/ecg-anomaly-detection/diagram_light.png" style="width:60%"/>
+<p class="blog-post-image-caption">LSTM-AD architecture.</p>
+<p>
+At inference time, the model predicts the values of the time series (which can now include anomalies)
+at each time step, and calculates the likelihood of the model’s prediction errors under the fitted
+Gaussian distribution.
+The computed Gaussian likelihood is then used as a normality score: the lower the Gaussian
+likelihood at a given a time step, the more likely the time step is to be an anomaly.
+</p><div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If enough labelled anomalous data is available, an optimal threshold on the normality score can be determined
 by maximizing the F-beta score between the actual and predicted anomaly labels.</p>
-</p></section></section></div>
-
+</div>
+</section>
 <section id="data">
 <h2>Data<a class="headerlink" href="#data" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data'">¶</a></h2>
 <p>
@@ -346,8 +353,8 @@ Long Short Term Memory Networks for Anomaly Detection in Time Series.
 In <em>European Symposium on Artificial Neural Networks, Computational Intelligence
 and Machine Learning. Bruges (Belgium), 22-24 April 2015</em>, pp. 89-94.</p>
 </section>
-
-</div></main></div><aside class="hidden text-sm xl:block" id="right-sidebar">
+</section>
+</div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
 <li><a :data-current="activeSection === '#model'" class="reference internal" href="#model">Model</a></li>
@@ -363,7 +370,7 @@ and Machine Learning. Bruges (Belgium), 22-24 April 2015</em>, pp. 89-94.</p>
 </ul>
 </div>
 </aside>
-
+</main>
 </div>
 </div><footer class="py-6 border-t border-border md:py-0">
 <div class="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
@@ -375,7 +382,7 @@ Amazon Web Services, AWS, Amazon SageMaker, AWS Marketplace and the AWS Marketpl
 </div>
 </div>
 </footer>
-
+</div>
 <script src="../../../_static/documentation_options.js?v=953f42dc"></script>
 <script src="../../../_static/doctools.js?v=9a2dae69"></script>
 <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
