@@ -188,7 +188,7 @@ but GRU layers can also be used as an alternative.
 
             return probability
 
-We also define a custom class for training the ForGAN model and generating the probabilistic forecasts.
+We additionally define a custom class for training the ForGAN model and generating the probabilistic forecasts.
 The class has two methods: :code:`.fit()` and :code:`.predict()`:
 
 .. raw:: html
