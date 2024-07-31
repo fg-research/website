@@ -48,6 +48,7 @@ window.setInterval(function(){
         'lstm-ae-oil-price-anomaly-detection-results-table',
         'lstm-fcn-ecg-classification-class-distribution',
         'lstm-fcn-ecg-classification-confusion-matrix',
+        'lstm-fcn-ecg-classification-diagram',
         'cnn-kmeans-control-chart-clustering-dataset',
         'cnn-kmeans-control-chart-clustering-results',
         'lstm-ad-ecg-anomaly-detection-dataset',

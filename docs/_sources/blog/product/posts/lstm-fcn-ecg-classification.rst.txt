@@ -57,6 +57,16 @@ Model
     concatenated and passed to a final output layer with softmax activation.
     </p>
 
+    <img
+        id="lstm-fcn-ecg-classification-diagram"
+        class="blog-post-image"
+        alt="LSTM-FCN architecture."
+        style="width:60%"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/ecg-classification/diagram_light.png
+    />
+
+    <p class="blog-post-image-caption">LSTM-FCN architecture.</p>
+
 ******************************************
 Data
 ******************************************
