@@ -10,13 +10,17 @@ Forecasting commodity prices with generative adversarial networks
 .. raw:: html
 
     <p>
-    Forecasting commodity prices is a complex task due to the intricate interplay of supply and demand dynamics,
-    geopolitical factors, and market sentiment fluctuations. Deep learning models have shown to be effective at
-    with capturing the complex and non-linear relationships inherent in time series data.
-    Generative Adversarial Networks (GANs) have led to substantial advancements in diverse domains
-    such as image generation and natural language processing and have also recently been applied to time series tasks.
-    This paper explores the application of GANs in commodity price forecasting,
+    Forecasting commodity prices is a particularly challenging task due to the intricate interplay of
+    supply and demand dynamics, geopolitical factors, and market sentiment fluctuations.
+    Deep learning models have been shown to be more effective than traditional statistical models at
+    capturing the complex and non-linear relationships inherent in commodity price data
+    <a href="#references">[1]</a>.
+    </p>
 
+    <p>
+    Generative Adversarial Networks (GANs), which have led to substantial advancements in natural
+    language processing and computer visions, have also found several applications in time series
+    analysis <a href="#references">[2]</a>.
     </p>
 
 ******************************************

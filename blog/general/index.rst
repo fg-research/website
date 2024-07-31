@@ -12,6 +12,39 @@ General
 
    Learn about time series analysis
 
+
+.. card::
+    :width: 100%
+    :link: posts/commodity-forecasting-forgan
+    :link-type: doc
+
+    .. _commodity-forecasting-forgan-toctree:
+
+    .. toctree::
+        :titlesonly:
+
+        posts/inflation-forecasting-random-forest
+
+    .. _commodity-forecasting-forgan-include:
+
+    Forecasting commodity prices is a particularly challenging task due to the intricate interplay of
+    supply and demand dynamics, geopolitical factors, and market sentiment fluctuations.
+    Deep learning models have been shown to be more effective than traditional statistical models at
+    capturing the complex and non-linear relationships inherent in commodity price data...
+
+    .. grid:: 2
+        :margin: 0 3 auto auto
+
+        .. grid-item::
+            :class: sd-text-primary
+
+            :octicon:`graph;1rem;graph-icon` Forecasting
+
+        .. grid-item::
+            :class: sd-text-secondary
+
+            :octicon:`calendar;1rem;calendar-icon` July 26, 2024
+
 .. card::
     :width: 100%
     :link: posts/inflation-forecasting-random-forest
