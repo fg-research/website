@@ -44,6 +44,19 @@ Forecasting commodity prices with generative adversarial networks
 ******************************************
 Model
 ******************************************
+Both the generator and discriminator of the ForGAN model are based on recurrent neural networks (RNNs).
+As ForGAN is a CGAN, both the generator and discriminator take as input a *condition*, which is defined as
+fixed-length vector containing the most recent values of the time series, i.e. the condition is a context window.
+
+In the generator, the context window is passed through an RNN layer which produces an embedding vector.
+After that, the embedding vector is concatenated with a noise vector, which is sampled from the standard normal distribution.
+The concatenated embedding and noise vectors are then passed through a dense layer with ReLU activation,
+and to a final linear layer with a single hidden unit which outputs the generated next value of the time series.
+
+In the discriminator, the context window is extended with the actual or generated next value of the time series.
+After that, the extended context window is passed through an RNN layer which produces an embedding vector.
+The embedding vector is then passed to a final sigmoid layer with a single hidden unit which outputs the
+probability that the next value of the time series provided as input is actual (real) or generated (fake).
 
 .. raw:: html
 
