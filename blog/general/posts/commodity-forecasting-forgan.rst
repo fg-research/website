@@ -33,9 +33,8 @@ Forecasting commodity prices with generative adversarial networks
     </p>
 
     <p>
-    We will use the daily close prices from the 28<sup>th</sup> of July 2022 to
-    the 26<sup>th</sup> of July 2024, which we will download from
-    <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>.
+    We will download the daily close prices of Bloomberg Commodity Index from the 28<sup>th</sup> of July 2022 to
+    the 26<sup>th</sup> of July 2024 from <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>.
     We will train the model on the data up to the 12<sup>th</sup> of June 2024,
     and use the trained model to predict the subsequent data up to the 26<sup>th</sup> of July 2024.
     We will find that the ForGAN model achieves a mean absolute percentage error of
