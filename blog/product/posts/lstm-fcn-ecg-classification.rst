@@ -61,7 +61,6 @@ Model
         id="lstm-fcn-ecg-classification-diagram"
         class="blog-post-image"
         alt="LSTM-FCN architecture."
-        style="width:60%"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/ecg-classification/diagram_light.png
     />
 
