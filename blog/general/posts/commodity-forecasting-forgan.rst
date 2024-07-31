@@ -351,6 +351,7 @@ The class has two methods: :code:`.fit()` and :code:`.predict()`:
 
 .. code:: python
 
+    # download the data
     ticker = "^BCOM"
     dataset = yf.download(ticker, start="2022-07-28", end="2024-07-27")
     dataset = dataset[["Close"]].rename(columns={"Close": ticker})
@@ -374,6 +375,7 @@ We then train the model for 100 epochs with a batch size of 64 and a learning ra
 
 .. code:: python
 
+    # define all hyperparameters
     test_size = 30
     generator_units = 256
     discriminator_units = 64
@@ -385,11 +387,13 @@ We then train the model for 100 epochs with a batch size of 64 and a learning ra
 
 .. code:: python
 
+    # split the data
     training_dataset = dataset.iloc[:- test_size]
     test_dataset = dataset.iloc[- test_size - condition_length: -1]
 
 .. code:: python
 
+    # instantiate the model
     model = ForGAN(
         generator_units=generator_units,
         discriminator_units=discriminator_units,
@@ -397,6 +401,7 @@ We then train the model for 100 epochs with a batch size of 64 and a learning ra
         noise_dimension=noise_dimension,
     )
 
+    # train the model
     model.fit(
         x=training_dataset,
         learning_rate=learning_rate,
@@ -409,6 +414,7 @@ We use the model for generating 100 prices for each of the 30 days in the test s
 
 .. code:: python
 
+    # generate the model predictions
     simulations = model.predict(x=test_dataset, samples=100)
 
 We then summarize the 100 generated prices by calculating different quantiles.
@@ -416,6 +422,7 @@ For convenience, we include the actual values of the time series in the same dat
 
 .. code:: python
 
+    # calculate the summary statistics of the model predictions
     predictions = pd.DataFrame(
         data={
             "actual": dataset.iloc[- test_size:].values.flatten(),
@@ -448,6 +455,7 @@ mean absolute percentage error (MAPE) of the one-step-ahead predictions over the
 
 .. code:: python
 
+    # calculate the performance metrics of the model predictions
     metrics = pd.DataFrame(
         columns=["Metric", "Value"],
         data=[
