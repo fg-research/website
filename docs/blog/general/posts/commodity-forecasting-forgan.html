@@ -207,7 +207,8 @@ is real (i.e. an actual value from the dataset) or synthetic (i.e. a predicted v
 </span><span id="line-21">    <span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">threading</span><span class="o">.</span><span class="n">set_intra_op_parallelism_threads</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
-<p>We then define the generator and discriminator models, where we use LSTM layers as recurrent layers.</p>
+<p>We then define the generator and discriminator models. We use LSTM layers as recurrent layers,
+but GRU layers can also be used as an alternative.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">class</span> <span class="nc">Generator</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
 </span><span id="line-2"><span class="w">    </span><span class="sd">'''</span>
 </span><span id="line-3"><span class="sd">    Generator model.</span>

@@ -118,7 +118,8 @@ After that we define a function for fixing all random seeds, to ensure reproduci
         tf.config.threading.set_inter_op_parallelism_threads(1)
         tf.config.threading.set_intra_op_parallelism_threads(1)
 
-We then define the generator and discriminator models, where we use LSTM layers as recurrent layers.
+We then define the generator and discriminator models. We use LSTM layers as recurrent layers,
+but GRU layers can also be used as an alternative.
 
 .. code:: python
 
