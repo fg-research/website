@@ -30,7 +30,7 @@ General
     Forecasting commodity prices is a particularly challenging task due to the intricate interplay of
     supply and demand dynamics, geopolitical factors, and market sentiment fluctuations.
     Deep learning models have been shown to be more effective than traditional statistical models at
-    capturing the complex and non-linear relationships inherent in commodity price data...
+    capturing the complex and non-linear relationships inherent in commodity markets...
 
     .. grid:: 2
         :margin: 0 3 auto auto

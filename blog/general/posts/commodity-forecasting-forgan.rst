@@ -13,7 +13,7 @@ Forecasting commodity prices with generative adversarial networks
     Forecasting commodity prices is a particularly challenging task due to the intricate interplay of
     supply and demand dynamics, geopolitical factors, and market sentiment fluctuations.
     Deep learning models have been shown to be more effective than traditional statistical models at
-    capturing the complex and non-linear relationships inherent in commodity price data
+    capturing the complex and non-linear relationships inherent in commodity markets.
     <a href="#references">[1]</a>.
     </p>
 
