@@ -18,16 +18,18 @@ Forecasting commodity prices with generative adversarial networks
     </p>
 
     <p>
-    Generative Adversarial Networks (GANs), which have led to substantial advancements in natural
-    language processing and computer visions, have also found several applications in time series analysis
-    <a href="#references">[2]</a>. The application of GANs to time series is not restricted to time series
-    generation for data augmentation purposes, but also extends to numerous other tasks, including,
-    but not limited to, time series forecasting.
+    Generative Adversarial Networks (GANs) <a href="#references">[2]</a>, which have led to substantial
+    advancements in natural language processing and computer visions, have also found several applications
+    in time series analysis <a href="#references">[3]</a>. The application of GANs to time series is not
+    restricted to data generation for augmentation or anonymization purposes, but also extends to numerous
+    other tasks, including, but not limited to, time series forecasting.
     </p>
 
     <p>
-    In this post, we will focus on the ForGAN model introduced in <a href="#references">[3]</a>,
-    a conditional GAN (CGAN) for probabilistic one-step-ahead forecasting of univariate time series.
+    In this post, we will focus on the ForGAN model introduced in <a href="#references">[4]</a>,
+    a conditional GAN (CGAN) <a href="#references">[5]</a> for probabilistic one-step-ahead forecasting
+    of univariate time series.
+    </p>
 
 ******************************************
 Model
@@ -443,8 +445,3 @@ Probabilistic forecasting of sensory data with generative adversarial networks â
 
 [5] Mirza, M., & Osindero, S. (2014). Conditional generative adversarial nets. *arXiv preprint*.
 `doi: 10.48550/arXiv.1411.1784 <https://doi.org/10.48550/arXiv.1411.1784>`__.
-
-[6] VuletiÄ‡, M., Prenzel, F., & Cucuringu, M. (2024).
-Fin-GAN: Forecasting and classifying financial time series via generative adversarial networks.
-*Quantitative Finance*, 24(2), pp. 175-199.
-`doi: 10.1080/14697688.2023.2299466 <https://doi.org/10.1080/14697688.2023.2299466>`__.
