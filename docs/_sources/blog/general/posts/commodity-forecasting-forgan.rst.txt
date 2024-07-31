@@ -1,7 +1,7 @@
 .. meta::
    :thumbnail: https://fg-research.com/_static/thumbnail.png
    :description: Forecasting commodity prices with generative adversarial networks
-   :keywords: Time Series, Generative Adversarial Networks, Forecasting, Commodities
+   :keywords: Time Series, Generative Adversarial Networks, Forecasting, Commodities, Finance
 
 ######################################################################################
 Forecasting commodity prices with generative adversarial networks
