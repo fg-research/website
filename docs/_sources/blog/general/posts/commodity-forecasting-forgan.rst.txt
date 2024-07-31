@@ -10,6 +10,12 @@ Forecasting commodity prices with generative adversarial networks
 .. raw:: html
 
     <p>
+    Forecasting commodity prices is a complex task due to the intricate interplay of supply and demand dynamics,
+    geopolitical factors, and market sentiment fluctuations. Deep learning models have shown to be effective at
+    with capturing the complex and non-linear relationships inherent in time series data.
+    Generative Adversarial Networks (GANs) have led to substantial advancements in diverse domains
+    such as image generation and natural language processing and have also recently been applied to time series tasks.
+    This paper explores the application of GANs in commodity price forecasting,
 
     </p>
 
@@ -409,6 +415,19 @@ We find that the model achieves a MAPE of less than 1% over the test set.
 References
 ******************************************
 
-[1] Koochali, A., Schichtel, P., Dengel, A., & Ahmed, S. (2019).
+[1] Ben Ameur, H., Boubaker, S., Ftiti, Z., Louhichi, W., & Tissaoui, K. (2024).
+Forecasting commodity prices: empirical evidence using deep learning tools. *Annals of Operations Research*, 339, pp. 349–367.
+`doi: 10.1007/s10479-022-05076-6 <https://doi.org/10.1007/s10479-022-05076-6>`__.
+
+[2] Brophy, E., Wang, Z., She, Q., & Ward, T. (2021).
+Generative adversarial networks in time series: A survey and taxonomy. *arXiv preprint*.
+`doi: 10.48550/arXiv.2107.11098 <https://doi.org/10.48550/arXiv.2107.11098>`__.
+
+[3] Koochali, A., Schichtel, P., Dengel, A., & Ahmed, S. (2019).
 Probabilistic forecasting of sensory data with generative adversarial networks – ForGAN. *IEEE Access*, 7, pp. 63868-63880.
 `doi: 10.1109/ACCESS.2019.2915544 <https://doi.org/10.1109/ACCESS.2019.2915544>`__.
+
+[4] Vuletić, M., Prenzel, F., & Cucuringu, M. (2024).
+Fin-GAN: Forecasting and classifying financial time series via generative adversarial networks.
+*Quantitative Finance*, 24(2), pp. 175-199.
+`doi: 10.1080/14697688.2023.2299466 <https://doi.org/10.1080/14697688.2023.2299466>`__.
