@@ -52,6 +52,7 @@ window.setInterval(function(){
         'cnn-kmeans-control-chart-clustering-results',
         'lstm-ad-ecg-anomaly-detection-dataset',
         'lstm-ad-ecg-anomaly-detection-results',
+        'lstm-ad-ecg-anomaly-detection-diagram',
         'fred-md-dataset-head',
         'fred-md-dataset-tail',
         'fred-md-inflation-indices',
