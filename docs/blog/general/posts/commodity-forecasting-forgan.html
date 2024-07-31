@@ -131,7 +131,7 @@ capturing the complex and non-linear relationships inherent in commodity markets
 </p>
 <p>
 Generative Adversarial Networks (GANs) <a href="#references">[2]</a>, which have led to substantial
-advancements in natural language processing and computer vision, have also found several applications
+advancements in natural language processing and computer vision, have also found several use cases
 in the time series domain <a href="#references">[3]</a>. The application of GANs to time series is not
 restricted to data generation for augmentation or anonymization purposes, but also extends to numerous
 other tasks, including, but not limited to, time series forecasting.
@@ -152,17 +152,19 @@ We will find that the ForGAN model achieves a mean absolute error of 0.51 and me
 </p><section id="model">
 <h2>Model<a class="headerlink" href="#model" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#model'">¶</a></h2>
 <p>Both the generator and the discriminator of the ForGAN model are based on recurrent neural networks (RNNs).
-Given that ForGAN is a CGAN, both the generator and the discriminator take as input a <em>condition</em>, which is defined as
-fixed-length vector containing the most recent values of the time series, i.e. the condition is a context window.</p>
+Given that ForGAN is a CGAN, both the generator and the discriminator take as input a <em>condition</em>, which is
+defined as fixed-length vector containing the most recent values of the time series, i.e. the condition
+is a context window.</p>
 <p>In the generator, the context window is passed through an RNN layer which produces an embedding vector.
-After that, the embedding vector is concatenated with a noise vector, which is sampled from the standard normal distribution.
-The concatenated embedding and noise vectors are then passed through a dense layer with ReLU activation,
-and to a final linear layer with a single hidden unit which outputs the predicted next value of the time series.</p>
+After that, the embedding vector is concatenated with a noise vector, which is sampled from the standard
+normal distribution. The concatenated embedding and noise vectors are then passed through a dense layer
+with ReLU activation, and to a final linear output layer with a single hidden unit.
+The output of the generator is the predicted next value of the time series.</p>
 <p>In the discriminator, the context window is extended with the actual or predicted next value of the time series.
 After that, the extended context window is passed through an RNN layer which produces an embedding vector.
-The embedding vector is then passed to a final sigmoid layer with a single hidden unit which outputs the
-probability that the next value of the time series provided as input is real (i.e. an actual value from the dataset)
-or synthetic (i.e. a predicted value from the generator).</p>
+The embedding vector is then passed to a final sigmoid output layer with a single hidden unit.
+The output of the discriminator is the probability that the next value of the time series provided as input
+is real (i.e. an actual value from the dataset) or synthetic (i.e. a predicted value from the generator).</p>
 <img alt="ForGAN architecture" class="blog-post-image" id="commodity-forecasting-forgan-diagram" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/commodity-forecasting-forgan/diagram_light.png"/>
 <p class="blog-post-image-caption">ForGAN architecture.</p></section>
 <section id="code">
