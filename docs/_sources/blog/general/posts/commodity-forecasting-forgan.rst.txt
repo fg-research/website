@@ -195,8 +195,8 @@ The class has two methods: :code:`.fit()` and :code:`.predict()`:
     <ul
 
     <li>The <code>.fit()</code> method scales the time series, splits the time series into context windows
-    and target values, and trains the generator and discriminator models using the standard adversarial
-    training procedure.</li>
+    and target values, and trains the generator and discriminator models using standard adversarial
+    training with the cross-entropy loss.</li>
 
     <li>The <code>.predict()</code> method scales the time series, extracts the last context window,
     and then passes it through the generator together with different randomly generated noise vectors.
@@ -256,7 +256,7 @@ The class has two methods: :code:`.fit()` and :code:`.predict()`:
             generator_optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
             discriminator_optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
 
-            # define the loss functions
+            # define the loss function
             bce = tf.keras.losses.BinaryCrossentropy(from_logits=False)
 
             # define the training loop
@@ -366,6 +366,9 @@ The class has two methods: :code:`.fit()` and :code:`.predict()`:
     <p class="blog-post-image-caption">Bloomberg Commodity Index from 2022-07-28 to 2024-07-26.</p>
 
 We set aside the last 30 days for testing, and use all the previous data for training.
+We set the number of hidden units of the LSTM layer equal to 256 for the generator and to 64 for the discriminator.
+We use a context window of 5 days, meaning that we use the last 5 prices as input to forecast the next day's price.
+The length of the noise vector is set equal to 10.
 
 .. code:: python
 
@@ -428,7 +431,10 @@ For convenience, we include the actual values of the time series in the same dat
 
 Finally, we calculate the root mean squared error (RMSE), mean absolute error (MAE) and
 mean absolute percentage error (MAPE) of the one-step-ahead predictions over the test set.
-Note that we use the median as point forecast.
+
+.. note::
+
+    Note that we use the median as point forecast.
 
 .. code:: python
 

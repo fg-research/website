@@ -277,8 +277,8 @@ is real (i.e. an actual value from the dataset) or synthetic (i.e. a predicted v
 <p>We also define a custom class for training the ForGAN model and generating the probabilistic forecasts.
 The class has two methods: <code class="code docutils literal notranslate"><span class="pre">.fit()</span></code> and <code class="code docutils literal notranslate"><span class="pre">.predict()</span></code>:</p>
 <li>The <code>.fit()</code> method scales the time series, splits the time series into context windows
-and target values, and trains the generator and discriminator models using the standard adversarial
-training procedure.</li>
+and target values, and trains the generator and discriminator models using standard adversarial
+training with the cross-entropy loss.</li>
 <li>The <code>.predict()</code> method scales the time series, extracts the last context window,
 and then passes it through the generator together with different randomly generated noise vectors.
 Each different noise vector results in a different prediction, where the number of predictions to
@@ -333,7 +333,7 @@ back to the original scale before being returned as an output.</li>
 </span><span id="line-47">        <span class="n">generator_optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">)</span>
 </span><span id="line-48">        <span class="n">discriminator_optimizer</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">)</span>
 </span><span id="line-49">
-</span><span id="line-50">        <span class="c1"># define the loss functions</span>
+</span><span id="line-50">        <span class="c1"># define the loss function</span>
 </span><span id="line-51">        <span class="n">bce</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">BinaryCrossentropy</span><span class="p">(</span><span class="n">from_logits</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </span><span id="line-52">
 </span><span id="line-53">        <span class="c1"># define the training loop</span>
@@ -427,7 +427,10 @@ The dataset contains 502 daily observations.
 </span></code></pre></div>
 </div>
 <img alt="Bloomberg Commodity Index from 2022-07-28 to 2024-07-26" class="blog-post-image" id="commodity-forecasting-forgan-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/commodity-forecasting-forgan/time_series_light.png"/>
-<p class="blog-post-image-caption">Bloomberg Commodity Index from 2022-07-28 to 2024-07-26.</p><p>We set aside the last 30 days for testing, and use all the previous data for training.</p>
+<p class="blog-post-image-caption">Bloomberg Commodity Index from 2022-07-28 to 2024-07-26.</p><p>We set aside the last 30 days for testing, and use all the previous data for training.
+We set the number of hidden units of the LSTM layer equal to 256 for the generator and to 64 for the discriminator.
+We use a context window of 5 days, meaning that we use the last 5 prices as input to forecast the next day’s price.
+The length of the noise vector is set equal to 10.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">test_size</span> <span class="o">=</span> <span class="mi">30</span>
 </span></code></pre></div>
 </div>
@@ -472,8 +475,11 @@ For convenience, we include the actual values of the time series in the same dat
 </div>
 <img alt="Actual and predicted prices from 2024-06-13 to 2024-07-26" class="blog-post-image" id="commodity-forecasting-forgan-predictions" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/commodity-forecasting-forgan/predictions_light.png"/>
 <p class="blog-post-image-caption">Actual and predicted prices over the test set (from 2024-06-13 to 2024-07-26).</p><p>Finally, we calculate the root mean squared error (RMSE), mean absolute error (MAE) and
-mean absolute percentage error (MAPE) of the one-step-ahead predictions over the test set.
-Note that we use the median as point forecast.</p>
+mean absolute percentage error (MAPE) of the one-step-ahead predictions over the test set.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that we use the median as point forecast.</p>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
 </span><span id="line-2">    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"Metric"</span><span class="p">,</span> <span class="s2">"Value"</span><span class="p">],</span>
 </span><span id="line-3">    <span class="n">data</span><span class="o">=</span><span class="p">[</span>
