@@ -276,11 +276,12 @@ is real (i.e. an actual value from the dataset) or synthetic (i.e. a predicted v
 </div>
 <p>We also define a custom class for training the ForGAN model and generating the probabilistic forecasts.
 The class has two methods: <code class="code docutils literal notranslate"><span class="pre">.fit()</span></code> and <code class="code docutils literal notranslate"><span class="pre">.predict()</span></code>:</p>
-<li style="line-height: 1.75rem; margin-top: 1.75rem">The <code>.fit()</code> method scales the time series, splits the time series into context windows
-and target values, and trains the generator and discriminator models using standard adversarial
-training with the cross-entropy loss.</li>
-<li style="line-height: 1.75rem; margin-top: 1.75rem">The <code>.predict()</code> method scales the time series, extracts the last context window,
-and then passes it through the generator together with different randomly generated noise vectors.
+<li style="line-height: 1.75rem; margin-top: 1.75rem">The <code>.fit()</code> method scales the
+time series, splits the time series into context windows and target values, and trains the
+generator and discriminator models using standard adversarial training with the cross-entropy loss.</li>
+<li style="line-height: 1.75rem; margin-top: 1.75rem">The <code>.predict()</code> method scales
+the time series, extracts the last context window, and then passes it through the generator
+together with different randomly generated noise vectors.
 Each different noise vector results in a different prediction, where the number of predictions to
 be generated is controlled by the <code>samples</code> parameter. Each prediction is transformed
 back to the original scale before being returned as an output.</li>
