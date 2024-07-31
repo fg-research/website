@@ -19,13 +19,15 @@ Forecasting commodity prices with generative adversarial networks
 
     <p>
     Generative Adversarial Networks (GANs), which have led to substantial advancements in natural
-    language processing and computer visions, have also found several applications in time series analysis <a href="#references">[2]</a>.
-    The application of GANs to time series is not restricted to time series generation for data augmentation
-    purposes, but also extends to numerous other tasks including, but not limited to, time series forecasting.
+    language processing and computer visions, have also found several applications in time series analysis
+    <a href="#references">[2]</a>. The application of GANs to time series is not restricted to time series
+    generation for data augmentation purposes, but also extends to numerous other tasks, including,
+    but not limited to, time series forecasting.
     </p>
 
     <p>
-    In this post,
+    In this post, we will focus on the ForGAN model introduced in <a href="#references">[3]</a>,
+    a conditional GAN (CGAN) for probabilistic one-step-ahead forecasting of univariate time series.
 
 ******************************************
 Model
