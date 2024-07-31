@@ -23,7 +23,7 @@ General
     .. toctree::
         :titlesonly:
 
-        posts/inflation-forecasting-random-forest
+        posts/commodity-forecasting-forgan
 
     .. _commodity-forecasting-forgan-include:
 
