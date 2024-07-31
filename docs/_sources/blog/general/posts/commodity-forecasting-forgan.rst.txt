@@ -20,9 +20,9 @@ Forecasting commodity prices with generative adversarial networks
     <p>
     Generative Adversarial Networks (GANs) <a href="#references">[2]</a>, which have led to substantial
     advancements in natural language processing and computer vision, have also found several use cases
-    in the time series domain <a href="#references">[3]</a>. The application of GANs to time series is not
-    restricted to data generation for augmentation or anonymization purposes, but extends to numerous
-    other tasks, including, but not limited to, time series forecasting.
+    in the time series domain <a href="#references">[3]</a>. The application of GANs to time series is
+    not restricted to data generation for augmentation purposes, but extends to numerous other tasks,
+    including, but not limited to, time series forecasting.
     </p>
 
     <p>
@@ -35,10 +35,9 @@ Forecasting commodity prices with generative adversarial networks
     <p>
     We will download the daily close prices of Bloomberg Commodity Index from the 28<sup>th</sup> of July 2022 to
     the 26<sup>th</sup> of July 2024 from <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>.
-    We will train the model on the data up to the 12<sup>th</sup> of June 2024,
-    and use the trained model to predict the subsequent 30 days of data up to the 26<sup>th</sup> of July 2024.
-    We will find that the ForGAN model achieves a mean absolute error of 0.51 and mean absolute percentage error of
-    0.5% over the considered 30-days period.
+    We will train the model on the data up to the 12<sup>th</sup> of June 2024, and use the trained model to predict
+    the subsequent 30 days of data up to the 26<sup>th</sup> of July 2024. We will find that the ForGAN model achieves
+    a mean absolute percentage error of less than 1% over the considered 30-days period.
     </p>
 
 ******************************************
@@ -199,10 +198,10 @@ The class has two methods: :code:`.fit()` and :code:`.predict()`:
     generator and discriminator models using standard adversarial training with the cross-entropy loss.</li>
 
     <li style="line-height: 1.75rem; margin-top: 1.75rem">The <code>.predict()</code> method scales
-    the time series, extracts the last context window, and then passes it through the generator
-    together with different randomly generated noise vectors. Each different noise vector results
-    in a different prediction. Each prediction is transformed back to the original scale before
-    being returned as an output.</li>
+    the time series, splits the time series into context windows, and then passes the context windows
+    through the generator together with different randomly generated noise vectors. Each different
+    noise vector results in different predictions. The predictions are transformed back to the original
+    scale before being returned as an output.</li>
 
     </ul>
 
@@ -311,28 +310,31 @@ The class has two methods: :code:`.fit()` and :code:`.predict()`:
             x = x.copy().values
             x = (x - self.mu) / self.sigma
 
-            # get the condition sequence
-            condition = np.expand_dims(x[- self.condition_length:], axis=0)
+            # split the time series into condition sequences
+            condition = []
+            for t in range(self.condition_length, len(x) + 1):
+                condition.append(x[t - self.condition_length: t, :])
+            condition = np.array(condition)
 
-            # generate the next value of the target time series
+            # generate the predicted target values
             simulation = []
 
             # loop across the number of samples to be generated
-            for sample in range(samples):
+            for _ in range(samples):
 
                 # generate the noise vector
                 noise = tf.random.normal(shape=(len(condition), self.noise_dimension))
 
-                # generate the next target value
+                # generate the predicted target values
                 prediction = self.generator_model(inputs=[condition, noise]).numpy()
 
-                # transform the generated target value back to the original scale
+                # transform the predicted target values back to the original scale
                 prediction = self.mu + self.sigma * prediction
 
-                # save the generated target value
+                # save the predicted target values
                 simulation.append(prediction)
 
-            # cast the generated target values to array
+            # cast the predicted target values to array
             simulation = np.concatenate(simulation, axis=1)
 
             return simulation
@@ -349,9 +351,6 @@ The class has two methods: :code:`.fit()` and :code:`.predict()`:
 .. code:: python
 
     ticker = "^BCOM"
-
-.. code:: python
-
     dataset = yf.download(ticker, start="2022-07-28", end="2024-07-27")
     dataset = dataset[["Close"]].rename(columns={"Close": ticker})
 
@@ -367,29 +366,41 @@ The class has two methods: :code:`.fit()` and :code:`.predict()`:
     <p class="blog-post-image-caption">Bloomberg Commodity Index from 2022-07-28 to 2024-07-26.</p>
 
 We set aside the last 30 days for testing, and use all the previous data for training.
-We set the number of hidden units of the LSTM layer equal to 256 for the generator and to 64 for the discriminator.
 We use a context window of 5 days, meaning that we use the last 5 prices as input to forecast the next day's price.
+We set the number of hidden units of the LSTM layer equal to 256 for the generator and to 64 for the discriminator.
 We set the length of the generated noise vectors equal to 10.
+We then train the model for 100 epochs with a batch size of 64 and a learning rate of 0.001.
 
 .. code:: python
 
     test_size = 30
+    generator_units = 256
+    discriminator_units = 64
+    condition_length = 5
+    noise_dimension = 10
+    learning_rate = 0.001
+    batch_size = 64
+    epochs = 100
+
+.. code:: python
+
+    training_dataset = dataset.iloc[:- test_size]
+    test_dataset = dataset.iloc[- test_size - condition_length: -1]
 
 .. code:: python
 
     model = ForGAN(
-        generator_units=256,
-        discriminator_units=64,
-        condition_length=5,
-        noise_dimension=10,
-        seed=42
+        generator_units=generator_units,
+        discriminator_units=discriminator_units,
+        condition_length=condition_length,
+        noise_dimension=noise_dimension,
     )
 
     model.fit(
-        x=dataset.iloc[:- test_size],
-        learning_rate=0.001,
-        batch_size=64,
-        epochs=100,
+        x=training_dataset,
+        learning_rate=learning_rate,
+        batch_size=batch_size,
+        epochs=epochs,
     )
 
 After the model has been trained, we generate the one-step-ahead predictions over the test set.
@@ -397,12 +408,17 @@ We use the model for generating 100 prices for each of the 30 days in the test s
 
 .. code:: python
 
-    simulations = []
-    for t in reversed(range(1, 1 + test_size)):
-        simulations.append(model.predict(x=dataset.iloc[:- t], samples=100))
-    simulations = np.concatenate(simulations, axis=0)
+    simulations = model.predict(x=test_dataset, samples=100)
 
-We then summarize the 100 generated prices by calculating the median and the quantiles.
+.. code:: python
+
+    simulations.shape
+
+.. code-block:: console
+
+    (30, 100)
+
+We then summarize the 100 generated prices by calculating different quantiles.
 For convenience, we include the actual values of the time series in the same data frame.
 
 .. code:: python
@@ -416,7 +432,7 @@ For convenience, we include the actual values of the time series in the same dat
             "q10": np.quantile(simulations, 0.10, axis=1),
             "q90": np.quantile(simulations, 0.90, axis=1),
         },
-        index=dataset.index[-test_size:]
+        index=dataset.index[- test_size:]
     )
 
 .. raw:: html
