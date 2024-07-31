@@ -281,10 +281,9 @@ time series, splits the time series into context windows and target values, and 
 generator and discriminator models using standard adversarial training with the cross-entropy loss.</li>
 <li style="line-height: 1.75rem; margin-top: 1.75rem">The <code>.predict()</code> method scales
 the time series, extracts the last context window, and then passes it through the generator
-together with different randomly generated noise vectors.
-Each different noise vector results in a different prediction, where the number of predictions to
-be generated is controlled by the <code>samples</code> parameter. Each prediction is transformed
-back to the original scale before being returned as an output.</li>
+together with different randomly generated noise vectors. Each different noise vector results
+in a different prediction. Each prediction is transformed back to the original scale before
+being returned as an output.</li>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">class</span> <span class="nc">ForGAN</span><span class="p">():</span>
 </span><span id="line-2"><span class="w">    </span><span class="sd">'''</span>
 </span><span id="line-3"><span class="sd">    ForGAN model.</span>

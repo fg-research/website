@@ -200,10 +200,9 @@ The class has two methods: :code:`.fit()` and :code:`.predict()`:
 
     <li style="line-height: 1.75rem; margin-top: 1.75rem">The <code>.predict()</code> method scales
     the time series, extracts the last context window, and then passes it through the generator
-    together with different randomly generated noise vectors.
-    Each different noise vector results in a different prediction, where the number of predictions to
-    be generated is controlled by the <code>samples</code> parameter. Each prediction is transformed
-    back to the original scale before being returned as an output.</li>
+    together with different randomly generated noise vectors. Each different noise vector results
+    in a different prediction. Each prediction is transformed back to the original scale before
+    being returned as an output.</li>
 
     </ul>
 
