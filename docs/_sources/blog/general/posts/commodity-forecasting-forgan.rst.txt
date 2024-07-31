@@ -375,7 +375,7 @@ We train the model for 100 epochs with a batch size of 64 and a learning rate of
 
 .. code:: python
 
-    # define all hyperparameters
+    # define the hyperparameters
     test_size = 30
     generator_units = 256
     discriminator_units = 64
