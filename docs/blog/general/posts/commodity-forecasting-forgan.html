@@ -433,7 +433,7 @@ The dataset contains 502 daily observations.
 We use a context window of 5 days, meaning that we use the last 5 prices as input to forecast the next day’s price.
 We set the number of hidden units of the LSTM layer equal to 256 for the generator and to 64 for the discriminator.
 We set the length of the generated noise vectors equal to 10.
-We then train the model for 100 epochs with a batch size of 64 and a learning rate of 0.001.</p>
+We train the model for 100 epochs with a batch size of 64 and a learning rate of 0.001.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># define all hyperparameters</span>
 </span><span id="line-2"><span class="n">test_size</span> <span class="o">=</span> <span class="mi">30</span>
 </span><span id="line-3"><span class="n">generator_units</span> <span class="o">=</span> <span class="mi">256</span>
@@ -468,14 +468,14 @@ We then train the model for 100 epochs with a batch size of 64 and a learning ra
 </span></code></pre></div>
 </div>
 <p>After the model has been trained, we generate the one-step-ahead predictions over the test set.
-We use the model for generating 100 prices for each of the 30 days in the test set.</p>
+We generate 100 prices for each of the 30 days in the test set.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># generate the model predictions</span>
 </span><span id="line-2"><span class="n">simulations</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">test_dataset</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
 <p>We then summarize the 100 generated prices by calculating different quantiles.
 For convenience, we include the actual values of the time series in the same data frame.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># calculate the summary statistics of the model predictions</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># summarize the model predictions</span>
 </span><span id="line-2"><span class="n">predictions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
 </span><span id="line-3">    <span class="n">data</span><span class="o">=</span><span class="p">{</span>
 </span><span id="line-4">        <span class="s2">"actual"</span><span class="p">:</span> <span class="n">dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span> <span class="n">test_size</span><span class="p">:]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span>
@@ -496,7 +496,7 @@ mean absolute percentage error (MAPE) of the one-step-ahead predictions over the
 <p class="admonition-title">Note</p>
 <p>Note that we use the median as point forecast.</p>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># calculate the performance metrics of the model predictions</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># evaluate the model predictions</span>
 </span><span id="line-2"><span class="n">metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
 </span><span id="line-3">    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"Metric"</span><span class="p">,</span> <span class="s2">"Value"</span><span class="p">],</span>
 </span><span id="line-4">    <span class="n">data</span><span class="o">=</span><span class="p">[</span>

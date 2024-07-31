@@ -371,7 +371,7 @@ We set aside the last 30 days for testing, and use all the previous data for tra
 We use a context window of 5 days, meaning that we use the last 5 prices as input to forecast the next day's price.
 We set the number of hidden units of the LSTM layer equal to 256 for the generator and to 64 for the discriminator.
 We set the length of the generated noise vectors equal to 10.
-We then train the model for 100 epochs with a batch size of 64 and a learning rate of 0.001.
+We train the model for 100 epochs with a batch size of 64 and a learning rate of 0.001.
 
 .. code:: python
 
@@ -410,7 +410,7 @@ We then train the model for 100 epochs with a batch size of 64 and a learning ra
     )
 
 After the model has been trained, we generate the one-step-ahead predictions over the test set.
-We use the model for generating 100 prices for each of the 30 days in the test set.
+We generate 100 prices for each of the 30 days in the test set.
 
 .. code:: python
 
@@ -422,7 +422,7 @@ For convenience, we include the actual values of the time series in the same dat
 
 .. code:: python
 
-    # calculate the summary statistics of the model predictions
+    # summarize the model predictions
     predictions = pd.DataFrame(
         data={
             "actual": dataset.iloc[- test_size:].values.flatten(),
@@ -455,7 +455,7 @@ mean absolute percentage error (MAPE) of the one-step-ahead predictions over the
 
 .. code:: python
 
-    # calculate the performance metrics of the model predictions
+    # evaluate the model predictions
     metrics = pd.DataFrame(
         columns=["Metric", "Value"],
         data=[
