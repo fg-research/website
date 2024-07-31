@@ -20,15 +20,26 @@ Forecasting commodity prices with generative adversarial networks
     <p>
     Generative Adversarial Networks (GANs) <a href="#references">[2]</a>, which have led to substantial
     advancements in natural language processing and computer visions, have also found several applications
-    in time series analysis <a href="#references">[3]</a>. The application of GANs to time series is not
-    restricted to data generation for augmentation or anonymization purposes, but also extends to numerous
+    in the time series domain <a href="#references">[3]</a>. The application of GANs to time series is not
+    restricted to data generation for augmentation purposes, but also extends to numerous
     other tasks, including, but not limited to, time series forecasting.
     </p>
 
     <p>
     In this post, we will focus on the ForGAN model introduced in <a href="#references">[4]</a>,
     a conditional GAN (CGAN) <a href="#references">[5]</a> for probabilistic one-step-ahead forecasting
-    of univariate time series.
+    of univariate time series. We will use the ForGAN model for forecasting the daily prices of
+    Bloomberg Commodity Index (BCOM), a leading commodities benchmark.
+    </p>
+
+    <p>
+    We will use the daily close prices from the 28<sup>th</sup> of July 2022 to
+    the 26<sup>th</sup> of July 2024, which we will download from
+    <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>.
+    We will train the model on the data up to the 12<sup>th</sup> of June 2024,
+    and use the trained model to predict the subsequent data up to the 26<sup>th</sup> of July 2024.
+    We will find that the ForGAN model achieves a mean absolute percentage error of
+    less than 1% over the considered time period.
     </p>
 
 ******************************************
