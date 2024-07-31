@@ -194,11 +194,11 @@ The class has two methods: :code:`.fit()` and :code:`.predict()`:
 .. raw:: html
     <ul
 
-    <li style="line-height: 1.75rem">The <code>.fit()</code> method scales the time series, splits the time series into context windows
+    <li style="line-height: 1.75rem; margin-top: 1.75rem">The <code>.fit()</code> method scales the time series, splits the time series into context windows
     and target values, and trains the generator and discriminator models using standard adversarial
     training with the cross-entropy loss.</li>
 
-    <li style="line-height: 1.75rem">The <code>.predict()</code> method scales the time series, extracts the last context window,
+    <li style="line-height: 1.75rem; margin-top: 1.75rem">The <code>.predict()</code> method scales the time series, extracts the last context window,
     and then passes it through the generator together with different randomly generated noise vectors.
     Each different noise vector results in a different prediction, where the number of predictions to
     be generated is controlled by the <code>samples</code> parameter. Each prediction is transformed
