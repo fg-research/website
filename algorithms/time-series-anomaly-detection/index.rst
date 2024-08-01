@@ -64,3 +64,44 @@ LSTM-AE SageMaker Algorithm
         <a href="https://github.com/fg-research/lstm-ae-sagemaker" target="_blank">GitHub</a>
         repository.
     </p>
+
+
+.. raw:: html
+
+    <p style="margin-bottom: 1rem"> <br/> </p>
+
+------
+
+.. grid:: 3
+
+    .. grid-item::
+        :columns: 5
+
+        .. toctree::
+           :caption: Algorithms
+           :maxdepth: 1
+
+           algorithms/time-series-forecasting/index
+           algorithms/time-series-anomaly-detection/index
+           algorithms/time-series-classification/index
+           algorithms/time-series-clustering/index
+
+    .. grid-item::
+        :columns: 3
+
+        .. toctree::
+           :caption: Blog
+           :maxdepth: 1
+
+           blog/product/index
+           blog/general/index
+
+    .. grid-item::
+        :columns: 4
+
+        .. toctree::
+           :caption: Terms and Conditions
+           :maxdepth: 1
+
+           terms/disclaimer/index
+           terms/eula/index
