@@ -80,8 +80,8 @@ For support, contact `support@fg-research.com <mailto:support@fg-research.com>`_
 
            algorithms/time-series-forecasting/index
            algorithms/time-series-anomaly-detection/index
-           algorithms/time-series-clustering/index
            algorithms/time-series-classification/index
+           algorithms/time-series-clustering/index
 
     .. grid-item::
         :columns: 3
