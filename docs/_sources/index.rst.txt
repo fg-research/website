@@ -26,7 +26,7 @@ Time Series Analysis in Amazon SageMaker
 ******************************************
 Overview
 ******************************************
-We provide Amazon SageMaker algorithms for multiple time series tasks, including forecasting, anomaly detection, classification and clustering.
+We provide Amazon SageMaker algorithms for multiple time series tasks, including forecasting, anomaly detection, clustering and classification.
 Each algorithm implements a state-of-the-art machine learning model designed specifically for time series.
 
 ******************************************
@@ -80,8 +80,8 @@ For support, contact `support@fg-research.com <mailto:support@fg-research.com>`_
 
            algorithms/time-series-forecasting/index
            algorithms/time-series-anomaly-detection/index
-           algorithms/time-series-classification/index
            algorithms/time-series-clustering/index
+           algorithms/time-series-classification/index
 
     .. grid-item::
         :columns: 3
