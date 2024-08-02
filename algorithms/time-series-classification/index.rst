@@ -21,7 +21,6 @@ Time Series Classification
    ===========================================================  ======================================== ======================================== ============================================ ================================================
    :ref:`LSTM-FCN <lstm-fcn-sagemaker-algorithm>`               :octicon:`check;1rem;check-icon`         :octicon:`check;1rem;check-icon`         :octicon:`check;1rem;check-icon`             :octicon:`check;1rem;check-icon`
    :ref:`InceptionTime <inception-time-sagemaker-algorithm>`    :octicon:`check;1rem;check-icon`         :octicon:`check;1rem;check-icon`         :octicon:`check;1rem;check-icon`             :octicon:`check;1rem;check-icon`
-   :ref:`CNN-SVC <cnn-svc-sagemaker-algorithm>`                 :octicon:`check;1rem;check-icon`         :octicon:`check;1rem;check-icon`         :octicon:`x;1rem;x-icon`                     :octicon:`x;1rem;x-icon`
    ===========================================================  ======================================== ======================================== ============================================ ================================================
 
 .. _lstm-fcn-sagemaker-algorithm:
@@ -67,21 +66,3 @@ InceptionTime SageMaker Algorithm
 
 .. _cnn-svc-sagemaker-algorithm:
 
-******************************************
-CNN-SVC SageMaker Algorithm
-******************************************
-.. raw:: html
-
-    <p>
-        The CNN-SVC SageMaker Algorithm performs time series classification with an <a href="https://arxiv.org/pdf/1901.10738.pdf" target="_blank">unsupervised convolutional neural network (CNN)</a> followed by a support vector classifier (SVC).
-        The CNN network encodes the input time series into a number of time-independent features, which are then used as inputs by the SVC algorithm.
-        The CNN network consists of a stack of exponentially dilated causal convolutional blocks with residual connections and
-        is trained in an unsupervised manner using a contrastive learning procedure that minimizes the triplet loss.
-        The algorithm can be used for time series with different lengths and with missing values.
-        The algorithm also supports missing class labels.
-        For additional information, see the algorithm's
-        <a href="https://aws.amazon.com/marketplace/pp/prodview-mo7cf4nrgrbxk" target="_blank">AWS Marketplace</a>
-        listing page and
-        <a href="https://github.com/fg-research/cnn-svc-sagemaker" target="_blank">GitHub</a>
-        repository.
-    </p>
