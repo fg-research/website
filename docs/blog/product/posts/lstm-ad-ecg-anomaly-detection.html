@@ -146,10 +146,6 @@ for detecting anomalies in an ECG trace.
 The LSTM-AD model predicts the future values of the time series with a stacked LSTM model.
 The model parameters are learned on a training set containing only normal data (i.e. without anomalies)
 by minimizing the Mean Squared Error (MSE) between the actual and predicted values of the time series.
-</p>
-<img alt="LSTM-AD architecture." class="blog-post-image" id="lstm-ad-ecg-anomaly-detection-diagram" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/ecg-anomaly-detection/diagram_light.png"/>
-<p class="blog-post-image-caption">LSTM-AD architecture.</p>
-<p>
 After the model has been trained, a Gaussian distribution is fitted to the model’s prediction errors
 on an independent validation set (also without anomalies) using Maximum Likelihood Estimation (MLE).
 </p>
@@ -390,6 +386,6 @@ Amazon Web Services, AWS, Amazon SageMaker, AWS Marketplace and the AWS Marketpl
 <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
 <script defer="defer" src="../../../_static/theme.js?v=e82a16a3"></script>
 <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
-<script src="../../../_static/custom.js?v=f0049644"></script>
+<script src="../../../_static/custom.js?v=f5153e7f"></script>
 </body>
 </html>

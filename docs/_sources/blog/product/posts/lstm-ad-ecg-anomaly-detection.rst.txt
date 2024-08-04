@@ -40,18 +40,6 @@ Model
     The LSTM-AD model predicts the future values of the time series with a stacked LSTM model.
     The model parameters are learned on a training set containing only normal data (i.e. without anomalies)
     by minimizing the Mean Squared Error (MSE) between the actual and predicted values of the time series.
-    </p>
-
-    <img
-        id="lstm-ad-ecg-anomaly-detection-diagram"
-        class="blog-post-image"
-        alt="LSTM-AD architecture."
-        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/ecg-anomaly-detection/diagram_light.png
-    />
-
-    <p class="blog-post-image-caption">LSTM-AD architecture.</p>
-
-    <p>
     After the model has been trained, a Gaussian distribution is fitted to the model’s prediction errors
     on an independent validation set (also without anomalies) using Maximum Likelihood Estimation (MLE).
     </p>
