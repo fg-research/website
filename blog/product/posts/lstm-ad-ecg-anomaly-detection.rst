@@ -121,7 +121,7 @@ We start by importing all the requirements and setting up the SageMaker environm
     import pandas as pd
     import numpy as np
 
-    # SageMaker algorithm ARN from AWS Marketplace
+    # SageMaker algorithm ARN, replace the placeholder below with your AWS Marketplace ARN
     algo_arn = "arn:aws:sagemaker:<...>"
 
     # SageMaker session

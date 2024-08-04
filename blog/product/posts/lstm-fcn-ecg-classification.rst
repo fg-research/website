@@ -123,7 +123,7 @@ We start by importing all the requirements and setting up the SageMaker environm
     from imblearn.under_sampling import RandomUnderSampler
     from sklearn.metrics import accuracy_score, confusion_matrix
 
-    # SageMaker algorithm ARN from AWS Marketplace
+    # SageMaker algorithm ARN, replace the placeholder below with your AWS Marketplace ARN
     algo_arn = "arn:aws:sagemaker:<...>"
 
     # SageMaker session

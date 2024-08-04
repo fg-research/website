@@ -123,7 +123,7 @@ We start by importing all the requirements and setting up the SageMaker environm
     import numpy as np
     from sklearn.metrics import silhouette_score
 
-    # SageMaker algorithm ARN from AWS Marketplace
+    # SageMaker algorithm ARN, replace the placeholder below with your AWS Marketplace ARN
     algo_arn = "arn:aws:sagemaker:<...>"
 
     # SageMaker session

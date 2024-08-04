@@ -143,6 +143,9 @@ We start by importing all the dependencies and setting up the SageMaker environm
     from pandas.tseries.offsets import CustomBusinessDay
     from sklearn.metrics import root_mean_squared_error, mean_absolute_error, accuracy_score, f1_score
 
+    # SageMaker algorithm ARN, replace the placeholder below with your AWS Marketplace ARN
+    algo_arn = "arn:aws:sagemaker:<...>"
+
     # SageMaker session
     sagemaker_session = sagemaker.Session()
 

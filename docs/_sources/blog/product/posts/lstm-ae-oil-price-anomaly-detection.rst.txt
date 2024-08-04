@@ -179,22 +179,22 @@ We start by setting up the SageMaker environment.
 
 .. code:: python
 
-   import sagemaker
+    import sagemaker
 
-   # SageMaker algorithm ARN from AWS Marketplace
-   algo_arn = "arn:aws:sagemaker:<...>"
+    # SageMaker algorithm ARN, replace the placeholder below with your AWS Marketplace ARN
+    algo_arn = "arn:aws:sagemaker:<...>"
 
-   # SageMaker session
-   sagemaker_session = sagemaker.Session()
+    # SageMaker session
+    sagemaker_session = sagemaker.Session()
 
-   # SageMaker role
-   role = sagemaker.get_execution_role()
+    # SageMaker role
+    role = sagemaker.get_execution_role()
 
-   # S3 bucket
-   bucket = sagemaker_session.default_bucket()
+    # S3 bucket
+    bucket = sagemaker_session.default_bucket()
 
-   # EC2 instance
-   instance_type = "ml.m5.2xlarge"
+    # EC2 instance
+    instance_type = "ml.m5.2xlarge"
 
 ==========================================
 Data Preparation
