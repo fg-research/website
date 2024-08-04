@@ -66,7 +66,7 @@ is real (i.e. an actual value from the dataset), as opposed to synthetic (i.e. a
         id="commodity-forecasting-forgan-diagram"
         class="blog-post-image"
         alt="ForGAN architecture"
-        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/commodity-forecasting-forgan/diagram_light.png
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/commodity-forecasting-forgan/diagram.png
     />
 
     <p class="blog-post-image-caption">ForGAN architecture.</p>
