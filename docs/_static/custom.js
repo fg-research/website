@@ -55,7 +55,6 @@ window.setInterval(function(){
         'lstm-ad-ecg-anomaly-detection-results',
         'fred-md-dataset-head',
         'fred-md-dataset-tail',
-        'fred-md-inflation-indices',
         'inflation-forecasting-random-forest-diagram',
         'inflation-forecasting-random-forest-time-series',
         'inflation-forecasting-random-forest-forecasts-plot',
