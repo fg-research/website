@@ -93,18 +93,6 @@ codes are defined as follows:
     In <a href="#references">[5]</a> it was shown that machine learning models trained on the FRED-MD dataset outperform the standard linear regression model in all considered forecasting periods.
     </p>
 
-    <img
-        id="fred-md-inflation-indices"
-        class="blog-post-image"
-        style="width:80%"
-        alt="CPI and PCE index data from FRED-MD dataset, 12-2023 vintage"
-        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/fred-md-dataset/indices_light.png
-    />
-
-    <p class="blog-post-image-caption">Consumer Price Index for All Urban Consumers: All Items in U.S. City Average (CPI)
-    and Personal Consumption Expenditures: Chain-type Price Index (PCE) with corresponding inflation rates (12-month % change).
-    Source: FRED-MD dataset, 12-2023 vintage.</p>
-
 ******************************************
 Code
 ******************************************
