@@ -30,8 +30,13 @@ LNN SageMaker Algorithm
 .. raw:: html
 
     <p>
-        The LNN SageMaker Algorithm performs time series forecasting with <a href="https://news.mit.edu/2021/machine-learning-adapts-0128" target="_blank">Liquid Neural Networks (LNNs)</a>.
-        LNNs are continuous-time recurrent neural networks (CT-RNNs) which implement an approximate closed-form solution of the <a href="https://doi.org/10.1609/aaai.v35i9.16936" target="_blank">Liquid Time Constant (LTC)</a> ordinary differential equation.
+        The LNN SageMaker Algorithm performs time series forecasting with Liquid Neural Networks (LNNs).
+        LNNs belong to the class of continuous-time recurrent neural networks (CT-RNNs), where the evolution
+        of the hidden state over time is described by an Ordinary Differential Equation (ODE).
+        The algorithm uses the closed-form continuous-depth (CfC) network implementation of LNNs.
+        Differently from other CT-RNNs (including other LNNs such as liquid time-constant networks),
+        which use a numerical solver to approximate the ODE solution, CfCs use an approximate closed-form solution.
+        As a results, CfCs achieve faster training and inference performance than other LNNs and CT-RNNs.
         The algorithm can be used for both univariate and multivariate time series and supports the inclusion of external features.
         For additional information, see the algorithm's
         <a href="https://aws.amazon.com/marketplace/pp/prodview-7s4giphluwgta" target="_blank">AWS Marketplace</a>
