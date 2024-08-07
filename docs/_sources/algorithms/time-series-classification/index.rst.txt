@@ -52,6 +52,8 @@ InceptionTime SageMaker Algorithm
     <p>
         The InceptionTime SageMaker Algorithm performs time series classification with the <a href="https://arxiv.org/pdf/1909.04939.pdf" target="_blank">InceptionTime Network</a>.
         The InceptionTime network consists of a stack of Inception blocks linked by residual connections.
+        Each block transforms the input using different convolutional layers and returns
+        a combined representation which is then used as input by the subsequent block.
         The algorithm trains an ensemble of InceptionTime networks and generates the final predicted class labels by averaging the class probabilities predicted by the different networks in the ensemble.
         For additional information, see the algorithm's
         <a href="https://aws.amazon.com/marketplace/pp/prodview-omz7rumnllmla" target="_blank">AWS Marketplace</a>
