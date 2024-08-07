@@ -171,7 +171,7 @@ Long Term ST Database (LTST DB)</a>. The length of the time series is 55,000
 observations. The first 23,000 observations are included in the training set, while the remaining
 32,000 observations are included in the test set. The training set contains only normal data,
 while the test set contains an anomalous heartbeat between observations 52,600 and 52,800.
-</p><img alt="Hexagon ML / UCR dataset N°179 (combined training and test sets)" class="blog-post-image" id="lstm-ad-ecg-anomaly-detection-dataset" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/ecg-anomaly-detection/data_light.png"/>
+</p><img alt="Hexagon ML / UCR dataset N°179 (combined training and test sets)" class="blog-post-image" id="lstm-ad-ecg-anomaly-detection-dataset" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/lstm-ad-ecg-anomaly-detection/data_light.png"/>
 <p class="blog-post-image-caption">Hexagon ML / UCR dataset N°179 (combined training and test sets).</p></section>
 <section id="code">
 <h2>Code<a class="headerlink" href="#code" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#code'">¶</a></h2>
@@ -318,7 +318,7 @@ subsequent columns.</p>
 <p class="admonition-title">Note</p>
 <p>The algorithm defines the normality scores using the Gaussian log-likelihood instead of the likelihood.</p>
 </div>
-<img alt="Results on Hexagon ML / UCR dataset №179 (test set)" class="blog-post-image" id="lstm-ad-ecg-anomaly-detection-results" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/ecg-anomaly-detection/results_light.png"/>
+<img alt="Results on Hexagon ML / UCR dataset №179 (test set)" class="blog-post-image" id="lstm-ad-ecg-anomaly-detection-results" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/lstm-ad-ecg-anomaly-detection/results_light.png"/>
 <p class="blog-post-image-caption">Results on Hexagon ML / UCR dataset №179 (test set).</p><p>We find that the model correctly identifies the anomalies, as the normality score exhibits the largest
 downward spikes on the same time steps where the anomalies are observed.</p>
 <p>After the analysis has been completed, we can delete the model.</p>
