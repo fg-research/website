@@ -198,7 +198,7 @@ We can then use the above function for downloading the 12-2023 dataset vintage a
         class="blog-post-image"
         style="width:80%"
         alt="First 3 rows of FRED-MD dataset, 12-2023 vintage"
-        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/fred-md-dataset/dataset_head_light.png
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/fred-md-overview/dataset_head_light.png
     />
 
 .. code:: python
@@ -212,7 +212,7 @@ We can then use the above function for downloading the 12-2023 dataset vintage a
         class="blog-post-image"
         style="width:80%"
         alt="Last 3 rows of FRED-MD dataset, 12-2023 vintage"
-        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/fred-md-dataset/dataset_tail_light.png
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/fred-md-overview/dataset_tail_light.png
     />
 
 .. tip::
