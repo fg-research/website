@@ -181,7 +181,7 @@ These extracted features are then used as input by the K-Means clusterer.
  The time series represent 6 different control chart patterns: normal (class 1), cyclic (class 2), increasing trend (class 3),
  decreasing trend (class 4), upward shift (class 5) and downward shift (class 6).
  </a></p>
-<img alt="Synthetic Control dataset (combined training and test sets)" class="blog-post-image" id="cnn-kmeans-control-chart-clustering-dataset" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/control-chart-clustering/data_light.png" style="width:100%"/>
+<img alt="Synthetic Control dataset (combined training and test sets)" class="blog-post-image" id="cnn-kmeans-control-chart-clustering-dataset" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/cnn-kmeans-control-chart-clustering/data_light.png" style="width:100%"/>
 <p class="blog-post-image-caption"> Synthetic Control dataset (combined training and test sets).</p></section>
 <section id="code">
 <h2>Code<a class="headerlink" href="#code" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#code'">¶</a></h2>
@@ -324,7 +324,7 @@ The Silhouette coefficient ranges from -1 to 1, with higher values indicating be
 </span></code></pre></div>
 </div>
 <p>We find that the model achieves a Silhouette coefficient of 0.33 on the test set.</p>
-<img alt="Results on Synthetic Control UCR dataset (test set)" class="blog-post-image" id="cnn-kmeans-control-chart-clustering-results" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/control-chart-clustering/results_light.png" style="width:100%"/>
+<img alt="Results on Synthetic Control UCR dataset (test set)" class="blog-post-image" id="cnn-kmeans-control-chart-clustering-results" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/cnn-kmeans-control-chart-clustering/results_light.png" style="width:100%"/>
 <p class="blog-post-image-caption"> Results on Synthetic Control UCR dataset (test set).</p><p>After the analysis has been completed, we can delete the model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># delete the model</span>
 </span><span id="line-2"><span class="n">transformer</span><span class="o">.</span><span class="n">delete_model</span><span class="p">()</span>

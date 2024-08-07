@@ -93,7 +93,7 @@ Data
         class="blog-post-image"
         style="width:100%"
         alt="Synthetic Control dataset (combined training and test sets)"
-        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/control-chart-clustering/data_light.png
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/cnn-kmeans-control-chart-clustering/data_light.png
     />
 
    <p class="blog-post-image-caption"> Synthetic Control dataset (combined training and test sets).</p>
@@ -266,7 +266,7 @@ We find that the model achieves a Silhouette coefficient of 0.33 on the test set
         class="blog-post-image"
         style="width:100%"
         alt="Results on Synthetic Control UCR dataset (test set)"
-        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/control-chart-clustering/results_light.png
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/cnn-kmeans-control-chart-clustering/results_light.png
    />
 
    <p class="blog-post-image-caption"> Results on Synthetic Control UCR dataset (test set).</p>
