@@ -19,8 +19,30 @@ Time Series Forecasting
    ============================================  ======================================== ======================================== ============================================ ================================================
    SageMaker Algorithm                           CPU Training                             GPU Training                             Multi-GPU Training                           Incremental Training
    ============================================  ======================================== ======================================== ============================================ ================================================
+   :ref:`RNN <rnn-sagemaker-algorithm>`          :octicon:`check;1rem;check-icon`         :octicon:`check;1rem;check-icon`          :octicon:`check;1rem;check-icon`             :octicon:`check;1rem;check-icon`
    :ref:`LNN <lnn-sagemaker-algorithm>`          :octicon:`check;1rem;check-icon`         :octicon:`check;1rem;check-icon`          :octicon:`check;1rem;check-icon`             :octicon:`check;1rem;check-icon`
    ============================================  ======================================== ======================================== ============================================ ================================================
+
+.. _rnn-sagemaker-algorithm:
+
+******************************************
+RNN SageMaker Algorithm
+******************************************
+.. raw:: html
+
+    <p>
+        The RNN SageMaker Algorithm performs time series forecasting with Recurrent Neural Networks (RNNs).
+        The model is a stack of RNN layers with either LSTM or GRU cells.
+        Each RNN layer is followed by an activation layer and a dropout layer.
+        The model is trained by minimizing the negative Gaussian log-likelihood and outputs the predicted mean
+        and standard deviation at each future time step.
+        The algorithm can be used for both univariate and multivariate time series and supports the inclusion of external features.
+        For additional information, see the algorithm's
+        <a href="https://aws.amazon.com/marketplace/pp/prodview-p5cr7ncmdcziw" target="_blank">AWS Marketplace</a>
+        listing page and
+        <a href="https://github.com/fg-research/rnn-sagemaker" target="_blank">GitHub</a>
+        repository.
+    </p>
 
 .. _lnn-sagemaker-algorithm:
 
