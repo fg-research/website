@@ -32,7 +32,7 @@ RNN SageMaker Algorithm
 
     <p>
         The RNN SageMaker Algorithm performs time series forecasting with Recurrent Neural Networks (RNNs).
-        The model is a stack of RNN layers with either LSTM or GRU cells.
+        The model consists of a stack of RNN layers with either LSTM or GRU cells.
         Each RNN layer is followed by an activation layer and a dropout layer.
         The model is trained by minimizing the negative Gaussian log-likelihood and outputs the predicted mean
         and standard deviation at each future time step.
