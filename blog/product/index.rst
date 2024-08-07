@@ -15,22 +15,22 @@ Product
 
 .. card::
     :width: 100%
-    :link: posts/cfc-tsf-equity-forecasting
+    :link: posts/lnn-equity-forecasting
     :link-type: doc
 
-    .. _cfc-tsf-equity-forecasting-toctree:
+    .. _lnn-equity-forecasting-toctree:
 
     .. toctree::
         :titlesonly:
 
-        posts/cfc-tsf-equity-forecasting
+        posts/lnn-equity-forecasting
 
-    .. _cfc-tsf-equity-forecasting-include:
+    .. _lnn-equity-forecasting-include:
 
     Stock return forecasting has been extensively studied by both academic researchers and
     industry practitioners. Numerous machine learning models have been proposed for this purpose,
     ranging from simple linear regressions to complex deep learning models.
-    In this post, we examine the performance of liquid neural networks,
+    In this post, we examine the performance of liquid neural networks (LNNs),
     a new neural network architecture for sequential data.
 
     .. grid:: 2

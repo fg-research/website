@@ -10,15 +10,15 @@
 <meta content="https://fg-research.com/_static/thumbnail.png" name="thumbnail"/>
 <meta content="Forecasting Stock Returns with Liquid Neural Networks" name="description"/>
 <meta content="Amazon SageMaker, Time Series, Liquid Neural Networks, Forecasting, Stock Market" name="keywords"/>
-<title>Forecasting stock returns with liquid neural networks using the CfC SageMaker Algorithm | fg-research</title>
-<meta content="Forecasting stock returns with liquid neural networks using the CfC SageMaker Algorithm | fg-research" property="og:title"/>
-<meta content="Forecasting stock returns with liquid neural networks using the CfC SageMaker Algorithm | fg-research" name="twitter:title"/>
+<title>Forecasting stock returns with liquid neural networks using the LNN SageMaker Algorithm | fg-research</title>
+<meta content="Forecasting stock returns with liquid neural networks using the LNN SageMaker Algorithm | fg-research" property="og:title"/>
+<meta content="Forecasting stock returns with liquid neural networks using the LNN SageMaker Algorithm | fg-research" name="twitter:title"/>
 <link href="../../../_static/pygments.css?v=8d216cef" rel="stylesheet" type="text/css"/>
 <link href="../../../_static/theme.css?v=ecdfb4fc" rel="stylesheet" type="text/css"/>
 <link href="../../../_static/sphinx-design.min.css?v=87e54e7c" rel="stylesheet" type="text/css"/>
-<link href="../../../_static/custom.css?v=b3f5cfd0" rel="stylesheet" type="text/css"/>
+<link href="../../../_static/custom.css?v=07dde421" rel="stylesheet" type="text/css"/>
 <link href="../../../_static/awesome-sphinx-design.css?v=a54cf077" rel="stylesheet" type="text/css"/>
-<link href="https://fg-research.com/blog/product/posts/cfc-tsf-equity-forecasting.html" rel="canonical"/>
+<link href="https://fg-research.com/blog/product/posts/lnn-equity-forecasting.html" rel="canonical"/>
 <link href="../../../_static/favicon.ico" rel="icon"/>
 <link href="../../../search.html" rel="search" title="Search"/>
 <link href="../../../genindex.html" rel="index" title="Index"/>
@@ -117,11 +117,11 @@
 </svg>
 </a>
 <div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="../index.html">Product</a>
-<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Forecasting stock returns with liquid neural networks using the CfC SageMaker Algorithm</span>
+<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Forecasting stock returns with liquid neural networks using the LNN SageMaker Algorithm</span>
 </nav>
 <div id="content" role="main">
-<section id="forecasting-stock-returns-with-liquid-neural-networks-using-the-cfc-sagemaker-algorithm">
-<h1>Forecasting stock returns with liquid neural networks using the CfC SageMaker Algorithm<a class="headerlink" href="#forecasting-stock-returns-with-liquid-neural-networks-using-the-cfc-sagemaker-algorithm" title="Link to this heading">¶</a></h1>
+<section id="forecasting-stock-returns-with-liquid-neural-networks-using-the-lnn-sagemaker-algorithm">
+<h1>Forecasting stock returns with liquid neural networks using the LNN SageMaker Algorithm<a class="headerlink" href="#forecasting-stock-returns-with-liquid-neural-networks-using-the-lnn-sagemaker-algorithm" title="Link to this heading">¶</a></h1>
 <p>
 Stock return forecasting has been extensively studied by both academic researchers and
 industry practitioners. Numerous machine learning models have been proposed for this purpose,
@@ -143,13 +143,13 @@ on time series prediction tasks.
 LNNs were initially implemented as LTC networks or LTCs <a href="#references">[5]</a>.
 Similar to other CT-RNNs, LTCs use a numerical solver for finding the ODE solution,
 which results in slow training and inference performance.
-In this post, we focus on the closed-form continuous-depth (CfC) implementation of LNNs
+In this post, we use the closed-form continuous-depth (CfC) implementation of LNNs
 <a href="#references">[6]</a>. CfCs use an approximate closed-form solution
 of the LTC ODE and, therefore, are significantly faster than LTCs and other CT-RNNs.
 </p>
 <p>
 We will use our Amazon SageMaker implementation of CfCs for probabilistic time series
-forecasting, the <a href="https://fg-research.com/algorithms/time-series-forecasting/index.html#cfc-sagemaker-algorithm" target="_blank"> CfC SageMaker algorithm</a>.
+forecasting, the <a href="https://fg-research.com/algorithms/time-series-forecasting/index.html#lnn-sagemaker-algorithm" target="_blank"> LNN SageMaker algorithm</a>.
 We will forecast the conditional mean and the conditional standard deviation of the 30-day returns of
 the S&amp;P 500 using as input the S&amp;P 500 realized volatility as well as different implied volatility indices,
 as in <a href="#references">[2]</a>.
@@ -160,7 +160,7 @@ the 28<sup>th</sup> of June 2024, which we will download from
 <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>.
 We will train the model on the data up to the 8<sup>th</sup> of September 2023,
 and use the trained model to predict the subsequent data up to the 28<sup>th</sup> of June 2024.
-We will find that the CfC SageMaker algorithm achieves a mean absolute error of 1.4% and
+We will find that the LNN SageMaker algorithm achieves a mean absolute error of 1.4% and
 a mean directional accuracy of 95.8% over the considered time period.
 </p><section id="data">
 <h2>Data<a class="headerlink" href="#data" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data'">¶</a></h2>
@@ -209,10 +209,10 @@ the subsequent 30 days.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>To be able to run the code below, you need to have an active subscription to the
-CfC SageMaker algorithm. You can subscribe to a free trial from the
+LNN SageMaker algorithm. You can subscribe to a free trial from the
 <a class="reference external" href="https://aws.amazon.com/marketplace/pp/prodview-7s4giphluwgta">AWS Marketplace</a>
 in order to get your Amazon Resource Name (ARN).
-In this post we use version 1.6 of the CfC SageMaker algorithm, which runs in the
+In this post we use version 1.6 of the LNN SageMaker algorithm, which runs in the
 PyTorch 2.1.0 Python 3.10 deep learning container.</p>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span> <span class="nn">io</span>
@@ -256,7 +256,7 @@ of the inputs and output to predict the subsequent 30 values of the output.</p>
 <p>We also define all the remaining hyperparameters of the CfC network.
 Note that we use a relatively small model with less than 5k parameters.
 A detailed description of the model architecture and of its hyperparameters
-is provided in our <a class="reference external" href="https://github.com/fg-research/cfc-tsf-sagemaker">GitHub repository</a>.</p>
+is provided in our <a class="reference external" href="https://github.com/fg-research/lnn-sagemaker">GitHub repository</a>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># neural network hyperparameters</span>
 </span><span id="line-2"><span class="n">hyperparameters</span> <span class="o">=</span> <span class="p">{</span>
 </span><span id="line-3">    <span class="s2">"context-length"</span><span class="p">:</span> <span class="n">context_length</span><span class="p">,</span>
@@ -317,8 +317,8 @@ The dataset contains 502 daily observations.
 </div>
 <p>After dropping the missing values resulting from the calculation of the returns and of the realized volatility,
 the number of daily observations is reduced to 472.</p>
-<img alt="30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-28" class="blog-post-image" id="cfc-tsf-forecasting-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/time_series_light.png"/>
-<p class="blog-post-image-caption">30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-28.</p><p>We now proceed to renaming the columns in the format expected by the CfC SageMaker algorithm,
+<img alt="30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-28" class="blog-post-image" id="lnn-equity-forecasting-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/time_series_light.png"/>
+<p class="blog-post-image-caption">30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-28.</p><p>We now proceed to renaming the columns in the format expected by the LNN SageMaker algorithm,
 where the output names should start with <code class="code docutils literal notranslate"><span class="pre">"y"</span></code> and the input names should start with <code class="code docutils literal notranslate"><span class="pre">"x"</span></code>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">dataset</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"y"</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="sa">f</span><span class="s2">"x</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>
 </span></code></pre></div>
@@ -427,7 +427,7 @@ the same as the horizon of the returns).</p>
 </span><span id="line-33"><span class="n">predictions</span><span class="p">[</span><span class="s2">"y"</span><span class="p">]</span> <span class="o">=</span> <span class="n">test_dataset</span><span class="p">[</span><span class="s2">"y"</span><span class="p">]</span>
 </span></code></pre></div>
 </div>
-<img alt="Actual and predicted 30-day returns from 2023-12-04 to 2024-06-28" class="blog-post-image" id="cfc-tsf-forecasting-predictions" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/predictions_light.png"/>
+<img alt="Actual and predicted 30-day returns from 2023-12-04 to 2024-06-28" class="blog-post-image" id="lnn-equity-forecasting-predictions" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/predictions_light.png"/>
 <p class="blog-post-image-caption">Actual and predicted 30-day returns over the test set (from 2023-12-04 to 2024-06-28).</p><p>We evaluate the test set predictions using the following metrics:</p>
 <ul class="simple">
 <li><p>The root mean squared error (<em>RMSE</em>) of the predicted values of the returns.</p></li>
@@ -448,7 +448,7 @@ the same as the horizon of the returns).</p>
 </span></code></pre></div>
 </div>
 <p>We find that the model achieves a mean absolute error of 1.4% and a mean directional accuracy of 95.8% on the test set.</p>
-<img alt="Performance metrics of predicted 30-day returns over the test set (from 2023-12-04 to 2024-06-28)" class="blog-post-image" id="cfc-tsf-forecasting-metrics" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/metrics_light.png"/>
+<img alt="Performance metrics of predicted 30-day returns over the test set (from 2023-12-04 to 2024-06-28)" class="blog-post-image" id="lnn-equity-forecasting-metrics" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/metrics_light.png"/>
 <p class="blog-post-image-caption">Performance metrics of predicted 30-day returns over the test set (from 2023-12-04 to 2024-06-28).</p><p>We can now delete the model and the endpoint.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># delete the model</span>
 </span><span id="line-2"><span class="n">predictor</span><span class="o">.</span><span class="n">delete_model</span><span class="p">()</span>
@@ -525,7 +525,7 @@ The forecasts are saved to a CSV file in S3 with the same name as the input CSV 
 </span><span id="line-15"><span class="p">)</span>
 </span></code></pre></div>
 </div>
-<img alt="30-day returns out-of-sample forecasts (from 2024-07-01 to 2024-08-12)" class="blog-post-image" id="cfc-tsf-forecasting-forecasts" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/forecasts_light.png"/>
+<img alt="30-day returns out-of-sample forecasts (from 2024-07-01 to 2024-08-12)" class="blog-post-image" id="lnn-equity-forecasting-forecasts" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/forecasts_light.png"/>
 <p class="blog-post-image-caption">30-day returns out-of-sample forecasts (from 2024-07-01 to 2024-08-12).</p><p>We can now delete the model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># delete the model</span>
 </span><span id="line-2"><span class="n">transformer</span><span class="o">.</span><span class="n">delete_model</span><span class="p">()</span>
@@ -534,9 +534,9 @@ The forecasts are saved to a CSV file in S3 with the same name as the input CSV 
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>You can download the
-<a class="reference external" href="https://github.com/fg-research/cfc-tsf-sagemaker/blob/master/examples/SPX.ipynb">notebook</a>
+<a class="reference external" href="https://github.com/fg-research/lnn-sagemaker/blob/master/examples/SPX.ipynb">notebook</a>
 with the full code from our
-<a class="reference external" href="https://github.com/fg-research/cfc-tsf-sagemaker">GitHub</a>
+<a class="reference external" href="https://github.com/fg-research/lnn-sagemaker">GitHub</a>
 repository.</p>
 </div>
 </section>
@@ -604,6 +604,6 @@ Amazon Web Services, AWS, Amazon SageMaker, AWS Marketplace and the AWS Marketpl
 <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
 <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
 <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-<script src="../../../_static/custom.js?v=727e0bc3"></script>
+<script src="../../../_static/custom.js?v=f823a62c"></script>
 </body>
 </html>

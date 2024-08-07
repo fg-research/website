@@ -27,7 +27,7 @@ window.setInterval(function(){
         'cnn-kmeans-control-chart-clustering-toctree',
         'lstm-ad-ecg-anomaly-detection-toctree',
         'inflation-forecasting-random-forest-toctree',
-        'cfc-tsf-equity-forecasting-toctree',
+        'lnn-equity-forecasting-toctree',
         'commodity-forecasting-forgan-toctree'
     ];
     for (var i = 0; i < elements.length; i++) {
@@ -63,10 +63,10 @@ window.setInterval(function(){
         'inflation-forecasting-random-forest-targets-table-head',
         'inflation-forecasting-random-forest-targets-table-tail',
         'inflation-forecasting-random-forest-errors-table',
-        'cfc-tsf-forecasting-time-series',
-        'cfc-tsf-forecasting-predictions',
-        'cfc-tsf-forecasting-forecasts',
-        'cfc-tsf-forecasting-metrics',
+        'lnn-equity-forecasting-time-series',
+        'lnn-equity-forecasting-predictions',
+        'lnn-equity-forecasting-forecasts',
+        'lnn-equity-forecasting-metrics',
         'commodity-forecasting-forgan-time-series',
         'commodity-forecasting-forgan-predictions',
         'commodity-forecasting-forgan-metrics'

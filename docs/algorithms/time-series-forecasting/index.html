@@ -16,7 +16,7 @@
 <link href="../../_static/pygments.css?v=8d216cef" rel="stylesheet" type="text/css"/>
 <link href="../../_static/theme.css?v=ecdfb4fc" rel="stylesheet" type="text/css"/>
 <link href="../../_static/sphinx-design.min.css?v=87e54e7c" rel="stylesheet" type="text/css"/>
-<link href="../../_static/custom.css?v=b3f5cfd0" rel="stylesheet" type="text/css"/>
+<link href="../../_static/custom.css?v=07dde421" rel="stylesheet" type="text/css"/>
 <link href="../../_static/awesome-sphinx-design.css?v=a54cf077" rel="stylesheet" type="text/css"/>
 <link href="https://fg-research.com/algorithms/time-series-forecasting/index.html" rel="canonical"/>
 <link href="../../_static/favicon.ico" rel="icon"/>
@@ -132,7 +132,7 @@
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><a class="reference internal" href="#cfc-sagemaker-algorithm"><span class="std std-ref">CfC</span></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lnn-sagemaker-algorithm"><span class="std std-ref">LNN</span></a></p></td>
 <td><p><svg aria-hidden="true" class="sd-octicon sd-octicon-check check-icon" height="1.0rem" version="1.1" viewbox="0 0 16 16" width="1.0rem"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path></svg></p></td>
 <td><p><svg aria-hidden="true" class="sd-octicon sd-octicon-check check-icon" height="1.0rem" version="1.1" viewbox="0 0 16 16" width="1.0rem"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path></svg></p></td>
 <td><p><svg aria-hidden="true" class="sd-octicon sd-octicon-check check-icon" height="1.0rem" version="1.1" viewbox="0 0 16 16" width="1.0rem"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path></svg></p></td>
@@ -140,24 +140,23 @@
 </tr>
 </tbody>
 </table>
-<section id="cfc-sagemaker-algorithm">
-<span id="id1"></span><h2>CfC SageMaker Algorithm<a class="headerlink" href="#cfc-sagemaker-algorithm" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#cfc-sagemaker-algorithm'">¶</a></h2>
+<section id="lnn-sagemaker-algorithm">
+<span id="id1"></span><h2>LNN SageMaker Algorithm<a class="headerlink" href="#lnn-sagemaker-algorithm" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#lnn-sagemaker-algorithm'">¶</a></h2>
 <p>
-    The CfC SageMaker Algorithm performs time series forecasting with the <a href="https://doi.org/10.1038/s42256-022-00556-7" target="_blank">Closed-Form Continuous-Depth (CfC) network</a>.
-    CfCs are continuous-time recurrent neural networks which implement an approximate closed-form solution of the <a href="https://doi.org/10.1609/aaai.v35i9.16936" target="_blank">Liquid Time Constant (LTC)</a> ordinary differential equation.
-    CfCs belong to the class of <a href="https://news.mit.edu/2021/machine-learning-adapts-0128" target="_blank">Liquid Neural Networks</a>.
+    The LNN SageMaker Algorithm performs time series forecasting with <a href="https://news.mit.edu/2021/machine-learning-adapts-0128" target="_blank">Liquid Neural Networks (LNNs)</a>.
+    LNNs are continuous-time recurrent neural networks which implement an approximate closed-form solution of the <a href="https://doi.org/10.1609/aaai.v35i9.16936" target="_blank">Liquid Time Constant (LTC)</a> ordinary differential equation.
     The algorithm can be used for both univariate and multivariate time series and supports the inclusion of external features.
     For additional information, see the algorithm's
     <a href="https://aws.amazon.com/marketplace/pp/prodview-7s4giphluwgta" target="_blank">AWS Marketplace</a>
     listing page and
-    <a href="https://github.com/fg-research/cfc-tsf-sagemaker" target="_blank">GitHub</a>
+    <a href="https://github.com/fg-research/lnn-sagemaker" target="_blank">GitHub</a>
     repository.
 </p></section>
 </section>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
-<li><a :data-current="activeSection === '#cfc-sagemaker-algorithm'" class="reference internal" href="#cfc-sagemaker-algorithm">CfC SageMaker Algorithm</a></li>
+<li><a :data-current="activeSection === '#lnn-sagemaker-algorithm'" class="reference internal" href="#lnn-sagemaker-algorithm">LNN SageMaker Algorithm</a></li>
 </ul>
 </div>
 </aside>
@@ -179,6 +178,6 @@ Amazon Web Services, AWS, Amazon SageMaker, AWS Marketplace and the AWS Marketpl
 <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
 <script defer="defer" src="../../_static/theme.js?v=e82a16a3"></script>
 <script src="../../_static/design-tabs.js?v=f930bc37"></script>
-<script src="../../_static/custom.js?v=727e0bc3"></script>
+<script src="../../_static/custom.js?v=f823a62c"></script>
 </body>
 </html>

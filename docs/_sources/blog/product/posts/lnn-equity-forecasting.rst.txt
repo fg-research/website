@@ -4,7 +4,7 @@
    :keywords: Amazon SageMaker, Time Series, Liquid Neural Networks, Forecasting, Stock Market
 
 ###########################################################################################
-Forecasting stock returns with liquid neural networks using the CfC SageMaker Algorithm
+Forecasting stock returns with liquid neural networks using the LNN SageMaker Algorithm
 ###########################################################################################
 
 .. raw:: html
@@ -32,14 +32,14 @@ Forecasting stock returns with liquid neural networks using the CfC SageMaker Al
     LNNs were initially implemented as LTC networks or LTCs <a href="#references">[5]</a>.
     Similar to other CT-RNNs, LTCs use a numerical solver for finding the ODE solution,
     which results in slow training and inference performance.
-    In this post, we focus on the closed-form continuous-depth (CfC) implementation of LNNs
+    In this post, we use the closed-form continuous-depth (CfC) implementation of LNNs
     <a href="#references">[6]</a>. CfCs use an approximate closed-form solution
     of the LTC ODE and, therefore, are significantly faster than LTCs and other CT-RNNs.
     </p>
 
     <p>
     We will use our Amazon SageMaker implementation of CfCs for probabilistic time series
-    forecasting, the <a href="https://fg-research.com/algorithms/time-series-forecasting/index.html#cfc-sagemaker-algorithm" target="_blank"> CfC SageMaker algorithm</a>.
+    forecasting, the <a href="https://fg-research.com/algorithms/time-series-forecasting/index.html#lnn-sagemaker-algorithm" target="_blank"> LNN SageMaker algorithm</a>.
     We will forecast the conditional mean and the conditional standard deviation of the 30-day returns of
     the S&P 500 using as input the S&P 500 realized volatility as well as different implied volatility indices,
     as in <a href="#references">[2]</a>.
@@ -51,7 +51,7 @@ Forecasting stock returns with liquid neural networks using the CfC SageMaker Al
     <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>.
     We will train the model on the data up to the 8<sup>th</sup> of September 2023,
     and use the trained model to predict the subsequent data up to the 28<sup>th</sup> of June 2024.
-    We will find that the CfC SageMaker algorithm achieves a mean absolute error of 1.4% and
+    We will find that the LNN SageMaker algorithm achieves a mean absolute error of 1.4% and
     a mean directional accuracy of 95.8% over the considered time period.
     </p>
 
@@ -125,10 +125,10 @@ We start by importing all the dependencies and setting up the SageMaker environm
 .. warning::
 
    To be able to run the code below, you need to have an active subscription to the
-   CfC SageMaker algorithm. You can subscribe to a free trial from the
+   LNN SageMaker algorithm. You can subscribe to a free trial from the
    `AWS Marketplace <https://aws.amazon.com/marketplace/pp/prodview-7s4giphluwgta>`__
    in order to get your Amazon Resource Name (ARN).
-   In this post we use version 1.6 of the CfC SageMaker algorithm, which runs in the
+   In this post we use version 1.6 of the LNN SageMaker algorithm, which runs in the
    PyTorch 2.1.0 Python 3.10 deep learning container.
 
 .. code:: python
@@ -175,7 +175,7 @@ of the inputs and output to predict the subsequent 30 values of the output.
 We also define all the remaining hyperparameters of the CfC network.
 Note that we use a relatively small model with less than 5k parameters.
 A detailed description of the model architecture and of its hyperparameters
-is provided in our `GitHub repository <https://github.com/fg-research/cfc-tsf-sagemaker>`__.
+is provided in our `GitHub repository <https://github.com/fg-research/lnn-sagemaker>`__.
 
 .. code:: python
 
@@ -251,7 +251,7 @@ the number of daily observations is reduced to 472.
 .. raw:: html
 
     <img
-        id="cfc-tsf-forecasting-time-series"
+        id="lnn-equity-forecasting-time-series"
         class="blog-post-image"
         alt="30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-28"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/time_series_light.png
@@ -259,7 +259,7 @@ the number of daily observations is reduced to 472.
 
     <p class="blog-post-image-caption">30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-28.</p>
 
-We now proceed to renaming the columns in the format expected by the CfC SageMaker algorithm,
+We now proceed to renaming the columns in the format expected by the LNN SageMaker algorithm,
 where the output names should start with :code:`"y"` and the input names should start with :code:`"x"`.
 
 .. code:: python
@@ -382,7 +382,7 @@ the same as the horizon of the returns).
 .. raw:: html
 
     <img
-        id="cfc-tsf-forecasting-predictions"
+        id="lnn-equity-forecasting-predictions"
         class="blog-post-image"
         alt="Actual and predicted 30-day returns from 2023-12-04 to 2024-06-28"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/predictions_light.png
@@ -418,7 +418,7 @@ We find that the model achieves a mean absolute error of 1.4% and a mean directi
 .. raw:: html
 
     <img
-        id="cfc-tsf-forecasting-metrics"
+        id="lnn-equity-forecasting-metrics"
         class="blog-post-image"
         alt="Performance metrics of predicted 30-day returns over the test set (from 2023-12-04 to 2024-06-28)"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/metrics_light.png
@@ -517,7 +517,7 @@ After the batch transform job has been completed, we can load the forecasts from
 .. raw:: html
 
     <img
-        id="cfc-tsf-forecasting-forecasts"
+        id="lnn-equity-forecasting-forecasts"
         class="blog-post-image"
         alt="30-day returns out-of-sample forecasts (from 2024-07-01 to 2024-08-12)"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/forecasts_light.png
@@ -535,9 +535,9 @@ We can now delete the model.
 .. tip::
 
     You can download the
-    `notebook <https://github.com/fg-research/cfc-tsf-sagemaker/blob/master/examples/SPX.ipynb>`__
+    `notebook <https://github.com/fg-research/lnn-sagemaker/blob/master/examples/SPX.ipynb>`__
     with the full code from our
-    `GitHub <https://github.com/fg-research/cfc-tsf-sagemaker>`__
+    `GitHub <https://github.com/fg-research/lnn-sagemaker>`__
     repository.
 
 ******************************************
