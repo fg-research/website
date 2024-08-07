@@ -35,7 +35,7 @@ LNN SageMaker Algorithm
         of the hidden state over time is described by an Ordinary Differential Equation (ODE).
         The algorithm uses the <a href="https://doi.org/10.1038/s42256-022-00556-7" target="_blank">closed-form continuous-depth (CfC) network</a>
         implementation of LNNs.
-        Differently from other CT-RNNs (including other LNNs such as liquid time-constant networks or LTCs),
+        Differently from other CT-RNNs (including other LNNs such as <a href="https://doi.org/10.1609/aaai.v35i9.16936" target="_blank">liquid time-constant networks (LTCs)</a>),
         which use a numerical solver to find the ODE solution, CfCs use an approximate closed-form solution.
         As a results, CfCs achieve faster training and inference performance than other LNNs and CT-RNNs.
         The algorithm can be used for both univariate and multivariate time series and supports the inclusion of external features.
