@@ -128,7 +128,7 @@ to $9.12.
         id="lstm-ae-oil-price-anomaly-detection-prices"
         class="blog-post-image"
         alt="WTI and Brent daily prices from 1987-05-20 to 2020-12-31"
-        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/prices_light.png
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/lstm-ae-oil-price-anomaly-detection/prices_light.png
     />
 
     <p class="blog-post-image-caption">WTI and Brent daily prices from 1987-05-20 to 2020-12-31.</p>
@@ -153,7 +153,7 @@ on the 20\ :superscript:`th` of April 2020 was -12%, followed by a -47% decrease
         id="lstm-ae-oil-price-anomaly-detection-returns"
         class="blog-post-image"
         alt="WTI and Brent daily returns from 1987-05-20 to 2020-12-31"
-        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/returns_light.png
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/lstm-ae-oil-price-anomaly-detection/returns_light.png
     />
 
     <p class="blog-post-image-caption">WTI and Brent daily returns from 1987-05-20 to 2020-12-31.</p>
@@ -317,7 +317,7 @@ visualize the results.
         id="lstm-ae-oil-price-anomaly-detection-results-plot"
         class="blog-post-image"
         alt="LSTM-AE reconstructions and anomaly score from 2019-08-02 to 2020-12-31"
-        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/results_light.png
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/lstm-ae-oil-price-anomaly-detection/results_light.png
     />
 
     <p class="blog-post-image-caption"> LSTM-AE reconstructions and anomaly score from 2019-08-02 to 2020-12-31.</p>
@@ -337,7 +337,7 @@ spikes on the 20\ :superscript:`th` (anomaly score = 810,274), 21\ :superscript:
         id="lstm-ae-oil-price-anomaly-detection-results-table"
         class="blog-post-image"
         alt="LSTM-AE largest anomaly scores from 2019-08-02 to 2020-12-31"
-        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/anomalies_light.png
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/lstm-ae-oil-price-anomaly-detection/anomalies_light.png
     />
 
     <p class="blog-post-image-caption"> LSTM-AE largest anomaly scores from 2019-08-02 to 2020-12-31.</p>

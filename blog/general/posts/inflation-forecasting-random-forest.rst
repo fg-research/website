@@ -737,7 +737,7 @@ We start by importing the dependencies.
 
 .. tip::
 
-    A Python notebook with the full code is available in our `GitHub <https://github.com/fg-research/blog/blob/master/inflation-forecasting-random-forest>`__
+    A Python notebook with the full code is available in our `GitHub <https://github.com/fg-research/blog/tree/master/inflation-forecasting-random-forest>`__
     repository. The official R code from the authors of `[2] <#references>`__ is also available in `GitHub <https://github.com/gabrielrvsc/ForecastingInflation>`__.
 
 ******************************************

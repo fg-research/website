@@ -215,7 +215,7 @@ dataset contains 8,772 daily price observations.</p>
 -$36.98, going negative for the first time in its history, while on the
 next day the 21<sup>st</sup> of April 2020, the Brent price decreased from $17.36
 to $9.12.</p>
-<img alt="WTI and Brent daily prices from 1987-05-20 to 2020-12-31" class="blog-post-image" id="lstm-ae-oil-price-anomaly-detection-prices" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/prices_light.png"/>
+<img alt="WTI and Brent daily prices from 1987-05-20 to 2020-12-31" class="blog-post-image" id="lstm-ae-oil-price-anomaly-detection-prices" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/lstm-ae-oil-price-anomaly-detection/prices_light.png"/>
 <p class="blog-post-image-caption">WTI and Brent daily prices from 1987-05-20 to 2020-12-31.</p><p>We use the percentage changes in the daily prices (or daily returns) for
 training the LSTM-AE model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># calculate the returns</span>
@@ -227,7 +227,7 @@ followed by a -124% decrease on the 21<sup>st</sup> of April 2020 and a 53%
 increase on the 22<sup>nd</sup> of April 2020. The percentage change in Brent price
 on the 20<sup>th</sup> of April 2020 was -12%, followed by a -47% decrease on the
 21<sup>st</sup> of April 2020 and a 51% increase on the 22<sup>nd</sup> of April 2020.</p>
-<img alt="WTI and Brent daily returns from 1987-05-20 to 2020-12-31" class="blog-post-image" id="lstm-ae-oil-price-anomaly-detection-returns" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/returns_light.png"/>
+<img alt="WTI and Brent daily returns from 1987-05-20 to 2020-12-31" class="blog-post-image" id="lstm-ae-oil-price-anomaly-detection-returns" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/lstm-ae-oil-price-anomaly-detection/returns_light.png"/>
 <p class="blog-post-image-caption">WTI and Brent daily returns from 1987-05-20 to 2020-12-31.</p></section>
 <section id="code">
 <h2>Code<a class="headerlink" href="#code" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#code'">¶</a></h2>
@@ -367,7 +367,7 @@ series at each time step.</p>
 </div>
 <p>After loading the anomaly scores and the reconstructions from S3, we can
 visualize the results.</p>
-<img alt="LSTM-AE reconstructions and anomaly score from 2019-08-02 to 2020-12-31" class="blog-post-image" id="lstm-ae-oil-price-anomaly-detection-results-plot" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/results_light.png"/>
+<img alt="LSTM-AE reconstructions and anomaly score from 2019-08-02 to 2020-12-31" class="blog-post-image" id="lstm-ae-oil-price-anomaly-detection-results-plot" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/lstm-ae-oil-price-anomaly-detection/results_light.png"/>
 <p class="blog-post-image-caption"> LSTM-AE reconstructions and anomaly score from 2019-08-02 to 2020-12-31.</p><p>We find that, as expected, the anomaly score exhibits the largest upward
 spikes on the 20<sup>th</sup> (anomaly score = 810,274), 21<sup>st</sup> (anomaly score =
 64,522) and 22<sup>nd</sup> (anomaly score = 15,533) of April 2020.</p>
@@ -375,7 +375,7 @@ spikes on the 20<sup>th</sup> (anomaly score = 810,274), 21<sup>st</sup> (anomal
 </span><span id="line-2"><span class="n">reconstructions</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
-<img alt="LSTM-AE largest anomaly scores from 2019-08-02 to 2020-12-31" class="blog-post-image" id="lstm-ae-oil-price-anomaly-detection-results-table" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/oil-price-anomaly-detection/anomalies_light.png"/>
+<img alt="LSTM-AE largest anomaly scores from 2019-08-02 to 2020-12-31" class="blog-post-image" id="lstm-ae-oil-price-anomaly-detection-results-table" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/lstm-ae-oil-price-anomaly-detection/anomalies_light.png"/>
 <p class="blog-post-image-caption"> LSTM-AE largest anomaly scores from 2019-08-02 to 2020-12-31.</p><p>After the analysis has been completed, we can delete the model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># delete the model</span>
 </span><span id="line-2"><span class="n">transformer</span><span class="o">.</span><span class="n">delete_model</span><span class="p">()</span>
