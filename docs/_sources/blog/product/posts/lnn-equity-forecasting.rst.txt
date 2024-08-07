@@ -46,7 +46,7 @@ Forecasting stock returns with liquid neural networks using the LNN SageMaker Al
     </p>
 
     <p>
-    We will use the daily close prices from the 30<sup>th</sup> of June 2022 to
+    We will use the daily close prices of the S&P 500 from the 30<sup>th</sup> of June 2022 to
     the 28<sup>th</sup> of June 2024, which we will download from
     <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>.
     We will train the model on the data up to the 8<sup>th</sup> of September 2023,
@@ -172,7 +172,7 @@ of the inputs and output to predict the subsequent 30 values of the output.
     # number of time steps to output
     prediction_length = 30
 
-We also define all the remaining hyperparameters of the CfC network.
+We also define all the remaining hyperparameters.
 Note that we use a relatively small model with less than 5k parameters.
 A detailed description of the model architecture and of its hyperparameters
 is provided in our `GitHub repository <https://github.com/fg-research/lnn-sagemaker>`__.
@@ -207,9 +207,8 @@ Data Preparation
 .. raw:: html
 
     <p>
-    Next, we download the daily close price time series from the 30<sup>th</sup> of June 2022 to
-    the 28<sup>th</sup> of June 2024 using the
-    <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
+    Next, we download the daily close price time series of the S&P 500 from the 30<sup>th</sup> of June 2022 to
+    the 28<sup>th</sup> of June 2024 using the <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
     The dataset contains 502 daily observations.
     </p>
 
@@ -226,7 +225,7 @@ Data Preparation
     # forward fill any missing values
     dataset.ffill(inplace=True)
 
-We then calculate the S&P 500 30-day returns and 30-day realized volatility.
+We then calculate the 30-day returns and 30-day realized volatility.
 
 .. code:: python
 
@@ -254,7 +253,7 @@ the number of daily observations is reduced to 472.
         id="lnn-equity-forecasting-time-series"
         class="blog-post-image"
         alt="30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-28"
-        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/time_series_light.png
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/lnn-equity-forecasting/time_series_light.png
     />
 
     <p class="blog-post-image-caption">30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-28.</p>
@@ -385,7 +384,7 @@ the same as the horizon of the returns).
         id="lnn-equity-forecasting-predictions"
         class="blog-post-image"
         alt="Actual and predicted 30-day returns from 2023-12-04 to 2024-06-28"
-        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/predictions_light.png
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/lnn-equity-forecasting/predictions_light.png
     />
 
     <p class="blog-post-image-caption">Actual and predicted 30-day returns over the test set (from 2023-12-04 to 2024-06-28).</p>
@@ -421,7 +420,7 @@ We find that the model achieves a mean absolute error of 1.4% and a mean directi
         id="lnn-equity-forecasting-metrics"
         class="blog-post-image"
         alt="Performance metrics of predicted 30-day returns over the test set (from 2023-12-04 to 2024-06-28)"
-        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/metrics_light.png
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/lnn-equity-forecasting/metrics_light.png
     />
 
     <p class="blog-post-image-caption">Performance metrics of predicted 30-day returns over the test set (from 2023-12-04 to 2024-06-28).</p>
@@ -520,7 +519,7 @@ After the batch transform job has been completed, we can load the forecasts from
         id="lnn-equity-forecasting-forecasts"
         class="blog-post-image"
         alt="30-day returns out-of-sample forecasts (from 2024-07-01 to 2024-08-12)"
-        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/forecasts_light.png
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/lnn-equity-forecasting/forecasts_light.png
     />
 
     <p class="blog-post-image-caption">30-day returns out-of-sample forecasts (from 2024-07-01 to 2024-08-12).</p>

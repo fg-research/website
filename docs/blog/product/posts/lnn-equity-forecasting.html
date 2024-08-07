@@ -155,7 +155,7 @@ the S&amp;P 500 using as input the S&amp;P 500 realized volatility as well as di
 as in <a href="#references">[2]</a>.
 </p>
 <p>
-We will use the daily close prices from the 30<sup>th</sup> of June 2022 to
+We will use the daily close prices of the S&amp;P 500 from the 30<sup>th</sup> of June 2022 to
 the 28<sup>th</sup> of June 2024, which we will download from
 <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>.
 We will train the model on the data up to the 8<sup>th</sup> of September 2023,
@@ -253,7 +253,7 @@ of the inputs and output to predict the subsequent 30 values of the output.</p>
 </span><span id="line-5"><span class="n">prediction_length</span> <span class="o">=</span> <span class="mi">30</span>
 </span></code></pre></div>
 </div>
-<p>We also define all the remaining hyperparameters of the CfC network.
+<p>We also define all the remaining hyperparameters.
 Note that we use a relatively small model with less than 5k parameters.
 A detailed description of the model architecture and of its hyperparameters
 is provided in our <a class="reference external" href="https://github.com/fg-research/lnn-sagemaker">GitHub repository</a>.</p>
@@ -282,9 +282,8 @@ is provided in our <a class="reference external" href="https://github.com/fg-res
 <section id="data-preparation">
 <h3>Data Preparation<a class="headerlink" href="#data-preparation" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data-preparation'">¶</a></h3>
 <p>
-Next, we download the daily close price time series from the 30<sup>th</sup> of June 2022 to
-the 28<sup>th</sup> of June 2024 using the
-<a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
+Next, we download the daily close price time series of the S&amp;P 500 from the 30<sup>th</sup> of June 2022 to
+the 28<sup>th</sup> of June 2024 using the <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
 The dataset contains 502 daily observations.
 </p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># download the data</span>
 </span><span id="line-2"><span class="n">tickers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"^SPX"</span><span class="p">,</span> <span class="s2">"^VIX"</span><span class="p">,</span> <span class="s2">"^VVIX"</span><span class="p">,</span> <span class="s2">"^VXN"</span><span class="p">,</span> <span class="s2">"^GVZ"</span><span class="p">,</span> <span class="s2">"^OVX"</span><span class="p">]</span>
@@ -298,7 +297,7 @@ The dataset contains 502 daily observations.
 </span><span id="line-10"><span class="n">dataset</span><span class="o">.</span><span class="n">ffill</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
-<p>We then calculate the S&amp;P 500 30-day returns and 30-day realized volatility.</p>
+<p>We then calculate the 30-day returns and 30-day realized volatility.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># calculate the returns</span>
 </span><span id="line-2"><span class="n">dataset</span><span class="p">[</span><span class="s2">"Return30"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">dataset</span><span class="p">[</span><span class="s2">"^SPX"</span><span class="p">])</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">periods</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
 </span><span id="line-3">
@@ -317,7 +316,7 @@ The dataset contains 502 daily observations.
 </div>
 <p>After dropping the missing values resulting from the calculation of the returns and of the realized volatility,
 the number of daily observations is reduced to 472.</p>
-<img alt="30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-28" class="blog-post-image" id="lnn-equity-forecasting-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/time_series_light.png"/>
+<img alt="30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-28" class="blog-post-image" id="lnn-equity-forecasting-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/lnn-equity-forecasting/time_series_light.png"/>
 <p class="blog-post-image-caption">30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-28.</p><p>We now proceed to renaming the columns in the format expected by the LNN SageMaker algorithm,
 where the output names should start with <code class="code docutils literal notranslate"><span class="pre">"y"</span></code> and the input names should start with <code class="code docutils literal notranslate"><span class="pre">"x"</span></code>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">dataset</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"y"</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="sa">f</span><span class="s2">"x</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>
@@ -427,7 +426,7 @@ the same as the horizon of the returns).</p>
 </span><span id="line-33"><span class="n">predictions</span><span class="p">[</span><span class="s2">"y"</span><span class="p">]</span> <span class="o">=</span> <span class="n">test_dataset</span><span class="p">[</span><span class="s2">"y"</span><span class="p">]</span>
 </span></code></pre></div>
 </div>
-<img alt="Actual and predicted 30-day returns from 2023-12-04 to 2024-06-28" class="blog-post-image" id="lnn-equity-forecasting-predictions" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/predictions_light.png"/>
+<img alt="Actual and predicted 30-day returns from 2023-12-04 to 2024-06-28" class="blog-post-image" id="lnn-equity-forecasting-predictions" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/lnn-equity-forecasting/predictions_light.png"/>
 <p class="blog-post-image-caption">Actual and predicted 30-day returns over the test set (from 2023-12-04 to 2024-06-28).</p><p>We evaluate the test set predictions using the following metrics:</p>
 <ul class="simple">
 <li><p>The root mean squared error (<em>RMSE</em>) of the predicted values of the returns.</p></li>
@@ -448,7 +447,7 @@ the same as the horizon of the returns).</p>
 </span></code></pre></div>
 </div>
 <p>We find that the model achieves a mean absolute error of 1.4% and a mean directional accuracy of 95.8% on the test set.</p>
-<img alt="Performance metrics of predicted 30-day returns over the test set (from 2023-12-04 to 2024-06-28)" class="blog-post-image" id="lnn-equity-forecasting-metrics" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/metrics_light.png"/>
+<img alt="Performance metrics of predicted 30-day returns over the test set (from 2023-12-04 to 2024-06-28)" class="blog-post-image" id="lnn-equity-forecasting-metrics" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/lnn-equity-forecasting/metrics_light.png"/>
 <p class="blog-post-image-caption">Performance metrics of predicted 30-day returns over the test set (from 2023-12-04 to 2024-06-28).</p><p>We can now delete the model and the endpoint.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># delete the model</span>
 </span><span id="line-2"><span class="n">predictor</span><span class="o">.</span><span class="n">delete_model</span><span class="p">()</span>
@@ -525,7 +524,7 @@ The forecasts are saved to a CSV file in S3 with the same name as the input CSV 
 </span><span id="line-15"><span class="p">)</span>
 </span></code></pre></div>
 </div>
-<img alt="30-day returns out-of-sample forecasts (from 2024-07-01 to 2024-08-12)" class="blog-post-image" id="lnn-equity-forecasting-forecasts" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-forecasting/forecasts_light.png"/>
+<img alt="30-day returns out-of-sample forecasts (from 2024-07-01 to 2024-08-12)" class="blog-post-image" id="lnn-equity-forecasting-forecasts" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/lnn-equity-forecasting/forecasts_light.png"/>
 <p class="blog-post-image-caption">30-day returns out-of-sample forecasts (from 2024-07-01 to 2024-08-12).</p><p>We can now delete the model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># delete the model</span>
 </span><span id="line-2"><span class="n">transformer</span><span class="o">.</span><span class="n">delete_model</span><span class="p">()</span>
