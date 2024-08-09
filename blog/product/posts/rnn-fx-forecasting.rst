@@ -82,6 +82,96 @@ the previous 5 days to predict the value of the EUR/USD exchange rate on the nex
     # number of time steps to output
     prediction_length = 1
 
+We also define all the remaining hyperparameters.
+We use two LSTM layers with respectively 100 and 50 hidden units and with LeCun activation.
+We train the model for 200 epochs with a batch size of 16 and a learning rate of 0.001,
+where the learning rate is decayed exponentially at a rate of 0.99.
+
+.. code:: python
+
+    hyperparameters = {
+        "context-length": context_length,
+        "prediction-length": prediction_length,
+        "sequence-stride": 1,
+        "cell-type": "lstm",
+        "hidden-size-1": 100,
+        "hidden-size-2": 50,
+        "hidden-size-3": 0,
+        "activation": "lecun",
+        "dropout": 0,
+        "batch-size": 16,
+        "lr": 0.001,
+        "lr-decay": 0.99,
+        "epochs": 200,
+    }
+
+==========================================
+Data Preparation
+==========================================
+
+.. raw:: html
+
+    <p>
+    Next, we download the EUR/USD time series from the 1<sup>st</sup> of August 2022 to
+    the 31<sup>st</sup> of July 2024 using the <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
+    The dataset contains 522 daily observations.
+    </p>
+
+.. code:: python
+
+    dataset = yf.download(tickers="EURUSD=X", start="2022-08-01", end="2024-08-01")
+
+We then calculate the technical indicators.
+
+.. code:: python
+
+    dataset["MA"] = simple_moving_average(
+        data=dataset["Close"],
+        period=10
+    )
+
+    dataset["MACD"] = moving_average_convergence_divergence(
+        data=dataset["Close"],
+        short_period=12,
+        long_period=26
+    )
+
+    dataset["ROC"] = rate_of_change(
+        data=dataset["Close"],
+        period=2
+    )
+
+    dataset["Momentum"] = momentum(
+        data=dataset["Close"],
+        period=4
+    )
+
+    dataset["RSI"] = relative_strength_index(
+        data=dataset["Close"],
+        period=10
+    )
+
+    dataset["MiddleBB"] = middle_bollinger_band(
+        data=dataset["Close"],
+        period=20
+    )
+
+    dataset["LowerBB"] = upper_bollinger_band(
+        data=dataset["Close"],
+        period=20
+    )
+
+    dataset["UpperBB"] = lower_bollinger_band(
+        data=dataset["Close"],
+        period=20
+    )
+
+    dataset["CCI"] = commodity_channel_index(
+        close_data=dataset["Close"],
+        low_data=dataset["Low"],
+        high_data=dataset["High"],
+        period=20
+    )
 
 .. raw:: html
 
