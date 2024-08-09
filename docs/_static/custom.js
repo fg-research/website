@@ -68,7 +68,11 @@ window.setInterval(function(){
         'lnn-equity-forecasting-metrics',
         'commodity-forecasting-forgan-time-series',
         'commodity-forecasting-forgan-predictions',
-        'commodity-forecasting-forgan-metrics'
+        'commodity-forecasting-forgan-metrics',
+        'rnn-fx-forecasting-time-series',
+        'rnn-fx-forecasting-predictions',
+        'rnn-fx-forecasting-returns',
+        'rnn-fx-forecasting-metrics'
     ];
     for (var i = 0; i < elements.length; i++) {
         var f = document.getElementById(elements[i]);
