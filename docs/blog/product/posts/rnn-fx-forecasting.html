@@ -119,12 +119,83 @@
 <div id="content" role="main">
 <section id="forecasting-exchange-rates-with-long-short-term-memory-lstm-networks-using-the-rnn-sagemaker-algorithm">
 <h1>Forecasting exchange rates with long short-term memory (LSTM) networks using the RNN SageMaker Algorithm<a class="headerlink" href="#forecasting-exchange-rates-with-long-short-term-memory-lstm-networks-using-the-rnn-sagemaker-algorithm" title="Link to this heading">¶</a></h1>
+<section id="data">
+<h2>Data<a class="headerlink" href="#data" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data'">¶</a></h2>
+<p>The model generates one-day-ahead predictions of the EUR/USD exchange rate using as input the past values of the
+EUR/USD exchange rate and of the following technical indicators:</p>
+</section>
+<section id="code">
+<h2>Code<a class="headerlink" href="#code" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#code'">¶</a></h2>
+<p>We start by importing all the dependencies and setting up the SageMaker environment.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>To be able to run the code below, you need to have an active subscription to the
+RNN SageMaker algorithm. You can subscribe to a free trial from the
+<a class="reference external" href="https://aws.amazon.com/marketplace/pp/prodview-p5cr7ncmdcziw">AWS Marketplace</a>
+in order to get your Amazon Resource Name (ARN).
+In this post we use version 1.0 of the RNN SageMaker algorithm, which runs in the
+PyTorch 2.1.0 Python 3.10 deep learning container.</p>
+</div>
+<p>We use the <code class="code docutils literal notranslate"><span class="pre">yfinance</span></code> library for downloading the EUR/USD daily time series and
+the <code class="code docutils literal notranslate"><span class="pre">pyti</span></code> library for calculating the technical indicators.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span> <span class="nn">io</span>
+</span><span id="line-2"><span class="kn">import</span> <span class="nn">sagemaker</span>
+</span><span id="line-3"><span class="kn">import</span> <span class="nn">warnings</span>
+</span><span id="line-4"><span class="kn">import</span> <span class="nn">yfinance</span> <span class="k">as</span> <span class="nn">yf</span>
+</span><span id="line-5"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span><span id="line-6"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</span><span id="line-7"><span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
+</span><span id="line-8"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</span><span id="line-9"><span class="kn">from</span> <span class="nn">pyti.momentum</span> <span class="kn">import</span> <span class="n">momentum</span>
+</span><span id="line-10"><span class="kn">from</span> <span class="nn">pyti.rate_of_change</span> <span class="kn">import</span> <span class="n">rate_of_change</span>
+</span><span id="line-11"><span class="kn">from</span> <span class="nn">pyti.moving_average_convergence_divergence</span> <span class="kn">import</span> <span class="n">moving_average_convergence_divergence</span>
+</span><span id="line-12"><span class="kn">from</span> <span class="nn">pyti.simple_moving_average</span> <span class="kn">import</span> <span class="n">simple_moving_average</span>
+</span><span id="line-13"><span class="kn">from</span> <span class="nn">pyti.relative_strength_index</span> <span class="kn">import</span> <span class="n">relative_strength_index</span>
+</span><span id="line-14"><span class="kn">from</span> <span class="nn">pyti.bollinger_bands</span> <span class="kn">import</span> <span class="n">middle_bollinger_band</span><span class="p">,</span> <span class="n">upper_bollinger_band</span><span class="p">,</span> <span class="n">lower_bollinger_band</span>
+</span><span id="line-15"><span class="kn">from</span> <span class="nn">pyti.commodity_channel_index</span> <span class="kn">import</span> <span class="n">commodity_channel_index</span>
+</span><span id="line-16"><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">root_mean_squared_error</span><span class="p">,</span> <span class="n">mean_absolute_error</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">f1_score</span>
+</span><span id="line-17"><span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">'ignore'</span><span class="p">)</span>
+</span><span id="line-18">
+</span><span id="line-19"><span class="c1"># SageMaker session</span>
+</span><span id="line-20"><span class="n">sagemaker_session</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+</span><span id="line-21">
+</span><span id="line-22"><span class="c1"># SageMaker role</span>
+</span><span id="line-23"><span class="n">role</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">get_execution_role</span><span class="p">()</span>
+</span><span id="line-24">
+</span><span id="line-25"><span class="c1"># S3 bucket</span>
+</span><span id="line-26"><span class="n">bucket</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">default_bucket</span><span class="p">()</span>
+</span><span id="line-27">
+</span><span id="line-28"><span class="c1"># EC2 instance</span>
+</span><span id="line-29"><span class="n">instance_type</span> <span class="o">=</span> <span class="s2">"ml.m5.4xlarge"</span>
+</span></code></pre></div>
+</div>
+<p>After that we define the neural network’s <em>context length</em> and <em>prediction length</em>.
+The context length is the number of past time steps used as input,
+while the prediction length is the number of future time steps to be predicted.
+We set the context length equal to 5 and the prediction length equal to 1, that is
+we use the values of the EUR/USD exchange rate and of the technical indicators on
+the previous 5 days to predict the value of the EUR/USD exchange rate on the next day.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># number of time steps used as input</span>
+</span><span id="line-2"><span class="n">context_length</span> <span class="o">=</span> <span class="mi">5</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="c1"># number of time steps to output</span>
+</span><span id="line-5"><span class="n">prediction_length</span> <span class="o">=</span> <span class="mi">1</span>
+</span></code></pre></div>
+</div>
 <img alt="EUR/USD daily exchange rate with technical indicators from 2022-09-05 to 2024-07-31" class="blog-post-image" id="rnn-fx-forecasting-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/rnn-fx-forecasting/time_series_light.png"/>
 <p class="blog-post-image-caption">EUR/USD daily exchange rate with technical indicators from 2022-09-05 to 2024-07-31.</p><img alt="Actual and predicted EUR/USD daily exchange rate over the test set (from 2024-06-19 to 2024-07-31)." class="blog-post-image" id="rnn-fx-forecasting-predictions" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/rnn-fx-forecasting/predictions_light.png"/>
 <p class="blog-post-image-caption">Actual and predicted EUR/USD daily exchange rate over the test set (from 2024-06-19 to 2024-07-31).</p><img alt="Actual and predicted EUR/USD daily percentage changes over the test set (from 2024-06-19 to 2024-07-31)." class="blog-post-image" id="rnn-fx-forecasting-returns" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/rnn-fx-forecasting/returns_light.png"/>
 <p class="blog-post-image-caption">Actual and predicted EUR/USD daily percentage changes over the test set (from 2024-06-19 to 2024-07-31).</p><img alt="Performance metrics of predicted EUR/USD daily exchange rate over the test set (from 2024-06-19 to 2024-07-31)" class="blog-post-image" id="rnn-fx-forecasting-metrics" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/rnn-fx-forecasting/metrics_light.png"/>
 <p class="blog-post-image-caption">Performance metrics of predicted EUR/USD daily exchange rate over the test set (from 2024-06-19 to 2024-07-31).</p></section>
-</div></div>
+</section>
+</div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
+<div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
+<ul>
+<li><a :data-current="activeSection === '#data'" class="reference internal" href="#data">Data</a></li>
+<li><a :data-current="activeSection === '#code'" class="reference internal" href="#code">Code</a></li>
+</ul>
+</div>
+</aside>
 </main>
 </div>
 </div><footer class="py-6 border-t border-border md:py-0">
