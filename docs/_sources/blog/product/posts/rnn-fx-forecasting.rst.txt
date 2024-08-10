@@ -12,9 +12,15 @@ Forecasting exchange rates with long short-term memory (LSTM) networks using the
 Data
 ******************************************
 The model generates one-day-ahead predictions of the EUR/USD exchange rate using as input the past values of the
-EUR/USD exchange rate and of the following technical indicators:
+EUR/USD exchange rate and of the following technical indicators, which were proposed in :
 
-
+* Moving average (MA) with a period of 10.
+* Moving average convergence/divergence (MACD) with short- and long-term periods of 12 and 26.
+* Rate of change (ROC) with a period of 2.
+* Momentum with a period of 4.
+* Relative strength index (RSI) with a period of 10.
+* Bollinger bands (BB) with period of 20.
+* Commodity channel index (CCI) with a period of 20.
 
 ******************************************
 Code
@@ -86,7 +92,7 @@ the previous 5 days to predict the value of the EUR/USD exchange rate on the nex
     prediction_length = 1
 
 We also define all the remaining hyperparameters.
-We use two LSTM layers with respectively 100 and 50 hidden units and with LeCun activation.
+We use two LSTM layers with respectively 100 and 50 hidden units and apply a LeCun's hyperbolic tangent activation after each layer.
 We train the model for 200 epochs with a batch size of 16 and a learning rate of 0.001,
 where the learning rate is decayed exponentially at a rate of 0.99.
 
@@ -396,3 +402,18 @@ We can now delete the model.
 References
 ******************************************
 
+Hochreiter, S., & Schmidhuber, J. (1997). Long short-term memory. *Neural computation*, 9(8), pp. 1735-1780.
+`doi: 10.1162/neco.1997.9.8.1735 <https://doi.org/10.1162/neco.1997.9.8.1735>`__.
+
+Cho, K., Van Merriënboer, B., Gulcehre, C., Bahdanau, D., Bougares, F., Schwenk, H., & Bengio, Y. (2014).
+Learning phrase representations using RNN encoder-decoder for statistical machine translation. *arXiv preprint*.
+`doi: 10.48550/arXiv.1406.1078 <https://doi.org/10.48550/arXiv.1406.1078>`__.
+
+Chung, J., Gulcehre, C., Cho, K., & Bengio, Y. (2014). Empirical evaluation of gated recurrent neural networks on sequence modeling.
+*arXiv preprint*. `doi: 10.48550/arXiv.1412.3555 <https://doi.org/10.48550/arXiv.1412.3555>`__
+
+Yıldırım, D. C., Toroslu, I. H., & Fiore, U. (2021). Forecasting directional movement of Forex data using LSTM with technical and macroeconomic indicators.
+*Financial Innovation*, 7, pp. 1-36. `doi: 10.1186/s40854-020-00220-2 <https://doi.org/10.1186/s40854-020-00220-2>`__.
+
+LeCun, Y., Bottou, L., Orr, G. B., & Müller, K. R. (2002). Efficient backprop. In *Neural networks: Tricks of the trade.*, pp. 9-50, Springer.
+`doi: 10.1007/3-540-49430-8_2 <https://doi.org/10.1007/3-540-49430-8_2>`__.

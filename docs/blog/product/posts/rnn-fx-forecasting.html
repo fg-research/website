@@ -122,7 +122,16 @@
 <section id="data">
 <h2>Data<a class="headerlink" href="#data" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data'">¶</a></h2>
 <p>The model generates one-day-ahead predictions of the EUR/USD exchange rate using as input the past values of the
-EUR/USD exchange rate and of the following technical indicators:</p>
+EUR/USD exchange rate and of the following technical indicators, which were proposed in :</p>
+<ul class="simple">
+<li><p>Moving average (MA) with a period of 10.</p></li>
+<li><p>Moving average convergence/divergence (MACD) with short- and long-term periods of 12 and 26.</p></li>
+<li><p>Rate of change (ROC) with a period of 2.</p></li>
+<li><p>Momentum with a period of 4.</p></li>
+<li><p>Relative strength index (RSI) with a period of 10.</p></li>
+<li><p>Bollinger bands (BB) with period of 20.</p></li>
+<li><p>Commodity channel index (CCI) with a period of 20.</p></li>
+</ul>
 </section>
 <section id="code">
 <h2>Code<a class="headerlink" href="#code" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#code'">¶</a></h2>
@@ -186,7 +195,7 @@ the previous 5 days to predict the value of the EUR/USD exchange rate on the nex
 </span></code></pre></div>
 </div>
 <p>We also define all the remaining hyperparameters.
-We use two LSTM layers with respectively 100 and 50 hidden units and with LeCun activation.
+We use two LSTM layers with respectively 100 and 50 hidden units and apply a LeCun’s hyperbolic tangent activation after each layer.
 We train the model for 200 epochs with a batch size of 16 and a learning rate of 0.001,
 where the learning rate is decayed exponentially at a rate of 0.99.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># neural network hyperparameters</span>
@@ -426,6 +435,17 @@ repository.</p>
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#references'">¶</a></h2>
+<p>Hochreiter, S., &amp; Schmidhuber, J. (1997). Long short-term memory. <em>Neural computation</em>, 9(8), pp. 1735-1780.
+<a class="reference external" href="https://doi.org/10.1162/neco.1997.9.8.1735">doi: 10.1162/neco.1997.9.8.1735</a>.</p>
+<p>Cho, K., Van Merriënboer, B., Gulcehre, C., Bahdanau, D., Bougares, F., Schwenk, H., &amp; Bengio, Y. (2014).
+Learning phrase representations using RNN encoder-decoder for statistical machine translation. <em>arXiv preprint</em>.
+<a class="reference external" href="https://doi.org/10.48550/arXiv.1406.1078">doi: 10.48550/arXiv.1406.1078</a>.</p>
+<p>Chung, J., Gulcehre, C., Cho, K., &amp; Bengio, Y. (2014). Empirical evaluation of gated recurrent neural networks on sequence modeling.
+<em>arXiv preprint</em>. <a class="reference external" href="https://doi.org/10.48550/arXiv.1412.3555">doi: 10.48550/arXiv.1412.3555</a></p>
+<p>Yıldırım, D. C., Toroslu, I. H., &amp; Fiore, U. (2021). Forecasting directional movement of Forex data using LSTM with technical and macroeconomic indicators.
+<em>Financial Innovation</em>, 7, pp. 1-36. <a class="reference external" href="https://doi.org/10.1186/s40854-020-00220-2">doi: 10.1186/s40854-020-00220-2</a>.</p>
+<p>LeCun, Y., Bottou, L., Orr, G. B., &amp; Müller, K. R. (2002). Efficient backprop. In <em>Neural networks: Tricks of the trade.</em>, pp. 9-50, Springer.
+<a class="reference external" href="https://doi.org/10.1007/3-540-49430-8_2">doi: 10.1007/3-540-49430-8_2</a>.</p>
 </section>
 </section>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
