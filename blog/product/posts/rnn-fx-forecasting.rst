@@ -309,13 +309,13 @@ changes predicted by the model.
 
 .. code:: python
 
-    # get the predictions from S3
+    # get the forecasts from S3
     predictions = sagemaker_session.read_s3_file(
         bucket=bucket,
         key_prefix=f"{transformer.latest_transform_job.name}/test_data.csv.out"
     )
 
-    # cast the predictions to data frame
+    # cast the forecasts to data frame
     predictions = pd.read_csv(io.StringIO(predictions), dtype=float)
 
     # drop the out-of-sample forecast
@@ -327,7 +327,7 @@ changes predicted by the model.
     # add the actual values
     predictions["y"] = test_dataset["y"]
 
-    # add the actual and predicted returns
+    # add the actual and predicted percentage changes
     predictions["r"] = predictions["y"] / predictions["y"].shift(periods=1) - 1
     predictions["r_mean"] = predictions["y_mean"] / predictions["y"].shift(periods=1) - 1
 

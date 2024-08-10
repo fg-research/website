@@ -378,13 +378,13 @@ The results are saved to a CSV file in S3 with the same name as the input CSV fi
 <p>After the batch transform job has been completed, we can load the results from S3.
 We also include in the results the predicted returns, that is the 1-day percentage
 changes predicted by the model.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># get the predictions from S3</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># get the forecasts from S3</span>
 </span><span id="line-2"><span class="n">predictions</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">read_s3_file</span><span class="p">(</span>
 </span><span id="line-3">    <span class="n">bucket</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span>
 </span><span id="line-4">    <span class="n">key_prefix</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">transformer</span><span class="o">.</span><span class="n">latest_transform_job</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">/test_data.csv.out"</span>
 </span><span id="line-5"><span class="p">)</span>
 </span><span id="line-6">
-</span><span id="line-7"><span class="c1"># cast the predictions to data frame</span>
+</span><span id="line-7"><span class="c1"># cast the forecasts to data frame</span>
 </span><span id="line-8"><span class="n">predictions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">predictions</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 </span><span id="line-9">
 </span><span id="line-10"><span class="c1"># drop the out-of-sample forecast</span>
@@ -396,7 +396,7 @@ changes predicted by the model.</p>
 </span><span id="line-16"><span class="c1"># add the actual values</span>
 </span><span id="line-17"><span class="n">predictions</span><span class="p">[</span><span class="s2">"y"</span><span class="p">]</span> <span class="o">=</span> <span class="n">test_dataset</span><span class="p">[</span><span class="s2">"y"</span><span class="p">]</span>
 </span><span id="line-18">
-</span><span id="line-19"><span class="c1"># add the actual and predicted returns</span>
+</span><span id="line-19"><span class="c1"># add the actual and predicted percentage changes</span>
 </span><span id="line-20"><span class="n">predictions</span><span class="p">[</span><span class="s2">"r"</span><span class="p">]</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">[</span><span class="s2">"y"</span><span class="p">]</span> <span class="o">/</span> <span class="n">predictions</span><span class="p">[</span><span class="s2">"y"</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="n">periods</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
 </span><span id="line-21"><span class="n">predictions</span><span class="p">[</span><span class="s2">"r_mean"</span><span class="p">]</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">[</span><span class="s2">"y_mean"</span><span class="p">]</span> <span class="o">/</span> <span class="n">predictions</span><span class="p">[</span><span class="s2">"y"</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="n">periods</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
 </span><span id="line-22">
