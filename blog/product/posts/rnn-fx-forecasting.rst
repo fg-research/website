@@ -54,6 +54,9 @@ the :code:`pyti` library for calculating the technical indicators.
     from sklearn.metrics import root_mean_squared_error, mean_absolute_error, accuracy_score, f1_score
     warnings.filterwarnings(action='ignore')
 
+    # SageMaker algorithm ARN, replace the placeholder below with your AWS Marketplace ARN
+    algo_arn = "arn:aws:sagemaker:<...>"
+
     # SageMaker session
     sagemaker_session = sagemaker.Session()
 
@@ -89,6 +92,7 @@ where the learning rate is decayed exponentially at a rate of 0.99.
 
 .. code:: python
 
+    # neural network hyperparameters
     hyperparameters = {
         "context-length": context_length,
         "prediction-length": prediction_length,
@@ -125,32 +129,38 @@ We then calculate the technical indicators.
 
 .. code:: python
 
+    # MA with a period of 10
     dataset["MA"] = simple_moving_average(
         data=dataset["Close"],
         period=10
     )
 
+    # MACD with short- and long-term periods of 12 and 26
     dataset["MACD"] = moving_average_convergence_divergence(
         data=dataset["Close"],
         short_period=12,
         long_period=26
     )
 
+    # ROC with a period of 2
     dataset["ROC"] = rate_of_change(
         data=dataset["Close"],
         period=2
     )
 
+    # Momentum with a period of 4
     dataset["Momentum"] = momentum(
         data=dataset["Close"],
         period=4
     )
 
+    # RSI with a period of 10
     dataset["RSI"] = relative_strength_index(
         data=dataset["Close"],
         period=10
     )
 
+    # BB with period of 20
     dataset["MiddleBB"] = middle_bollinger_band(
         data=dataset["Close"],
         period=20
@@ -166,12 +176,21 @@ We then calculate the technical indicators.
         period=20
     )
 
+    # CCI with a period of 20
     dataset["CCI"] = commodity_channel_index(
         close_data=dataset["Close"],
         low_data=dataset["Low"],
         high_data=dataset["High"],
         period=20
     )
+
+.. code:: python
+
+    # drop the missing values
+    dataset.dropna(inplace=True)
+
+After dropping the missing values resulting from the calculation of the technical indicators,
+the number of daily observations is reduced to 497.
 
 .. raw:: html
 
@@ -184,6 +203,130 @@ We then calculate the technical indicators.
 
     <p class="blog-post-image-caption">EUR/USD daily exchange rate with technical indicators from 2022-09-05 to 2024-07-31.</p>
 
+We now proceed to renaming the columns in the format expected by the LNN SageMaker algorithm,
+where the output names should start with :code:`"y"` and the input names should start with :code:`"x"`.
+
+.. code:: python
+
+    # drop the unnecessary columns
+    dataset.drop(labels=["Adj Close", "Volume"], axis=1, inplace=True)
+
+    # move the target to the first column.
+    dataset = dataset[["Close"] + dataset.columns.drop("Close").tolist()]
+
+    # rename the columns
+    dataset.columns = ["y"] + [f"x{i}" for i in range(dataset.shape[1] - 1)]
+
+.. note::
+
+    Note that the algorithm's code always includes the past values of the outputs
+    among the inputs and, therefore, there is no need to add the lagged values of
+    the outputs when preparing the data for the model.
+
+We then split the data into a training set and a test set.
+We use the last 30 days for testing, and the previous 467 days for training.
+We save both the training data and the test data to CSV files in S3.
+
+.. code:: python
+
+    # define the size of the test set
+    test_size = 30
+
+    # extract the training data
+    training_dataset = dataset.iloc[:- test_size]
+
+    # extract the test data
+    test_dataset = dataset.iloc[- test_size - context_length:]
+
+    # upload the training data to S3
+    training_data = sagemaker_session.upload_string_as_file_body(
+        body=training_dataset.to_csv(index=False),
+        bucket=bucket,
+        key="training_data.csv"
+    )
+
+    # upload the test data to S3
+    test_data = sagemaker_session.upload_string_as_file_body(
+        body=test_dataset.to_csv(index=False),
+        bucket=bucket,
+        key="test_data.csv"
+    )
+
+.. note::
+
+    Note that the data is scaled internally by the algorithm, there is no need to scale the data beforehand.
+
+==========================================
+Training
+==========================================
+We can now train the model using the training data in S3.
+
+.. code:: python
+
+    # create the estimator
+    estimator = sagemaker.algorithm.AlgorithmEstimator(
+        algorithm_arn=algo_arn,
+        role=role,
+        instance_count=1,
+        instance_type=instance_type,
+        input_mode="File",
+        sagemaker_session=sagemaker_session,
+        hyperparameters=hyperparameters
+    )
+
+    # run the training job
+    estimator.fit({"training": training_data})
+
+==========================================
+Inference
+==========================================
+After the training job has been completed, we run a batch transform job on the test data in S3.
+The results are saved to a CSV file in S3 with the same name as the input CSV file but with the :code:`".out"` file extension.
+
+.. code:: python
+
+    # create the transformer
+    transformer = estimator.transformer(
+        instance_count=1,
+        instance_type=instance_type,
+    )
+
+    # run the transform job
+    transformer.transform(
+        data=test_data,
+        content_type="text/csv",
+    )
+
+After the batch transform job has been completed, we can load the results from S3.
+We also include in the results the predicted returns, that is the 1-day percentage
+changes predicted by the model.
+
+.. code:: python
+
+    # get the predictions from S3
+    predictions = sagemaker_session.read_s3_file(
+        bucket=bucket,
+        key_prefix=f"{transformer.latest_transform_job.name}/test_data.csv.out"
+    )
+
+    # cast the predictions to data frame
+    predictions = pd.read_csv(io.StringIO(predictions), dtype=float)
+
+    # drop the out-of-sample forecast
+    predictions = predictions.iloc[:-1]
+
+    # add the dates
+    predictions.index = test_dataset.index
+
+    # add the actual values
+    predictions["y"] = test_dataset["y"]
+
+    # add the actual and predicted returns
+    predictions["r"] = predictions["y"] / predictions["y"].shift(periods=1) - 1
+    predictions["r_mean"] = predictions["y_mean"] / predictions["y"].shift(periods=1) - 1
+
+    # drop the missing values
+    predictions.dropna(inplace=True)
 
 .. raw:: html
 
@@ -197,7 +340,6 @@ We then calculate the technical indicators.
     <p class="blog-post-image-caption">Actual and predicted EUR/USD daily exchange rate over the test set (from 2024-06-19 to 2024-07-31).</p>
 
 
-
 .. raw:: html
 
     <img
@@ -209,6 +351,18 @@ We then calculate the technical indicators.
 
     <p class="blog-post-image-caption">Actual and predicted EUR/USD daily percentage changes over the test set (from 2024-06-19 to 2024-07-31).</p>
 
+==========================================
+Evaluation
+==========================================
+We evaluate the test set predictions using the following metrics:
+
+* The root mean squared error (*RMSE*) of the predicted values.
+
+* The mean absolute error (*MAE*) of the predicted values.
+
+* The *accuracy* of the predicted signs of the returns.
+
+* The *F1* score of the predicted signs of the returns.
 
 .. raw:: html
 
@@ -220,3 +374,25 @@ We then calculate the technical indicators.
     />
 
     <p class="blog-post-image-caption">Performance metrics of predicted EUR/USD daily exchange rate over the test set (from 2024-06-19 to 2024-07-31).</p>
+
+We find that the model achieves a mean absolute error of 0.001 and a mean directional accuracy of 83.3% on the test set.
+
+We can now delete the model.
+
+.. code:: python
+
+    # delete the model
+    transformer.delete_model()
+
+.. tip::
+
+    You can download the
+    `notebook <https://github.com/fg-research/rnn-sagemaker/blob/master/examples/EURUSD.ipynb>`__
+    with the full code from our
+    `GitHub <https://github.com/fg-research/rnn-sagemaker>`__
+    repository.
+
+******************************************
+References
+******************************************
+
