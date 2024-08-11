@@ -39,7 +39,7 @@ Forecasting stock returns with liquid neural networks using the LNN SageMaker Al
 
     <p>
     We will use our Amazon SageMaker implementation of CfCs for probabilistic time series
-    forecasting, the <a href="https://fg-research.com/algorithms/time-series-forecasting/index.html#lnn-sagemaker-algorithm" target="_blank"> LNN SageMaker algorithm</a>.
+    forecasting, the <a href="https://fg-research.com/algorithms/time-series-forecasting/index.html#lnn-sagemaker-algorithm" target="_blank">LNN SageMaker algorithm</a>.
     We will forecast the conditional mean and the conditional standard deviation of the 30-day returns of
     the S&P 500 using as input the S&P 500 realized volatility as well as different implied volatility indices,
     as in <a href="#references">[2]</a>.

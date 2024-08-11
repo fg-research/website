@@ -16,18 +16,18 @@ Forecasting exchange rates with long short-term memory (LSTM) networks using the
     </p>
 
     <p>
-    LSTMs belong to the class of recurrent neural networks (RNN), which are designed to process and predict sequences of data.
-    While vanilla RNNs often fail to capture long-term dependencies due to issues like vanishing gradients,
-    LSTMs implement a number of gating mechanisms which allow the network to keep memory of relevant features
-    over long time intervals.
+    LSTMs belong to the class of recurrent neural networks (RNN), which are designed to process and predict
+    sequences of data. While vanilla RNNs often fail to capture long-term dependencies due to issues like
+    vanishing gradients, LSTMs implement a number of gating mechanisms which allow the network to retain memory
+    of relevant features over long time intervals.
     </p>
 
     <p>
     In this post, we will use our Amazon SageMaker implementation of RNNs for
-    probabilistic time series forecasting, the <a href="https://fg-research.com/algorithms/time-series-forecasting/index.html#rnn-sagemaker-algorithm" target="_blank"> RNN SageMaker algorithm</a>,
-    for generating one-day-ahead forecasts of the EUR/USD exchange rate using as input a
-    number of technical indicators, similar to <a href="#references">[2]</a>.
-    We will implement a relatively simple LSTM model with less than 80k parameters.
+    probabilistic time series forecasting, the <a href="https://fg-research.com/algorithms/time-series-forecasting/index.html#rnn-sagemaker-algorithm" target="_blank">RNN SageMaker algorithm</a>,
+    for implementing a simple stacked LSTM model with two layers with LeCun's hyperbolic tangent activation <a href="#references">[3]</a>.
+    We will use the model for generating one-day-ahead forecasts of the EUR/USD exchange rate using as input a
+    set of technical indicators, similar to <a href="#references">[4]</a>.
     </p>
 
     <p>
@@ -430,24 +430,15 @@ We can now delete the model.
 References
 ******************************************
 
-[1] Ayitey Junior, M., Appiahene, P., Appiah, O., & Bombie, C. N. (2023).
-Forex market forecasting using machine learning: Systematic Literature Review and meta-analysis. *Journal of Big Data*, 10(1), 9.
-`doi: 10.1186/s40537-022-00676-2 <https://doi.org/10.1186/s40537-022-00676-2>`__.
-
-[2] Hochreiter, S., & Schmidhuber, J. (1997). Long short-term memory. *Neural computation*, 9(8), pp. 1735-1780.
+[1] Hochreiter, S., & Schmidhuber, J. (1997). Long short-term memory. *Neural computation*, 9(8), pp. 1735-1780.
 `doi: 10.1162/neco.1997.9.8.1735 <https://doi.org/10.1162/neco.1997.9.8.1735>`__.
 
+[2] Ayitey Junior, M., Appiahene, P., Appiah, O., & Bombie, C. N. (2023).
+Forex market forecasting using machine learning: systematic literature review and meta-analysis. *Journal of Big Data*, 10(1), 9.
+`doi: 10.1186/s40537-022-00676-2 <https://doi.org/10.1186/s40537-022-00676-2>`__.
 
-
-Cho, K., Van Merriënboer, B., Gulcehre, C., Bahdanau, D., Bougares, F., Schwenk, H., & Bengio, Y. (2014).
-Learning phrase representations using RNN encoder-decoder for statistical machine translation. *arXiv preprint*.
-`doi: 10.48550/arXiv.1406.1078 <https://doi.org/10.48550/arXiv.1406.1078>`__.
-
-Chung, J., Gulcehre, C., Cho, K., & Bengio, Y. (2014). Empirical evaluation of gated recurrent neural networks on sequence modeling.
-*arXiv preprint*. `doi: 10.48550/arXiv.1412.3555 <https://doi.org/10.48550/arXiv.1412.3555>`__
-
-Yıldırım, D. C., Toroslu, I. H., & Fiore, U. (2021). Forecasting directional movement of Forex data using LSTM with technical and macroeconomic indicators.
-*Financial Innovation*, 7, pp. 1-36. `doi: 10.1186/s40854-020-00220-2 <https://doi.org/10.1186/s40854-020-00220-2>`__.
-
-LeCun, Y., Bottou, L., Orr, G. B., & Müller, K. R. (2002). Efficient backprop. In *Neural networks: Tricks of the trade.*, pp. 9-50, Springer.
+[3] LeCun, Y., Bottou, L., Orr, G. B., & Müller, K. R. (2002). Efficient backprop. In *Neural networks: Tricks of the trade.*, pp. 9-50, Springer.
 `doi: 10.1007/3-540-49430-8_2 <https://doi.org/10.1007/3-540-49430-8_2>`__.
+
+[4] Yıldırım, D. C., Toroslu, I. H., & Fiore, U. (2021). Forecasting directional movement of Forex data using LSTM with technical and macroeconomic indicators.
+*Financial Innovation*, 7, pp. 1-36. `doi: 10.1186/s40854-020-00220-2 <https://doi.org/10.1186/s40854-020-00220-2>`__.
