@@ -22,6 +22,8 @@
 <link href="../../../_static/favicon.ico" rel="icon"/>
 <link href="../../../search.html" rel="search" title="Search"/>
 <link href="../../../genindex.html" rel="index" title="Index"/>
+<link href="lnn-equity-forecasting.html" rel="next" title="Forecasting stock returns with liquid neural networks using the LNN SageMaker Algorithm"/>
+<link href="../index.html" rel="prev" title="Product"/>
 <script>
     <!-- Prevent Flash of wrong theme -->
       const userPreference = localStorage.getItem('darkMode');
@@ -87,8 +89,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../algorithms/time-series-clustering/index.html">Time Series Clustering</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Blog</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../index.html">Product</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Product</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Terms and Conditions</span></p>
@@ -114,26 +116,38 @@
 <path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z"></path>
 </svg>
 </a>
+<div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="../index.html">Product</a>
 <div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Forecasting exchange rates with long short-term memory (LSTM) networks using the RNN SageMaker Algorithm</span>
 </nav>
 <div id="content" role="main">
 <section id="forecasting-exchange-rates-with-long-short-term-memory-lstm-networks-using-the-rnn-sagemaker-algorithm">
 <h1>Forecasting exchange rates with long short-term memory (LSTM) networks using the RNN SageMaker Algorithm<a class="headerlink" href="#forecasting-exchange-rates-with-long-short-term-memory-lstm-networks-using-the-rnn-sagemaker-algorithm" title="Link to this heading">¶</a></h1>
-<section id="data">
-<h2>Data<a class="headerlink" href="#data" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data'">¶</a></h2>
-<p>The model generates one-day-ahead predictions of the EUR/USD exchange rate using as input the past values of the
-EUR/USD exchange rate and of the following technical indicators, which were proposed in :</p>
-<ul class="simple">
-<li><p>Moving average (MA) with a period of 10.</p></li>
-<li><p>Moving average convergence/divergence (MACD) with short- and long-term periods of 12 and 26.</p></li>
-<li><p>Rate of change (ROC) with a period of 2.</p></li>
-<li><p>Momentum with a period of 4.</p></li>
-<li><p>Relative strength index (RSI) with a period of 10.</p></li>
-<li><p>Bollinger bands (BB) with period of 20.</p></li>
-<li><p>Commodity channel index (CCI) with a period of 20.</p></li>
-</ul>
-</section>
-<section id="code">
+<p>
+Forecasting exchange rates is a critical task for traders, investors, and financial institutions.
+Even though different machine learning models have been studied for this purpose, Long Short-Term Memory
+(LSTM) <a href="#references">[1]</a> networks have become the most widely adopted <a href="#references">[2]</a>.
+</p>
+<p>
+The LSTM network is a type of recurrent neural network (RNN) designed to process and predict sequences of data.
+Unlike traditional RNNs, which can struggle with long-term dependencies due to issues like vanishing gradients,
+LSTMs can retain information over longer time intervals.
+</p>
+<p>
+In this post, we will use the LSTM network for generating one-day-ahead forecasts of the EUR/USD exchange rate
+using as input a number of technical indicators. We will use our Amazon SageMaker implementation of RNNs for
+probabilistic time series forecasting, the <a href="https://fg-research.com/algorithms/time-series-forecasting/index.html#rnn-sagemaker-algorithm" target="_blank"> RNN SageMaker algorithm</a>.
+</p>
+<p>
+We will use the daily EUR/USD exchange rate from rom the 1<sup>st</sup> of August 2022 to
+the 31<sup>st</sup> of July 2024 which we will download from
+<a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>.
+</p>
+<p>
+We will train the model on the data up to the 18<sup>th</sup> of June 2024,
+and use the trained model to predict the subsequent data up to the 31<sup>st</sup> of July 2024.
+We will find that the RNN SageMaker algorithm achieves a mean absolute error of 0.0012 and
+a mean directional accuracy of 83.33% over the considered time period.
+</p><section id="code">
 <h2>Code<a class="headerlink" href="#code" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#code'">¶</a></h2>
 <p>We start by importing all the dependencies and setting up the SageMaker environment.</p>
 <div class="admonition warning">
@@ -194,28 +208,6 @@ the previous 5 days to predict the value of the EUR/USD exchange rate on the nex
 </span><span id="line-5"><span class="n">prediction_length</span> <span class="o">=</span> <span class="mi">1</span>
 </span></code></pre></div>
 </div>
-<p>We also define all the remaining hyperparameters.
-We use two LSTM layers with respectively 100 and 50 hidden units and apply a LeCun’s hyperbolic tangent activation after each layer.
-We train the model for 200 epochs with a batch size of 16 and a learning rate of 0.001,
-where the learning rate is decayed exponentially at a rate of 0.99.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># neural network hyperparameters</span>
-</span><span id="line-2"><span class="n">hyperparameters</span> <span class="o">=</span> <span class="p">{</span>
-</span><span id="line-3">    <span class="s2">"context-length"</span><span class="p">:</span> <span class="n">context_length</span><span class="p">,</span>
-</span><span id="line-4">    <span class="s2">"prediction-length"</span><span class="p">:</span> <span class="n">prediction_length</span><span class="p">,</span>
-</span><span id="line-5">    <span class="s2">"sequence-stride"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-</span><span id="line-6">    <span class="s2">"cell-type"</span><span class="p">:</span> <span class="s2">"lstm"</span><span class="p">,</span>
-</span><span id="line-7">    <span class="s2">"hidden-size-1"</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
-</span><span id="line-8">    <span class="s2">"hidden-size-2"</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
-</span><span id="line-9">    <span class="s2">"hidden-size-3"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-</span><span id="line-10">    <span class="s2">"activation"</span><span class="p">:</span> <span class="s2">"lecun"</span><span class="p">,</span>
-</span><span id="line-11">    <span class="s2">"dropout"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-</span><span id="line-12">    <span class="s2">"batch-size"</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
-</span><span id="line-13">    <span class="s2">"lr"</span><span class="p">:</span> <span class="mf">0.001</span><span class="p">,</span>
-</span><span id="line-14">    <span class="s2">"lr-decay"</span><span class="p">:</span> <span class="mf">0.99</span><span class="p">,</span>
-</span><span id="line-15">    <span class="s2">"epochs"</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
-</span><span id="line-16"><span class="p">}</span>
-</span></code></pre></div>
-</div>
 <section id="data-preparation">
 <h3>Data Preparation<a class="headerlink" href="#data-preparation" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data-preparation'">¶</a></h3>
 <p>
@@ -225,7 +217,14 @@ The dataset contains 522 daily observations.
 </p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">dataset</span> <span class="o">=</span> <span class="n">yf</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">tickers</span><span class="o">=</span><span class="s2">"EURUSD=X"</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">"2022-08-01"</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">"2024-08-01"</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
-<p>We then calculate the technical indicators.</p>
+<p>We then calculate the technical indicators.
+* Moving average (MA) with a period of 10.
+* Moving average convergence/divergence (MACD) with short- and long-term periods of 12 and 26.
+* Rate of change (ROC) with a period of 2.
+* Momentum with a period of 4.
+* Relative strength index (RSI) with a period of 10.
+* Bollinger bands (BB) with period of 20.
+* Commodity channel index (CCI) with a period of 20.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># MA with a period of 10</span>
 </span><span id="line-2"><span class="n">dataset</span><span class="p">[</span><span class="s2">"MA"</span><span class="p">]</span> <span class="o">=</span> <span class="n">simple_moving_average</span><span class="p">(</span>
 </span><span id="line-3">    <span class="n">data</span><span class="o">=</span><span class="n">dataset</span><span class="p">[</span><span class="s2">"Close"</span><span class="p">],</span>
@@ -289,7 +288,7 @@ The dataset contains 522 daily observations.
 <p>After dropping the missing values resulting from the calculation of the technical indicators,
 the number of daily observations is reduced to 497.</p>
 <img alt="EUR/USD daily exchange rate with technical indicators from 2022-09-05 to 2024-07-31" class="blog-post-image" id="rnn-fx-forecasting-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/rnn-fx-forecasting/time_series_light.png"/>
-<p class="blog-post-image-caption">EUR/USD daily exchange rate with technical indicators from 2022-09-05 to 2024-07-31.</p><p>We now proceed to renaming the columns in the format expected by the LNN SageMaker algorithm,
+<p class="blog-post-image-caption">EUR/USD daily exchange rate with technical indicators from 2022-09-05 to 2024-07-31.</p><p>We now proceed to renaming the columns in the format expected by the RNN SageMaker algorithm,
 where the output names should start with <code class="code docutils literal notranslate"><span class="pre">"y"</span></code> and the input names should start with <code class="code docutils literal notranslate"><span class="pre">"x"</span></code>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># drop the unnecessary columns</span>
 </span><span id="line-2"><span class="n">dataset</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s2">"Adj Close"</span><span class="p">,</span> <span class="s2">"Volume"</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -341,7 +340,9 @@ We save both the training data and the test data to CSV files in S3.</p>
 </section>
 <section id="training">
 <h3>Training<a class="headerlink" href="#training" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#training'">¶</a></h3>
-<p>We can now train the model using the training data in S3.</p>
+<p>We can now train the model using the data in S3.
+We use two LSTM layers with respectively 100 and 50 hidden units and apply a LeCun’s hyperbolic tangent activation after each layer.
+We train the model for 200 epochs with a batch size of 16 and a learning rate of 0.001, where the learning rate is decayed exponentially at a rate of 0.99.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># create the estimator</span>
 </span><span id="line-2"><span class="n">estimator</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">AlgorithmEstimator</span><span class="p">(</span>
 </span><span id="line-3">    <span class="n">algorithm_arn</span><span class="o">=</span><span class="n">algo_arn</span><span class="p">,</span>
@@ -350,11 +351,25 @@ We save both the training data and the test data to CSV files in S3.</p>
 </span><span id="line-6">    <span class="n">instance_type</span><span class="o">=</span><span class="n">instance_type</span><span class="p">,</span>
 </span><span id="line-7">    <span class="n">input_mode</span><span class="o">=</span><span class="s2">"File"</span><span class="p">,</span>
 </span><span id="line-8">    <span class="n">sagemaker_session</span><span class="o">=</span><span class="n">sagemaker_session</span><span class="p">,</span>
-</span><span id="line-9">    <span class="n">hyperparameters</span><span class="o">=</span><span class="n">hyperparameters</span>
-</span><span id="line-10"><span class="p">)</span>
-</span><span id="line-11">
-</span><span id="line-12"><span class="c1"># run the training job</span>
-</span><span id="line-13"><span class="n">estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">({</span><span class="s2">"training"</span><span class="p">:</span> <span class="n">training_data</span><span class="p">})</span>
+</span><span id="line-9">    <span class="n">hyperparameters</span><span class="o">=</span><span class="p">{</span>
+</span><span id="line-10">        <span class="s2">"context-length"</span><span class="p">:</span> <span class="n">context_length</span><span class="p">,</span>
+</span><span id="line-11">        <span class="s2">"prediction-length"</span><span class="p">:</span> <span class="n">prediction_length</span><span class="p">,</span>
+</span><span id="line-12">        <span class="s2">"sequence-stride"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+</span><span id="line-13">        <span class="s2">"cell-type"</span><span class="p">:</span> <span class="s2">"lstm"</span><span class="p">,</span>
+</span><span id="line-14">        <span class="s2">"hidden-size-1"</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+</span><span id="line-15">        <span class="s2">"hidden-size-2"</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+</span><span id="line-16">        <span class="s2">"hidden-size-3"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span id="line-17">        <span class="s2">"activation"</span><span class="p">:</span> <span class="s2">"lecun"</span><span class="p">,</span>
+</span><span id="line-18">        <span class="s2">"dropout"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span id="line-19">        <span class="s2">"batch-size"</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
+</span><span id="line-20">        <span class="s2">"lr"</span><span class="p">:</span> <span class="mf">0.001</span><span class="p">,</span>
+</span><span id="line-21">        <span class="s2">"lr-decay"</span><span class="p">:</span> <span class="mf">0.99</span><span class="p">,</span>
+</span><span id="line-22">        <span class="s2">"epochs"</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+</span><span id="line-23">    <span class="p">}</span>
+</span><span id="line-24"><span class="p">)</span>
+</span><span id="line-25">
+</span><span id="line-26"><span class="c1"># run the training job</span>
+</span><span id="line-27"><span class="n">estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">({</span><span class="s2">"training"</span><span class="p">:</span> <span class="n">training_data</span><span class="p">})</span>
 </span></code></pre></div>
 </div>
 </section>
@@ -376,8 +391,8 @@ The results are saved to a CSV file in S3 with the same name as the input CSV fi
 </span></code></pre></div>
 </div>
 <p>After the batch transform job has been completed, we can load the results from S3.
-We also include in the results the predicted returns, that is the 1-day percentage
-changes predicted by the model.</p>
+For the purpose of evaluating the model’s directional accuracy, we calculate the
+1-day predicted returns, that is the 1-day percentage changes predicted by the model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># get the forecasts from S3</span>
 </span><span id="line-2"><span class="n">predictions</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">read_s3_file</span><span class="p">(</span>
 </span><span id="line-3">    <span class="n">bucket</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span>
@@ -417,7 +432,7 @@ changes predicted by the model.</p>
 <li><p>The <em>F1</em> score of the predicted signs of the returns.</p></li>
 </ul>
 <img alt="Performance metrics of predicted EUR/USD daily exchange rate over the test set (from 2024-06-19 to 2024-07-31)" class="blog-post-image" id="rnn-fx-forecasting-metrics" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/rnn-fx-forecasting/metrics_light.png"/>
-<p class="blog-post-image-caption">Performance metrics of predicted EUR/USD daily exchange rate over the test set (from 2024-06-19 to 2024-07-31).</p><p>We find that the model achieves a mean absolute error of 0.001 and a mean directional accuracy of 83.3% on the test set.</p>
+<p class="blog-post-image-caption">Performance metrics of predicted EUR/USD daily exchange rate over the test set (from 2024-06-19 to 2024-07-31).</p><p>We find that the model achieves a mean absolute error of 0.0012 and a mean directional accuracy of 83.33% on the test set.</p>
 <p>We can now delete the model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># delete the model</span>
 </span><span id="line-2"><span class="n">transformer</span><span class="o">.</span><span class="n">delete_model</span><span class="p">()</span>
@@ -435,7 +450,10 @@ repository.</p>
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#references'">¶</a></h2>
-<p>Hochreiter, S., &amp; Schmidhuber, J. (1997). Long short-term memory. <em>Neural computation</em>, 9(8), pp. 1735-1780.
+<p>[1] Ayitey Junior, M., Appiahene, P., Appiah, O., &amp; Bombie, C. N. (2023).
+Forex market forecasting using machine learning: Systematic Literature Review and meta-analysis. <em>Journal of Big Data</em>, 10(1), 9.
+<a class="reference external" href="https://doi.org/10.1186/s40537-022-00676-2">doi: 10.1186/s40537-022-00676-2</a>.</p>
+<p>[2] Hochreiter, S., &amp; Schmidhuber, J. (1997). Long short-term memory. <em>Neural computation</em>, 9(8), pp. 1735-1780.
 <a class="reference external" href="https://doi.org/10.1162/neco.1997.9.8.1735">doi: 10.1162/neco.1997.9.8.1735</a>.</p>
 <p>Cho, K., Van Merriënboer, B., Gulcehre, C., Bahdanau, D., Bougares, F., Schwenk, H., &amp; Bengio, Y. (2014).
 Learning phrase representations using RNN encoder-decoder for statistical machine translation. <em>arXiv preprint</em>.
@@ -451,7 +469,6 @@ Learning phrase representations using RNN encoder-decoder for statistical machin
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
-<li><a :data-current="activeSection === '#data'" class="reference internal" href="#data">Data</a></li>
 <li><a :data-current="activeSection === '#code'" class="reference internal" href="#code">Code</a><ul>
 <li><a :data-current="activeSection === '#data-preparation'" class="reference internal" href="#data-preparation">Data Preparation</a></li>
 <li><a :data-current="activeSection === '#training'" class="reference internal" href="#training">Training</a></li>
@@ -481,6 +498,6 @@ Amazon Web Services, AWS, Amazon SageMaker, AWS Marketplace and the AWS Marketpl
 <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
 <script defer="defer" src="../../../_static/theme.js?v=e82a16a3"></script>
 <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
-<script src="../../../_static/custom.js?v=fb8dea03"></script>
+<script src="../../../_static/custom.js?v=764b583c"></script>
 </body>
 </html>

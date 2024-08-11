@@ -35,7 +35,7 @@ LSTM-FCN SageMaker Algorithm
         The LSTM-FCN model consists of two blocks: a recurrent block and a convolutional block.
         The two blocks process the input time series in parallel.
         After that their output representations are concatenated and passed to a final output layer with softmax activation.
-        The algorithm can be used for both binary and multiclass classification of univariate time series.
+        The algorithm can be used for binary and multiclass classification of univariate time series.
         For additional information, see the algorithm's
         <a href="https://aws.amazon.com/marketplace/pp/prodview-vzxmyw25oqtx6" target="_blank">AWS Marketplace</a>
         listing page and
@@ -56,7 +56,7 @@ InceptionTime SageMaker Algorithm
         Each block processes the inputs in parallel using three convolutional layers and a max pooling layer and returns
         a combined representation.
         The algorithm trains an ensemble of InceptionTime networks and generates the final predicted class labels by averaging the class probabilities predicted by the different networks in the ensemble.
-        The algorithm can be used for both binary and multiclass classification of univariate time series.
+        The algorithm can be used for binary and multiclass classification of univariate time series.
         For additional information, see the algorithm's
         <a href="https://aws.amazon.com/marketplace/pp/prodview-omz7rumnllmla" target="_blank">AWS Marketplace</a>
         listing page and

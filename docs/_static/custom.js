@@ -28,7 +28,8 @@ window.setInterval(function(){
         'lstm-ad-ecg-anomaly-detection-toctree',
         'inflation-forecasting-random-forest-toctree',
         'lnn-equity-forecasting-toctree',
-        'commodity-forecasting-forgan-toctree'
+        'commodity-forecasting-forgan-toctree',
+        'rnn-fx-forecasting-toctree'
     ];
     for (var i = 0; i < elements.length; i++) {
         var f = document.getElementById(elements[i]);

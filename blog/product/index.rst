@@ -12,6 +12,37 @@ Product
 
    Learn about our time series algorithms
 
+.. card::
+    :width: 100%
+    :link: posts/rnn-fx-forecasting
+    :link-type: doc
+
+    .. _rnn-fx-forecasting-toctree:
+
+    .. toctree::
+        :titlesonly:
+
+        posts/rnn-fx-forecasting
+
+    .. _rnn-fx-forecasting-include:
+
+    Forecasting exchange rates is a critical task for traders, investors, and financial institutions.
+    Even though different machine learning models have been studied for this purpose, Long Short-Term Memory
+    (LSTM) networks have become the most widely adopted.
+
+    .. grid:: 2
+        :margin: 0 3 auto auto
+
+        .. grid-item::
+            :class: sd-text-primary
+
+            :octicon:`graph;1rem;graph-icon` Forecasting
+
+        .. grid-item::
+            :class: sd-text-secondary
+
+            :octicon:`calendar;1rem;calendar-icon` August 11, 2024
+
 
 .. card::
     :width: 100%

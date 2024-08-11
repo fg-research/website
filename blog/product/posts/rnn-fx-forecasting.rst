@@ -7,20 +7,38 @@
 Forecasting exchange rates with long short-term memory (LSTM) networks using the RNN SageMaker Algorithm
 ############################################################################################################
 
+.. raw:: html
 
-******************************************
-Data
-******************************************
-The model generates one-day-ahead predictions of the EUR/USD exchange rate using as input the past values of the
-EUR/USD exchange rate and of the following technical indicators, which were proposed in :
+    <p>
+    Forecasting exchange rates is a critical task for traders, investors, and financial institutions.
+    Even though different machine learning models have been studied for this purpose, Long Short-Term Memory
+    (LSTM) <a href="#references">[1]</a> networks have become the most widely adopted <a href="#references">[2]</a>.
+    </p>
 
-* Moving average (MA) with a period of 10.
-* Moving average convergence/divergence (MACD) with short- and long-term periods of 12 and 26.
-* Rate of change (ROC) with a period of 2.
-* Momentum with a period of 4.
-* Relative strength index (RSI) with a period of 10.
-* Bollinger bands (BB) with period of 20.
-* Commodity channel index (CCI) with a period of 20.
+    <p>
+    The LSTM network is a type of recurrent neural network (RNN) designed to process and predict sequences of data.
+    Unlike traditional RNNs, which can struggle with long-term dependencies due to issues like vanishing gradients,
+    LSTMs can retain information over longer time intervals.
+    </p>
+
+    <p>
+    In this post, we will use the LSTM network for generating one-day-ahead forecasts of the EUR/USD exchange rate
+    using as input a number of technical indicators. We will use our Amazon SageMaker implementation of RNNs for
+    probabilistic time series forecasting, the <a href="https://fg-research.com/algorithms/time-series-forecasting/index.html#rnn-sagemaker-algorithm" target="_blank"> RNN SageMaker algorithm</a>.
+    </p>
+
+    <p>
+    We will use the daily EUR/USD exchange rate from rom the 1<sup>st</sup> of August 2022 to
+    the 31<sup>st</sup> of July 2024 which we will download from
+    <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>.
+    </p>
+
+    <p>
+    We will train the model on the data up to the 18<sup>th</sup> of June 2024,
+    and use the trained model to predict the subsequent data up to the 31<sup>st</sup> of July 2024.
+    We will find that the RNN SageMaker algorithm achieves a mean absolute error of 0.0012 and
+    a mean directional accuracy of 83.33% over the considered time period.
+    </p>
 
 ******************************************
 Code
@@ -91,30 +109,6 @@ the previous 5 days to predict the value of the EUR/USD exchange rate on the nex
     # number of time steps to output
     prediction_length = 1
 
-We also define all the remaining hyperparameters.
-We use two LSTM layers with respectively 100 and 50 hidden units and apply a LeCun's hyperbolic tangent activation after each layer.
-We train the model for 200 epochs with a batch size of 16 and a learning rate of 0.001,
-where the learning rate is decayed exponentially at a rate of 0.99.
-
-.. code:: python
-
-    # neural network hyperparameters
-    hyperparameters = {
-        "context-length": context_length,
-        "prediction-length": prediction_length,
-        "sequence-stride": 1,
-        "cell-type": "lstm",
-        "hidden-size-1": 100,
-        "hidden-size-2": 50,
-        "hidden-size-3": 0,
-        "activation": "lecun",
-        "dropout": 0,
-        "batch-size": 16,
-        "lr": 0.001,
-        "lr-decay": 0.99,
-        "epochs": 200,
-    }
-
 ==========================================
 Data Preparation
 ==========================================
@@ -132,6 +126,13 @@ Data Preparation
     dataset = yf.download(tickers="EURUSD=X", start="2022-08-01", end="2024-08-01")
 
 We then calculate the technical indicators.
+* Moving average (MA) with a period of 10.
+* Moving average convergence/divergence (MACD) with short- and long-term periods of 12 and 26.
+* Rate of change (ROC) with a period of 2.
+* Momentum with a period of 4.
+* Relative strength index (RSI) with a period of 10.
+* Bollinger bands (BB) with period of 20.
+* Commodity channel index (CCI) with a period of 20.
 
 .. code:: python
 
@@ -209,7 +210,7 @@ the number of daily observations is reduced to 497.
 
     <p class="blog-post-image-caption">EUR/USD daily exchange rate with technical indicators from 2022-09-05 to 2024-07-31.</p>
 
-We now proceed to renaming the columns in the format expected by the LNN SageMaker algorithm,
+We now proceed to renaming the columns in the format expected by the RNN SageMaker algorithm,
 where the output names should start with :code:`"y"` and the input names should start with :code:`"x"`.
 
 .. code:: python
@@ -265,7 +266,9 @@ We save both the training data and the test data to CSV files in S3.
 ==========================================
 Training
 ==========================================
-We can now train the model using the training data in S3.
+We can now train the model using the data in S3.
+We use two LSTM layers with respectively 100 and 50 hidden units and apply a LeCun's hyperbolic tangent activation after each layer.
+We train the model for 200 epochs with a batch size of 16 and a learning rate of 0.001, where the learning rate is decayed exponentially at a rate of 0.99.
 
 .. code:: python
 
@@ -277,7 +280,21 @@ We can now train the model using the training data in S3.
         instance_type=instance_type,
         input_mode="File",
         sagemaker_session=sagemaker_session,
-        hyperparameters=hyperparameters
+        hyperparameters={
+            "context-length": context_length,
+            "prediction-length": prediction_length,
+            "sequence-stride": 1,
+            "cell-type": "lstm",
+            "hidden-size-1": 100,
+            "hidden-size-2": 50,
+            "hidden-size-3": 0,
+            "activation": "lecun",
+            "dropout": 0,
+            "batch-size": 16,
+            "lr": 0.001,
+            "lr-decay": 0.99,
+            "epochs": 200,
+        }
     )
 
     # run the training job
@@ -304,8 +321,8 @@ The results are saved to a CSV file in S3 with the same name as the input CSV fi
     )
 
 After the batch transform job has been completed, we can load the results from S3.
-We also include in the results the predicted returns, that is the 1-day percentage
-changes predicted by the model.
+For the purpose of evaluating the model's directional accuracy, we calculate the
+1-day predicted returns, that is the 1-day percentage changes predicted by the model.
 
 .. code:: python
 
@@ -381,7 +398,7 @@ We evaluate the test set predictions using the following metrics:
 
     <p class="blog-post-image-caption">Performance metrics of predicted EUR/USD daily exchange rate over the test set (from 2024-06-19 to 2024-07-31).</p>
 
-We find that the model achieves a mean absolute error of 0.001 and a mean directional accuracy of 83.3% on the test set.
+We find that the model achieves a mean absolute error of 0.0012 and a mean directional accuracy of 83.33% on the test set.
 
 We can now delete the model.
 
@@ -402,8 +419,14 @@ We can now delete the model.
 References
 ******************************************
 
-Hochreiter, S., & Schmidhuber, J. (1997). Long short-term memory. *Neural computation*, 9(8), pp. 1735-1780.
+[1] Ayitey Junior, M., Appiahene, P., Appiah, O., & Bombie, C. N. (2023).
+Forex market forecasting using machine learning: Systematic Literature Review and meta-analysis. *Journal of Big Data*, 10(1), 9.
+`doi: 10.1186/s40537-022-00676-2 <https://doi.org/10.1186/s40537-022-00676-2>`__.
+
+[2] Hochreiter, S., & Schmidhuber, J. (1997). Long short-term memory. *Neural computation*, 9(8), pp. 1735-1780.
 `doi: 10.1162/neco.1997.9.8.1735 <https://doi.org/10.1162/neco.1997.9.8.1735>`__.
+
+
 
 Cho, K., Van Merriënboer, B., Gulcehre, C., Bahdanau, D., Bougares, F., Schwenk, H., & Bengio, Y. (2014).
 Learning phrase representations using RNN encoder-decoder for statistical machine translation. *arXiv preprint*.
