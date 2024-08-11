@@ -280,6 +280,7 @@ Training
 ==========================================
 
 .. raw:: html
+
     <p>
     We can now train the model using the training data in S3.
     We use two LSTM layers with respectively 100 and 50 hidden units and apply a

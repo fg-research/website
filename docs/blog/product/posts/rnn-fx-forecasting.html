@@ -346,7 +346,13 @@ We save both the training data and the test data to CSV files in S3.</p>
 </section>
 <section id="training">
 <h3>Training<a class="headerlink" href="#training" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#training'">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># create the estimator</span>
+<p>
+We can now train the model using the training data in S3.
+We use two LSTM layers with respectively 100 and 50 hidden units and apply a
+LeCun's hyperbolic tangent activation <a href="#references">[3]</a> after each layer.
+We train the model for 200 epochs with a batch size of 16 and a learning rate of 0.001,
+where the learning rate is decayed exponentially at a rate of 0.99.
+</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># create the estimator</span>
 </span><span id="line-2"><span class="n">estimator</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">AlgorithmEstimator</span><span class="p">(</span>
 </span><span id="line-3">    <span class="n">algorithm_arn</span><span class="o">=</span><span class="n">algo_arn</span><span class="p">,</span>
 </span><span id="line-4">    <span class="n">role</span><span class="o">=</span><span class="n">role</span><span class="p">,</span>
