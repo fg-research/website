@@ -123,7 +123,11 @@ Data Preparation
 
     dataset = yf.download(tickers="EURUSD=X", start="2022-08-01", end="2024-08-01")
 
-We then calculate the following technical indicators, as in <a href="#references">[2]</a>:
+.. raw:: html
+
+    <p>
+    We then calculate the following technical indicators, as in <a href="#references">[2]</a>:
+    </p>
 
 * Moving average (MA) with a period of 10.
 
