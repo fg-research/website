@@ -28,7 +28,7 @@ Product
 
     Forecasting exchange rates is a critical task for traders, investors, and financial institutions.
     Even though different machine learning models have been studied for this purpose, Long Short-Term Memory
-    (LSTM) networks have become the most widely adopted.
+    (LSTM) networks have become the most widely adopted...
 
     .. grid:: 2
         :margin: 0 3 auto auto
