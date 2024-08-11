@@ -22,7 +22,7 @@ Forecasting exchange rates with long short-term memory (LSTM) networks using the
     </p>
 
     <p>
-    In this post, we will use use our Amazon SageMaker implementation of LSTM networks for
+    In this post, we will use our Amazon SageMaker implementation of LSTM networks for
     probabilistic time series forecasting, the <a href="https://fg-research.com/algorithms/time-series-forecasting/index.html#rnn-sagemaker-algorithm" target="_blank"> RNN SageMaker algorithm</a>,
     for generating one-day-ahead forecasts of the EUR/USD exchange rate using as input a
     number of technical indicators, similar to <a href="#references">[2]</a>.
@@ -123,13 +123,20 @@ Data Preparation
 
     dataset = yf.download(tickers="EURUSD=X", start="2022-08-01", end="2024-08-01")
 
-We then calculate the technical indicators.
+We then calculate the following technical indicators, as in <a href="#references">[2]</a>:
+
 * Moving average (MA) with a period of 10.
+
 * Moving average convergence/divergence (MACD) with short- and long-term periods of 12 and 26.
+
 * Rate of change (ROC) with a period of 2.
+
 * Momentum with a period of 4.
+
 * Relative strength index (RSI) with a period of 10.
+
 * Bollinger bands (BB) with period of 20.
+
 * Commodity channel index (CCI) with a period of 20.
 
 .. code:: python

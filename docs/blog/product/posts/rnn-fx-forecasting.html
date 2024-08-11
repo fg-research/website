@@ -133,7 +133,7 @@ Unlike traditional RNNs, which can struggle with long-term dependencies due to i
 LSTMs can retain information over longer time intervals.
 </p>
 <p>
-In this post, we will use use our Amazon SageMaker implementation of LSTM networks for
+In this post, we will use our Amazon SageMaker implementation of LSTM networks for
 probabilistic time series forecasting, the <a href="https://fg-research.com/algorithms/time-series-forecasting/index.html#rnn-sagemaker-algorithm" target="_blank"> RNN SageMaker algorithm</a>,
 for generating one-day-ahead forecasts of the EUR/USD exchange rate using as input a
 number of technical indicators, similar to <a href="#references">[2]</a>.
@@ -216,14 +216,16 @@ The dataset contains 522 daily observations.
 </p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">dataset</span> <span class="o">=</span> <span class="n">yf</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">tickers</span><span class="o">=</span><span class="s2">"EURUSD=X"</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">"2022-08-01"</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">"2024-08-01"</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
-<p>We then calculate the technical indicators.
-* Moving average (MA) with a period of 10.
-* Moving average convergence/divergence (MACD) with short- and long-term periods of 12 and 26.
-* Rate of change (ROC) with a period of 2.
-* Momentum with a period of 4.
-* Relative strength index (RSI) with a period of 10.
-* Bollinger bands (BB) with period of 20.
-* Commodity channel index (CCI) with a period of 20.</p>
+<p>We then calculate the following technical indicators, as in &lt;a href=”#references”&gt;[2]&lt;/a&gt;:</p>
+<ul class="simple">
+<li><p>Moving average (MA) with a period of 10.</p></li>
+<li><p>Moving average convergence/divergence (MACD) with short- and long-term periods of 12 and 26.</p></li>
+<li><p>Rate of change (ROC) with a period of 2.</p></li>
+<li><p>Momentum with a period of 4.</p></li>
+<li><p>Relative strength index (RSI) with a period of 10.</p></li>
+<li><p>Bollinger bands (BB) with period of 20.</p></li>
+<li><p>Commodity channel index (CCI) with a period of 20.</p></li>
+</ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># MA with a period of 10</span>
 </span><span id="line-2"><span class="n">dataset</span><span class="p">[</span><span class="s2">"MA"</span><span class="p">]</span> <span class="o">=</span> <span class="n">simple_moving_average</span><span class="p">(</span>
 </span><span id="line-3">    <span class="n">data</span><span class="o">=</span><span class="n">dataset</span><span class="p">[</span><span class="s2">"Close"</span><span class="p">],</span>
