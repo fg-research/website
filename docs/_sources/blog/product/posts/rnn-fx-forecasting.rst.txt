@@ -22,21 +22,19 @@ Forecasting exchange rates with long short-term memory (LSTM) networks using the
     </p>
 
     <p>
-    In this post, we will use the LSTM network for generating one-day-ahead forecasts of the EUR/USD exchange rate
-    using as input a number of technical indicators. We will use our Amazon SageMaker implementation of RNNs for
-    probabilistic time series forecasting, the <a href="https://fg-research.com/algorithms/time-series-forecasting/index.html#rnn-sagemaker-algorithm" target="_blank"> RNN SageMaker algorithm</a>.
+    In this post, we will use use our Amazon SageMaker implementation of LSTM networks for
+    probabilistic time series forecasting, the <a href="https://fg-research.com/algorithms/time-series-forecasting/index.html#rnn-sagemaker-algorithm" target="_blank"> RNN SageMaker algorithm</a>,
+    for generating one-day-ahead forecasts of the EUR/USD exchange rate using as input a
+    number of technical indicators, similar to <a href="#references">[2]</a>.
     </p>
 
     <p>
-    We will use the daily EUR/USD exchange rate from rom the 1<sup>st</sup> of August 2022 to
-    the 31<sup>st</sup> of July 2024 which we will download from
+    We will use the daily EUR/USD exchange rate from the 1<sup>st</sup> of August 2022 to
+    the 31<sup>st</sup> of July 2024, which we will download from
     <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>.
-    </p>
-
-    <p>
     We will train the model on the data up to the 18<sup>th</sup> of June 2024,
     and use the trained model to predict the subsequent data up to the 31<sup>st</sup> of July 2024.
-    We will find that the RNN SageMaker algorithm achieves a mean absolute error of 0.0012 and
+    We will find that the model achieves a mean absolute error of 0.0012 and
     a mean directional accuracy of 83.33% over the considered time period.
     </p>
 
