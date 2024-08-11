@@ -204,7 +204,7 @@ The context length is the number of past time steps used as input,
 while the prediction length is the number of future time steps to be predicted.
 We set the context length equal to 5 and the prediction length equal to 1, that is
 we use the values of the EUR/USD exchange rate and of the technical indicators on
-the previous 5 days to predict the value of the EUR/USD exchange rate on the next day.</p>
+the previous week to predict the value of the EUR/USD exchange rate on the next day.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># number of time steps used as input</span>
 </span><span id="line-2"><span class="n">context_length</span> <span class="o">=</span> <span class="mi">5</span>
 </span><span id="line-3">
@@ -287,6 +287,8 @@ We then calculate the following technical indicators, as in <a href="#references
 </span><span id="line-54"><span class="p">)</span>
 </span></code></pre></div>
 </div>
+<p>After dropping the missing values resulting from the calculation of the technical indicators,
+the number of daily observations is reduced to 497.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># drop the missing values</span>
 </span><span id="line-2"><span class="n">dataset</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span><span id="line-3">
@@ -294,8 +296,6 @@ We then calculate the following technical indicators, as in <a href="#references
 </span><span id="line-5"><span class="n">dataset</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s2">"Adj Close"</span><span class="p">,</span> <span class="s2">"Volume"</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
-<p>After dropping the missing values resulting from the calculation of the technical indicators,
-the number of daily observations is reduced to 497.</p>
 <img alt="EUR/USD daily exchange rate with technical indicators from 2022-09-05 to 2024-07-31" class="blog-post-image" id="rnn-fx-forecasting-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/rnn-fx-forecasting/time_series_light.png"/>
 <p class="blog-post-image-caption">EUR/USD daily exchange rate with technical indicators from 2022-09-05 to 2024-07-31.</p><p>We now proceed to renaming the columns in the format expected by the RNN SageMaker algorithm,
 where the output names should start with <code class="code docutils literal notranslate"><span class="pre">"y"</span></code> and the input names should start with <code class="code docutils literal notranslate"><span class="pre">"x"</span></code>.</p>
@@ -314,7 +314,7 @@ the outputs when preparing the data for the model.</p>
 </div>
 <p>We then split the data into a training set and a test set.
 We use the last 30 days for testing, and the previous 467 days for training.
-We save both the training data and the test data to CSV files in S3.</p>
+We save both the training data and the test data to CSV files in S3 such that they can be used by the algorithm.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># define the size of the test set</span>
 </span><span id="line-2"><span class="n">test_size</span> <span class="o">=</span> <span class="mi">30</span>
 </span><span id="line-3">

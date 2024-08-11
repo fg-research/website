@@ -100,7 +100,7 @@ The context length is the number of past time steps used as input,
 while the prediction length is the number of future time steps to be predicted.
 We set the context length equal to 5 and the prediction length equal to 1, that is
 we use the values of the EUR/USD exchange rate and of the technical indicators on
-the previous 5 days to predict the value of the EUR/USD exchange rate on the next day.
+the previous week to predict the value of the EUR/USD exchange rate on the next day.
 
 .. code:: python
 
@@ -203,6 +203,9 @@ Data Preparation
         period=20
     )
 
+After dropping the missing values resulting from the calculation of the technical indicators,
+the number of daily observations is reduced to 497.
+
 .. code:: python
 
     # drop the missing values
@@ -211,8 +214,6 @@ Data Preparation
     # drop the unnecessary columns
     dataset.drop(labels=["Adj Close", "Volume"], axis=1, inplace=True)
 
-After dropping the missing values resulting from the calculation of the technical indicators,
-the number of daily observations is reduced to 497.
 
 .. raw:: html
 
@@ -244,7 +245,7 @@ where the output names should start with :code:`"y"` and the input names should 
 
 We then split the data into a training set and a test set.
 We use the last 30 days for testing, and the previous 467 days for training.
-We save both the training data and the test data to CSV files in S3.
+We save both the training data and the test data to CSV files in S3 such that they can be used by the algorithm.
 
 .. code:: python
 
