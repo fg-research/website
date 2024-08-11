@@ -31,7 +31,7 @@ Forecasting exchange rates with long short-term memory (LSTM) networks using the
     </p>
 
     <p>
-    We will use the daily EUR/USD exchange rate from the 1<sup>st</sup> of August 2022 to
+    We will use the daily EUR/USD exchange rate time series from the 1<sup>st</sup> of August 2022 to
     the 31<sup>st</sup> of July 2024, which we will download from
     <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>.
     We will train the model on the data up to the 18<sup>th</sup> of June 2024,
@@ -112,13 +112,13 @@ the previous week to predict the value of the EUR/USD exchange rate on the next 
     prediction_length = 1
 
 ==========================================
-Data Preparation
+Data
 ==========================================
 
 .. raw:: html
 
     <p>
-    Next, we download the EUR/USD time series from the 1<sup>st</sup> of August 2022 to
+    Next, we download the EUR/USD exchange rate time series from the 1<sup>st</sup> of August 2022 to
     the 31<sup>st</sup> of July 2024. The dataset contains 522 daily observations.
     </p>
 

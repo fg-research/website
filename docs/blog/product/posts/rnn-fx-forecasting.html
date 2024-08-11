@@ -141,7 +141,7 @@ We will use the model for forecasting the EUR/USD exchange rate one day ahead us
 similar to <a href="#references">[4]</a>.
 </p>
 <p>
-We will use the daily EUR/USD exchange rate from the 1<sup>st</sup> of August 2022 to
+We will use the daily EUR/USD exchange rate time series from the 1<sup>st</sup> of August 2022 to
 the 31<sup>st</sup> of July 2024, which we will download from
 <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>.
 We will train the model on the data up to the 18<sup>th</sup> of June 2024,
@@ -212,10 +212,10 @@ the previous week to predict the value of the EUR/USD exchange rate on the next 
 </span><span id="line-5"><span class="n">prediction_length</span> <span class="o">=</span> <span class="mi">1</span>
 </span></code></pre></div>
 </div>
-<section id="data-preparation">
-<h3>Data Preparation<a class="headerlink" href="#data-preparation" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data-preparation'">¶</a></h3>
+<section id="data">
+<h3>Data<a class="headerlink" href="#data" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data'">¶</a></h3>
 <p>
-Next, we download the EUR/USD time series from the 1<sup>st</sup> of August 2022 to
+Next, we download the EUR/USD exchange rate time series from the 1<sup>st</sup> of August 2022 to
 the 31<sup>st</sup> of July 2024. The dataset contains 522 daily observations.
 </p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">dataset</span> <span class="o">=</span> <span class="n">yf</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">tickers</span><span class="o">=</span><span class="s2">"EURUSD=X"</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">"2022-08-01"</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">"2024-08-01"</span><span class="p">)</span>
 </span></code></pre></div>
@@ -474,7 +474,7 @@ Forex market forecasting using machine learning: systematic literature review an
 <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
 <li><a :data-current="activeSection === '#code'" class="reference internal" href="#code">Code</a><ul>
-<li><a :data-current="activeSection === '#data-preparation'" class="reference internal" href="#data-preparation">Data Preparation</a></li>
+<li><a :data-current="activeSection === '#data'" class="reference internal" href="#data">Data</a></li>
 <li><a :data-current="activeSection === '#training'" class="reference internal" href="#training">Training</a></li>
 <li><a :data-current="activeSection === '#inference'" class="reference internal" href="#inference">Inference</a></li>
 <li><a :data-current="activeSection === '#evaluation'" class="reference internal" href="#evaluation">Evaluation</a></li>
