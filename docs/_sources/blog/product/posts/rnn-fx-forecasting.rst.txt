@@ -133,7 +133,7 @@ Data Preparation
 
 * Moving average (MA) with a period of 10.
 
-* Moving average convergence/divergence (MACD) with short- and long-term periods of 12 and 26.
+* Moving average convergence/divergence (MACD) with periods of 12 and 26.
 
 * Rate of change (ROC) with a period of 2.
 
