@@ -209,6 +209,9 @@ Data Preparation
     # drop the missing values
     dataset.dropna(inplace=True)
 
+    # drop the unnecessary columns
+    dataset.drop(labels=["Adj Close", "Volume"], axis=1, inplace=True)
+
 After dropping the missing values resulting from the calculation of the technical indicators,
 the number of daily observations is reduced to 497.
 
@@ -227,9 +230,6 @@ We now proceed to renaming the columns in the format expected by the RNN SageMak
 where the output names should start with :code:`"y"` and the input names should start with :code:`"x"`.
 
 .. code:: python
-
-    # drop the unnecessary columns
-    dataset.drop(labels=["Adj Close", "Volume"], axis=1, inplace=True)
 
     # move the target to the first column
     dataset = dataset[["Close"] + dataset.columns.drop("Close").tolist()]
