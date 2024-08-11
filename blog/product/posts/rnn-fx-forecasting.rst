@@ -119,8 +119,7 @@ Data Preparation
 
     <p>
     Next, we download the EUR/USD time series from the 1<sup>st</sup> of August 2022 to
-    the 31<sup>st</sup> of July 2024 using the <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
-    The dataset contains 522 daily observations.
+    the 31<sup>st</sup> of July 2024. The dataset contains 522 daily observations.
     </p>
 
 .. code:: python
@@ -279,9 +278,15 @@ We save both the training data and the test data to CSV files in S3.
 ==========================================
 Training
 ==========================================
-We can now train the model using the data in S3.
-We use two LSTM layers with respectively 100 and 50 hidden units and apply a LeCun's hyperbolic tangent activation after each layer.
-We train the model for 200 epochs with a batch size of 16 and a learning rate of 0.001, where the learning rate is decayed exponentially at a rate of 0.99.
+
+.. raw:: html
+    <p>
+    We can now train the model using the training data in S3.
+    We use two LSTM layers with respectively 100 and 50 hidden units and apply a
+    LeCun's hyperbolic tangent activation <a href="#references">[3]</a> after each layer.
+    We train the model for 200 epochs with a batch size of 16 and a learning rate of 0.001,
+    where the learning rate is decayed exponentially at a rate of 0.99.
+    </p>
 
 .. code:: python
 
@@ -334,8 +339,8 @@ The results are saved to a CSV file in S3 with the same name as the input CSV fi
     )
 
 After the batch transform job has been completed, we can load the results from S3.
-For the purpose of evaluating the model's directional accuracy, we calculate the
-1-day predicted returns, that is the 1-day percentage changes predicted by the model.
+For the purpose of evaluating the model's directional accuracy, we also include
+the actual and predicted percentage changes in the results.
 
 .. code:: python
 

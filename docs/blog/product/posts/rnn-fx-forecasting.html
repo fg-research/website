@@ -216,8 +216,7 @@ the previous 5 days to predict the value of the EUR/USD exchange rate on the nex
 <h3>Data Preparation<a class="headerlink" href="#data-preparation" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data-preparation'">¶</a></h3>
 <p>
 Next, we download the EUR/USD time series from the 1<sup>st</sup> of August 2022 to
-the 31<sup>st</sup> of July 2024 using the <a href="https://github.com/ranaroussi/yfinance" target="_blank">Yahoo! Finance Python API</a>.
-The dataset contains 522 daily observations.
+the 31<sup>st</sup> of July 2024. The dataset contains 522 daily observations.
 </p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">dataset</span> <span class="o">=</span> <span class="n">yf</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">tickers</span><span class="o">=</span><span class="s2">"EURUSD=X"</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">"2022-08-01"</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">"2024-08-01"</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
@@ -347,9 +346,6 @@ We save both the training data and the test data to CSV files in S3.</p>
 </section>
 <section id="training">
 <h3>Training<a class="headerlink" href="#training" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#training'">¶</a></h3>
-<p>We can now train the model using the data in S3.
-We use two LSTM layers with respectively 100 and 50 hidden units and apply a LeCun’s hyperbolic tangent activation after each layer.
-We train the model for 200 epochs with a batch size of 16 and a learning rate of 0.001, where the learning rate is decayed exponentially at a rate of 0.99.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># create the estimator</span>
 </span><span id="line-2"><span class="n">estimator</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">AlgorithmEstimator</span><span class="p">(</span>
 </span><span id="line-3">    <span class="n">algorithm_arn</span><span class="o">=</span><span class="n">algo_arn</span><span class="p">,</span>
@@ -398,8 +394,8 @@ The results are saved to a CSV file in S3 with the same name as the input CSV fi
 </span></code></pre></div>
 </div>
 <p>After the batch transform job has been completed, we can load the results from S3.
-For the purpose of evaluating the model’s directional accuracy, we calculate the
-1-day predicted returns, that is the 1-day percentage changes predicted by the model.</p>
+For the purpose of evaluating the model’s directional accuracy, we also include
+the actual and predicted percentage changes in the results.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># get the forecasts from S3</span>
 </span><span id="line-2"><span class="n">predictions</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">read_s3_file</span><span class="p">(</span>
 </span><span id="line-3">    <span class="n">bucket</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span>
