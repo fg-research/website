@@ -81,7 +81,8 @@ h6 {
 #lstm-ad-ecg-anomaly-detection-include,
 #inflation-forecasting-random-forest-include,
 #lnn-equity-forecasting-include,
-#commodity-forecasting-forgan-include
+#commodity-forecasting-forgan-include,
+#rnn-fx-forecasting-include
 {
     font-weight: 300 !important;
 }
