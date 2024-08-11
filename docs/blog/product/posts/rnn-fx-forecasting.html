@@ -160,8 +160,11 @@ in order to get your Amazon Resource Name (ARN).
 In this post we use version 1.0 of the RNN SageMaker algorithm, which runs in the
 PyTorch 2.1.0 Python 3.10 deep learning container.</p>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
 <p>We use the <code class="code docutils literal notranslate"><span class="pre">yfinance</span></code> library for downloading the EUR/USD daily time series and
 the <code class="code docutils literal notranslate"><span class="pre">pyti</span></code> library for calculating the technical indicators.</p>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span> <span class="nn">io</span>
 </span><span id="line-2"><span class="kn">import</span> <span class="nn">sagemaker</span>
 </span><span id="line-3"><span class="kn">import</span> <span class="nn">warnings</span>

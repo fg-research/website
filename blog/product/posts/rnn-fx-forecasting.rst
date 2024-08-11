@@ -55,8 +55,10 @@ We start by importing all the dependencies and setting up the SageMaker environm
    In this post we use version 1.0 of the RNN SageMaker algorithm, which runs in the
    PyTorch 2.1.0 Python 3.10 deep learning container.
 
-We use the :code:`yfinance` library for downloading the EUR/USD daily time series and
-the :code:`pyti` library for calculating the technical indicators.
+.. note::
+
+    We use the :code:`yfinance` library for downloading the EUR/USD daily time series and
+    the :code:`pyti` library for calculating the technical indicators.
 
 .. code:: python
 
