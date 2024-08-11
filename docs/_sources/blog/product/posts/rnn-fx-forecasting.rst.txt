@@ -43,9 +43,7 @@ Forecasting exchange rates with long short-term memory (LSTM) networks using the
 ******************************************
 Code
 ******************************************
-==========================================
-Set Up
-==========================================
+
 We start by importing all the dependencies and setting up the SageMaker environment.
 
 .. warning::
