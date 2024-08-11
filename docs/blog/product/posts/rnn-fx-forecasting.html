@@ -128,15 +128,17 @@ Even though different machine learning models have been studied for this purpose
 (LSTM) <a href="#references">[1]</a> networks have become the most widely adopted <a href="#references">[2]</a>.
 </p>
 <p>
-The LSTM network is a type of recurrent neural network (RNN) designed to process and predict sequences of data.
-Unlike traditional RNNs, which can struggle with long-term dependencies due to issues like vanishing gradients,
-LSTMs can retain information over longer time intervals.
+LSTMs belong to the class of recurrent neural networks (RNN), which are designed to process and predict sequences of data.
+While vanilla RNNs often fail to capture long-term dependencies due to issues like vanishing gradients,
+LSTMs implement a number of gating mechanisms which allow the network to keep memory of relevant features
+over long time intervals.
 </p>
 <p>
-In this post, we will use our Amazon SageMaker implementation of LSTM networks for
+In this post, we will use our Amazon SageMaker implementation of RNNs for
 probabilistic time series forecasting, the <a href="https://fg-research.com/algorithms/time-series-forecasting/index.html#rnn-sagemaker-algorithm" target="_blank"> RNN SageMaker algorithm</a>,
 for generating one-day-ahead forecasts of the EUR/USD exchange rate using as input a
 number of technical indicators, similar to <a href="#references">[2]</a>.
+We will implement a relatively simple LSTM model with less than 80k parameters.
 </p>
 <p>
 We will use the daily EUR/USD exchange rate from the 1<sup>st</sup> of August 2022 to
@@ -144,7 +146,7 @@ the 31<sup>st</sup> of July 2024, which we will download from
 <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>.
 We will train the model on the data up to the 18<sup>th</sup> of June 2024,
 and use the trained model to predict the subsequent data up to the 31<sup>st</sup> of July 2024.
-We will find that the model achieves a mean absolute error of 0.0012 and
+We will find that our LSTM model achieves a mean absolute error of 0.0012 and
 a mean directional accuracy of 83.33% over the considered time period.
 </p><section id="code">
 <h2>Code<a class="headerlink" href="#code" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#code'">¶</a></h2>
@@ -295,7 +297,7 @@ where the output names should start with <code class="code docutils literal notr
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># drop the unnecessary columns</span>
 </span><span id="line-2"><span class="n">dataset</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s2">"Adj Close"</span><span class="p">,</span> <span class="s2">"Volume"</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span><span id="line-3">
-</span><span id="line-4"><span class="c1"># move the target to the first column.</span>
+</span><span id="line-4"><span class="c1"># move the target to the first column</span>
 </span><span id="line-5"><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[[</span><span class="s2">"Close"</span><span class="p">]</span> <span class="o">+</span> <span class="n">dataset</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">"Close"</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()]</span>
 </span><span id="line-6">
 </span><span id="line-7"><span class="c1"># rename the columns</span>

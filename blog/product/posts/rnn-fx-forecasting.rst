@@ -16,16 +16,18 @@ Forecasting exchange rates with long short-term memory (LSTM) networks using the
     </p>
 
     <p>
-    The LSTM network is a type of recurrent neural network (RNN) designed to process and predict sequences of data.
-    Unlike traditional RNNs, which can struggle with long-term dependencies due to issues like vanishing gradients,
-    LSTMs can retain information over longer time intervals.
+    LSTMs belong to the class of recurrent neural networks (RNN), which are designed to process and predict sequences of data.
+    While vanilla RNNs often fail to capture long-term dependencies due to issues like vanishing gradients,
+    LSTMs implement a number of gating mechanisms which allow the network to keep memory of relevant features
+    over long time intervals.
     </p>
 
     <p>
-    In this post, we will use our Amazon SageMaker implementation of LSTM networks for
+    In this post, we will use our Amazon SageMaker implementation of RNNs for
     probabilistic time series forecasting, the <a href="https://fg-research.com/algorithms/time-series-forecasting/index.html#rnn-sagemaker-algorithm" target="_blank"> RNN SageMaker algorithm</a>,
     for generating one-day-ahead forecasts of the EUR/USD exchange rate using as input a
     number of technical indicators, similar to <a href="#references">[2]</a>.
+    We will implement a relatively simple LSTM model with less than 80k parameters.
     </p>
 
     <p>
@@ -34,7 +36,7 @@ Forecasting exchange rates with long short-term memory (LSTM) networks using the
     <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>.
     We will train the model on the data up to the 18<sup>th</sup> of June 2024,
     and use the trained model to predict the subsequent data up to the 31<sup>st</sup> of July 2024.
-    We will find that the model achieves a mean absolute error of 0.0012 and
+    We will find that our LSTM model achieves a mean absolute error of 0.0012 and
     a mean directional accuracy of 83.33% over the considered time period.
     </p>
 
@@ -227,7 +229,7 @@ where the output names should start with :code:`"y"` and the input names should 
     # drop the unnecessary columns
     dataset.drop(labels=["Adj Close", "Volume"], axis=1, inplace=True)
 
-    # move the target to the first column.
+    # move the target to the first column
     dataset = dataset[["Close"] + dataset.columns.drop("Close").tolist()]
 
     # rename the columns
