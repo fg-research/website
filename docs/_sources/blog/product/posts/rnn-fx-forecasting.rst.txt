@@ -129,7 +129,7 @@ Data
 .. raw:: html
 
     <p>
-    We then calculate the following technical indicators, as in <a href="#references">[2]</a>:
+    We then calculate the following technical indicators, as in <a href="#references">[4]</a>:
     </p>
 
 * *Moving average (MA)* with a period of 10.
