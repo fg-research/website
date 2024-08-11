@@ -25,8 +25,8 @@ Forecasting exchange rates with long short-term memory (LSTM) networks using the
     <p>
     In this post, we will use our Amazon SageMaker implementation of RNNs for
     probabilistic time series forecasting, the <a href="https://fg-research.com/algorithms/time-series-forecasting/index.html#rnn-sagemaker-algorithm" target="_blank">RNN SageMaker algorithm</a>.
-    We will use an LSTM model with two layers with LeCun's hyperbolic tangent activation <a href="#references">[3]</a>
-    for forecasting the EUR/USD exchange rate one day ahead using as input a set of technical indicators,
+    We will implement a stacked LSTM model with two layers with LeCun's hyperbolic tangent activation <a href="#references">[3]</a>.
+    We will use the model for forecasting the EUR/USD exchange rate one day ahead using as input a set of technical indicators,
     similar to <a href="#references">[4]</a>.
     </p>
 
