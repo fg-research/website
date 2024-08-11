@@ -131,19 +131,19 @@ Data Preparation
     We then calculate the following technical indicators, as in <a href="#references">[2]</a>:
     </p>
 
-* Moving average (MA) with a period of 10.
+* *Moving average (MA)* with a period of 10.
 
-* Moving average convergence/divergence (MACD) with periods of 12 and 26.
+* *Moving average convergence/divergence (MACD)* with periods of 12 and 26.
 
-* Rate of change (ROC) with a period of 2.
+* *Rate of change (ROC)* with a period of 2.
 
-* Momentum with a period of 4.
+* *Momentum* with a period of 4.
 
-* Relative strength index (RSI) with a period of 10.
+* *Relative strength index (RSI)* with a period of 10.
 
-* Bollinger bands (BB) with period of 20.
+* *Bollinger bands (BB)* with period of 20.
 
-* Commodity channel index (CCI) with a period of 20.
+* *Commodity channel index (CCI)* with a period of 20.
 
 .. code:: python
 
