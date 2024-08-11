@@ -36,7 +36,7 @@ Forecasting exchange rates with long short-term memory (LSTM) networks using the
     <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>.
     We will train the model on the data up to the 18<sup>th</sup> of June 2024,
     and use the trained model to predict the subsequent data up to the 31<sup>st</sup> of July 2024.
-    We will find that our LSTM model achieves a mean absolute error of 0.0012 and
+    We will find that the model achieves a mean absolute error of 0.0012 and
     a mean directional accuracy of 83.33% over the considered time period.
     </p>
 
