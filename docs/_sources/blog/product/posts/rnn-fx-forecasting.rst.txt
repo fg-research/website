@@ -402,9 +402,9 @@ We evaluate the test set predictions using the following metrics:
 
 * The mean absolute error (*MAE*) of the predicted values.
 
-* The *accuracy* of the predicted signs of the returns.
+* The *accuracy* of the signs of the predicted percentage changes.
 
-* The *F1* score of the predicted signs of the returns.
+* The *F1* score of the signs of the predicted percentage changes.
 
 .. raw:: html
 
