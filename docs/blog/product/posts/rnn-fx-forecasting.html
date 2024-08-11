@@ -385,7 +385,8 @@ where the learning rate is decayed exponentially at a rate of 0.99.
 <section id="inference">
 <h3>Inference<a class="headerlink" href="#inference" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#inference'">¶</a></h3>
 <p>After the training job has been completed, we run a batch transform job on the test data in S3.
-The results are saved to a CSV file in S3 with the same name as the input CSV file but with the <code class="code docutils literal notranslate"><span class="pre">".out"</span></code> file extension.</p>
+The results of the batch transform job are saved to a CSV file in S3 with the same name as the
+input CSV file but with the <code class="code docutils literal notranslate"><span class="pre">".out"</span></code> file extension.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># create the transformer</span>
 </span><span id="line-2"><span class="n">transformer</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">transformer</span><span class="p">(</span>
 </span><span id="line-3">    <span class="n">instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>

@@ -324,7 +324,8 @@ Training
 Inference
 ==========================================
 After the training job has been completed, we run a batch transform job on the test data in S3.
-The results are saved to a CSV file in S3 with the same name as the input CSV file but with the :code:`".out"` file extension.
+The results of the batch transform job are saved to a CSV file in S3 with the same name as the
+input CSV file but with the :code:`".out"` file extension.
 
 .. code:: python
 
