@@ -200,9 +200,9 @@ The class has two methods: :code:`.fit()` and :code:`.predict()`:
 
     <li style="line-height: 1.75rem; margin-top: 1.75rem">The <code>.predict()</code> method scales
     the time series, splits the time series into context windows, and then passes the context windows
-    through the generator together with different randomly generated noise vectors. Each different
-    noise vector results in different predictions. The predictions are transformed back to the original
-    scale before being returned as an output.</li>
+    through the generator together with different randomly generated noise vectors. Each noise vector
+    results in different predictions. The predictions are transformed back to the original scale
+    before being returned as an output.</li>
 
     </ul>
 
@@ -370,7 +370,7 @@ The class has two methods: :code:`.fit()` and :code:`.predict()`:
 We set aside the last 30 days for testing, and use all the previous data for training.
 We use a context window of 5 days, meaning that we use the last 5 prices as input to forecast the next day's price.
 We set the number of hidden units of the LSTM layer equal to 256 for the generator and to 64 for the discriminator.
-We set the length of the generated noise vectors equal to 10.
+We set the length of the noise vectors equal to 10.
 We train the model for 100 epochs with a batch size of 64 and a learning rate of 0.001.
 
 .. code:: python

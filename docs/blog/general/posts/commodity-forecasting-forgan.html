@@ -281,9 +281,9 @@ time series, splits the time series into context windows and target values, and 
 generator and discriminator models using standard adversarial training with the cross-entropy loss.</li>
 <li style="line-height: 1.75rem; margin-top: 1.75rem">The <code>.predict()</code> method scales
 the time series, splits the time series into context windows, and then passes the context windows
-through the generator together with different randomly generated noise vectors. Each different
-noise vector results in different predictions. The predictions are transformed back to the original
-scale before being returned as an output.</li>
+through the generator together with different randomly generated noise vectors. Each noise vector
+results in different predictions. The predictions are transformed back to the original scale
+before being returned as an output.</li>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">class</span> <span class="nc">ForGAN</span><span class="p">():</span>
 </span><span id="line-2"><span class="w">    </span><span class="sd">'''</span>
 </span><span id="line-3"><span class="sd">    ForGAN model.</span>
@@ -432,7 +432,7 @@ The dataset contains 502 daily observations.
 <p class="blog-post-image-caption">Bloomberg Commodity Index from 2022-07-28 to 2024-07-26.</p><p>We set aside the last 30 days for testing, and use all the previous data for training.
 We use a context window of 5 days, meaning that we use the last 5 prices as input to forecast the next day’s price.
 We set the number of hidden units of the LSTM layer equal to 256 for the generator and to 64 for the discriminator.
-We set the length of the generated noise vectors equal to 10.
+We set the length of the noise vectors equal to 10.
 We train the model for 100 epochs with a batch size of 64 and a learning rate of 0.001.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># define the hyperparameters</span>
 </span><span id="line-2"><span class="n">test_size</span> <span class="o">=</span> <span class="mi">30</span>
