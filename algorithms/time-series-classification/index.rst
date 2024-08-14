@@ -56,7 +56,7 @@ InceptionTime SageMaker Algorithm
         Each block processes the inputs in parallel using three convolutional layers and a max pooling layer and returns
         a combined representation.
         The algorithm trains an ensemble of InceptionTime networks and generates the final predicted class labels by averaging the class probabilities predicted by the different networks in the ensemble.
-        The algorithm can be used for binary and multiclass classification of univariate time series.
+        The algorithm can be used for binary, multiclass and multilabel classification of both univariate and multivariate time series.
         For additional information, see the algorithm's
         <a href="https://aws.amazon.com/marketplace/pp/prodview-omz7rumnllmla" target="_blank">AWS Marketplace</a>
         listing page and
