@@ -436,20 +436,12 @@ For convenience, we include the actual values of the time series in the same dat
             "actual": dataset.iloc[- test_size:].values.flatten(),
             "median": np.median(predictions, axis=1),
             "q005": np.quantile(predictions, 0.005, axis=1),
-            "q995": np.quantile(predictions, 0.995, axis=1),
             "q10": np.quantile(predictions, 0.10, axis=1),
             "q90": np.quantile(predictions, 0.90, axis=1),
+            "q995": np.quantile(predictions, 0.995, axis=1),
         },
         index=dataset.index[- test_size:]
     )
-
-.. code:: python
-
-    predictions.shape
-
-.. code-block:: console
-
-    (30, 6)
 
 .. code:: python
 
