@@ -235,7 +235,7 @@ the number of daily observations is reduced to 497.
         id="rnn-fx-forecasting-dataset"
         class="blog-post-image"
         alt="First 3 rows of dataset"
-        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/rnn-fx-forecasting/dataset_light.png,
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/rnn-fx-forecasting/dataset_light.png
         style="width:100%"
     />
 
