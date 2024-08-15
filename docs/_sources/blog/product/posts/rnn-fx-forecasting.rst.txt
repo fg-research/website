@@ -269,6 +269,7 @@ where the output names should start with :code:`"y"` and the input names should 
         class="blog-post-image"
         alt="First 3 rows of renamed dataset"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/rnn-fx-forecasting/renamed_dataset_light.png
+        style="width:100%"
     />
 
 .. note::
