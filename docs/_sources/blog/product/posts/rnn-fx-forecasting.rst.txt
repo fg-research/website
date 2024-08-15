@@ -248,7 +248,7 @@ the number of daily observations is reduced to 497.
     <img
         id="rnn-fx-forecasting-dataset-tail"
         class="blog-post-image"
-        alt="First 3 rows of dataset"
+        alt="Last 3 rows of dataset"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/rnn-fx-forecasting/dataset_tail_light.png
         style="width:100%"
     />
@@ -295,7 +295,7 @@ where the output names should start with :code:`"y"` and the input names should 
     <img
         id="rnn-fx-forecasting-renamed-dataset-tail"
         class="blog-post-image"
-        alt="First 3 rows of renamed dataset"
+        alt="Last 3 rows of renamed dataset"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/rnn-fx-forecasting/renamed_dataset_tail_light.png
         style="width:100%"
     />

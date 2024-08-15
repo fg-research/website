@@ -247,6 +247,42 @@ We then calculate the 30-day returns and 30-day realized volatility.
 After dropping the missing values resulting from the calculation of the returns and of the realized volatility,
 the number of daily observations is reduced to 472.
 
+.. code:: python
+
+    dataset.shape
+
+.. code-block:: console
+
+    (472, 7)
+
+.. code:: python
+
+    dataset.head()
+
+.. raw:: html
+
+    <img
+        id="lnn-equity-forecasting-dataset-head"
+        class="blog-post-image"
+        alt="First 3 rows of dataset"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/lnn-equity-forecasting/dataset_head_light.png
+        style="width:100%"
+    />
+
+.. code:: python
+
+    dataset.tail()
+
+.. raw:: html
+
+    <img
+        id="lnn-equity-forecasting-dataset-tail"
+        class="blog-post-image"
+        alt="Last 3 rows of dataset"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/lnn-equity-forecasting/dataset_tail_light.png
+        style="width:100%"
+    />
+
 .. raw:: html
 
     <img
@@ -264,6 +300,34 @@ where the output names should start with :code:`"y"` and the input names should 
 .. code:: python
 
     dataset.columns = ["y"] + [f"x{i}" for i in range(dataset.shape[1] - 1)]
+
+.. code:: python
+
+    dataset.head()
+
+.. raw:: html
+
+    <img
+        id="lnn-equity-forecasting-renamed-dataset-head"
+        class="blog-post-image"
+        alt="First 3 rows of renamed dataset"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/lnn-equity-forecasting/renamed_dataset_head_light.png
+        style="width:100%"
+    />
+
+.. code:: python
+
+    dataset.tail()
+
+.. raw:: html
+
+    <img
+        id="lnn-equity-forecasting-renamed-dataset-tail"
+        class="blog-post-image"
+        alt="Last 3 rows of renamed dataset"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/lnn-equity-forecasting/renamed_dataset_tail_light.png
+        style="width:100%"
+    />
 
 .. note::
 

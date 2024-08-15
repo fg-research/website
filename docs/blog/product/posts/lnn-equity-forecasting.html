@@ -316,13 +316,31 @@ The dataset contains 502 daily observations.
 </div>
 <p>After dropping the missing values resulting from the calculation of the returns and of the realized volatility,
 the number of daily observations is reduced to 472.</p>
-<img alt="30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-28" class="blog-post-image" id="lnn-equity-forecasting-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/lnn-equity-forecasting/time_series_light.png"/>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">dataset</span><span class="o">.</span><span class="n">shape</span>
+</span></code></pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp gp-VirtualEnv">(472, 7)</span>
+</span></code></pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">dataset</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+<img alt="First 3 rows of dataset" class="blog-post-image" id="lnn-equity-forecasting-dataset-head" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/lnn-equity-forecasting/dataset_head_light.png" style="width:100%"/><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">dataset</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+<img alt="Last 3 rows of dataset" class="blog-post-image" id="lnn-equity-forecasting-dataset-tail" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/lnn-equity-forecasting/dataset_tail_light.png" style="width:100%"/><img alt="30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-28" class="blog-post-image" id="lnn-equity-forecasting-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/lnn-equity-forecasting/time_series_light.png"/>
 <p class="blog-post-image-caption">30-day returns, 30-day realized volatility and volatility indices from 2022-08-12 to 2024-06-28.</p><p>We now proceed to renaming the columns in the format expected by the LNN SageMaker algorithm,
 where the output names should start with <code class="code docutils literal notranslate"><span class="pre">"y"</span></code> and the input names should start with <code class="code docutils literal notranslate"><span class="pre">"x"</span></code>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">dataset</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"y"</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="sa">f</span><span class="s2">"x</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>
 </span></code></pre></div>
 </div>
-<div class="admonition note">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">dataset</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+<img alt="First 3 rows of renamed dataset" class="blog-post-image" id="lnn-equity-forecasting-renamed-dataset-head" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/lnn-equity-forecasting/renamed_dataset_head_light.png" style="width:100%"/><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">dataset</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+<img alt="Last 3 rows of renamed dataset" class="blog-post-image" id="lnn-equity-forecasting-renamed-dataset-tail" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/lnn-equity-forecasting/renamed_dataset_tail_light.png" style="width:100%"/><div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Note that the algorithm’s code always includes the past values of the outputs
 among the inputs and, therefore, there is no need to add the lagged values of
@@ -603,6 +621,6 @@ Amazon Web Services, AWS, Amazon SageMaker, AWS Marketplace and the AWS Marketpl
 <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
 <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
 <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-<script src="../../../_static/custom.js?v=90b1549a"></script>
+<script src="../../../_static/custom.js?v=267e5192"></script>
 </body>
 </html>
