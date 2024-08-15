@@ -452,7 +452,7 @@ For convenience, we include the actual values of the time series in the same dat
     <img
         id="commodity-forecasting-forgan-predictions-head"
         class="blog-post-image"
-        alt="First 3 rows of predicted prices"
+        alt="First 3 rows of predictions"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/commodity-forecasting-forgan/predictions_head_light.png
     />
 
@@ -465,7 +465,7 @@ For convenience, we include the actual values of the time series in the same dat
     <img
         id="commodity-forecasting-forgan-predictions-tail"
         class="blog-post-image"
-        alt="Last 3 rows of predicted prices"
+        alt="Last 3 rows of predictions"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/commodity-forecasting-forgan/predictions_tail_light.png
     />
 
