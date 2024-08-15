@@ -214,6 +214,29 @@ the number of daily observations is reduced to 497.
     # drop the unnecessary columns
     dataset.drop(labels=["Adj Close", "Volume"], axis=1, inplace=True)
 
+    # move the target to the first column
+    dataset = dataset[["Close"] + dataset.columns.drop("Close").tolist()]
+
+.. code:: python
+
+    dataset.shape
+
+.. code-block:: console
+
+    (497, 13)
+
+.. code:: python
+
+    dataset.head()
+
+.. raw:: html
+
+    <img
+        id="rnn-fx-forecasting-dataset"
+        class="blog-post-image"
+        alt="First 3 rows of dataset"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/rnn-fx-forecasting/dataset_light.png
+    />
 
 .. raw:: html
 
@@ -231,11 +254,21 @@ where the output names should start with :code:`"y"` and the input names should 
 
 .. code:: python
 
-    # move the target to the first column
-    dataset = dataset[["Close"] + dataset.columns.drop("Close").tolist()]
-
     # rename the columns
     dataset.columns = ["y"] + [f"x{i}" for i in range(dataset.shape[1] - 1)]
+
+.. code:: python
+
+    dataset.head()
+
+.. raw:: html
+
+    <img
+        id="rnn-fx-forecasting-renamed-dataset"
+        class="blog-post-image"
+        alt="First 3 rows of renamed dataset"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/rnn-fx-forecasting/renamed_dataset_light.png
+    />
 
 .. note::
 
