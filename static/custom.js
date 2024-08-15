@@ -74,8 +74,10 @@ window.setInterval(function(){
         'commodity-forecasting-forgan-metrics',
         'rnn-fx-forecasting-time-series',
         'rnn-fx-forecasting-predictions',
-        'rnn-fx-forecasting-dataset',
-        'rnn-fx-forecasting-renamed-dataset',
+        'rnn-fx-forecasting-dataset-head',
+        'rnn-fx-forecasting-dataset-tail',
+        'rnn-fx-forecasting-renamed-dataset-head',
+        'rnn-fx-forecasting-renamed-dataset-tail',
         'rnn-fx-forecasting-returns',
         'rnn-fx-forecasting-metrics'
     ];
