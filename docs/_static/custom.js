@@ -69,6 +69,8 @@ window.setInterval(function(){
         'lnn-equity-forecasting-metrics',
         'commodity-forecasting-forgan-time-series',
         'commodity-forecasting-forgan-predictions',
+        'commodity-forecasting-forgan-predictions-head',
+        'commodity-forecasting-forgan-predictions-tail',
         'commodity-forecasting-forgan-metrics',
         'rnn-fx-forecasting-time-series',
         'rnn-fx-forecasting-predictions',

@@ -417,6 +417,14 @@ We generate 100 prices for each of the 30 days in the test set.
     # generate the model predictions
     predictions = model.predict(x=test_dataset, samples=100)
 
+.. code:: python
+
+    predictions.shape
+
+.. code-block:: console
+
+    (30, 100)
+
 We then summarize the 100 generated prices by calculating different quantiles.
 For convenience, we include the actual values of the time series in the same data frame.
 
@@ -434,6 +442,40 @@ For convenience, we include the actual values of the time series in the same dat
         },
         index=dataset.index[- test_size:]
     )
+
+.. code:: python
+
+    predictions.shape
+
+.. code-block:: console
+
+    (30, 6)
+
+.. code:: python
+
+    predictions.head()
+
+.. raw:: html
+
+    <img
+        id="commodity-forecasting-forgan-predictions-head"
+        class="blog-post-image"
+        alt="First 3 rows of predicted prices"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/commodity-forecasting-forgan/predictions_head_light.png
+    />
+
+.. code:: python
+
+    predictions.tail()
+
+.. raw:: html
+
+    <img
+        id="commodity-forecasting-forgan-predictions-tail"
+        class="blog-post-image"
+        alt="Last 3 rows of predicted prices"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/commodity-forecasting-forgan/predictions_tail_light.png
+    />
 
 .. raw:: html
 
