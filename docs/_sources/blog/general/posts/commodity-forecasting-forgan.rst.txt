@@ -445,6 +445,14 @@ For convenience, we include the actual values of the time series in the same dat
 
 .. code:: python
 
+    predictions.shape
+
+.. code-block:: console
+
+    (30, 6)
+
+.. code:: python
+
     predictions.head()
 
 .. raw:: html
