@@ -35,8 +35,8 @@ Clustering ECG signals with the CNN-KMeans SageMaker Algorithm
 
     <p>
     In the rest of this post, we will demonstrate how to use the framework introduced in <a href="#references">[5]</a>
-    clustering ECG signals. We will use our Amazon SageMaker implementation of the clustering version
-    of this framework, the <a href="https://fg-research.com/algorithms/time-series-clustering/index.html#cnn-kmeans-sagemaker-algorithm"
+    for clustering ECG signals. We will use our Amazon SageMaker implementation of this framework, the
+    <a href="https://fg-research.com/algorithms/time-series-clustering/index.html#cnn-kmeans-sagemaker-algorithm"
     target="_blank">CNN-KMeans SageMaker algorithm</a>, for clustering the ECG traces in the
     <a href="http://www.timeseriesclassification.com/description.php?Dataset=ECG200" target="_blank">
     ECG200 dataset</a> <a href="#references">[6]</a>.
