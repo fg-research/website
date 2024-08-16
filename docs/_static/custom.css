@@ -121,6 +121,10 @@ h6 {
     width: 35%;
 }
 
+.anomaly-detection{
+    color: #bb2d3b
+}
+
 @media (max-width:750px) {
 
     .sd-card-text{

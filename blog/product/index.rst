@@ -168,7 +168,7 @@ Product
         :margin: 0 3 auto auto
 
         .. grid-item::
-            :class: sd-text-danger
+            :class: anomaly-detection
 
             :octicon:`graph;1rem;graph-icon` Anomaly Detection
 
