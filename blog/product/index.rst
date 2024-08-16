@@ -102,7 +102,7 @@ Product
         :margin: 0 3 auto auto
 
         .. grid-item::
-            :class: sd-text-danger
+            :class: sd-text-danger-highlight
 
             :octicon:`graph;1rem;graph-icon` Anomaly Detection
 
@@ -168,7 +168,7 @@ Product
         :margin: 0 3 auto auto
 
         .. grid-item::
-            :class: sd-text-danger
+            :class: sd-text-danger-highlight
 
             :octicon:`graph;1rem;graph-icon` Anomaly Detection
 
