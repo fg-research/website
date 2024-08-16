@@ -61,6 +61,15 @@ Model
     match the one of the output.
     </p>
 
+    <img
+        id="cnn-kmeans-ecg-clustering-diagram"
+        class="blog-post-image"
+        alt="Encoder block."
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/cnn-kmeans-ecg-clustering/diagram.png
+    />
+
+    <p class="blog-post-image-caption">Encoder block.</p>
+
     <p>
     The encoder parameters are learned in an unsupervised manner by minimizing the <i>triplet loss</i>. The contrastive learning
     procedure makes the extracted features of a given sequence (<i>anchor</i> or <i>reference</i>) as close as possible to the
