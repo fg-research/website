@@ -242,7 +242,7 @@ After that we load the test data from the CSV file.
     # load the test data
     test_dataset = pd.read_csv("mitbih_test.csv", header=None)
 
-To avoid confusion, we move the class labels from the last column to the first column, even though they are obviously not used for inference.
+To avoid confusion, we move the class labels from the last column to the first column, even though they are not used for inference.
 
 .. code:: python
 
