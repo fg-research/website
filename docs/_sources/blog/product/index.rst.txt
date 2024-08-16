@@ -34,7 +34,7 @@ Product
         :margin: 0 3 auto auto
 
         .. grid-item::
-            :class: sd-text-primary
+            :class: sd-text-primary-highlight
 
             :octicon:`graph;1rem;graph-icon` Forecasting
 
@@ -68,7 +68,7 @@ Product
         :margin: 0 3 auto auto
 
         .. grid-item::
-            :class: sd-text-primary
+            :class: sd-text-primary-highlight
 
             :octicon:`graph;1rem;graph-icon` Forecasting
 
