@@ -36,7 +36,7 @@ General
         :margin: 0 3 auto auto
 
         .. grid-item::
-            :class: sd-text-primary
+            :class: forecasting
 
             :octicon:`graph;1rem;graph-icon` Forecasting
 
@@ -69,7 +69,7 @@ General
         :margin: 0 3 auto auto
 
         .. grid-item::
-            :class: sd-text-primary
+            :class: forecasting
 
             :octicon:`graph;1rem;graph-icon` Forecasting
 
@@ -101,7 +101,7 @@ General
         :margin: 0 3 auto auto
 
         .. grid-item::
-            :class: sd-text-secondary
+            :class: miscellaneous
 
             :octicon:`graph;1rem;graph-icon` Datasets
 

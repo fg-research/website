@@ -121,8 +121,24 @@ h6 {
     width: 35%;
 }
 
+.forecasting{
+    color: #0069D9
+}
+
 .anomaly-detection{
     color: #bb2d3b
+}
+
+.clustering{
+    color: #148a9c
+}
+
+.classification{
+    color: #228e3b
+}
+
+.miscellaneous{
+    color: #5c636a
 }
 
 @media (max-width:750px) {
