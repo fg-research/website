@@ -15,6 +15,39 @@ Product
 
 .. card::
     :width: 100%
+    :link: posts/cnn-kmeans-ecg-clustering
+    :link-type: doc
+
+    .. _cnn-kmeans-ecg-clustering-toctree:
+
+    .. toctree::
+        :titlesonly:
+
+        posts/cnn-kmeans-ecg-clustering
+
+    .. _cnn-kmeans-ecg-clustering-include:
+
+    Time series clustering is the task of partitioning a set of time series into homogeneous groups.
+    Traditional clustering algorithms based on the Euclidean distance, such as K-Means clustering,
+    are not directly applicable to time series data, as time series with similar patterns can have
+    large Euclidean distance due to misalignments and offsets along the time axis...
+
+    .. grid:: 2
+        :margin: 0 3 auto auto
+
+        .. grid-item::
+            :class: blog-post-tag
+
+            :octicon:`graph;1rem;graph-icon` Clustering
+
+        .. grid-item::
+            :class: sd-text-secondary
+
+            :octicon:`calendar;1rem;calendar-icon` August 16, 2024
+
+
+.. card::
+    :width: 100%
     :link: posts/rnn-fx-forecasting
     :link-type: doc
 
@@ -179,34 +212,4 @@ Product
             :octicon:`calendar;1rem;calendar-icon` January 2, 2024
 
 
-.. card::
-    :width: 100%
-    :link: posts/cnn-kmeans-ecg-clustering
-    :link-type: doc
 
-    .. _cnn-kmeans-ecg-clustering-toctree:
-
-    .. toctree::
-        :titlesonly:
-
-        posts/cnn-kmeans-ecg-clustering
-
-    .. _cnn-kmeans-ecg-clustering-include:
-
-    Time series clustering is the task of partitioning a set of time series into homogeneous groups.
-    Traditional clustering algorithms based on the Euclidean distance, such as K-Means clustering,
-    are not directly applicable to time series data, as time series with similar patterns can have
-    large Euclidean distance due to misalignments and offsets along the time axis...
-
-    .. grid:: 2
-        :margin: 0 3 auto auto
-
-        .. grid-item::
-            :class: blog-post-tag
-
-            :octicon:`graph;1rem;graph-icon` Clustering
-
-        .. grid-item::
-            :class: sd-text-secondary
-
-            :octicon:`calendar;1rem;calendar-icon` August 8, 2023
