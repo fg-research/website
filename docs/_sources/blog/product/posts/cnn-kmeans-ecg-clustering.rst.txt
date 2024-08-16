@@ -255,8 +255,9 @@ After loading the model outputs from S3, we can compare the predicted cluster la
         normalize="index"
     )
 
-We find that the model assigns 83% of the normal ECG traces (class 1) to cluster 0,
-and 83% of the abnormal ECG traces (class -1) to cluster 1.
+We find that the model achieves approximately 83% accuracy, as it assigns 82.81% of
+the normal ECG traces (class 1) to cluster 0, and 83.33% of the abnormal ECG traces
+(class -1) to cluster 1.
 
 .. raw:: html
 
