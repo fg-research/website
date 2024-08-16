@@ -34,7 +34,7 @@ Product
         :margin: 0 3 auto auto
 
         .. grid-item::
-            :class: sd-text-primary-highlight
+            :class: sd-text-primary
 
             :octicon:`graph;1rem;graph-icon` Forecasting
 
@@ -68,7 +68,7 @@ Product
         :margin: 0 3 auto auto
 
         .. grid-item::
-            :class: sd-text-primary-highlight
+            :class: sd-text-primary
 
             :octicon:`graph;1rem;graph-icon` Forecasting
 
@@ -102,7 +102,7 @@ Product
         :margin: 0 3 auto auto
 
         .. grid-item::
-            :class: sd-text-danger-highlight
+            :class: sd-text-danger
 
             :octicon:`graph;1rem;graph-icon` Anomaly Detection
 
@@ -168,7 +168,7 @@ Product
         :margin: 0 3 auto auto
 
         .. grid-item::
-            :class: sd-text-danger-highlight
+            :class: sd-text-danger
 
             :octicon:`graph;1rem;graph-icon` Anomaly Detection
 
