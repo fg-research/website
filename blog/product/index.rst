@@ -136,7 +136,7 @@ Product
         :margin: 0 3 auto auto
 
         .. grid-item::
-            :class: classification
+            :class: blog-post-tag
 
             :octicon:`graph;1rem;graph-icon` Classification
 
