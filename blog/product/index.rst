@@ -12,6 +12,7 @@ Product
 
    Learn about our time series algorithms
 
+
 .. card::
     :width: 100%
     :link: posts/rnn-fx-forecasting
@@ -180,17 +181,17 @@ Product
 
 .. card::
     :width: 100%
-    :link: posts/cnn-kmeans-control-chart-clustering
+    :link: posts/cnn-kmeans-ecg-clustering
     :link-type: doc
 
-    .. _cnn-kmeans-control-chart-clustering-toctree:
+    .. _cnn-kmeans-ecg-clustering-toctree:
 
     .. toctree::
         :titlesonly:
 
-        posts/cnn-kmeans-control-chart-clustering
+        posts/cnn-kmeans-ecg-clustering
 
-    .. _cnn-kmeans-control-chart-clustering-include:
+    .. _cnn-kmeans-ecg-clustering-include:
 
     Time series clustering is the task of partitioning a set of time series into homogeneous groups.
     Traditional clustering algorithms based on the Euclidean distance, such as K-Means clustering,
@@ -208,4 +209,4 @@ Product
         .. grid-item::
             :class: sd-text-secondary
 
-            :octicon:`calendar;1rem;calendar-icon` December 12, 2023
+            :octicon:`calendar;1rem;calendar-icon` August 8, 2023

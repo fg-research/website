@@ -4,7 +4,7 @@
    :keywords: Amazon SageMaker, Time Series, Clustering, Convolutional Neural Network, K-Means
 
 ######################################################################################
-Control chart pattern clustering with the CNN-KMeans SageMaker Algorithm
+Clustering ECG signals with the CNN-KMeans SageMaker Algorithm
 ######################################################################################
 
 .. raw:: html
@@ -35,11 +35,11 @@ Control chart pattern clustering with the CNN-KMeans SageMaker Algorithm
 
     <p>
     In the rest of this post, we will demonstrate how to use the framework introduced in <a href="#references">[5]</a>
-    for control chart pattern recognition. We will use our Amazon SageMaker implementation of the clustering version
+    clustering ECG signals. We will use our Amazon SageMaker implementation of the clustering version
     of this framework, the <a href="https://fg-research.com/algorithms/time-series-clustering/index.html#cnn-kmeans-sagemaker-algorithm"
-    target="_blank">CNN-KMeans SageMaker algorithm</a>, for clustering the control charts in the
-    <a href="http://www.timeseriesclassification.com/description.php?Dataset=SyntheticControl" target="_blank">
-    Synthetic Control dataset</a> <a href="#references">[6]</a>.
+    target="_blank">CNN-KMeans SageMaker algorithm</a>, for clustering the ECG traces in the
+    <a href="http://www.timeseriesclassification.com/description.php?Dataset=ECG200" target="_blank">
+    ECG200 dataset</a> <a href="#references">[6]</a>.
     </p>
 
 ******************************************
@@ -80,23 +80,23 @@ Data
 .. raw:: html
 
     <p>
-    We use the <a href="http://www.timeseriesclassification.com/description.php?Dataset=SyntheticControl" target="_blank">
-    Synthetic Control dataset</a> introduced in <a href="#references">[2]</a> and available in the <a href="http://www.timeseriesclassification.com/dataset.php"
-    target="_blank"> UCR Time Series Classification Archive <a href="#references">[6]</a>.
-    The dataset contains 600 synthetically generated time series, which are equally split into a training set and a test set.
-    The time series represent 6 different control chart patterns: normal (class 1), cyclic (class 2), increasing trend (class 3),
-    decreasing trend (class 4), upward shift (class 5) and downward shift (class 6).
+    We use the ECG200 dataset introduced in <a href="#references">[7]</a> and available
+    in the UCR Time Series Classification Archive <a href="#references">[6]</a>.
+    The dataset contains 200 time series of cardiac electrical activity as recorded from electrodes
+    at various locations on the body. Each time series in the dataset contains 96 measurements
+    recorded by one electrode during one heartbeat. 133 time series are labelled as normal (class 1),
+    while 67 time series are labelled as abnormal (class -1). The time series are equally split into
+    a training set and a test set.
     </p>
 
     <img
-        id="cnn-kmeans-control-chart-clustering-dataset"
+        id="cnn-kmeans-ecg-clustering-time-series"
         class="blog-post-image"
-        style="width:100%"
-        alt="Synthetic Control dataset (combined training and test sets)"
-        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/cnn-kmeans-control-chart-clustering/data_light.png
+        alt="ECG200 dataset (combined training and test sets)"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/cnn-kmeans-ecg-clustering/data_light.png
     />
 
-   <p class="blog-post-image-caption"> Synthetic Control dataset (combined training and test sets).</p>
+   <p class="blog-post-image-caption"> ECG200 dataset (combined training and test sets).</p>
 
 ******************************************
 Code
@@ -121,7 +121,6 @@ We start by importing all the requirements and setting up the SageMaker environm
     import sagemaker
     import pandas as pd
     import numpy as np
-    from sklearn.metrics import silhouette_score
 
     # SageMaker algorithm ARN, replace the placeholder below with your AWS Marketplace ARN
     algo_arn = "arn:aws:sagemaker:<...>"
@@ -146,20 +145,20 @@ After that we load the training and test datasets, drop the first column with th
 
 .. warning::
 
-    To be able to run the code below, you need to download the datasets (`"SyntheticControl_TRAIN.txt"` and `"SyntheticControl_TEST.txt"`)
-    from the `UCR Time Series Classification Archive <http://www.timeseriesclassification.com/description.php?Dataset=SyntheticControl>`__
+    To be able to run the code below, you need to download the datasets (`"ECG200_TRAIN.txt"` and `"ECG200_TEST.txt"`)
+    from the `UCR Time Series Classification Archive <http://www.timeseriesclassification.com/description.php?Dataset=ECG200>`__
     and store them in the SageMaker notebook instance.
 
 .. code:: python
 
     # load the training dataset
     training_dataset = pd.DataFrame(
-        data=np.genfromtxt("SyntheticControl_TRAIN.txt")
+        data=np.genfromtxt("ECG200_TRAIN.txt")
     )
 
     # load the test dataset
     test_dataset = pd.DataFrame(
-        data=np.genfromtxt("SyntheticControl_TEST.txt")
+        data=np.genfromtxt("ECG200_TEST.txt")
     )
 
     # save the training dataset in S3
@@ -193,17 +192,17 @@ Now that the training dataset is available in an accessible S3 bucket, we are re
         input_mode="File",
         sagemaker_session=sagemaker_session,
         hyperparameters={
-            "clusters": 6,
+            "clusters": 2,
             "algorithm": "lloyd",
-            "blocks": 10,
-            "filters": 40,
+            "blocks": 1,
+            "filters": 50,
             "kernel-size": 3,
-            "reduced-size": 160,
-            "output-size": 320,
+            "reduced-size": 100,
+            "output-size": 50,
             "negative-samples": 10,
             "lr": 0.001,
-            "batch-size": 128,
-            "epochs": 100,
+            "batch-size": 64,
+            "epochs": 50,
         },
     )
 
@@ -240,36 +239,35 @@ which are stored in the subsequent columns.
     # load the model outputs from S3
     predictions = sagemaker_session.read_s3_file(
         bucket=bucket,
-        key_prefix=f"{transformer.latest_transform_job.name}/SyntheticControl_test.csv.out"
+        key_prefix=f"{transformer.latest_transform_job.name}/ECG200_test.csv.out"
     )
 
     # convert the model outputs to data frame
     predictions = pd.read_csv(io.StringIO(predictions), header=None, dtype=float)
 
-After loading the model outputs from S3, we can calculate the *Silhouette coefficient*.
-The Silhouette coefficient ranges from -1 to 1, with higher values indicating better clustering.
+After loading the model outputs from S3, we can compare the predicted cluster labels to the ground truth class labels.
 
 .. code:: python
 
-    # calculate the Silhouette coefficient
-    score = silhouette_score(
-        labels=predictions.iloc[:, 0],
-        X=predictions.iloc[:, 1:]
+    results = pd.crosstab(
+        index=pd.Series(data=test_dataset.iloc[:, 0].values, name="class label"),
+        columns=pd.Series(data=predictions.iloc[:, 0].values, name="cluster label"),
+        normalize="index"
     )
 
-We find that the model achieves a Silhouette coefficient of 0.33 on the test set.
+We find that the model assigns 83% of the normal ECG traces (class 1) to cluster 0,
+and 83% of the abnormal ECG traces (class -1) to cluster 1.
 
 .. raw:: html
 
    <img
-        id="cnn-kmeans-control-chart-clustering-results"
+        id="cnn-kmeans-ecg-clustering-results"
         class="blog-post-image"
-        style="width:100%"
-        alt="Results on Synthetic Control UCR dataset (test set)"
-        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/cnn-kmeans-control-chart-clustering/results_light.png
+        alt="Results on ECG200 dataset (test set)"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/cnn-kmeans-ecg-clustering/results_light.png
    />
 
-   <p class="blog-post-image-caption"> Results on Synthetic Control UCR dataset (test set).</p>
+   <p class="blog-post-image-caption"> Results on ECG200 dataset (test set).</p>
 
 After the analysis has been completed, we can delete the model.
 
@@ -281,7 +279,7 @@ After the analysis has been completed, we can delete the model.
 .. tip::
 
     You can download the
-    `notebook <https://github.com/fg-research/cnn-kmeans-sagemaker/blob/master/examples/SyntheticControl.ipynb>`__
+    `notebook <https://github.com/fg-research/cnn-kmeans-sagemaker/blob/master/examples/ECG200.ipynb>`__
     with the full code from our
     `GitHub <https://github.com/fg-research/cnn-kmeans-sagemaker>`__
     repository.
@@ -317,3 +315,6 @@ Unsupervised scalable representation learning for multivariate time series.
 The UCR time series archive.
 *IEEE/CAA Journal of Automatica Sinica*, vol. 6, no. 6, pp. 1293-1305.
 `doi: 10.1109/JAS.2019.1911747 <https://doi.org/10.1109/JAS.2019.1911747>`__.
+
+[7] Olszewski, R. T. (2001). Generalized feature extraction for structural pattern recognition in time-series data.
+*Carnegie Mellon University*.

@@ -10,15 +10,15 @@
 <meta content="https://fg-research.com/_static/thumbnail.png" name="thumbnail"/>
 <meta content="Control chart pattern clustering with the CNN-KMeans SageMaker Algorithm" name="description"/>
 <meta content="Amazon SageMaker, Time Series, Clustering, Convolutional Neural Network, K-Means" name="keywords"/>
-<title>Control chart pattern clustering with the CNN-KMeans SageMaker Algorithm | fg-research</title>
-<meta content="Control chart pattern clustering with the CNN-KMeans SageMaker Algorithm | fg-research" property="og:title"/>
-<meta content="Control chart pattern clustering with the CNN-KMeans SageMaker Algorithm | fg-research" name="twitter:title"/>
+<title>Clustering ECG signals with the CNN-KMeans SageMaker Algorithm | fg-research</title>
+<meta content="Clustering ECG signals with the CNN-KMeans SageMaker Algorithm | fg-research" property="og:title"/>
+<meta content="Clustering ECG signals with the CNN-KMeans SageMaker Algorithm | fg-research" name="twitter:title"/>
 <link href="../../../_static/pygments.css?v=8d216cef" rel="stylesheet" type="text/css"/>
 <link href="../../../_static/theme.css?v=ecdfb4fc" rel="stylesheet" type="text/css"/>
 <link href="../../../_static/sphinx-design.min.css?v=87e54e7c" rel="stylesheet" type="text/css"/>
-<link href="../../../_static/custom.css?v=d6b8185c" rel="stylesheet" type="text/css"/>
+<link href="../../../_static/custom.css?v=b94747c2" rel="stylesheet" type="text/css"/>
 <link href="../../../_static/awesome-sphinx-design.css?v=a54cf077" rel="stylesheet" type="text/css"/>
-<link href="https://fg-research.com/blog/product/posts/cnn-kmeans-control-chart-clustering.html" rel="canonical"/>
+<link href="https://fg-research.com/blog/product/posts/cnn-kmeans-ecg-clustering.html" rel="canonical"/>
 <link href="../../../_static/favicon.ico" rel="icon"/>
 <link href="../../../search.html" rel="search" title="Search"/>
 <link href="../../../genindex.html" rel="index" title="Index"/>
@@ -117,11 +117,11 @@
 </svg>
 </a>
 <div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="../index.html">Product</a>
-<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Control chart pattern clustering with the CNN-KMeans SageMaker Algorithm</span>
+<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Clustering ECG signals with the CNN-KMeans SageMaker Algorithm</span>
 </nav>
 <div id="content" role="main">
-<section id="control-chart-pattern-clustering-with-the-cnn-kmeans-sagemaker-algorithm">
-<h1>Control chart pattern clustering with the CNN-KMeans SageMaker Algorithm<a class="headerlink" href="#control-chart-pattern-clustering-with-the-cnn-kmeans-sagemaker-algorithm" title="Link to this heading">¶</a></h1>
+<section id="clustering-ecg-signals-with-the-cnn-kmeans-sagemaker-algorithm">
+<h1>Clustering ECG signals with the CNN-KMeans SageMaker Algorithm<a class="headerlink" href="#clustering-ecg-signals-with-the-cnn-kmeans-sagemaker-algorithm" title="Link to this heading">¶</a></h1>
 <p>
 Time series clustering is the task of partitioning a set of time series into homogeneous groups.
 Traditional clustering algorithms based on the Euclidean distance, such as K-Means clustering, are
@@ -145,10 +145,10 @@ time series classification and time series regression.
 </p>
 <p>
 In the rest of this post, we will demonstrate how to use the framework introduced in <a href="#references">[5]</a>
-for control chart pattern recognition. We will use our Amazon SageMaker implementation of the clustering version
-of this framework, the <a href="https://fg-research.com/algorithms/time-series-clustering/index.html#cnn-kmeans-sagemaker-algorithm" target="_blank">CNN-KMeans SageMaker algorithm</a>, for clustering the control charts in the
-<a href="http://www.timeseriesclassification.com/description.php?Dataset=SyntheticControl" target="_blank">
-Synthetic Control dataset</a> <a href="#references">[6]</a>.
+clustering ECG signals. We will use our Amazon SageMaker implementation of the clustering version
+of this framework, the <a href="https://fg-research.com/algorithms/time-series-clustering/index.html#cnn-kmeans-sagemaker-algorithm" target="_blank">CNN-KMeans SageMaker algorithm</a>, for clustering the ECG traces in the
+<a href="http://www.timeseriesclassification.com/description.php?Dataset=ECG200" target="_blank">
+ECG200 dataset</a> <a href="#references">[6]</a>.
 </p><section id="model">
 <h2>Model<a class="headerlink" href="#model" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#model'">¶</a></h2>
 <p>
@@ -175,14 +175,16 @@ These extracted features are then used as input by the K-Means clusterer.
 <section id="data">
 <h2>Data<a class="headerlink" href="#data" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data'">¶</a></h2>
 <p>
- We use the <a href="http://www.timeseriesclassification.com/description.php?Dataset=SyntheticControl" target="_blank">
- Synthetic Control dataset</a> introduced in <a href="#references">[2]</a> and available in the <a href="http://www.timeseriesclassification.com/dataset.php" target="_blank"> UCR Time Series Classification Archive <a href="#references">[6]</a>.
- The dataset contains 600 synthetically generated time series, which are equally split into a training set and a test set.
- The time series represent 6 different control chart patterns: normal (class 1), cyclic (class 2), increasing trend (class 3),
- decreasing trend (class 4), upward shift (class 5) and downward shift (class 6).
- </a></p>
-<img alt="Synthetic Control dataset (combined training and test sets)" class="blog-post-image" id="cnn-kmeans-control-chart-clustering-dataset" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/cnn-kmeans-control-chart-clustering/data_light.png" style="width:100%"/>
-<p class="blog-post-image-caption"> Synthetic Control dataset (combined training and test sets).</p></section>
+ We use the ECG200 dataset introduced in <a href="#references">[7]</a> and available
+ in the UCR Time Series Classification Archive <a href="#references">[6]</a>.
+ The dataset contains 200 time series of cardiac electrical activity as recorded from electrodes
+ at various locations on the body. Each time series in the dataset contains 96 measurements
+ recorded by one electrode during one heartbeat. 133 time series are labelled as normal (class 1),
+ while 67 time series are labelled as abnormal (class -1). The time series are equally split into
+ a training set and a test set.
+ </p>
+<img alt="ECG200 dataset (combined training and test sets)" class="blog-post-image" id="cnn-kmeans-ecg-clustering-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/cnn-kmeans-ecg-clustering/data_light.png"/>
+<p class="blog-post-image-caption"> ECG200 dataset (combined training and test sets).</p></section>
 <section id="code">
 <h2>Code<a class="headerlink" href="#code" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#code'">¶</a></h2>
 <section id="environment-set-up">
@@ -199,22 +201,21 @@ which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.</p>
 </span><span id="line-2"><span class="kn">import</span> <span class="nn">sagemaker</span>
 </span><span id="line-3"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 </span><span id="line-4"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-</span><span id="line-5"><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">silhouette_score</span>
-</span><span id="line-6">
-</span><span id="line-7"><span class="c1"># SageMaker algorithm ARN, replace the placeholder below with your AWS Marketplace ARN</span>
-</span><span id="line-8"><span class="n">algo_arn</span> <span class="o">=</span> <span class="s2">"arn:aws:sagemaker:&lt;...&gt;"</span>
-</span><span id="line-9">
-</span><span id="line-10"><span class="c1"># SageMaker session</span>
-</span><span id="line-11"><span class="n">sagemaker_session</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
-</span><span id="line-12">
-</span><span id="line-13"><span class="c1"># SageMaker role</span>
-</span><span id="line-14"><span class="n">role</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">get_execution_role</span><span class="p">()</span>
-</span><span id="line-15">
-</span><span id="line-16"><span class="c1"># S3 bucket</span>
-</span><span id="line-17"><span class="n">bucket</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">default_bucket</span><span class="p">()</span>
-</span><span id="line-18">
-</span><span id="line-19"><span class="c1"># EC2 instance</span>
-</span><span id="line-20"><span class="n">instance_type</span> <span class="o">=</span> <span class="s2">"ml.m5.2xlarge"</span>
+</span><span id="line-5">
+</span><span id="line-6"><span class="c1"># SageMaker algorithm ARN, replace the placeholder below with your AWS Marketplace ARN</span>
+</span><span id="line-7"><span class="n">algo_arn</span> <span class="o">=</span> <span class="s2">"arn:aws:sagemaker:&lt;...&gt;"</span>
+</span><span id="line-8">
+</span><span id="line-9"><span class="c1"># SageMaker session</span>
+</span><span id="line-10"><span class="n">sagemaker_session</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+</span><span id="line-11">
+</span><span id="line-12"><span class="c1"># SageMaker role</span>
+</span><span id="line-13"><span class="n">role</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">get_execution_role</span><span class="p">()</span>
+</span><span id="line-14">
+</span><span id="line-15"><span class="c1"># S3 bucket</span>
+</span><span id="line-16"><span class="n">bucket</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">default_bucket</span><span class="p">()</span>
+</span><span id="line-17">
+</span><span id="line-18"><span class="c1"># EC2 instance</span>
+</span><span id="line-19"><span class="n">instance_type</span> <span class="o">=</span> <span class="s2">"ml.m5.2xlarge"</span>
 </span></code></pre></div>
 </div>
 </section>
@@ -223,18 +224,18 @@ which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.</p>
 <p>After that we load the training and test datasets, drop the first column with the class labels, and save them in the S3 bucket in CSV format.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>To be able to run the code below, you need to download the datasets (<cite>“SyntheticControl_TRAIN.txt”</cite> and <cite>“SyntheticControl_TEST.txt”</cite>)
-from the <a class="reference external" href="http://www.timeseriesclassification.com/description.php?Dataset=SyntheticControl">UCR Time Series Classification Archive</a>
+<p>To be able to run the code below, you need to download the datasets (<cite>“ECG200_TRAIN.txt”</cite> and <cite>“ECG200_TEST.txt”</cite>)
+from the <a class="reference external" href="http://www.timeseriesclassification.com/description.php?Dataset=ECG200">UCR Time Series Classification Archive</a>
 and store them in the SageMaker notebook instance.</p>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># load the training dataset</span>
 </span><span id="line-2"><span class="n">training_dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-</span><span id="line-3">    <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="s2">"SyntheticControl_TRAIN.txt"</span><span class="p">)</span>
+</span><span id="line-3">    <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="s2">"ECG200_TRAIN.txt"</span><span class="p">)</span>
 </span><span id="line-4"><span class="p">)</span>
 </span><span id="line-5">
 </span><span id="line-6"><span class="c1"># load the test dataset</span>
 </span><span id="line-7"><span class="n">test_dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-</span><span id="line-8">    <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="s2">"SyntheticControl_TEST.txt"</span><span class="p">)</span>
+</span><span id="line-8">    <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">genfromtxt</span><span class="p">(</span><span class="s2">"ECG200_TEST.txt"</span><span class="p">)</span>
 </span><span id="line-9"><span class="p">)</span>
 </span><span id="line-10">
 </span><span id="line-11"><span class="c1"># save the training dataset in S3</span>
@@ -265,17 +266,17 @@ and store them in the SageMaker notebook instance.</p>
 </span><span id="line-7">    <span class="n">input_mode</span><span class="o">=</span><span class="s2">"File"</span><span class="p">,</span>
 </span><span id="line-8">    <span class="n">sagemaker_session</span><span class="o">=</span><span class="n">sagemaker_session</span><span class="p">,</span>
 </span><span id="line-9">    <span class="n">hyperparameters</span><span class="o">=</span><span class="p">{</span>
-</span><span id="line-10">        <span class="s2">"clusters"</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+</span><span id="line-10">        <span class="s2">"clusters"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
 </span><span id="line-11">        <span class="s2">"algorithm"</span><span class="p">:</span> <span class="s2">"lloyd"</span><span class="p">,</span>
-</span><span id="line-12">        <span class="s2">"blocks"</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
-</span><span id="line-13">        <span class="s2">"filters"</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span>
+</span><span id="line-12">        <span class="s2">"blocks"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+</span><span id="line-13">        <span class="s2">"filters"</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
 </span><span id="line-14">        <span class="s2">"kernel-size"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
-</span><span id="line-15">        <span class="s2">"reduced-size"</span><span class="p">:</span> <span class="mi">160</span><span class="p">,</span>
-</span><span id="line-16">        <span class="s2">"output-size"</span><span class="p">:</span> <span class="mi">320</span><span class="p">,</span>
+</span><span id="line-15">        <span class="s2">"reduced-size"</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+</span><span id="line-16">        <span class="s2">"output-size"</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
 </span><span id="line-17">        <span class="s2">"negative-samples"</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
 </span><span id="line-18">        <span class="s2">"lr"</span><span class="p">:</span> <span class="mf">0.001</span><span class="p">,</span>
-</span><span id="line-19">        <span class="s2">"batch-size"</span><span class="p">:</span> <span class="mi">128</span><span class="p">,</span>
-</span><span id="line-20">        <span class="s2">"epochs"</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+</span><span id="line-19">        <span class="s2">"batch-size"</span><span class="p">:</span> <span class="mi">64</span><span class="p">,</span>
+</span><span id="line-20">        <span class="s2">"epochs"</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
 </span><span id="line-21">    <span class="p">},</span>
 </span><span id="line-22"><span class="p">)</span>
 </span><span id="line-23">
@@ -307,25 +308,25 @@ which are stored in the subsequent columns.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># load the model outputs from S3</span>
 </span><span id="line-2"><span class="n">predictions</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">read_s3_file</span><span class="p">(</span>
 </span><span id="line-3">    <span class="n">bucket</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span>
-</span><span id="line-4">    <span class="n">key_prefix</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">transformer</span><span class="o">.</span><span class="n">latest_transform_job</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">/SyntheticControl_test.csv.out"</span>
+</span><span id="line-4">    <span class="n">key_prefix</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">transformer</span><span class="o">.</span><span class="n">latest_transform_job</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">/ECG200_test.csv.out"</span>
 </span><span id="line-5"><span class="p">)</span>
 </span><span id="line-6">
 </span><span id="line-7"><span class="c1"># convert the model outputs to data frame</span>
 </span><span id="line-8"><span class="n">predictions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">predictions</span><span class="p">),</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
-<p>After loading the model outputs from S3, we can calculate the <em>Silhouette coefficient</em>.
-The Silhouette coefficient ranges from -1 to 1, with higher values indicating better clustering.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># calculate the Silhouette coefficient</span>
-</span><span id="line-2"><span class="n">score</span> <span class="o">=</span> <span class="n">silhouette_score</span><span class="p">(</span>
-</span><span id="line-3">    <span class="n">labels</span><span class="o">=</span><span class="n">predictions</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span>
-</span><span id="line-4">    <span class="n">X</span><span class="o">=</span><span class="n">predictions</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span>
+<p>After loading the model outputs from S3, we can compare the predicted cluster labels to the ground truth class labels.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span>
+</span><span id="line-2">    <span class="n">index</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">test_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"class label"</span><span class="p">),</span>
+</span><span id="line-3">    <span class="n">columns</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">predictions</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"cluster label"</span><span class="p">),</span>
+</span><span id="line-4">    <span class="n">normalize</span><span class="o">=</span><span class="s2">"index"</span>
 </span><span id="line-5"><span class="p">)</span>
 </span></code></pre></div>
 </div>
-<p>We find that the model achieves a Silhouette coefficient of 0.33 on the test set.</p>
-<img alt="Results on Synthetic Control UCR dataset (test set)" class="blog-post-image" id="cnn-kmeans-control-chart-clustering-results" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/cnn-kmeans-control-chart-clustering/results_light.png" style="width:100%"/>
-<p class="blog-post-image-caption"> Results on Synthetic Control UCR dataset (test set).</p><p>After the analysis has been completed, we can delete the model.</p>
+<p>We find that the model assigns 83% of the normal ECG traces (class 1) to cluster 0,
+and 83% of the abnormal ECG traces (class -1) to cluster 1.</p>
+<img alt="Results on ECG200 dataset (test set)" class="blog-post-image" id="cnn-kmeans-ecg-clustering-results" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/cnn-kmeans-ecg-clustering/results_light.png"/>
+<p class="blog-post-image-caption"> Results on ECG200 dataset (test set).</p><p>After the analysis has been completed, we can delete the model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># delete the model</span>
 </span><span id="line-2"><span class="n">transformer</span><span class="o">.</span><span class="n">delete_model</span><span class="p">()</span>
 </span></code></pre></div>
@@ -333,7 +334,7 @@ The Silhouette coefficient ranges from -1 to 1, with higher values indicating be
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>You can download the
-<a class="reference external" href="https://github.com/fg-research/cnn-kmeans-sagemaker/blob/master/examples/SyntheticControl.ipynb">notebook</a>
+<a class="reference external" href="https://github.com/fg-research/cnn-kmeans-sagemaker/blob/master/examples/ECG200.ipynb">notebook</a>
 with the full code from our
 <a class="reference external" href="https://github.com/fg-research/cnn-kmeans-sagemaker">GitHub</a>
 repository.</p>
@@ -364,6 +365,8 @@ Unsupervised scalable representation learning for multivariate time series.
 The UCR time series archive.
 <em>IEEE/CAA Journal of Automatica Sinica</em>, vol. 6, no. 6, pp. 1293-1305.
 <a class="reference external" href="https://doi.org/10.1109/JAS.2019.1911747">doi: 10.1109/JAS.2019.1911747</a>.</p>
+<p>[7] Olszewski, R. T. (2001). Generalized feature extraction for structural pattern recognition in time-series data.
+<em>Carnegie Mellon University</em>.</p>
 </section>
 </section>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
@@ -400,6 +403,6 @@ Amazon Web Services, AWS, Amazon SageMaker, AWS Marketplace and the AWS Marketpl
 <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
 <script defer="defer" src="../../../_static/theme.js?v=e82a16a3"></script>
 <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
-<script src="../../../_static/custom.js?v=267e5192"></script>
+<script src="../../../_static/custom.js?v=cbd14006"></script>
 </body>
 </html>
