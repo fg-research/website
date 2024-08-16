@@ -121,24 +121,8 @@ h6 {
     width: 35%;
 }
 
-.forecasting{
+.blog-post-tag{
     color: #0069D9
-}
-
-.anomaly-detection{
-    color: #bb2d3b
-}
-
-.clustering{
-    color: #6c757d
-}
-
-.classification{
-    color: #28a745
-}
-
-.miscellaneous{
-    color: #5c636a
 }
 
 @media (max-width:750px) {

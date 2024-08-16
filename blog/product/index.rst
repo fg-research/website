@@ -35,7 +35,7 @@ Product
         :margin: 0 3 auto auto
 
         .. grid-item::
-            :class: forecasting
+            :class: blog-post-tag
 
             :octicon:`graph;1rem;graph-icon` Forecasting
 
@@ -69,7 +69,7 @@ Product
         :margin: 0 3 auto auto
 
         .. grid-item::
-            :class: forecasting
+            :class: blog-post-tag
 
             :octicon:`graph;1rem;graph-icon` Forecasting
 
@@ -103,7 +103,7 @@ Product
         :margin: 0 3 auto auto
 
         .. grid-item::
-            :class: anomaly-detection
+            :class: blog-post-tag
 
             :octicon:`graph;1rem;graph-icon` Anomaly Detection
 
@@ -169,7 +169,7 @@ Product
         :margin: 0 3 auto auto
 
         .. grid-item::
-            :class: anomaly-detection
+            :class: blog-post-tag
 
             :octicon:`graph;1rem;graph-icon` Anomaly Detection
 
@@ -202,7 +202,7 @@ Product
         :margin: 0 3 auto auto
 
         .. grid-item::
-            :class: clustering
+            :class: blog-post-tag
 
             :octicon:`graph;1rem;graph-icon` Clustering
 
