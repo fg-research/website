@@ -29,9 +29,9 @@ Epileptic seizure detection with the InceptionTime SageMaker Algorithm
     In this post, we will demonstrate how to use our Amazon SageMaker implementation of the InceptionTime
     model <a href="#references">[2]</a>, a state-of-the-art neural network architecture for time series data,
     for detecting epileptic seizures from the readings of a wearable tri-axial accelerometer. We will train and
-    validate the InceptionTime model on tri-axial accelerometer data collected from six participants who mimicked
-    epileptic seizures following a specific medical protocol. We will find that the InceptionTime model achieves a
-    ROC-AUC score of 99.63% on this dataset.
+    validate the InceptionTime model on a small dataset collected from six participants who mimicked
+    epileptic seizures following a specific medical protocol <a href="#references">[3]</a>.
+    We will find that the InceptionTime model achieves a ROC-AUC score of 99.63% on this dataset.
     </p>
 
 ******************************************
