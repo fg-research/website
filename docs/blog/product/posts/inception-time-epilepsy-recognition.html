@@ -146,7 +146,19 @@ a unique predicted probability and, therefore, a unique predicted label, for eac
 <p>
  We use the Epilepsy dataset introduced in <a href="#references">[...]</a> and available
  in the UCR Time Series Classification Archive <a href="#references">[...]</a>.
-
+ The data was collected from 6 study participants who conducted 4 different activities
+ while wearing a tri-axial accelerometer on their wrist: walking, running, sewing and
+ mimicking epileptic seizures.
+ The mimicked epileptic seizures followed a protocol defined by a medical expert.
+ </p>
+<p>
+ The dataset contains 275 3-dimensional time series of length 206 recorded at a
+ sampling frequency of 16 Hz, corresponding to approximately 13 seconds.
+ 137 time series are included in the training set, while the remaining
+ 138 time series are included in the test set.
+ The training set and test time series correspond to different participants
+ (3 participants are included in the training set,
+ while the remaining 3 participants are included in the test set).
  </p>
 <img alt="Epilepsy dataset (combined training and test sets)" class="blog-post-image" id="inception-time-epilepsy-recognition-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/data_light.png"/>
 <p class="blog-post-image-caption"> Epilepsy dataset (combined training and test sets).</p></section>
@@ -162,6 +174,31 @@ You can subscribe to a free trial from the <a class="reference external" href="h
 in order to get your Amazon Resource Name (ARN). In this post we use version 1.8 of the InceptionTime SageMaker algorithm,
 which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.</p>
 </div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span> <span class="nn">io</span>
+</span><span id="line-2"><span class="kn">import</span> <span class="nn">sagemaker</span>
+</span><span id="line-3"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span><span id="line-4"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</span><span id="line-5"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</span><span id="line-6"><span class="kn">from</span> <span class="nn">scipy.io</span> <span class="kn">import</span> <span class="n">arff</span>
+</span><span id="line-7"><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span>
+</span><span id="line-8"><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">recall_score</span><span class="p">,</span> <span class="n">f1_score</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">roc_auc_score</span>
+</span><span id="line-9">
+</span><span id="line-10"><span class="c1"># SageMaker algorithm ARN, replace the placeholder below with your AWS Marketplace ARN</span>
+</span><span id="line-11"><span class="n">algo_arn</span> <span class="o">=</span> <span class="s2">"arn:aws:sagemaker:&lt;...&gt;"</span>
+</span><span id="line-12">
+</span><span id="line-13"><span class="c1"># SageMaker session</span>
+</span><span id="line-14"><span class="n">sagemaker_session</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+</span><span id="line-15">
+</span><span id="line-16"><span class="c1"># SageMaker role</span>
+</span><span id="line-17"><span class="n">role</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">get_execution_role</span><span class="p">()</span>
+</span><span id="line-18">
+</span><span id="line-19"><span class="c1"># S3 bucket</span>
+</span><span id="line-20"><span class="n">bucket</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">default_bucket</span><span class="p">()</span>
+</span><span id="line-21">
+</span><span id="line-22"><span class="c1"># EC2 instance</span>
+</span><span id="line-23"><span class="n">instance_type</span> <span class="o">=</span> <span class="s2">"ml.m5.2xlarge"</span>
+</span></code></pre></div>
+</div>
 </section>
 <section id="data-preparation">
 <h3>Data Preparation<a class="headerlink" href="#data-preparation" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data-preparation'">¶</a></h3>
@@ -169,7 +206,40 @@ which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.</p>
 <p class="admonition-title">Warning</p>
 <p>To be able to run the code below, you need to download the data
 from the <a class="reference external" href="http://www.timeseriesclassification.com/description.php?Dataset=ECG200">UCR Time Series Classification Archive</a>
-and store the :code::<cite>ARFF</cite> files in the SageMaker notebook instance.</p>
+and store the <code class="code docutils literal notranslate"><span class="pre">ARFF</span></code> files in the SageMaker notebook instance.</p>
+</div>
+<p>After that we define a function for reading and preparing the data
+in the format required by the InceptionTime SageMaker algorithm.
+The algorithm expects the column names of the one-hot encoded class labels to start with <code class="code docutils literal notranslate"><span class="pre">"y"</span></code>
+and the column names of the time series values to start with <code class="code docutils literal notranslate"><span class="pre">"x"</span></code>.
+The algorithm also requires including unique sample identifiers in the <code class="code docutils literal notranslate"><span class="pre">"sample"</span></code> column and
+unique feature identifiers in the <code class="code docutils literal notranslate"><span class="pre">"feature"</span></code> column,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">def</span> <span class="nf">read_data</span><span class="p">(</span><span class="n">dimension</span><span class="p">,</span> <span class="n">split</span><span class="p">):</span>
+</span><span id="line-2">
+</span><span id="line-3">    <span class="c1"># load the data</span>
+</span><span id="line-4">    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">arff</span><span class="o">.</span><span class="n">loadarff</span><span class="p">(</span><span class="sa">f</span><span class="s2">"EpilepsyDimension</span><span class="si">{</span><span class="n">dimension</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">split</span><span class="si">}</span><span class="s2">.arff"</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+</span><span id="line-5">
+</span><span id="line-6">    <span class="c1"># extract the features and labels</span>
+</span><span id="line-7">    <span class="n">features</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:]</span>
+</span><span id="line-8">
+</span><span id="line-9">    <span class="c1"># rename the features</span>
+</span><span id="line-10">    <span class="n">features</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">"x_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">features</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+</span><span id="line-11">
+</span><span id="line-12">    <span class="c1"># one-hot encode the labels</span>
+</span><span id="line-13">    <span class="n">ohe</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">sparse_output</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+</span><span id="line-14">    <span class="n">labels</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">ohe</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">labels</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s1">'y_</span><span class="si">{</span><span class="n">c</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ohe</span><span class="o">.</span><span class="n">categories_</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+</span><span id="line-15">
+</span><span id="line-16">    <span class="c1"># merge the labels and features</span>
+</span><span id="line-17">    <span class="n">data</span> <span class="o">=</span> <span class="n">labels</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+</span><span id="line-18">
+</span><span id="line-19">    <span class="c1"># add the sample ids</span>
+</span><span id="line-20">    <span class="n">data</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">"sample"</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)))</span>
+</span><span id="line-21">
+</span><span id="line-22">    <span class="c1"># add the feature ids</span>
+</span><span id="line-23">    <span class="n">data</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">"feature"</span><span class="p">,</span> <span class="n">dimension</span><span class="p">)</span>
+</span><span id="line-24">
+</span><span id="line-25">    <span class="k">return</span> <span class="n">data</span>
+</span></code></pre></div>
 </div>
 <img alt="First 6 rows of training dataset" class="blog-post-image" id="inception-time-epilepsy-recognition-training-dataset-head" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/training_dataset_head_light.png" style="width:100%"/><img alt="Last 6 rows of training dataset" class="blog-post-image" id="inception-time-epilepsy-recognition-training-dataset-tail" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/training_dataset_tail_light.png" style="width:100%"/><img alt="First 6 rows of test inputs" class="blog-post-image" id="inception-time-epilepsy-recognition-test-inputs-head" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/test_inputs_head_light.png"/><img alt="Last 6 rows of test inputs" class="blog-post-image" id="inception-time-epilepsy-recognition-test-inputs-tail" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/test_inputs_tail_light.png"/><img alt="First 6 rows of test outputs" class="blog-post-image" id="inception-time-epilepsy-recognition-test-outputs-head" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/test_outputs_head_light.png"/><img alt="Last 6 rows of test outputs" class="blog-post-image" id="inception-time-epilepsy-recognition-test-outputs-tail" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/test_outputs_tail_light.png"/></section>
 <section id="training">
@@ -200,9 +270,13 @@ repository.</p>
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#references'">¶</a></h2>
-<p>[6] Dau, H. A., Bagnall, A., Kamgar, K., Yeh, C. C. M., Zhu, Y., Gharghabi, S., Ratanamahatana, C. A., &amp; Keogh, E. (2019).
+<p>[] Villar, J. R., Vergara, P., Menéndez, M., de la Cal, E., González, V. M., &amp; Sedano, J. (2016).
+Generalized models for the classification of abnormal movements in daily life and its applicability to epilepsy convulsion recognition.
+<em>International journal of neural systems</em>, 26(06), 1650037.
+<a class="reference external" href="https://doi.org/10.1142/S0129065716500374">doi: 10.1142/S0129065716500374</a>.</p>
+<p>[] Dau, H. A., Bagnall, A., Kamgar, K., Yeh, C. C. M., Zhu, Y., Gharghabi, S., Ratanamahatana, C. A., &amp; Keogh, E. (2019).
 The UCR time series archive.
-<em>IEEE/CAA Journal of Automatica Sinica</em>, vol. 6, no. 6, pp. 1293-1305.
+<em>IEEE/CAA Journal of Automatica Sinica</em>, 6(6), pp. 1293-1305.
 <a class="reference external" href="https://doi.org/10.1109/JAS.2019.1911747">doi: 10.1109/JAS.2019.1911747</a>.</p>
 </section>
 </section>

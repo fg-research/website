@@ -57,7 +57,20 @@ Data
     <p>
     We use the Epilepsy dataset introduced in <a href="#references">[...]</a> and available
     in the UCR Time Series Classification Archive <a href="#references">[...]</a>.
+    The data was collected from 6 study participants who conducted 4 different activities
+    while wearing a tri-axial accelerometer on their wrist: walking, running, sewing and
+    mimicking epileptic seizures.
+    The mimicked epileptic seizures followed a protocol defined by a medical expert.
+    </p>
 
+    <p>
+    The dataset contains 275 3-dimensional time series of length 206 recorded at a
+    sampling frequency of 16 Hz, corresponding to approximately 13 seconds.
+    137 time series are included in the training set, while the remaining
+    138 time series are included in the test set.
+    The training set and test time series correspond to different participants
+    (3 participants are included in the training set,
+    while the remaining 3 participants are included in the test set).
     </p>
 
     <img
@@ -86,19 +99,76 @@ We start by importing all the requirements and setting up the SageMaker environm
     in order to get your Amazon Resource Name (ARN). In this post we use version 1.8 of the InceptionTime SageMaker algorithm,
     which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.
 
+.. code:: python
+
+    import io
+    import sagemaker
+    import pandas as pd
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from scipy.io import arff
+    from sklearn.preprocessing import OneHotEncoder
+    from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score, roc_auc_score
+
+    # SageMaker algorithm ARN, replace the placeholder below with your AWS Marketplace ARN
+    algo_arn = "arn:aws:sagemaker:<...>"
+
+    # SageMaker session
+    sagemaker_session = sagemaker.Session()
+
+    # SageMaker role
+    role = sagemaker.get_execution_role()
+
+    # S3 bucket
+    bucket = sagemaker_session.default_bucket()
+
+    # EC2 instance
+    instance_type = "ml.m5.2xlarge"
 
 ==========================================
 Data Preparation
 ==========================================
 
-
 .. warning::
 
     To be able to run the code below, you need to download the data
     from the `UCR Time Series Classification Archive <http://www.timeseriesclassification.com/description.php?Dataset=ECG200>`__
-    and store the :code::`ARFF` files in the SageMaker notebook instance.
+    and store the :code:`ARFF` files in the SageMaker notebook instance.
 
+After that we define a function for reading and preparing the data
+in the format required by the InceptionTime SageMaker algorithm.
+The algorithm expects the column names of the one-hot encoded class labels to start with :code:`"y"`
+and the column names of the time series values to start with :code:`"x"`.
+The algorithm also requires including unique sample identifiers in the :code:`"sample"` column and
+unique feature identifiers in the :code:`"feature"` column,
 
+.. code:: python
+
+    def read_data(dimension, split):
+
+        # load the data
+        df = pd.DataFrame(data=arff.loadarff(f"EpilepsyDimension{dimension}_{split}.arff")[0])
+
+        # extract the features and labels
+        features, labels = df.iloc[:, :-1], df.iloc[:, -1:]
+
+        # rename the features
+        features.columns = [f"x_{i}" for i in range(1, 1 + features.shape[1])]
+
+        # one-hot encode the labels
+        ohe = OneHotEncoder(sparse_output=False).fit(labels)
+        labels = pd.DataFrame(data=ohe.transform(labels), columns=[f'y_{c.decode("utf-8")}' for c in ohe.categories_[0]])
+
+        # merge the labels and features
+        data = labels.join(features)
+
+        # add the sample ids
+        data.insert(0, "sample", range(1, 1 + len(df)))
+
+        # add the feature ids
+        data.insert(1, "feature", dimension)
+
+        return data
 
 .. raw:: html
 
@@ -209,10 +279,14 @@ After the analysis has been completed, we can delete the model.
 References
 ******************************************
 
+[] Villar, J. R., Vergara, P., Menéndez, M., de la Cal, E., González, V. M., & Sedano, J. (2016).
+Generalized models for the classification of abnormal movements in daily life and its applicability to epilepsy convulsion recognition.
+*International journal of neural systems*, 26(06), 1650037.
+`doi: 10.1142/S0129065716500374 <https://doi.org/10.1142/S0129065716500374>`__.
 
-[6] Dau, H. A., Bagnall, A., Kamgar, K., Yeh, C. C. M., Zhu, Y., Gharghabi, S., Ratanamahatana, C. A., & Keogh, E. (2019).
+[] Dau, H. A., Bagnall, A., Kamgar, K., Yeh, C. C. M., Zhu, Y., Gharghabi, S., Ratanamahatana, C. A., & Keogh, E. (2019).
 The UCR time series archive.
-*IEEE/CAA Journal of Automatica Sinica*, vol. 6, no. 6, pp. 1293-1305.
+*IEEE/CAA Journal of Automatica Sinica*, 6(6), pp. 1293-1305.
 `doi: 10.1109/JAS.2019.1911747 <https://doi.org/10.1109/JAS.2019.1911747>`__.
 
 
