@@ -317,6 +317,9 @@ which are stored in the subsequent columns.</p>
 </span><span id="line-8"><span class="n">predictions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">predictions</span><span class="p">),</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
+</section>
+<section id="evaluation">
+<h3>Evaluation<a class="headerlink" href="#evaluation" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#evaluation'">¶</a></h3>
 <p>After loading the model outputs from S3, we can compare the predicted cluster labels to the ground truth class labels.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span>
 </span><span id="line-2">    <span class="n">index</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">test_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"class label"</span><span class="p">),</span>
@@ -382,6 +385,7 @@ The UCR time series archive.
 <li><a :data-current="activeSection === '#data-preparation'" class="reference internal" href="#data-preparation">Data Preparation</a></li>
 <li><a :data-current="activeSection === '#training'" class="reference internal" href="#training">Training</a></li>
 <li><a :data-current="activeSection === '#inference'" class="reference internal" href="#inference">Inference</a></li>
+<li><a :data-current="activeSection === '#evaluation'" class="reference internal" href="#evaluation">Evaluation</a></li>
 </ul>
 </li>
 <li><a :data-current="activeSection === '#references'" class="reference internal" href="#references">References</a></li>

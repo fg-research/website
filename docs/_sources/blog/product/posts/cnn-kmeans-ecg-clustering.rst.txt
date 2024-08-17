@@ -254,6 +254,10 @@ which are stored in the subsequent columns.
     # convert the model outputs to data frame
     predictions = pd.read_csv(io.StringIO(predictions), header=None, dtype=float)
 
+==========================================
+Evaluation
+==========================================
+
 After loading the model outputs from S3, we can compare the predicted cluster labels to the ground truth class labels.
 
 .. code:: python
