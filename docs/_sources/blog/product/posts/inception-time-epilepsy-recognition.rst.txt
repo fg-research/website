@@ -23,9 +23,9 @@ Epileptic seizure detection with the InceptionTime SageMaker Algorithm
     </p>
 
     <p>
-    We will demonstrate how to use our Amazon SageMaker implementation of the InceptionTime model <a href="#references">[2]</a>, the
-    <a href="https://fg-research.com/algorithms/time-series-classification/index.html#inception-time-sagemaker-algorithm"
-    target="_blank">InceptionTime SageMaker algorithm</a>, for detecting epileptic seizure
+    In this post, we will demonstrate how to use our Amazon SageMaker implementation of the InceptionTime model
+    <a href="#references">[2]</a>, the <a href="https://fg-research.com/algorithms/time-series-classification/index.html#inception-time-sagemaker-algorithm"
+    target="_blank">InceptionTime SageMaker algorithm</a>, for detecting epileptic seizures
     from the readings of a wearable tri-axial accelerometer.
     </p>
 
