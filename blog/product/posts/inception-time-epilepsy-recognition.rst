@@ -106,6 +106,10 @@ Code
     in order to get your Amazon Resource Name (ARN). In this post we use version 1.8 of the InceptionTime SageMaker algorithm,
     which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.
 
+    You will also need to download the "Epilepsy" dataset from the
+    `UCR Time Series Classification Archive <http://www.timeseriesclassification.com/description.php?Dataset=Epilepsy>`__
+    and store the files in the SageMaker notebook instance.
+
 ==========================================
 Environment Set-Up
 ==========================================
@@ -146,12 +150,6 @@ The algorithm expects the column names of the one-hot encoded class labels to st
 and the column names of the time series values to start with :code:`"x"`.
 The algorithm also requires including unique sample identifiers in a column named :code:`"sample"` and
 unique feature identifiers in a column named :code:`"feature"`.
-
-.. warning::
-
-    To be able to run the code below, you need to download the data
-    from the `UCR Time Series Classification Archive <http://www.timeseriesclassification.com/description.php?Dataset=Epilepsy>`__
-    and store the files in the SageMaker notebook instance.
 
 .. code:: python
 

@@ -181,6 +181,9 @@ while the test set contains an anomalous heartbeat between observations 52,600 a
 You can subscribe to a free trial from the <a class="reference external" href="https://aws.amazon.com/marketplace/pp/prodview-4pbvedtnnlphw">AWS Marketplace</a>
 in order to get your Amazon Resource Name (ARN). In this post we use version 1.11 of the LSTM-FCN SageMaker algorithm,
 which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.</p>
+<p>You will also need to download the dataset (<code class="code docutils literal notranslate"><span class="pre">"179_UCR_Anomaly_ltstdbs30791AS_23000_52600_52800.txt"</span></code>)
+from the <a class="reference external" href="https://www.cs.ucr.edu/~eamonn/time_series_data_2018/">Hexagon ML / UCR Time Series Anomaly Detection Archive</a>
+and store it in the SageMaker notebook instance.</p>
 </div>
 <section id="environment-set-up">
 <h3>Environment Set-Up<a class="headerlink" href="#environment-set-up" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#environment-set-up'">¶</a></h3>
@@ -210,12 +213,6 @@ which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.</p>
 <section id="data-preparation">
 <h3>Data Preparation<a class="headerlink" href="#data-preparation" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data-preparation'">¶</a></h3>
 <p>After that we load the dataset and split it into training and test datasets, which we save to S3.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>To be able to run the code below, you need to download the dataset (<cite>“179_UCR_Anomaly_ltstdbs30791AS_23000_52600_52800.txt”</cite>)
-from the <a class="reference external" href="https://www.cs.ucr.edu/~eamonn/time_series_data_2018/">Hexagon ML / UCR Time Series Anomaly Detection Archive</a>
-and store it in the SageMaker notebook instance.</p>
-</div>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">dataset_name</span> <span class="o">=</span> <span class="s2">"179_UCR_Anomaly_ltstdbs30791AS_23000_52600_52800"</span>
 </span><span id="line-2"><span class="n">cutoff</span> <span class="o">=</span> <span class="mi">23000</span>  <span class="c1"># train-test cutoff</span>
 </span><span id="line-3"><span class="n">start</span> <span class="o">=</span> <span class="mi">52600</span>   <span class="c1"># start of anomalous time interval</span>

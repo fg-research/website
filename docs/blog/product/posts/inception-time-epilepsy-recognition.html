@@ -186,6 +186,9 @@ but are determined using PyTorch’s default initialization method.</p>
 You can subscribe to a free trial from the <a class="reference external" href="https://aws.amazon.com/marketplace/pp/prodview-omz7rumnllmla">AWS Marketplace</a>
 in order to get your Amazon Resource Name (ARN). In this post we use version 1.8 of the InceptionTime SageMaker algorithm,
 which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.</p>
+<p>You will also need to download the “Epilepsy” dataset from the
+<a class="reference external" href="http://www.timeseriesclassification.com/description.php?Dataset=Epilepsy">UCR Time Series Classification Archive</a>
+and store the files in the SageMaker notebook instance.</p>
 </div>
 <section id="environment-set-up">
 <h3>Environment Set-Up<a class="headerlink" href="#environment-set-up" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#environment-set-up'">¶</a></h3>
@@ -223,12 +226,6 @@ The algorithm expects the column names of the one-hot encoded class labels to st
 and the column names of the time series values to start with <code class="code docutils literal notranslate"><span class="pre">"x"</span></code>.
 The algorithm also requires including unique sample identifiers in a column named <code class="code docutils literal notranslate"><span class="pre">"sample"</span></code> and
 unique feature identifiers in a column named <code class="code docutils literal notranslate"><span class="pre">"feature"</span></code>.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>To be able to run the code below, you need to download the data
-from the <a class="reference external" href="http://www.timeseriesclassification.com/description.php?Dataset=Epilepsy">UCR Time Series Classification Archive</a>
-and store the files in the SageMaker notebook instance.</p>
-</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">def</span> <span class="nf">read_data</span><span class="p">(</span><span class="n">dimension</span><span class="p">,</span> <span class="n">split</span><span class="p">):</span>
 </span><span id="line-2">
 </span><span id="line-3">    <span class="c1"># load the data</span>

@@ -96,6 +96,10 @@ Code
     in order to get your Amazon Resource Name (ARN). In this post we use version 1.11 of the LSTM-FCN SageMaker algorithm,
     which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.
 
+    You will also need to download the dataset (:code:`"179_UCR_Anomaly_ltstdbs30791AS_23000_52600_52800.txt"`)
+    from the `Hexagon ML / UCR Time Series Anomaly Detection Archive <https://www.cs.ucr.edu/~eamonn/time_series_data_2018/>`__
+    and store it in the SageMaker notebook instance.
+
 ==========================================
 Environment Set-Up
 ==========================================
@@ -129,12 +133,6 @@ Data Preparation
 ==========================================
 
 After that we load the dataset and split it into training and test datasets, which we save to S3.
-
-.. warning::
-
-    To be able to run the code below, you need to download the dataset (`"179_UCR_Anomaly_ltstdbs30791AS_23000_52600_52800.txt"`)
-    from the `Hexagon ML / UCR Time Series Anomaly Detection Archive <https://www.cs.ucr.edu/~eamonn/time_series_data_2018/>`__
-    and store it in the SageMaker notebook instance.
 
 .. code::
 

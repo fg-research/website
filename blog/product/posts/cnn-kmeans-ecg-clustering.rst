@@ -118,6 +118,10 @@ Code
     in order to get your Amazon Resource Name (ARN). In this post we use version 1.6 of the CNN-KMeans SageMaker algorithm,
     which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.
 
+    You will also need to download the "ECG200" dataset
+    from the `UCR Time Series Classification Archive <http://www.timeseriesclassification.com/description.php?Dataset=ECG200>`__
+    and store the files in the SageMaker notebook instance.
+
 ==========================================
 Environment Set-Up
 ==========================================
@@ -151,12 +155,6 @@ Data Preparation
 ==========================================
 
 After that we load the training and test datasets, drop the first column with the class labels, and save them in the S3 bucket in CSV format.
-
-.. warning::
-
-    To be able to run the code below, you need to download the datasets (`"ECG200_TRAIN.txt"` and `"ECG200_TEST.txt"`)
-    from the `UCR Time Series Classification Archive <http://www.timeseriesclassification.com/description.php?Dataset=ECG200>`__
-    and store them in the SageMaker notebook instance.
 
 .. code:: python
 
