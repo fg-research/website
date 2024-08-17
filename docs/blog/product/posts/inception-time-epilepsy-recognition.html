@@ -126,7 +126,7 @@
 <p>InceptionTime is an ensemble model. The only difference between the models in the ensemble
 is in the initial values of the weights, which are sampled from the Glorot uniform distribution,
 while the model architecture and hyperparameters are the same.</p>
-<p>The models consist of a stack of Inception blocks.
+<p>Each model consist of a stack of Inception blocks.
 Each block includes three convolutional layers with kernel sizes of 10, 20 and 40 and a max pooling layer.
 The block input is processed by the four layers in parallel, and the four outputs are concatenated
 before being passed to a batch normalization layer followed by a ReLU activation.</p>
