@@ -12,7 +12,7 @@ Epileptic seizure detection with the InceptionTime SageMaker Algorithm
     <p>
     Real-time monitoring of epileptic patients can prevent injuries and complications by alerting
     caregivers or medical personnel during a seizure, ensuring prompt assistance and reducing the
-    risk of accidents or unexpected death. Furthermore, continuous remote patient monitoring
+    risk of accidents or unexpected death. Continuous remote patient monitoring also
     allows healthcare providers to collect more accurate and detailed data on seizure
     frequency and duration, which enables them to tailor treatment plans more effectively.
     </p>
@@ -28,8 +28,8 @@ Epileptic seizure detection with the InceptionTime SageMaker Algorithm
     <p>
     In this post, we will demonstrate how to use our Amazon SageMaker implementation of the InceptionTime
     model <a href="#references">[2]</a>, a state-of-the-art neural network architecture for time series data,
-    for detecting epileptic seizures from the readings of a wearable tri-axial accelerometer. We will train and
-    validate the InceptionTime model on a small dataset collected from six participants who mimicked
+    for detecting epileptic seizures from the readings of a wearable 3D accelerometer. We will train and
+    validate the InceptionTime model on a small dataset collected from healthy participants who simulated
     epileptic seizures following a specific medical protocol <a href="#references">[3]</a>.
     We will find that the InceptionTime model achieves a ROC-AUC score of 99.63% on this dataset.
     </p>
@@ -40,7 +40,8 @@ Model
 .. raw:: html
 
     <p>
-    InceptionTime <a href="#references">[2]</a> is an ensemble model. The only difference between the models in the ensemble
+    InceptionTime <a href="#references">[2]</a> is a state-of-the-art deep learning model for classifying time series data.
+    InceptionTime is an ensemble of multiple models. The only difference between the models in the ensemble
     is in the initial values of the weights, which are sampled from the Glorot uniform distribution.
     </p>
 
@@ -122,9 +123,7 @@ Code
     To be able to run the code below, you need to have an active subscription to the InceptionTime SageMaker algorithm.
     You can subscribe to a free trial from the `AWS Marketplace <https://aws.amazon.com/marketplace/pp/prodview-omz7rumnllmla>`__
     in order to get your Amazon Resource Name (ARN). In this post we use version 1.8 of the InceptionTime SageMaker algorithm,
-    which runs in the PyTorch 2.1.0 Python 3.10 deep learning container. You also need to download the "Epilepsy" dataset from the
-    `UCR Time Series Classification Archive <http://www.timeseriesclassification.com/description.php?Dataset=Epilepsy>`__
-    and store the files in the SageMaker notebook instance.
+    which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.
 
 ==========================================
 Environment Set-Up

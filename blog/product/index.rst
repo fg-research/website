@@ -29,7 +29,7 @@ Product
 
     Real-time monitoring of epileptic patients can prevent injuries and complications by alerting
     caregivers or medical personnel during a seizure, ensuring prompt assistance and reducing the
-    risk of accidents or unexpected death. Furthermore, continuous remote patient monitoring
+    risk of accidents or unexpected death. Continuous remote patient monitoring also
     allows healthcare providers to collect more accurate and detailed data on seizure
     frequency and duration, which enables them to tailor treatment plans more effectively...
 
