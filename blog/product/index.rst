@@ -15,6 +15,36 @@ Product
 
 .. card::
     :width: 100%
+    :link: posts/inception-time-epilepsy-recognition
+    :link-type: doc
+
+    .. _inception-time-epilepsy-recognition-toctree:
+
+    .. toctree::
+        :titlesonly:
+
+        posts/inception-time-epilepsy-recognition
+
+    .. _inception-time-epilepsy-recognition-include:
+
+    ...
+
+    .. grid:: 2
+        :margin: 0 3 auto auto
+
+        .. grid-item::
+            :class: blog-post-tag
+
+            :octicon:`graph;1rem;graph-icon` Classification
+
+        .. grid-item::
+            :class: sd-text-secondary
+
+            :octicon:`calendar;1rem;calendar-icon` August 17, 2024
+
+
+.. card::
+    :width: 100%
     :link: posts/cnn-kmeans-ecg-clustering
     :link-type: doc
 

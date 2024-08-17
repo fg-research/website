@@ -24,12 +24,13 @@ window.setInterval(function(){
         'lstm-ae-oil-price-anomaly-detection-toctree',
         'lstm-fcn-ecg-classification-toctree',
         'fred-md-overview-toctree',
-        'cnn-kmeans-ecg-clustering-toctree',
         'lstm-ad-ecg-anomaly-detection-toctree',
         'inflation-forecasting-random-forest-toctree',
         'lnn-equity-forecasting-toctree',
         'commodity-forecasting-forgan-toctree',
-        'rnn-fx-forecasting-toctree'
+        'rnn-fx-forecasting-toctree',
+        'cnn-kmeans-ecg-clustering-toctree',
+        'inception-time-epilepsy-recognition'
     ];
     for (var i = 0; i < elements.length; i++) {
         var f = document.getElementById(elements[i]);
