@@ -20,7 +20,7 @@ Model
 .. raw:: html
 
     <p>
-    InceptionTime <a href="#references">[3]</a> is an ensemble model. The only difference between the models in the ensemble
+    InceptionTime <a href="#references">[2]</a> is an ensemble model. The only difference between the models in the ensemble
     is in the initial values of the weights, which are sampled from the Glorot uniform distribution.
     </p>
 
