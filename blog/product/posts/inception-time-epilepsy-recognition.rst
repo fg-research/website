@@ -17,6 +17,14 @@ Epilepsy convulsion recognition with the InceptionTime SageMaker Algorithm
 ******************************************
 Model
 ******************************************
+InceptionTime is an ensemble model. The only difference between the models in the ensemble
+is in the initial values of the weights, while the model architecture and hyperparameters
+stay the same.
+
+The models consist of a stack of Inception blocks.
+Each block includes three convolutional layers with kernel sizes of 10, 20 and 40 and a max pooling layer.
+The block input is processed by the four layers in parallel, and the four outputs are concatenated
+before being passed to a batch normalization layer followed by a ReLU activation.
 
 .. raw:: html
 
@@ -30,10 +38,67 @@ Model
 
     <p class="blog-post-image-caption">Inception block.</p>
 
+A residual connection is applied between the input time series and the output of the second block,
+and after that between every three blocks.
+The residual connection processes the inputs using an additional convolutional layer with a kernel size of 1
+followed by a batch normalization layer.
+The processed inputs are then added to the output, which is transformed by a ReLU activation.
+
+The output of the last block is passed to an average pooling layer which removes the time dimension,
+and then to a final linear layer.
+
+At inference time, the class probabilities predicted by the different models are averaged in order to obtain
+a unique predicted probability and, therefore, a unique predicted label, for each class.
 
 ******************************************
 Data
 ******************************************
+.. raw:: html
+
+    <p>
+    We use the Epilepsy dataset introduced in <a href="#references">[...]</a> and available
+    in the UCR Time Series Classification Archive <a href="#references">[...]</a>.
+
+    </p>
+
+    <img
+        id="inception-time-epilepsy-recognition-time-series"
+        class="blog-post-image"
+        alt="Epilepsy dataset (combined training and test sets)"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/data_light.png
+    />
+
+   <p class="blog-post-image-caption"> Epilepsy dataset (combined training and test sets).</p>
+
+******************************************
+Code
+******************************************
+
+==========================================
+Environment Set-Up
+==========================================
+
+We start by importing all the requirements and setting up the SageMaker environment.
+
+.. warning::
+
+    To be able to run the code below, you need to have an active subscription to the InceptionTime SageMaker algorithm.
+    You can subscribe to a free trial from the `AWS Marketplace <https://aws.amazon.com/marketplace/pp/prodview-omz7rumnllmla>`__
+    in order to get your Amazon Resource Name (ARN). In this post we use version 1.8 of the InceptionTime SageMaker algorithm,
+    which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.
+
+
+==========================================
+Data Preparation
+==========================================
+
+
+.. warning::
+
+    To be able to run the code below, you need to download the data
+    from the `UCR Time Series Classification Archive <http://www.timeseriesclassification.com/description.php?Dataset=ECG200>`__
+    and store the :code::`ARFF` files in the SageMaker notebook instance.
+
 
 
 .. raw:: html
@@ -94,54 +159,6 @@ Data
         alt="Last 6 rows of test outputs"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/test_outputs_tail_light.png
     />
-
-.. raw:: html
-
-    <p>
-    We use the Epilepsy dataset introduced in <a href="#references">[...]</a> and available
-    in the UCR Time Series Classification Archive <a href="#references">[...]</a>.
-
-    </p>
-
-    <img
-        id="inception-time-epilepsy-recognition-time-series"
-        class="blog-post-image"
-        alt="Epilepsy dataset (combined training and test sets)"
-        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/data_light.png
-    />
-
-   <p class="blog-post-image-caption"> Epilepsy dataset (combined training and test sets).</p>
-
-******************************************
-Code
-******************************************
-
-==========================================
-Environment Set-Up
-==========================================
-
-We start by importing all the requirements and setting up the SageMaker environment.
-
-.. warning::
-
-    To be able to run the code below, you need to have an active subscription to the InceptionTime SageMaker algorithm.
-    You can subscribe to a free trial from the `AWS Marketplace <https://aws.amazon.com/marketplace/pp/prodview-3hdblqdz5nx4m>`__
-    in order to get your Amazon Resource Name (ARN). In this post we use version 1.8 of the InceptionTime SageMaker algorithm,
-    which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.
-
-
-==========================================
-Data Preparation
-==========================================
-
-
-.. warning::
-
-    To be able to run the code below, you need to download the data
-    from the `UCR Time Series Classification Archive <http://www.timeseriesclassification.com/description.php?Dataset=ECG200>`__
-    and store them in the SageMaker notebook instance.
-
-
 
 ==========================================
 Training
