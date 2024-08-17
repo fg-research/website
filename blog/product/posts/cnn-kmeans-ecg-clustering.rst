@@ -89,7 +89,7 @@ Data
 .. raw:: html
 
     <p>
-    We use the ECG200 dataset introduced in <a href="#references">[7]</a> and available
+    We use the "ECG200" dataset introduced in <a href="#references">[7]</a> and available
     in the UCR Time Series Classification Archive <a href="#references">[6]</a>.
     The dataset contains 200 time series of cardiac electrical activity as recorded from electrodes
     at various locations on the body. Each time series in the dataset contains 96 measurements

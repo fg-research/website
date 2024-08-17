@@ -55,7 +55,7 @@ Data
 .. raw:: html
 
     <p>
-    We use the Epilepsy dataset introduced in <a href="#references">[...]</a> and available
+    We use the "Epilepsy" dataset introduced in <a href="#references">[...]</a> and available
     in the UCR Time Series Classification Archive <a href="#references">[...]</a>.
     The data was collected from 6 study participants who conducted 4 different activities
     while wearing a tri-axial accelerometer on their wrist: walking, running, sewing and
