@@ -30,7 +30,7 @@ window.setInterval(function(){
         'commodity-forecasting-forgan-toctree',
         'rnn-fx-forecasting-toctree',
         'cnn-kmeans-ecg-clustering-toctree',
-        'inception-time-epilepsy-recognition'
+        'inception-time-epilepsy-recognition-toctree'
     ];
     for (var i = 0; i < elements.length; i++) {
         var f = document.getElementById(elements[i]);
