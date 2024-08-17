@@ -283,7 +283,7 @@ A survey of heart anomaly detection using ambulatory electrocardiogram (ECG).
 [2] Nezamabadi, K., Sardaripour, N., Haghi, B., & Forouzanfar, M. (2022).
 Unsupervised ECG analysis: A review.
 *IEEE Reviews in Biomedical Engineering*, vol. 16, pp. 208-224.
-`doi: 10.1109/RBME.2022.3154893 <https://doi.org/10.1109/RBME.2022.3154893.>`__.
+`doi: 10.1109/RBME.2022.3154893 <https://doi.org/10.1109/RBME.2022.3154893>`__.
 
 [3] Malhotra, P., Vig, L., Shroff, G., & Agarwal, P. (2015).
 Long Short Term Memory Networks for Anomaly Detection in Time Series.
