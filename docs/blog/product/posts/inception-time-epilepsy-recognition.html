@@ -166,7 +166,7 @@ and store them in the SageMaker notebook instance.</p>
 <p>The results are saved in an output file in S3 with the same name as the input file and with the <cite>“.out”</cite> file extension.
 The results include the predicted cluster labels, which are stored in the first column, and the extracted features,
 which are stored in the subsequent columns.</p>
-<img alt="Results on Epilepsy dataset (test set)" class="blog-post-image" id="inception-time-epilepsy-recognition-metrics" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/metrics_light.png"/>
+<img alt="Results on Epilepsy dataset (test set)" class="blog-post-image" id="inception-time-epilepsy-recognition-metrics" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/metrics_light.png" style="width:90%"/>
 <p class="blog-post-image-caption"> Results on Epilepsy dataset (test set).</p><p>After the analysis has been completed, we can delete the model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># delete the model</span>
 </span><span id="line-2"><span class="n">transformer</span><span class="o">.</span><span class="n">delete_model</span><span class="p">()</span>
