@@ -15,8 +15,8 @@ Epileptic seizure detection with the InceptionTime SageMaker Algorithm
     risk of harm. Continuous monitoring also provides detailed data on seizure frequency, duration,
     and triggers, enabling healthcare providers to tailor treatment plans more effectively.<br>
     Several wearable devices have been developed for monitoring epileptic seizures in real time,
-    and different deep learning models have been studied for detecting epileptic seizures
-    from wearable signals <a href="#references">[1]</a>.
+    and deep learning models have been shown to be effective at detecting different types of
+    epileptic seizures from wearable signals <a href="#references">[1]</a>.
     </p>
 
     <p>
