@@ -107,6 +107,9 @@ Code
     in order to get your Amazon Resource Name (ARN). In this post we use version 1.14 of the LSTM-FCN SageMaker algorithm,
     which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.
 
+    You will also need to download the MIT-BIH dataset from `Kaggle <https://www.kaggle.com/datasets/shayanfazeli/heartbeat>`__
+    and store the files in the SageMaker notebook instance.
+
 ==========================================
 Environment Set-Up
 ==========================================
@@ -142,11 +145,6 @@ We start by importing all the requirements and setting up the SageMaker environm
 Data Preparation
 ==========================================
 After that we load the training data from the CSV file.
-
-.. warning::
-    To be able to run the code below, you need to download the datasets (`"mitbih_train.csv"` and `"mitbih_test.csv"`)
-    from `Kaggle <https://www.kaggle.com/datasets/shayanfazeli/heartbeat>`__ and store them in the SageMaker notebook
-    instance.
 
 .. code:: python
 

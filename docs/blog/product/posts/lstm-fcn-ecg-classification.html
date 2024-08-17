@@ -186,6 +186,8 @@ concatenated and passed to a final output layer with softmax activation.
 You can subscribe to a free trial from the <a class="reference external" href="https://aws.amazon.com/marketplace/pp/prodview-vzxmyw25oqtx6">AWS Marketplace</a>
 in order to get your Amazon Resource Name (ARN). In this post we use version 1.14 of the LSTM-FCN SageMaker algorithm,
 which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.</p>
+<p>You will also need to download the MIT-BIH dataset from <a class="reference external" href="https://www.kaggle.com/datasets/shayanfazeli/heartbeat">Kaggle</a>
+and store the files in the SageMaker notebook instance.</p>
 </div>
 <section id="environment-set-up">
 <h3>Environment Set-Up<a class="headerlink" href="#environment-set-up" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#environment-set-up'">¶</a></h3>
@@ -218,12 +220,6 @@ which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.</p>
 <section id="data-preparation">
 <h3>Data Preparation<a class="headerlink" href="#data-preparation" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data-preparation'">¶</a></h3>
 <p>After that we load the training data from the CSV file.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>To be able to run the code below, you need to download the datasets (<cite>“mitbih_train.csv”</cite> and <cite>“mitbih_test.csv”</cite>)
-from <a class="reference external" href="https://www.kaggle.com/datasets/shayanfazeli/heartbeat">Kaggle</a> and store them in the SageMaker notebook
-instance.</p>
-</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># load the training data</span>
 </span><span id="line-2"><span class="n">training_dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"mitbih_train.csv"</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </span></code></pre></div>
