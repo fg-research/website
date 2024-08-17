@@ -49,6 +49,12 @@ and then to a final linear layer.
 At inference time, the class probabilities predicted by the different models are averaged in order to obtain
 a unique predicted probability and, therefore, a unique predicted label, for each class.
 
+.. note::
+
+    The InceptionTime SageMaker algorithm implements the model as described above with no changes.
+    However, the initial values of the weights are not sampled from the Glorot uniform distribution,
+    but are determined using PyTorch's default initialization method.
+
 ******************************************
 Data
 ******************************************
