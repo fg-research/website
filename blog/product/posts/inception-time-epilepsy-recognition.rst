@@ -43,7 +43,6 @@ and after that between every three blocks.
 The residual connection processes the inputs using an additional convolutional layer with a kernel size of 1
 followed by a batch normalization layer.
 The processed inputs are then added to the output, which is transformed by a ReLU activation.
-
 The output of the last block is passed to an average pooling layer which removes the time dimension,
 and then to a final linear layer.
 

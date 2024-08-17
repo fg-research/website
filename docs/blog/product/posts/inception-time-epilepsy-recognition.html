@@ -135,8 +135,8 @@ before being passed to a batch normalization layer followed by a ReLU activation
 and after that between every three blocks.
 The residual connection processes the inputs using an additional convolutional layer with a kernel size of 1
 followed by a batch normalization layer.
-The processed inputs are then added to the output, which is transformed by a ReLU activation.</p>
-<p>The output of the last block is passed to an average pooling layer which removes the time dimension,
+The processed inputs are then added to the output, which is transformed by a ReLU activation.
+The output of the last block is passed to an average pooling layer which removes the time dimension,
 and then to a final linear layer.</p>
 <p>At inference time, the class probabilities predicted by the different models are averaged in order to obtain
 a unique predicted probability and, therefore, a unique predicted label, for each class.</p>
