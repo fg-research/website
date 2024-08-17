@@ -91,7 +91,9 @@ window.setInterval(function(){
         'inception-time-epilepsy-recognition-test-inputs-head',
         'inception-time-epilepsy-recognition-test-inputs-tail',
         'inception-time-epilepsy-recognition-test-outputs-head',
-        'inception-time-epilepsy-recognition-test-outputs-tail'
+        'inception-time-epilepsy-recognition-test-outputs-tail',
+        'inception-time-epilepsy-recognition-predictions-head',
+        'inception-time-epilepsy-recognition-predictions-tail'
     ];
     for (var i = 0; i < elements.length; i++) {
         var f = document.getElementById(elements[i]);
