@@ -212,8 +212,8 @@ and store the <code class="code docutils literal notranslate"><span class="pre">
 in the format required by the InceptionTime SageMaker algorithm.
 The algorithm expects the column names of the one-hot encoded class labels to start with <code class="code docutils literal notranslate"><span class="pre">"y"</span></code>
 and the column names of the time series values to start with <code class="code docutils literal notranslate"><span class="pre">"x"</span></code>.
-The algorithm also requires including unique sample identifiers in the <code class="code docutils literal notranslate"><span class="pre">"sample"</span></code> column and
-unique feature identifiers in the <code class="code docutils literal notranslate"><span class="pre">"feature"</span></code> column,</p>
+The algorithm also requires including unique sample identifiers in a column named <code class="code docutils literal notranslate"><span class="pre">"sample"</span></code> and
+unique feature identifiers in a column named <code class="code docutils literal notranslate"><span class="pre">"feature"</span></code>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">def</span> <span class="nf">read_data</span><span class="p">(</span><span class="n">dimension</span><span class="p">,</span> <span class="n">split</span><span class="p">):</span>
 </span><span id="line-2">
 </span><span id="line-3">    <span class="c1"># load the data</span>

@@ -139,8 +139,8 @@ After that we define a function for reading and preparing the data
 in the format required by the InceptionTime SageMaker algorithm.
 The algorithm expects the column names of the one-hot encoded class labels to start with :code:`"y"`
 and the column names of the time series values to start with :code:`"x"`.
-The algorithm also requires including unique sample identifiers in the :code:`"sample"` column and
-unique feature identifiers in the :code:`"feature"` column,
+The algorithm also requires including unique sample identifiers in a column named :code:`"sample"` and
+unique feature identifiers in a column named :code:`"feature"`.
 
 .. code:: python
 
