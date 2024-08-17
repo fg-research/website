@@ -18,8 +18,8 @@ Epilepsy convulsion recognition with the InceptionTime SageMaker Algorithm
 Model
 ******************************************
 InceptionTime is an ensemble model. The only difference between the models in the ensemble
-is in the initial values of the weights, while the model architecture and hyperparameters
-stay the same.
+is in the initial values of the weights, which are sampled from the Glorot uniform distribution,
+while the model architecture and hyperparameters are the same.
 
 The models consist of a stack of Inception blocks.
 Each block includes three convolutional layers with kernel sizes of 10, 20 and 40 and a max pooling layer.
