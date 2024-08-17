@@ -4,7 +4,7 @@
    :keywords: Amazon SageMaker, Time Series, Classification, Convolutional Neural Network, Epilepsy
 
 ######################################################################################
-Epileptic seizure detection with the InceptionTime SageMaker Algorithm
+Epileptic seizure detection with the InceptionTime SageMaker algorithm
 ######################################################################################
 
 .. raw:: html

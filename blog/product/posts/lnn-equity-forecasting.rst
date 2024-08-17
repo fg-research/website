@@ -4,7 +4,7 @@
    :keywords: Amazon SageMaker, Time Series, Liquid Neural Networks, Forecasting, Stock Market
 
 ###########################################################################################
-Forecasting stock returns with liquid neural networks using the LNN SageMaker Algorithm
+Forecasting stock returns with liquid neural networks using the LNN SageMaker algorithm
 ###########################################################################################
 
 .. raw:: html

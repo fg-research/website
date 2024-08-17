@@ -4,7 +4,7 @@
    :keywords: Amazon SageMaker, Time Series, Recurrent Neural Networks, Forecasting, Forex Market
 
 ############################################################################################################
-Forecasting exchange rates with long short-term memory (LSTM) networks using the RNN SageMaker Algorithm
+Forecasting exchange rates with long short-term memory (LSTM) networks using the RNN SageMaker algorithm
 ############################################################################################################
 
 .. raw:: html

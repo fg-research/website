@@ -4,7 +4,7 @@
    :keywords: Amazon SageMaker, Time Series, Classification, Neural Network, LSTM
 
 ######################################################################################
-Arrhythmia classification with the LSTM-FCN SageMaker Algorithm
+Arrhythmia classification with the LSTM-FCN SageMaker algorithm
 ######################################################################################
 
 .. raw:: html

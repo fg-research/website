@@ -4,7 +4,7 @@
    :keywords: Amazon SageMaker, Time Series, LSTM, Anomaly Detection
 
 ######################################################################################
-Detecting anomalies in financial time series with the LSTM-AE SageMaker Algorithm
+Detecting anomalies in financial time series with the LSTM-AE SageMaker algorithm
 ######################################################################################
 
 .. raw:: html

@@ -4,7 +4,7 @@
    :keywords: Amazon SageMaker, Time Series, LSTM, Anomaly Detection
 
 ######################################################################################
-ECG anomaly detection with the LSTM-AD SageMaker Algorithm
+ECG anomaly detection with the LSTM-AD SageMaker algorithm
 ######################################################################################
 
 .. raw:: html

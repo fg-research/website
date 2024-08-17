@@ -4,7 +4,7 @@
    :keywords: Amazon SageMaker, Time Series, Clustering, Convolutional Neural Network, K-Means
 
 ######################################################################################
-Clustering ECG signals with the CNN-KMeans SageMaker Algorithm
+Clustering ECG signals with the CNN-KMeans SageMaker algorithm
 ######################################################################################
 
 .. raw:: html
