@@ -28,7 +28,7 @@ Epileptic seizure detection with the InceptionTime SageMaker algorithm
     <p>
     In this post, we will demonstrate how to use our Amazon SageMaker implementation of the InceptionTime
     model <a href="#references">[2]</a>, a state-of-the-art neural network architecture for time series data,
-    for detecting epileptic seizures from the readings of a wearable 3D accelerometer. We will train and
+    for detecting epileptic seizures from the readings of a wearable 3D accelerometer sensor. We will train and
     validate the InceptionTime model on a small dataset collected from healthy participants who simulated
     epileptic seizures following a specific medical protocol <a href="#references">[3]</a>.
     We will find that the InceptionTime model achieves a ROC-AUC score of 99.63% on this dataset.
@@ -93,13 +93,13 @@ Data
     in the <a href=http://www.timeseriesclassification.com>UCR Time Series Classification Archive</a>
     <a href="#references">[4]</a>.
     The data was collected from 6 study participants who conducted 4 different activities
-    while wearing a tri-axial accelerometer on their wrist: walking, running, sewing and
-    mimicking epileptic seizures.
-    The mimicked epileptic seizures followed a protocol defined by a medical expert.
+    while wearing a tri-axial accelerometer (3DACM) sensor on their wrist: walking, running, sewing and
+    simulating epileptic seizures.
+    The epileptic seizures were simulated following a protocol defined by a medical expert.
     </p>
 
     <p>
-    The dataset contains 275 three-dimensional time series of length 206.
+    The dataset contains 275 three-dimensional time series. Each time series includes 206 observations.
     The data was recorded at a sampling frequency of 16 Hz, and therefore the time series span approximately 13 seconds.
     137 time series (corresponding to 3 participants) are included in the training set, while the remaining
     138 time series (corresponding to the 3 remaining participants) are included in the test set.
