@@ -10,7 +10,7 @@ Epileptic seizure detection with the InceptionTime SageMaker Algorithm
 .. raw:: html
 
     <p>
-    ...
+    <a href="#references">[1]</a>
     </p>
 
 
@@ -486,10 +486,12 @@ After the analysis has been completed, we can delete the model.
 ******************************************
 References
 ******************************************
-[1] Chung, Y. G., Jeon, Y., Yoo, S., Kim, H., & Hwang, H. (2022).
-Big data analysis and artificial intelligence in epilepsy – common data model analysis and machine learning-based seizure detection and forecasting.
-*Clinical and Experimental Pediatrics*, 65(6), 272.
-`doi: 10.3345/cep.2021.00766 <https://doi.org/10.3345/cep.2021.00766>`__.
+
+[1] Yu, S., El Atrache, R., Tang, J., Jackson, M., Makarucha, A., Cantley, S.,  Sheehan, T.,
+Vieluf, S., Zhang, B., Rogers, J.L., Mareels, I., Harrer, S. & Loddenkemper, T. (2023).
+Artificial intelligence‐enhanced epileptic seizure detection by wearables.
+*Epilepsia*, 64(12), 3213-3226.
+`doi: 110.1111/epi.17774 <https://doi.org/10.1111/epi.17774>`__.
 
 [2] Ismail Fawaz, H., Lucas, B., Forestier, G., Pelletier, C., Schmidt, D. F., Weber, J.,
 Webb, G. I., Idoumghar, L., Muller, P. A., & Petitjean, F. (2020).
