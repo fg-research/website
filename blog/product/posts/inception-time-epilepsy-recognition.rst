@@ -24,6 +24,7 @@ Model
         id="inception-time-epilepsy-recognition-diagram"
         class="blog-post-image"
         alt="Inception block."
+        style="width:100%"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/diagram.png
     />
 
@@ -108,6 +109,7 @@ which are stored in the subsequent columns.
         id="inception-time-epilepsy-recognition-metrics"
         class="blog-post-image"
         alt="Results on Epilepsy dataset (test set)"
+        style="width:100%"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/metrics_light.png
    />
 
