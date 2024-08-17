@@ -239,7 +239,7 @@ Once the training job has completed, we can run a batch transform job on the tes
         content_type="text/csv",
     )
 
-The results are saved in an output file in S3 with the same name as the input file and with the `".out"` file extension.
+The results are saved in an output file in S3 with the same name as the input file and with the :code:`".out"` file extension.
 The results include the predicted cluster labels, which are stored in the first column, and the extracted features,
 which are stored in the subsequent columns.
 

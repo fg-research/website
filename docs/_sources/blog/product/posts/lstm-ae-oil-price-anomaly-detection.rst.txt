@@ -284,7 +284,7 @@ Once the training job has completed, we can run a batch transform job on the tes
    )
 
 The results of the batch transform job are saved in an output file in S3
-with the same name as the input file and with the ``".out"`` file
+with the same name as the input file and with the :code:`".out"` file
 extension. The output file contains the anomaly scores in the first
 column, and the reconstructed values of the time series in the
 subsequent columns.

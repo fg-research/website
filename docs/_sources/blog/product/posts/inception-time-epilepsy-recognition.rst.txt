@@ -326,7 +326,7 @@ Training
 
 Now that the training dataset is available in an accessible S3 bucket, we can train the model.
 We train an ensemble of 5 models, where each model has 6 blocks. We set the number of filters
-of each convolutional layer in each block equal to 32. We train each model for 100 epochs
+of each convolutional layer in each block equal to 32. We run the training for 100 epochs
 with a batch size of 256 and a learning rate of 0.001.
 
 .. code:: python
@@ -375,7 +375,7 @@ Once the training job has completed, we can run a batch transform job on the tes
     )
 
 The results are saved in an output file in S3 with the same name as the input file and
-with the `".out"` file extension. The results include the predicted class labels, whose
+with the :code:`".out"` file extension. The results include the predicted class labels, whose
 column names start with :code:`"y"`, and the predicted class probabilities, whose column
 names start with :code:`"p"`
 

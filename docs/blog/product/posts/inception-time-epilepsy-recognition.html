@@ -325,7 +325,7 @@ that we will use for validation.</p>
 <h3>Training<a class="headerlink" href="#training" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#training'">¶</a></h3>
 <p>Now that the training dataset is available in an accessible S3 bucket, we can train the model.
 We train an ensemble of 5 models, where each model has 6 blocks. We set the number of filters
-of each convolutional layer in each block equal to 32. We train each model for 100 epochs
+of each convolutional layer in each block equal to 32. We run the training for 100 epochs
 with a batch size of 256 and a learning rate of 0.001.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># create the estimator</span>
 </span><span id="line-2"><span class="n">estimator</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">AlgorithmEstimator</span><span class="p">(</span>
@@ -369,7 +369,7 @@ with a batch size of 256 and a learning rate of 0.001.</p>
 </span></code></pre></div>
 </div>
 <p>The results are saved in an output file in S3 with the same name as the input file and
-with the <cite>“.out”</cite> file extension. The results include the predicted class labels, whose
+with the <code class="code docutils literal notranslate"><span class="pre">".out"</span></code> file extension. The results include the predicted class labels, whose
 column names start with <code class="code docutils literal notranslate"><span class="pre">"y"</span></code>, and the predicted class probabilities, whose column
 names start with <code class="code docutils literal notranslate"><span class="pre">"p"</span></code></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># load the model outputs from S3</span>
