@@ -40,7 +40,7 @@ Model
 .. raw:: html
 
     <p>
-    InceptionTime <a href="#references">[2]</a> is a state-of-the-art deep learning model for classifying time series data.
+    InceptionTime <a href="#references">[2]</a> is a state-of-the-art deep learning model for time series classification.
     InceptionTime is an ensemble of multiple models. The only difference between the models in the ensemble
     is in the initial values of the weights, which are sampled from the Glorot uniform distribution.
     </p>
