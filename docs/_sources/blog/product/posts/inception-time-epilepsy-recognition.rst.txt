@@ -17,16 +17,19 @@ Epileptic seizure detection with the InceptionTime SageMaker Algorithm
 ******************************************
 Model
 ******************************************
-InceptionTime is an ensemble model. The only difference between the models in the ensemble
-is in the initial values of the weights, which are sampled from the Glorot uniform distribution,
-while the model architecture and hyperparameters are the same.
-
-Each model consists of a stack of Inception blocks.
-Each block includes three convolutional layers with kernel sizes of 10, 20 and 40 and a max pooling layer.
-The block input is processed by the four layers in parallel, and the four outputs are concatenated
-before being passed to a batch normalization layer followed by a ReLU activation.
-
 .. raw:: html
+
+    <p>
+    InceptionTime <a href="#references">[3]</a> is an ensemble model. The only difference between the models in the ensemble
+    is in the initial values of the weights, which are sampled from the Glorot uniform distribution.
+    </p>
+
+    <p>
+    Each model consists of a stack of Inception blocks.
+    Each block includes three convolutional layers with kernel sizes of 10, 20 and 40 and a max pooling layer.
+    The block input is processed by the four layers in parallel, and the four outputs are concatenated
+    before being passed to a batch normalization layer followed by a ReLU activation.
+    </p>
 
     <img
         id="inception-time-epilepsy-recognition-diagram"
@@ -38,16 +41,20 @@ before being passed to a batch normalization layer followed by a ReLU activation
 
     <p class="blog-post-image-caption">Inception block.</p>
 
-A residual connection is applied between the input time series and the output of the second block,
-and after that between every three blocks.
-The residual connection processes the inputs using an additional convolutional layer with a kernel size of 1
-followed by a batch normalization layer.
-The processed inputs are then added to the output, which is transformed by a ReLU activation.
-The output of the last block is passed to an average pooling layer which removes the time dimension,
-and then to a final linear layer.
+    <p>
+    A residual connection is applied between the input time series and the output of the second block,
+    and after that between every three blocks.
+    The residual connection processes the inputs using an additional convolutional layer with a kernel size of 1
+    followed by a batch normalization layer.
+    The processed inputs are then added to the output, which is transformed by a ReLU activation.
+    The output of the last block is passed to an average pooling layer which removes the time dimension,
+    and then to a final linear layer.
+    </p>
 
-At inference time, the class probabilities predicted by the different models are averaged in order to obtain
-a unique predicted probability and, therefore, a unique predicted label, for each class.
+    <p>
+    At inference time, the class probabilities predicted by the different models are averaged in order to obtain
+    a unique predicted probability and, therefore, a unique predicted label, for each class.
+    </p>
 
 .. note::
 
@@ -61,8 +68,9 @@ Data
 .. raw:: html
 
     <p>
-    We use the "Epilepsy" dataset introduced in <a href="#references">[...]</a> and available
-    in the UCR Time Series Classification Archive <a href="#references">[...]</a>.
+    We use the "Epilepsy" dataset introduced in <a href="#references">[3]</a> and available
+    in the <a href=http://www.timeseriesclassification.com>UCR Time Series Classification Archive</a>
+    <a href="#references">[4]</a>.
     The data was collected from 6 study participants who conducted 4 different activities
     while wearing a tri-axial accelerometer on their wrist: walking, running, sewing and
     mimicking epileptic seizures.
@@ -72,12 +80,10 @@ Data
     <p>
     The dataset contains 275 three-dimensional time series of length 206.
     The data was recorded at a sampling frequency of 16 Hz, and therefore
-    the length of the time series is approximately 13 seconds.
+    the time series span approximately 13 seconds.
     137 time series are included in the training set, while the remaining
     138 time series are included in the test set.
-    The training set and test time series correspond to different participants:
-    3 participants are included in the training set,
-    while the remaining 3 participants are included in the test set.
+    The training set and test time series correspond to different participants.
     </p>
 
     <img
@@ -135,8 +141,7 @@ We start by importing all the requirements and setting up the SageMaker environm
 ==========================================
 Data Preparation
 ==========================================
-After that we define a function for reading and preparing the data
-in the format required by the algorithm.
+After that we define a function for reading and preparing the data in the format required by the algorithm.
 The algorithm expects the column names of the one-hot encoded class labels to start with :code:`"y"`
 and the column names of the time series values to start with :code:`"x"`.
 The algorithm also requires including unique sample identifiers in a column named :code:`"sample"` and
@@ -145,8 +150,8 @@ unique feature identifiers in a column named :code:`"feature"`.
 .. warning::
 
     To be able to run the code below, you need to download the data
-    from the `UCR Time Series Classification Archive <http://www.timeseriesclassification.com/description.php?Dataset=ECG200>`__
-    and store the :code:`ARFF` files in the SageMaker notebook instance.
+    from the `UCR Time Series Classification Archive <http://www.timeseriesclassification.com/description.php?Dataset=Epilepsy>`__
+    and store the files in the SageMaker notebook instance.
 
 .. code:: python
 
@@ -477,13 +482,23 @@ After the analysis has been completed, we can delete the model.
 ******************************************
 References
 ******************************************
+[1] Chung, Y. G., Jeon, Y., Yoo, S., Kim, H., & Hwang, H. (2022).
+Big data analysis and artificial intelligence in epilepsy – common data model analysis and machine learning-based seizure detection and forecasting.
+*Clinical and Experimental Pediatrics*, 65(6), 272.
+`doi: 10.3345/cep.2021.00766 <https://doi.org/10.3345/cep.2021.00766>`__.
 
-[] Villar, J. R., Vergara, P., Menéndez, M., de la Cal, E., González, V. M., & Sedano, J. (2016).
+[2] Ismail Fawaz, H., Lucas, B., Forestier, G., Pelletier, C., Schmidt, D. F., Weber, J.,
+Webb, G. I., Idoumghar, L., Muller, P. A., & Petitjean, F. (2020).
+InceptionTime: Finding AlexNet for time series classification.
+*Data Mining and Knowledge Discovery*, 34(6), 1936-1962.
+`doi: 10.1007/s10618-020-00710-y <https://doi.org/10.1007/s10618-020-00710-y>`__.
+
+[3] Villar, J. R., Vergara, P., Menéndez, M., de la Cal, E., González, V. M., & Sedano, J. (2016).
 Generalized models for the classification of abnormal movements in daily life and its applicability to epilepsy convulsion recognition.
 *International journal of neural systems*, 26(06), 1650037.
 `doi: 10.1142/S0129065716500374 <https://doi.org/10.1142/S0129065716500374>`__.
 
-[] Dau, H. A., Bagnall, A., Kamgar, K., Yeh, C. C. M., Zhu, Y., Gharghabi, S., Ratanamahatana, C. A., & Keogh, E. (2019).
+[4] Dau, H. A., Bagnall, A., Kamgar, K., Yeh, C. C. M., Zhu, Y., Gharghabi, S., Ratanamahatana, C. A., & Keogh, E. (2019).
 The UCR time series archive.
 *IEEE/CAA Journal of Automatica Sinica*, 6(6), pp. 1293-1305.
 `doi: 10.1109/JAS.2019.1911747 <https://doi.org/10.1109/JAS.2019.1911747>`__.

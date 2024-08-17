@@ -126,24 +126,31 @@
 ...
 </p><section id="model">
 <h2>Model<a class="headerlink" href="#model" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#model'">¶</a></h2>
-<p>InceptionTime is an ensemble model. The only difference between the models in the ensemble
-is in the initial values of the weights, which are sampled from the Glorot uniform distribution,
-while the model architecture and hyperparameters are the same.</p>
-<p>Each model consists of a stack of Inception blocks.
+<p>
+InceptionTime <a href="#references">[3]</a> is an ensemble model. The only difference between the models in the ensemble
+is in the initial values of the weights, which are sampled from the Glorot uniform distribution.
+</p>
+<p>
+Each model consists of a stack of Inception blocks.
 Each block includes three convolutional layers with kernel sizes of 10, 20 and 40 and a max pooling layer.
 The block input is processed by the four layers in parallel, and the four outputs are concatenated
-before being passed to a batch normalization layer followed by a ReLU activation.</p>
+before being passed to a batch normalization layer followed by a ReLU activation.
+</p>
 <img alt="Inception block." class="blog-post-image" id="inception-time-epilepsy-recognition-diagram" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/diagram.png" style="width:100%"/>
-<p class="blog-post-image-caption">Inception block.</p><p>A residual connection is applied between the input time series and the output of the second block,
+<p class="blog-post-image-caption">Inception block.</p>
+<p>
+A residual connection is applied between the input time series and the output of the second block,
 and after that between every three blocks.
 The residual connection processes the inputs using an additional convolutional layer with a kernel size of 1
 followed by a batch normalization layer.
 The processed inputs are then added to the output, which is transformed by a ReLU activation.
 The output of the last block is passed to an average pooling layer which removes the time dimension,
-and then to a final linear layer.</p>
-<p>At inference time, the class probabilities predicted by the different models are averaged in order to obtain
-a unique predicted probability and, therefore, a unique predicted label, for each class.</p>
-<div class="admonition note">
+and then to a final linear layer.
+</p>
+<p>
+At inference time, the class probabilities predicted by the different models are averaged in order to obtain
+a unique predicted probability and, therefore, a unique predicted label, for each class.
+</p><div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The InceptionTime SageMaker algorithm implements the model as described above with no changes.
 However, the initial values of the weights are not sampled from the Glorot uniform distribution,
@@ -153,8 +160,9 @@ but are determined using PyTorch’s default initialization method.</p>
 <section id="data">
 <h2>Data<a class="headerlink" href="#data" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data'">¶</a></h2>
 <p>
- We use the "Epilepsy" dataset introduced in <a href="#references">[...]</a> and available
- in the UCR Time Series Classification Archive <a href="#references">[...]</a>.
+ We use the "Epilepsy" dataset introduced in <a href="#references">[3]</a> and available
+ in the <a href="http://www.timeseriesclassification.com">UCR Time Series Classification Archive</a>
+<a href="#references">[4]</a>.
  The data was collected from 6 study participants who conducted 4 different activities
  while wearing a tri-axial accelerometer on their wrist: walking, running, sewing and
  mimicking epileptic seizures.
@@ -163,12 +171,10 @@ but are determined using PyTorch’s default initialization method.</p>
 <p>
  The dataset contains 275 three-dimensional time series of length 206.
  The data was recorded at a sampling frequency of 16 Hz, and therefore
- the length of the time series is approximately 13 seconds.
+ the time series span approximately 13 seconds.
  137 time series are included in the training set, while the remaining
  138 time series are included in the test set.
- The training set and test time series correspond to different participants:
- 3 participants are included in the training set,
- while the remaining 3 participants are included in the test set.
+ The training set and test time series correspond to different participants.
  </p>
 <img alt="Epilepsy dataset (combined training and test sets)" class="blog-post-image" id="inception-time-epilepsy-recognition-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/data_light.png"/>
 <p class="blog-post-image-caption"> Epilepsy dataset (combined training and test sets).</p></section>
@@ -212,8 +218,7 @@ which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.</p>
 </section>
 <section id="data-preparation">
 <h3>Data Preparation<a class="headerlink" href="#data-preparation" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data-preparation'">¶</a></h3>
-<p>After that we define a function for reading and preparing the data
-in the format required by the algorithm.
+<p>After that we define a function for reading and preparing the data in the format required by the algorithm.
 The algorithm expects the column names of the one-hot encoded class labels to start with <code class="code docutils literal notranslate"><span class="pre">"y"</span></code>
 and the column names of the time series values to start with <code class="code docutils literal notranslate"><span class="pre">"x"</span></code>.
 The algorithm also requires including unique sample identifiers in a column named <code class="code docutils literal notranslate"><span class="pre">"sample"</span></code> and
@@ -221,8 +226,8 @@ unique feature identifiers in a column named <code class="code docutils literal 
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>To be able to run the code below, you need to download the data
-from the <a class="reference external" href="http://www.timeseriesclassification.com/description.php?Dataset=ECG200">UCR Time Series Classification Archive</a>
-and store the <code class="code docutils literal notranslate"><span class="pre">ARFF</span></code> files in the SageMaker notebook instance.</p>
+from the <a class="reference external" href="http://www.timeseriesclassification.com/description.php?Dataset=Epilepsy">UCR Time Series Classification Archive</a>
+and store the files in the SageMaker notebook instance.</p>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="k">def</span> <span class="nf">read_data</span><span class="p">(</span><span class="n">dimension</span><span class="p">,</span> <span class="n">split</span><span class="p">):</span>
 </span><span id="line-2">
@@ -430,11 +435,20 @@ repository.</p>
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#references'">¶</a></h2>
-<p>[] Villar, J. R., Vergara, P., Menéndez, M., de la Cal, E., González, V. M., &amp; Sedano, J. (2016).
+<p>[1] Chung, Y. G., Jeon, Y., Yoo, S., Kim, H., &amp; Hwang, H. (2022).
+Big data analysis and artificial intelligence in epilepsy – common data model analysis and machine learning-based seizure detection and forecasting.
+<em>Clinical and Experimental Pediatrics</em>, 65(6), 272.
+<a class="reference external" href="https://doi.org/10.3345/cep.2021.00766">doi: 10.3345/cep.2021.00766</a>.</p>
+<p>[2] Ismail Fawaz, H., Lucas, B., Forestier, G., Pelletier, C., Schmidt, D. F., Weber, J.,
+Webb, G. I., Idoumghar, L., Muller, P. A., &amp; Petitjean, F. (2020).
+InceptionTime: Finding AlexNet for time series classification.
+<em>Data Mining and Knowledge Discovery</em>, 34(6), 1936-1962.
+<a class="reference external" href="https://doi.org/10.1007/s10618-020-00710-y">doi: 10.1007/s10618-020-00710-y</a>.</p>
+<p>[3] Villar, J. R., Vergara, P., Menéndez, M., de la Cal, E., González, V. M., &amp; Sedano, J. (2016).
 Generalized models for the classification of abnormal movements in daily life and its applicability to epilepsy convulsion recognition.
 <em>International journal of neural systems</em>, 26(06), 1650037.
 <a class="reference external" href="https://doi.org/10.1142/S0129065716500374">doi: 10.1142/S0129065716500374</a>.</p>
-<p>[] Dau, H. A., Bagnall, A., Kamgar, K., Yeh, C. C. M., Zhu, Y., Gharghabi, S., Ratanamahatana, C. A., &amp; Keogh, E. (2019).
+<p>[4] Dau, H. A., Bagnall, A., Kamgar, K., Yeh, C. C. M., Zhu, Y., Gharghabi, S., Ratanamahatana, C. A., &amp; Keogh, E. (2019).
 The UCR time series archive.
 <em>IEEE/CAA Journal of Automatica Sinica</em>, 6(6), pp. 1293-1305.
 <a class="reference external" href="https://doi.org/10.1109/JAS.2019.1911747">doi: 10.1109/JAS.2019.1911747</a>.</p>
