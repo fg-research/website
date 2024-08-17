@@ -29,9 +29,9 @@ Product
 
     Real-time monitoring of epileptic patients can prevent injuries and complications by alerting
     caregivers or medical personnel during a seizure, ensuring prompt assistance and reducing the
-    risk of accidents or unexpected death. Different wearable devices have been developed for remote
-    real-time monitoring of epileptic patients, and deep learning models have been shown to be
-    effective at detecting epileptic seizures from wearable signals...
+    risk of accidents or unexpected death. Furthermore, continuous remote patient monitoring
+    allows healthcare providers to collect more accurate and detailed data on seizure
+    frequency and duration, which enables them to tailor treatment plans more effectively...
 
     .. grid:: 2
         :margin: 0 3 auto auto

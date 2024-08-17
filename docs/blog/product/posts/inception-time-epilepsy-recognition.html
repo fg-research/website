@@ -125,20 +125,24 @@
 <p>
 Real-time monitoring of epileptic patients can prevent injuries and complications by alerting
 caregivers or medical personnel during a seizure, ensuring prompt assistance and reducing the
-risk of accidents or unexpected death. Furthermore, continuous remote monitoring of epileptic
-patients allows healthcare providers to collect more accurate and detailed data on seizure
+risk of accidents or unexpected death. Furthermore, continuous remote patient monitoring
+allows healthcare providers to collect more accurate and detailed data on seizure
 frequency and duration, which enables them to tailor treatment plans more effectively.
 </p>
 <p>
 Different wearable devices have been developed for remote real-time monitoring of epileptic
-patients as an alternative to more invasive electroencephalographic (EEG) systems, and it
-has been shown that deep learning models can be effective at detecting epileptic seizures
-from wearable signals <a href="#references">[1]</a>.
+patients, offering a less invasive alternative to traditional electroencephalographic (EEG)
+systems. Deep learning models, such as convolutional neural networks (CNNs) and long short-term
+memory (LSTM) networks, have been found to be effective at detecting different types of epileptic
+seizures from wearable device data <a href="#references">[1]</a>.
 </p>
 <p>
 In this post, we will demonstrate how to use our Amazon SageMaker implementation of the InceptionTime
 model <a href="#references">[2]</a>, a state-of-the-art neural network architecture for time series data,
-for detecting epileptic seizures from the readings of a wearable tri-axial accelerometer.
+for detecting epileptic seizures from the readings of a wearable tri-axial accelerometer. We will train and
+validate the InceptionTime model on tri-axial accelerometer data collected from six participants who mimicked
+epileptic seizures based on a given medical protocol. We will find that the InceptionTime model achieves a
+ROC-AUC score of 99.63% on this dataset.
 </p><section id="model">
 <h2>Model<a class="headerlink" href="#model" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#model'">¶</a></h2>
 <p>
