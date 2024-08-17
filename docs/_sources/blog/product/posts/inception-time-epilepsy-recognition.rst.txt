@@ -396,6 +396,7 @@ names start with :code:`"p"`
         class="blog-post-image"
         alt="First 6 rows of predictions"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/predictions_head_light.png
+        style="width:100%"
     />
 
 .. code:: python
@@ -409,6 +410,7 @@ names start with :code:`"p"`
         class="blog-post-image"
         alt="Last 6 rows of predictions"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/predictions_tail_light.png
+        style="width:100%"
     />
 
 ==========================================
