@@ -79,11 +79,9 @@ Data
 
     <p>
     The dataset contains 275 three-dimensional time series of length 206.
-    The data was recorded at a sampling frequency of 16 Hz, and therefore
-    the time series span approximately 13 seconds.
-    137 time series are included in the training set, while the remaining
-    138 time series are included in the test set.
-    The training set and test time series correspond to different participants.
+    The data was recorded at a sampling frequency of 16 Hz, and therefore the time series span approximately 13 seconds.
+    137 time series (corresponding to 3 participants) are included in the training set, while the remaining
+    138 time series (corresponding to the 3 remaining participants) are included in the test set.
     </p>
 
     <img
@@ -245,6 +243,14 @@ We then load the test data from the :code:`ARFF` files.
 
     # load the test data
     test_dataset = pd.concat([read_data(d, "TEST") for d in range(1, 4)]).sort_values(by=["sample", "feature"], ignore_index=True)
+
+.. code:: python
+
+    test_dataset.shape
+
+.. code-block:: console
+
+    (414, 212)
 
 We split the test data into two different data frames: a data frame containing the time series
 that we will use for inference, and a separate data frame containing the class labels

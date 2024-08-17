@@ -170,11 +170,9 @@ but are determined using PyTorch’s default initialization method.</p>
  </p>
 <p>
  The dataset contains 275 three-dimensional time series of length 206.
- The data was recorded at a sampling frequency of 16 Hz, and therefore
- the time series span approximately 13 seconds.
- 137 time series are included in the training set, while the remaining
- 138 time series are included in the test set.
- The training set and test time series correspond to different participants.
+ The data was recorded at a sampling frequency of 16 Hz, and therefore the time series span approximately 13 seconds.
+ 137 time series (corresponding to 3 participants) are included in the training set, while the remaining
+ 138 time series (corresponding to the 3 remaining participants) are included in the test set.
  </p>
 <img alt="Epilepsy dataset (combined training and test sets)" class="blog-post-image" id="inception-time-epilepsy-recognition-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/data_light.png"/>
 <p class="blog-post-image-caption"> Epilepsy dataset (combined training and test sets).</p></section>
@@ -287,6 +285,12 @@ unique feature identifiers in a column named <code class="code docutils literal 
 <p>We then load the test data from the <code class="code docutils literal notranslate"><span class="pre">ARFF</span></code> files.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># load the test data</span>
 </span><span id="line-2"><span class="n">test_dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">read_data</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s2">"TEST"</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)])</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s2">"sample"</span><span class="p">,</span> <span class="s2">"feature"</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">test_dataset</span><span class="o">.</span><span class="n">shape</span>
+</span></code></pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp gp-VirtualEnv">(414, 212)</span>
 </span></code></pre></div>
 </div>
 <p>We split the test data into two different data frames: a data frame containing the time series
