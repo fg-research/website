@@ -10,9 +10,23 @@ Epileptic seizure detection with the InceptionTime SageMaker Algorithm
 .. raw:: html
 
     <p>
-    <a href="#references">[1]</a>
+    Real-time monitoring of epileptic patients can prevent injuries and complications by alerting
+    caregivers or medical personnel during a seizure, ensuring prompt assistance and reducing the
+    risk of harm. Continuous monitoring also provides detailed data on seizure frequency, duration,
+    and triggers, enabling healthcare providers to tailor treatment plans more effectively.
+    Different wearable devices have been developed for monitoring epileptic seizures in real time,
+    and deep learning models have been shown to be effective at detecting a broad range of seizure
+    types from wearable signals <a href="#references">[1]</a>.
     </p>
 
+    <p>
+    In this post, we will investigate the performance of the InceptionTime network <a href="#references">[2]</a>,
+    a state-of-the-art deep learning model for classifying time series data.
+    We will demonstrate how to use our Amazon SageMaker implementation of the InceptionTime model, the
+    <a href="https://fg-research.com/algorithms/time-series-classification/index.html#inception-time-sagemaker-algorithm"
+    target="_blank">InceptionTime SageMaker algorithm</a>, for detecting epileptic seizure
+    from the readings of a wearable tri-axial accelerometer.
+    </p>
 
 ******************************************
 Model
@@ -508,5 +522,3 @@ Generalized models for the classification of abnormal movements in daily life an
 The UCR time series archive.
 *IEEE/CAA Journal of Automatica Sinica*, 6(6), pp. 1293-1305.
 `doi: 10.1109/JAS.2019.1911747 <https://doi.org/10.1109/JAS.2019.1911747>`__.
-
-
