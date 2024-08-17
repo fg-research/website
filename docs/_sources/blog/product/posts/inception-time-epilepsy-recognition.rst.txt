@@ -21,7 +21,7 @@ Epileptic seizure detection with the InceptionTime SageMaker Algorithm
 
     <p>
     In this post, we will investigate the performance of the InceptionTime network <a href="#references">[2]</a>,
-    a state-of-the-art deep learning model for time series classification.
+    a state-of-the-art deep learning model for time series data.
     We will demonstrate how to use our Amazon SageMaker implementation of the InceptionTime model, the
     <a href="https://fg-research.com/algorithms/time-series-classification/index.html#inception-time-sagemaker-algorithm"
     target="_blank">InceptionTime SageMaker algorithm</a>, for detecting epileptic seizure
