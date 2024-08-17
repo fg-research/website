@@ -109,7 +109,7 @@ which are stored in the subsequent columns.
         id="inception-time-epilepsy-recognition-metrics"
         class="blog-post-image"
         alt="Results on Epilepsy dataset (test set)"
-        style="width:90%"
+        style="width:85%"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/metrics_light.png
    />
 
