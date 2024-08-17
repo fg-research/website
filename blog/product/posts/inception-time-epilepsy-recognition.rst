@@ -169,6 +169,25 @@ unique feature identifiers in a column named :code:`"feature"`.
 
         return data
 
+We now load the training data from the :code:`ARFF` files.
+
+.. code:: python
+
+    # load the training data
+    training_dataset = pd.concat([read_data(d, "TRAIN") for d in range(1, 4)]).sort_values(by=["sample", "feature"], ignore_index=True)
+
+.. code:: python
+
+    training_dataset.shape
+
+.. code-block:: console
+
+    (411, 212)
+
+.. code:: python
+
+    training_dataset.head()
+
 .. raw:: html
 
     <img
@@ -179,6 +198,9 @@ unique feature identifiers in a column named :code:`"feature"`.
         style="width:100%"
     />
 
+.. code:: python
+
+    training_dataset.tail()
 
 .. raw:: html
 
@@ -190,6 +212,37 @@ unique feature identifiers in a column named :code:`"feature"`.
         style="width:100%"
     />
 
+We save the training dataset to a CSV file in S3, such that it can be used by the training algorithm.
+
+.. code:: python
+
+    # save the training data in S3
+    training_data = sagemaker_session.upload_string_as_file_body(
+        body=training_dataset.to_csv(index=False),
+        bucket=bucket,
+        key="Epilepsy_train.csv"
+    )
+
+We then load the test data from the :code:`ARFF` files.
+
+.. code:: python
+
+    # load the test data
+    test_dataset = pd.concat([read_data(d, "TEST") for d in range(1, 4)]).sort_values(by=["sample", "feature"], ignore_index=True)
+
+We split the test data into two different data frames: a data frame containing the time series
+that we will use for inference, and a separate data frame containing the class labels
+that we will use for validation.
+
+.. code:: python
+
+    # extract the time series
+    test_inputs = test_dataset[["sample", "feature"] + [c for c in test_dataset.columns if c.startswith("x")]]
+
+.. code:: python
+
+    test_inputs.head()
+
 .. raw:: html
 
     <img
@@ -199,6 +252,9 @@ unique feature identifiers in a column named :code:`"feature"`.
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/test_inputs_head_light.png
     />
 
+.. code:: python
+
+    test_inputs.tail()
 
 .. raw:: html
 
@@ -209,6 +265,15 @@ unique feature identifiers in a column named :code:`"feature"`.
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/test_inputs_tail_light.png
     />
 
+.. code:: python
+
+    # extract the class labels
+    test_outputs = test_dataset[["sample"] + [c for c in test_dataset.columns if c.startswith("y")]].drop_duplicates(ignore_index=True)
+
+.. code:: python
+
+    test_outputs.head()
+
 .. raw:: html
 
     <img
@@ -218,6 +283,9 @@ unique feature identifiers in a column named :code:`"feature"`.
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/test_outputs_head_light.png
     />
 
+.. code:: python
+
+    test_outputs.tail()
 
 .. raw:: html
 
@@ -228,13 +296,49 @@ unique feature identifiers in a column named :code:`"feature"`.
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/test_outputs_tail_light.png
     />
 
+We save the data frame with the time series to a CSV file in S3, such that it can be used by the inference algorithm.
+
+.. code:: python
+
+    # save the test data in S3
+    test_data = sagemaker_session.upload_string_as_file_body(
+        body=test_inputs.to_csv(index=False),
+        bucket=bucket,
+        key="Epilepsy_test.csv"
+    )
+
 ==========================================
 Training
 ==========================================
 
-Now that the training dataset is available in an accessible S3 bucket, we are ready to fit the model.
+Now that the training dataset is available in an accessible S3 bucket, we can train the model.
+We train an ensemble of 5 models, where each model has 6 blocks. We set the number of filters
+of each convolutional layer in each block equal to 32. We train each model for 100 epochs
+with a batch size of 256 and a learning rate of 0.001.
 
+.. code:: python
 
+    # create the estimator
+    estimator = sagemaker.algorithm.AlgorithmEstimator(
+        algorithm_arn=algo_arn,
+        role=role,
+        instance_count=1,
+        instance_type=instance_type,
+        input_mode="File",
+        sagemaker_session=sagemaker_session,
+        hyperparameters={
+            "filters": 32,
+            "depth": 6,
+            "models": 5,
+            "batch-size": 256,
+            "lr": 0.001,
+            "epochs": 100,
+            "task": "multiclass"
+        },
+    )
+
+    # run the training job
+    estimator.fit({"training": training_data})
 
 ==========================================
 Inference
@@ -242,11 +346,92 @@ Inference
 
 Once the training job has completed, we can run a batch transform job on the test dataset.
 
+.. code:: python
 
-The results are saved in an output file in S3 with the same name as the input file and with the `".out"` file extension.
-The results include the predicted cluster labels, which are stored in the first column, and the extracted features,
-which are stored in the subsequent columns.
+    # create the transformer
+    transformer = estimator.transformer(
+        instance_count=1,
+        instance_type=instance_type,
+        max_payload=100,
+    )
 
+    # run the transform job
+    transformer.transform(
+        data=test_data,
+        content_type="text/csv",
+    )
+
+The results are saved in an output file in S3 with the same name as the input file and
+with the `".out"` file extension. The results include the predicted class labels, whose
+column names start with :code:`"y"`, and the predicted class probabilities, whose column
+names start with :code:`"p"`
+
+.. code:: python
+
+    # load the model outputs from S3
+    predictions = sagemaker_session.read_s3_file(
+        bucket=bucket,
+        key_prefix=f"{transformer.latest_transform_job.name}/Epilepsy_test.csv.out"
+    )
+
+    # convert the model outputs to data frame
+    predictions = pd.read_csv(io.StringIO(predictions))
+
+.. code:: python
+
+    predictions.shape
+
+.. code-block:: console
+
+    (138, 9)
+
+.. code:: python
+
+    predictions.head()
+
+.. raw:: html
+
+    <img
+        id="inception-time-epilepsy-recognition-predictions-head"
+        class="blog-post-image"
+        alt="First 6 rows of predictions"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/predictions_head_light.png
+    />
+
+.. code:: python
+
+    predictions.tail()
+
+.. raw:: html
+
+    <img
+        id="inception-time-epilepsy-recognition-predictions-tail"
+        class="blog-post-image"
+        alt="Last 6 rows of predictions"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/predictions_tail_light.png
+    />
+
+==========================================
+Evaluation
+==========================================
+
+Finally, we calculate the classification metrics on the test set.
+
+.. code:: python
+
+    # calculate the classification metrics
+    metrics = pd.DataFrame(columns=[c.replace("y_", "") for c in test_outputs.columns if c.startswith("y")])
+    for c in metrics.columns:
+        metrics[c] = {
+            "Accuracy": accuracy_score(y_true=test_outputs[f"y_{c}"], y_pred=predictions[f"y_{c}"]),
+            "ROC-AUC": roc_auc_score(y_true=test_outputs[f"y_{c}"], y_score=predictions[f"p_{c}"]),
+            "Precision": precision_score(y_true=test_outputs[f"y_{c}"], y_pred=predictions[f"y_{c}"]),
+            "Recall": recall_score(y_true=test_outputs[f"y_{c}"], y_pred=predictions[f"y_{c}"]),
+            "F1": f1_score(y_true=test_outputs[f"y_{c}"], y_pred=predictions[f"y_{c}"]),
+        }
+
+We find that the model achieves a ROC-AUC score of 99.63% and an accuracy score of 97.1%
+in the detection of epileptic seizures.
 
 .. raw:: html
 

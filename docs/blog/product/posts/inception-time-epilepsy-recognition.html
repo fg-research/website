@@ -241,17 +241,161 @@ and store the <code class="code docutils literal notranslate"><span class="pre">
 </span><span id="line-25">    <span class="k">return</span> <span class="n">data</span>
 </span></code></pre></div>
 </div>
-<img alt="First 6 rows of training dataset" class="blog-post-image" id="inception-time-epilepsy-recognition-training-dataset-head" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/training_dataset_head_light.png" style="width:100%"/><img alt="Last 6 rows of training dataset" class="blog-post-image" id="inception-time-epilepsy-recognition-training-dataset-tail" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/training_dataset_tail_light.png" style="width:100%"/><img alt="First 6 rows of test inputs" class="blog-post-image" id="inception-time-epilepsy-recognition-test-inputs-head" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/test_inputs_head_light.png"/><img alt="Last 6 rows of test inputs" class="blog-post-image" id="inception-time-epilepsy-recognition-test-inputs-tail" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/test_inputs_tail_light.png"/><img alt="First 6 rows of test outputs" class="blog-post-image" id="inception-time-epilepsy-recognition-test-outputs-head" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/test_outputs_head_light.png"/><img alt="Last 6 rows of test outputs" class="blog-post-image" id="inception-time-epilepsy-recognition-test-outputs-tail" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/test_outputs_tail_light.png"/></section>
+<p>We now load the training data from the <code class="code docutils literal notranslate"><span class="pre">ARFF</span></code> files.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># load the training data</span>
+</span><span id="line-2"><span class="n">training_dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">read_data</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s2">"TRAIN"</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)])</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s2">"sample"</span><span class="p">,</span> <span class="s2">"feature"</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">training_dataset</span><span class="o">.</span><span class="n">shape</span>
+</span></code></pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp gp-VirtualEnv">(411, 212)</span>
+</span></code></pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">training_dataset</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+<img alt="First 6 rows of training dataset" class="blog-post-image" id="inception-time-epilepsy-recognition-training-dataset-head" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/training_dataset_head_light.png" style="width:100%"/><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">training_dataset</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+<img alt="Last 6 rows of training dataset" class="blog-post-image" id="inception-time-epilepsy-recognition-training-dataset-tail" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/training_dataset_tail_light.png" style="width:100%"/><p>We save the training dataset to a CSV file in S3, such that it can be used by the training algorithm.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># save the training data in S3</span>
+</span><span id="line-2"><span class="n">training_data</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">upload_string_as_file_body</span><span class="p">(</span>
+</span><span id="line-3">    <span class="n">body</span><span class="o">=</span><span class="n">training_dataset</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+</span><span id="line-4">    <span class="n">bucket</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span>
+</span><span id="line-5">    <span class="n">key</span><span class="o">=</span><span class="s2">"Epilepsy_train.csv"</span>
+</span><span id="line-6"><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>We then load the test data from the <code class="code docutils literal notranslate"><span class="pre">ARFF</span></code> files.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># load the test data</span>
+</span><span id="line-2"><span class="n">test_dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">read_data</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s2">"TEST"</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)])</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s2">"sample"</span><span class="p">,</span> <span class="s2">"feature"</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>We split the test data into two different data frames: a data frame containing the time series
+that we will use for inference, and a separate data frame containing the class labels
+that we will use for validation.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># extract the time series</span>
+</span><span id="line-2"><span class="n">test_inputs</span> <span class="o">=</span> <span class="n">test_dataset</span><span class="p">[[</span><span class="s2">"sample"</span><span class="p">,</span> <span class="s2">"feature"</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">test_dataset</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"x"</span><span class="p">)]]</span>
+</span></code></pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">test_inputs</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+<img alt="First 6 rows of test inputs" class="blog-post-image" id="inception-time-epilepsy-recognition-test-inputs-head" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/test_inputs_head_light.png"/><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">test_inputs</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+<img alt="Last 6 rows of test inputs" class="blog-post-image" id="inception-time-epilepsy-recognition-test-inputs-tail" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/test_inputs_tail_light.png"/><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># extract the class labels</span>
+</span><span id="line-2"><span class="n">test_outputs</span> <span class="o">=</span> <span class="n">test_dataset</span><span class="p">[[</span><span class="s2">"sample"</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">test_dataset</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"y"</span><span class="p">)]]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">test_outputs</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+<img alt="First 6 rows of test outputs" class="blog-post-image" id="inception-time-epilepsy-recognition-test-outputs-head" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/test_outputs_head_light.png"/><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">test_outputs</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+<img alt="Last 6 rows of test outputs" class="blog-post-image" id="inception-time-epilepsy-recognition-test-outputs-tail" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/test_outputs_tail_light.png"/><p>We save the data frame with the time series to a CSV file in S3, such that it can be used by the inference algorithm.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># save the test data in S3</span>
+</span><span id="line-2"><span class="n">test_data</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">upload_string_as_file_body</span><span class="p">(</span>
+</span><span id="line-3">    <span class="n">body</span><span class="o">=</span><span class="n">test_inputs</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+</span><span id="line-4">    <span class="n">bucket</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span>
+</span><span id="line-5">    <span class="n">key</span><span class="o">=</span><span class="s2">"Epilepsy_test.csv"</span>
+</span><span id="line-6"><span class="p">)</span>
+</span></code></pre></div>
+</div>
+</section>
 <section id="training">
 <h3>Training<a class="headerlink" href="#training" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#training'">¶</a></h3>
-<p>Now that the training dataset is available in an accessible S3 bucket, we are ready to fit the model.</p>
+<p>Now that the training dataset is available in an accessible S3 bucket, we can train the model.
+We train an ensemble of 5 models, where each model has 6 blocks. We set the number of filters
+of each convolutional layer in each block equal to 32. We train each model for 100 epochs
+with a batch size of 256 and a learning rate of 0.001.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># create the estimator</span>
+</span><span id="line-2"><span class="n">estimator</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">AlgorithmEstimator</span><span class="p">(</span>
+</span><span id="line-3">    <span class="n">algorithm_arn</span><span class="o">=</span><span class="n">algo_arn</span><span class="p">,</span>
+</span><span id="line-4">    <span class="n">role</span><span class="o">=</span><span class="n">role</span><span class="p">,</span>
+</span><span id="line-5">    <span class="n">instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+</span><span id="line-6">    <span class="n">instance_type</span><span class="o">=</span><span class="n">instance_type</span><span class="p">,</span>
+</span><span id="line-7">    <span class="n">input_mode</span><span class="o">=</span><span class="s2">"File"</span><span class="p">,</span>
+</span><span id="line-8">    <span class="n">sagemaker_session</span><span class="o">=</span><span class="n">sagemaker_session</span><span class="p">,</span>
+</span><span id="line-9">    <span class="n">hyperparameters</span><span class="o">=</span><span class="p">{</span>
+</span><span id="line-10">        <span class="s2">"filters"</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span>
+</span><span id="line-11">        <span class="s2">"depth"</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+</span><span id="line-12">        <span class="s2">"models"</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+</span><span id="line-13">        <span class="s2">"batch-size"</span><span class="p">:</span> <span class="mi">256</span><span class="p">,</span>
+</span><span id="line-14">        <span class="s2">"lr"</span><span class="p">:</span> <span class="mf">0.001</span><span class="p">,</span>
+</span><span id="line-15">        <span class="s2">"epochs"</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+</span><span id="line-16">        <span class="s2">"task"</span><span class="p">:</span> <span class="s2">"multiclass"</span>
+</span><span id="line-17">    <span class="p">},</span>
+</span><span id="line-18"><span class="p">)</span>
+</span><span id="line-19">
+</span><span id="line-20"><span class="c1"># run the training job</span>
+</span><span id="line-21"><span class="n">estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">({</span><span class="s2">"training"</span><span class="p">:</span> <span class="n">training_data</span><span class="p">})</span>
+</span></code></pre></div>
+</div>
 </section>
 <section id="inference">
 <h3>Inference<a class="headerlink" href="#inference" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#inference'">¶</a></h3>
 <p>Once the training job has completed, we can run a batch transform job on the test dataset.</p>
-<p>The results are saved in an output file in S3 with the same name as the input file and with the <cite>“.out”</cite> file extension.
-The results include the predicted cluster labels, which are stored in the first column, and the extracted features,
-which are stored in the subsequent columns.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># create the transformer</span>
+</span><span id="line-2"><span class="n">transformer</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">transformer</span><span class="p">(</span>
+</span><span id="line-3">    <span class="n">instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+</span><span id="line-4">    <span class="n">instance_type</span><span class="o">=</span><span class="n">instance_type</span><span class="p">,</span>
+</span><span id="line-5">    <span class="n">max_payload</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+</span><span id="line-6"><span class="p">)</span>
+</span><span id="line-7">
+</span><span id="line-8"><span class="c1"># run the transform job</span>
+</span><span id="line-9"><span class="n">transformer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
+</span><span id="line-10">    <span class="n">data</span><span class="o">=</span><span class="n">test_data</span><span class="p">,</span>
+</span><span id="line-11">    <span class="n">content_type</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">,</span>
+</span><span id="line-12"><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>The results are saved in an output file in S3 with the same name as the input file and
+with the <cite>“.out”</cite> file extension. The results include the predicted class labels, whose
+column names start with <code class="code docutils literal notranslate"><span class="pre">"y"</span></code>, and the predicted class probabilities, whose column
+names start with <code class="code docutils literal notranslate"><span class="pre">"p"</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># load the model outputs from S3</span>
+</span><span id="line-2"><span class="n">predictions</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">read_s3_file</span><span class="p">(</span>
+</span><span id="line-3">    <span class="n">bucket</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span>
+</span><span id="line-4">    <span class="n">key_prefix</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">transformer</span><span class="o">.</span><span class="n">latest_transform_job</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">/Epilepsy_test.csv.out"</span>
+</span><span id="line-5"><span class="p">)</span>
+</span><span id="line-6">
+</span><span id="line-7"><span class="c1"># convert the model outputs to data frame</span>
+</span><span id="line-8"><span class="n">predictions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">predictions</span><span class="p">))</span>
+</span></code></pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">predictions</span><span class="o">.</span><span class="n">shape</span>
+</span></code></pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp gp-VirtualEnv">(138, 9)</span>
+</span></code></pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">predictions</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+<img alt="First 6 rows of predictions" class="blog-post-image" id="inception-time-epilepsy-recognition-predictions-head" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/predictions_head_light.png"/><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">predictions</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+<img alt="Last 6 rows of predictions" class="blog-post-image" id="inception-time-epilepsy-recognition-predictions-tail" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/predictions_tail_light.png"/></section>
+<section id="evaluation">
+<h3>Evaluation<a class="headerlink" href="#evaluation" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#evaluation'">¶</a></h3>
+<p>Finally, we calculate the classification metrics on the test set.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># calculate the classification metrics</span>
+</span><span id="line-2"><span class="n">metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"y_"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">test_outputs</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"y"</span><span class="p">)])</span>
+</span><span id="line-3"><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">metrics</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+</span><span id="line-4">    <span class="n">metrics</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="line-5">        <span class="s2">"Accuracy"</span><span class="p">:</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">test_outputs</span><span class="p">[</span><span class="sa">f</span><span class="s2">"y_</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">"</span><span class="p">],</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="sa">f</span><span class="s2">"y_</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">"</span><span class="p">]),</span>
+</span><span id="line-6">        <span class="s2">"ROC-AUC"</span><span class="p">:</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">test_outputs</span><span class="p">[</span><span class="sa">f</span><span class="s2">"y_</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">"</span><span class="p">],</span> <span class="n">y_score</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="sa">f</span><span class="s2">"p_</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">"</span><span class="p">]),</span>
+</span><span id="line-7">        <span class="s2">"Precision"</span><span class="p">:</span> <span class="n">precision_score</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">test_outputs</span><span class="p">[</span><span class="sa">f</span><span class="s2">"y_</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">"</span><span class="p">],</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="sa">f</span><span class="s2">"y_</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">"</span><span class="p">]),</span>
+</span><span id="line-8">        <span class="s2">"Recall"</span><span class="p">:</span> <span class="n">recall_score</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">test_outputs</span><span class="p">[</span><span class="sa">f</span><span class="s2">"y_</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">"</span><span class="p">],</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="sa">f</span><span class="s2">"y_</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">"</span><span class="p">]),</span>
+</span><span id="line-9">        <span class="s2">"F1"</span><span class="p">:</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">test_outputs</span><span class="p">[</span><span class="sa">f</span><span class="s2">"y_</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">"</span><span class="p">],</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="sa">f</span><span class="s2">"y_</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">"</span><span class="p">]),</span>
+</span><span id="line-10">    <span class="p">}</span>
+</span></code></pre></div>
+</div>
+<p>We find that the model achieves a ROC-AUC score of 99.63% and an accuracy score of 97.1%
+in the detection of epileptic seizures.</p>
 <img alt="Results on Epilepsy dataset (test set)" class="blog-post-image" id="inception-time-epilepsy-recognition-metrics" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/metrics_light.png"/>
 <p class="blog-post-image-caption"> Results on Epilepsy dataset (test set).</p><p>After the analysis has been completed, we can delete the model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># delete the model</span>
@@ -290,6 +434,7 @@ The UCR time series archive.
 <li><a :data-current="activeSection === '#data-preparation'" class="reference internal" href="#data-preparation">Data Preparation</a></li>
 <li><a :data-current="activeSection === '#training'" class="reference internal" href="#training">Training</a></li>
 <li><a :data-current="activeSection === '#inference'" class="reference internal" href="#inference">Inference</a></li>
+<li><a :data-current="activeSection === '#evaluation'" class="reference internal" href="#evaluation">Evaluation</a></li>
 </ul>
 </li>
 <li><a :data-current="activeSection === '#references'" class="reference internal" href="#references">References</a></li>
