@@ -64,7 +64,6 @@ Data
         class="blog-post-image"
         alt="First 6 rows of test inputs"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/test_inputs_head_light.png
-        style="width:100%"
     />
 
 
@@ -75,7 +74,6 @@ Data
         class="blog-post-image"
         alt="Last 6 rows of test inputs"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/test_inputs_tail_light.png
-        style="width:100%"
     />
 
 .. raw:: html
@@ -85,7 +83,6 @@ Data
         class="blog-post-image"
         alt="First 6 rows of test outputs"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/test_outputs_head_light.png
-        style="width:100%"
     />
 
 
@@ -96,7 +93,6 @@ Data
         class="blog-post-image"
         alt="Last 6 rows of test outputs"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/test_outputs_tail_light.png
-        style="width:100%"
     />
 
 .. raw:: html
