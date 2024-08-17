@@ -8,7 +8,7 @@
 <meta content="black" media="(prefers-color-scheme: dark)" name="theme-color"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <meta content="https://fg-research.com/_static/thumbnail.png" name="thumbnail"/>
-<meta content="Control chart pattern clustering with the CNN-KMeans SageMaker Algorithm" name="description"/>
+<meta content="Clustering ECG signals with the CNN-KMeans SageMaker Algorithm" name="description"/>
 <meta content="Amazon SageMaker, Time Series, Clustering, Convolutional Neural Network, K-Means" name="keywords"/>
 <title>Clustering ECG signals with the CNN-KMeans SageMaker Algorithm | fg-research</title>
 <meta content="Clustering ECG signals with the CNN-KMeans SageMaker Algorithm | fg-research" property="og:title"/>
@@ -16,7 +16,7 @@
 <link href="../../../_static/pygments.css?v=8d216cef" rel="stylesheet" type="text/css"/>
 <link href="../../../_static/theme.css?v=ecdfb4fc" rel="stylesheet" type="text/css"/>
 <link href="../../../_static/sphinx-design.min.css?v=87e54e7c" rel="stylesheet" type="text/css"/>
-<link href="../../../_static/custom.css?v=50200e51" rel="stylesheet" type="text/css"/>
+<link href="../../../_static/custom.css?v=480b8b57" rel="stylesheet" type="text/css"/>
 <link href="../../../_static/awesome-sphinx-design.css?v=a54cf077" rel="stylesheet" type="text/css"/>
 <link href="https://fg-research.com/blog/product/posts/cnn-kmeans-ecg-clustering.html" rel="canonical"/>
 <link href="../../../_static/favicon.ico" rel="icon"/>
@@ -244,14 +244,14 @@ and store them in the SageMaker notebook instance.</p>
 </span><span id="line-12"><span class="n">training_data</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">upload_string_as_file_body</span><span class="p">(</span>
 </span><span id="line-13">    <span class="n">body</span><span class="o">=</span><span class="n">training_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
 </span><span id="line-14">    <span class="n">bucket</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span>
-</span><span id="line-15">    <span class="n">key</span><span class="o">=</span><span class="s2">"SyntheticControl_train.csv"</span>
+</span><span id="line-15">    <span class="n">key</span><span class="o">=</span><span class="s2">"ECG200_train.csv"</span>
 </span><span id="line-16"><span class="p">)</span>
 </span><span id="line-17">
 </span><span id="line-18"><span class="c1"># save the test dataset in S3</span>
 </span><span id="line-19"><span class="n">test_data</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">upload_string_as_file_body</span><span class="p">(</span>
 </span><span id="line-20">    <span class="n">body</span><span class="o">=</span><span class="n">test_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
 </span><span id="line-21">    <span class="n">bucket</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span>
-</span><span id="line-22">    <span class="n">key</span><span class="o">=</span><span class="s2">"SyntheticControl_test.csv"</span>
+</span><span id="line-22">    <span class="n">key</span><span class="o">=</span><span class="s2">"ECG200_test.csv"</span>
 </span><span id="line-23"><span class="p">)</span>
 </span></code></pre></div>
 </div>
@@ -406,6 +406,6 @@ Amazon Web Services, AWS, Amazon SageMaker, AWS Marketplace and the AWS Marketpl
 <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
 <script defer="defer" src="../../../_static/theme.js?v=e82a16a3"></script>
 <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
-<script src="../../../_static/custom.js?v=cbd14006"></script>
+<script src="../../../_static/custom.js?v=9f009278"></script>
 </body>
 </html>

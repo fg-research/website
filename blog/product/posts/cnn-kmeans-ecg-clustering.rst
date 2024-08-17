@@ -1,6 +1,6 @@
 .. meta::
    :thumbnail: https://fg-research.com/_static/thumbnail.png
-   :description: Control chart pattern clustering with the CNN-KMeans SageMaker Algorithm
+   :description: Clustering ECG signals with the CNN-KMeans SageMaker Algorithm
    :keywords: Amazon SageMaker, Time Series, Clustering, Convolutional Neural Network, K-Means
 
 ######################################################################################
@@ -174,14 +174,14 @@ After that we load the training and test datasets, drop the first column with th
     training_data = sagemaker_session.upload_string_as_file_body(
         body=training_dataset.iloc[:, 1:].to_csv(index=False, header=False),
         bucket=bucket,
-        key="SyntheticControl_train.csv"
+        key="ECG200_train.csv"
     )
 
     # save the test dataset in S3
     test_data = sagemaker_session.upload_string_as_file_body(
         body=test_dataset.iloc[:, 1:].to_csv(index=False, header=False),
         bucket=bucket,
-        key="SyntheticControl_test.csv"
+        key="ECG200_test.csv"
     )
 
 ==========================================

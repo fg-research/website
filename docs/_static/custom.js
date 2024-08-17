@@ -83,7 +83,9 @@ window.setInterval(function(){
         'rnn-fx-forecasting-renamed-dataset-head',
         'rnn-fx-forecasting-renamed-dataset-tail',
         'rnn-fx-forecasting-returns',
-        'rnn-fx-forecasting-metrics'
+        'rnn-fx-forecasting-metrics',
+        'inception-time-epilepsy-recognition-time-series',
+        'inception-time-epilepsy-recognition-metrics'
     ];
     for (var i = 0; i < elements.length; i++) {
         var f = document.getElementById(elements[i]);
