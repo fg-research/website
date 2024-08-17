@@ -127,7 +127,7 @@
 <p class="blog-post-image-caption">Inception block.</p></section>
 <section id="data">
 <h2>Data<a class="headerlink" href="#data" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data'">¶</a></h2>
-<p>
+<img alt="First 6 rows of training dataset" class="blog-post-image" id="inception-time-epilepsy-recognition-training-dataset-head" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/training_dataset_head_light.png" style="width:100%"/><img alt="Last 6 rows of training dataset" class="blog-post-image" id="inception-time-epilepsy-recognition-training-dataset-tail" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/training_dataset_tail_light.png" style="width:100%"/><img alt="First 6 rows of test inputs" class="blog-post-image" id="inception-time-epilepsy-recognition-test-inputs-head" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/test_inputs_head_light.png" style="width:100%"/><img alt="Last 6 rows of test inputs" class="blog-post-image" id="inception-time-epilepsy-recognition-test-inputs-tail" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/test_inputs_tail_light.png" style="width:100%"/><img alt="First 6 rows of test outputs" class="blog-post-image" id="inception-time-epilepsy-recognition-test-outputs-head" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/test_outputs_head_light.png" style="width:100%"/><img alt="Last 6 rows of test outputs" class="blog-post-image" id="inception-time-epilepsy-recognition-test-outputs-tail" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/test_outputs_tail_light.png" style="width:100%"/> <p>
  We use the Epilepsy dataset introduced in <a href="#references">[...]</a> and available
  in the UCR Time Series Classification Archive <a href="#references">[...]</a>.
 
@@ -151,7 +151,7 @@ which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.</p>
 <h3>Data Preparation<a class="headerlink" href="#data-preparation" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data-preparation'">¶</a></h3>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>To be able to run the code below, you need to download the datasets (<cite>“ECG200_TRAIN.txt”</cite> and <cite>“ECG200_TEST.txt”</cite>)
+<p>To be able to run the code below, you need to download the data
 from the <a class="reference external" href="http://www.timeseriesclassification.com/description.php?Dataset=ECG200">UCR Time Series Classification Archive</a>
 and store them in the SageMaker notebook instance.</p>
 </div>
@@ -166,7 +166,7 @@ and store them in the SageMaker notebook instance.</p>
 <p>The results are saved in an output file in S3 with the same name as the input file and with the <cite>“.out”</cite> file extension.
 The results include the predicted cluster labels, which are stored in the first column, and the extracted features,
 which are stored in the subsequent columns.</p>
-<img alt="Results on Epilepsy dataset (test set)" class="blog-post-image" id="inception-time-epilepsy-recognition-metrics" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/metrics_light.png" style="width:85%"/>
+<img alt="Results on Epilepsy dataset (test set)" class="blog-post-image" id="inception-time-epilepsy-recognition-metrics" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/metrics_light.png"/>
 <p class="blog-post-image-caption"> Results on Epilepsy dataset (test set).</p><p>After the analysis has been completed, we can delete the model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># delete the model</span>
 </span><span id="line-2"><span class="n">transformer</span><span class="o">.</span><span class="n">delete_model</span><span class="p">()</span>
@@ -224,6 +224,6 @@ Amazon Web Services, AWS, Amazon SageMaker, AWS Marketplace and the AWS Marketpl
 <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
 <script defer="defer" src="../../../_static/theme.js?v=e82a16a3"></script>
 <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
-<script src="../../../_static/custom.js?v=9f009278"></script>
+<script src="../../../_static/custom.js?v=9075774b"></script>
 </body>
 </html>

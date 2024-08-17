@@ -85,7 +85,13 @@ window.setInterval(function(){
         'rnn-fx-forecasting-returns',
         'rnn-fx-forecasting-metrics',
         'inception-time-epilepsy-recognition-time-series',
-        'inception-time-epilepsy-recognition-metrics'
+        'inception-time-epilepsy-recognition-metrics',
+        'inception-time-epilepsy-recognition-training-dataset-head',
+        'inception-time-epilepsy-recognition-training-dataset-tail',
+        'inception-time-epilepsy-recognition-test-inputs-head',
+        'inception-time-epilepsy-recognition-test-inputs-tail',
+        'inception-time-epilepsy-recognition-test-outputs-head',
+        'inception-time-epilepsy-recognition-test-outputs-tail'
     ];
     for (var i = 0; i < elements.length; i++) {
         var f = document.getElementById(elements[i]);

@@ -35,6 +35,70 @@ Model
 Data
 ******************************************
 
+
+.. raw:: html
+
+    <img
+        id="inception-time-epilepsy-recognition-training-dataset-head"
+        class="blog-post-image"
+        alt="First 6 rows of training dataset"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/training_dataset_head_light.png
+        style="width:100%"
+    />
+
+
+.. raw:: html
+
+    <img
+        id="inception-time-epilepsy-recognition-training-dataset-tail"
+        class="blog-post-image"
+        alt="Last 6 rows of training dataset"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/training_dataset_tail_light.png
+        style="width:100%"
+    />
+
+.. raw:: html
+
+    <img
+        id="inception-time-epilepsy-recognition-test-inputs-head"
+        class="blog-post-image"
+        alt="First 6 rows of test inputs"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/test_inputs_head_light.png
+        style="width:100%"
+    />
+
+
+.. raw:: html
+
+    <img
+        id="inception-time-epilepsy-recognition-test-inputs-tail"
+        class="blog-post-image"
+        alt="Last 6 rows of test inputs"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/test_inputs_tail_light.png
+        style="width:100%"
+    />
+
+.. raw:: html
+
+    <img
+        id="inception-time-epilepsy-recognition-test-outputs-head"
+        class="blog-post-image"
+        alt="First 6 rows of test outputs"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/test_outputs_head_light.png
+        style="width:100%"
+    />
+
+
+.. raw:: html
+
+    <img
+        id="inception-time-epilepsy-recognition-test-outputs-tail"
+        class="blog-post-image"
+        alt="Last 6 rows of test outputs"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/test_outputs_tail_light.png
+        style="width:100%"
+    />
+
 .. raw:: html
 
     <p>
@@ -77,7 +141,7 @@ Data Preparation
 
 .. warning::
 
-    To be able to run the code below, you need to download the datasets (`"ECG200_TRAIN.txt"` and `"ECG200_TEST.txt"`)
+    To be able to run the code below, you need to download the data
     from the `UCR Time Series Classification Archive <http://www.timeseriesclassification.com/description.php?Dataset=ECG200>`__
     and store them in the SageMaker notebook instance.
 
@@ -109,7 +173,6 @@ which are stored in the subsequent columns.
         id="inception-time-epilepsy-recognition-metrics"
         class="blog-post-image"
         alt="Results on Epilepsy dataset (test set)"
-        style="width:85%"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/metrics_light.png
    />
 
