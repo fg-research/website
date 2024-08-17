@@ -12,10 +12,10 @@ Epileptic seizure detection with the InceptionTime SageMaker Algorithm
     <p>
     Real-time monitoring of epileptic patients can prevent injuries and complications by alerting
     caregivers or medical personnel during a seizure, ensuring prompt assistance and reducing the
-    risk of accidents or unexpected death. <br>
+    risk of accidents or unexpected death.
     Different wearable devices have been developed for remote real-time monitoring of epileptic patients,
     and deep learning models have been shown to be effective at detecting epileptic seizures
-    from wearable signals <a href="#references">[1]</a>. <br>
+    from wearable signals <a href="#references">[1]</a>.
     In this post, we will demonstrate how to use our Amazon SageMaker implementation of the InceptionTime model
     <a href="#references">[2]</a>, a state-of-the-art neural network architecture for time series data,
     for detecting epileptic seizures from the readings of a wearable tri-axial accelerometer.
