@@ -152,13 +152,14 @@ a unique predicted probability and, therefore, a unique predicted label, for eac
  The mimicked epileptic seizures followed a protocol defined by a medical expert.
  </p>
 <p>
- The dataset contains 275 3-dimensional time series of length 206 recorded at a
- sampling frequency of 16 Hz, corresponding to approximately 13 seconds.
+ The dataset contains 275 three-dimensional time series of length 206.
+ The data was recorded at a sampling frequency of 16 Hz, and therefore
+ the length of the time series is approximately 13 seconds.
  137 time series are included in the training set, while the remaining
  138 time series are included in the test set.
- The training set and test time series correspond to different participants
- (3 participants are included in the training set,
- while the remaining 3 participants are included in the test set).
+ The training set and test time series correspond to different participants:
+ 3 participants are included in the training set,
+ while the remaining 3 participants are included in the test set.
  </p>
 <img alt="Epilepsy dataset (combined training and test sets)" class="blog-post-image" id="inception-time-epilepsy-recognition-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/inception-time-epilepsy-recognition/data_light.png"/>
 <p class="blog-post-image-caption"> Epilepsy dataset (combined training and test sets).</p></section>
@@ -203,7 +204,7 @@ which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.</p>
 <section id="data-preparation">
 <h3>Data Preparation<a class="headerlink" href="#data-preparation" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data-preparation'">¶</a></h3>
 <p>After that we define a function for reading and preparing the data
-in the format required by the InceptionTime SageMaker algorithm.
+in the format required by the algorithm.
 The algorithm expects the column names of the one-hot encoded class labels to start with <code class="code docutils literal notranslate"><span class="pre">"y"</span></code>
 and the column names of the time series values to start with <code class="code docutils literal notranslate"><span class="pre">"x"</span></code>.
 The algorithm also requires including unique sample identifiers in a column named <code class="code docutils literal notranslate"><span class="pre">"sample"</span></code> and
@@ -241,6 +242,8 @@ and store the <code class="code docutils literal notranslate"><span class="pre">
 </span><span id="line-25">    <span class="k">return</span> <span class="n">data</span>
 </span></code></pre></div>
 </div>
+<section id="training-data">
+<h4>Training Data<a class="headerlink" href="#training-data" title="Link to this heading">¶</a></h4>
 <p>We now load the training data from the <code class="code docutils literal notranslate"><span class="pre">ARFF</span></code> files.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># load the training data</span>
 </span><span id="line-2"><span class="n">training_dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">read_data</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s2">"TRAIN"</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)])</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s2">"sample"</span><span class="p">,</span> <span class="s2">"feature"</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -267,6 +270,9 @@ and store the <code class="code docutils literal notranslate"><span class="pre">
 </span><span id="line-6"><span class="p">)</span>
 </span></code></pre></div>
 </div>
+</section>
+<section id="test-data">
+<h4>Test Data<a class="headerlink" href="#test-data" title="Link to this heading">¶</a></h4>
 <p>We then load the test data from the <code class="code docutils literal notranslate"><span class="pre">ARFF</span></code> files.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># load the test data</span>
 </span><span id="line-2"><span class="n">test_dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">read_data</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="s2">"TEST"</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)])</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s2">"sample"</span><span class="p">,</span> <span class="s2">"feature"</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -304,6 +310,7 @@ that we will use for validation.</p>
 </span><span id="line-6"><span class="p">)</span>
 </span></code></pre></div>
 </div>
+</section>
 </section>
 <section id="training">
 <h3>Training<a class="headerlink" href="#training" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#training'">¶</a></h3>
@@ -431,7 +438,11 @@ The UCR time series archive.
 <li><a :data-current="activeSection === '#data'" class="reference internal" href="#data">Data</a></li>
 <li><a :data-current="activeSection === '#code'" class="reference internal" href="#code">Code</a><ul>
 <li><a :data-current="activeSection === '#environment-set-up'" class="reference internal" href="#environment-set-up">Environment Set-Up</a></li>
-<li><a :data-current="activeSection === '#data-preparation'" class="reference internal" href="#data-preparation">Data Preparation</a></li>
+<li><a :data-current="activeSection === '#data-preparation'" class="reference internal" href="#data-preparation">Data Preparation</a><ul>
+<li><a :data-current="activeSection === '#training-data'" class="reference internal" href="#training-data">Training Data</a></li>
+<li><a :data-current="activeSection === '#test-data'" class="reference internal" href="#test-data">Test Data</a></li>
+</ul>
+</li>
 <li><a :data-current="activeSection === '#training'" class="reference internal" href="#training">Training</a></li>
 <li><a :data-current="activeSection === '#inference'" class="reference internal" href="#inference">Inference</a></li>
 <li><a :data-current="activeSection === '#evaluation'" class="reference internal" href="#evaluation">Evaluation</a></li>

@@ -64,13 +64,14 @@ Data
     </p>
 
     <p>
-    The dataset contains 275 3-dimensional time series of length 206 recorded at a
-    sampling frequency of 16 Hz, corresponding to approximately 13 seconds.
+    The dataset contains 275 three-dimensional time series of length 206.
+    The data was recorded at a sampling frequency of 16 Hz, and therefore
+    the length of the time series is approximately 13 seconds.
     137 time series are included in the training set, while the remaining
     138 time series are included in the test set.
-    The training set and test time series correspond to different participants
-    (3 participants are included in the training set,
-    while the remaining 3 participants are included in the test set).
+    The training set and test time series correspond to different participants:
+    3 participants are included in the training set,
+    while the remaining 3 participants are included in the test set.
     </p>
 
     <img
@@ -129,7 +130,7 @@ We start by importing all the requirements and setting up the SageMaker environm
 Data Preparation
 ==========================================
 After that we define a function for reading and preparing the data
-in the format required by the InceptionTime SageMaker algorithm.
+in the format required by the algorithm.
 The algorithm expects the column names of the one-hot encoded class labels to start with :code:`"y"`
 and the column names of the time series values to start with :code:`"x"`.
 The algorithm also requires including unique sample identifiers in a column named :code:`"sample"` and
@@ -169,6 +170,9 @@ unique feature identifiers in a column named :code:`"feature"`.
 
         return data
 
+---------------------------
+Training Data
+---------------------------
 We now load the training data from the :code:`ARFF` files.
 
 .. code:: python
@@ -223,6 +227,9 @@ We save the training dataset to a CSV file in S3, such that it can be used by th
         key="Epilepsy_train.csv"
     )
 
+---------------------------
+Test Data
+---------------------------
 We then load the test data from the :code:`ARFF` files.
 
 .. code:: python
