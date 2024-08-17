@@ -90,7 +90,8 @@ Data
 
     <p>
     We use the "ECG200" dataset introduced in <a href="#references">[7]</a> and available
-    in the UCR Time Series Classification Archive <a href="#references">[6]</a>.
+    in the <a href=http://www.timeseriesclassification.com>UCR Time Series Classification Archive</a>
+    <a href="#references">[6]</a>.
     The dataset contains 200 time series of cardiac electrical activity as recorded from electrodes
     at various locations on the body. Each time series in the dataset contains 96 measurements
     recorded by one electrode during one heartbeat. 133 time series are labelled as normal (class 1),
