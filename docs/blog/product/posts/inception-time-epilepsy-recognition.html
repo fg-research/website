@@ -125,12 +125,19 @@
 <p>
 Real-time monitoring of epileptic patients can prevent injuries and complications by alerting
 caregivers or medical personnel during a seizure, ensuring prompt assistance and reducing the
-risk of accidents or unexpected death.
-Different wearable devices have been developed for remote real-time monitoring of epileptic patients,
-and deep learning models have been shown to be effective at detecting epileptic seizures
+risk of accidents or unexpected death. Furthermore, continuous remote monitoring of epileptic
+patients allows healthcare providers to collect more accurate and detailed data on seizure
+frequency and duration, which enables them to tailor treatment plans more effectively.
+</p>
+<p>
+Different wearable devices have been developed for remote real-time monitoring of epileptic
+patients as an alternative to more invasive electroencephalographic (EEG) systems, and it
+has been shown that deep learning models can be effective at detecting epileptic seizures
 from wearable signals <a href="#references">[1]</a>.
-In this post, we will demonstrate how to use our Amazon SageMaker implementation of the InceptionTime model
-<a href="#references">[2]</a>, a state-of-the-art neural network architecture for time series data,
+</p>
+<p>
+In this post, we will demonstrate how to use our Amazon SageMaker implementation of the InceptionTime
+model <a href="#references">[2]</a>, a state-of-the-art neural network architecture for time series data,
 for detecting epileptic seizures from the readings of a wearable tri-axial accelerometer.
 </p><section id="model">
 <h2>Model<a class="headerlink" href="#model" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#model'">¶</a></h2>
