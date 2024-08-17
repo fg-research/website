@@ -17,7 +17,7 @@ Epileptic seizure detection with the InceptionTime SageMaker Algorithm
     </p>
 
     <p>
-    Different wearable devices have been developed for monitoring epileptic seizures in real time,
+    Several wearable devices have been developed for monitoring epileptic seizures in real time,
     and deep learning models have been shown to be effective at detecting a broad range of seizure
     types from wearable signals <a href="#references">[1]</a>.
     </p>
