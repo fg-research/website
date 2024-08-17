@@ -44,8 +44,6 @@ Forecasting exchange rates with long short-term memory (LSTM) networks using the
 Code
 ******************************************
 
-We start by importing all the dependencies and setting up the SageMaker environment.
-
 .. warning::
 
    To be able to run the code below, you need to have an active subscription to the
@@ -54,6 +52,12 @@ We start by importing all the dependencies and setting up the SageMaker environm
    in order to get your Amazon Resource Name (ARN).
    In this post we use version 1.0 of the RNN SageMaker algorithm, which runs in the
    PyTorch 2.1.0 Python 3.10 deep learning container.
+
+==========================================
+Environment Set-Up
+==========================================
+
+We start by importing all the dependencies and setting up the SageMaker environment.
 
 .. note::
 

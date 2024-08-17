@@ -111,18 +111,18 @@ Data
 Code
 ******************************************
 
-==========================================
-Environment Set-Up
-==========================================
-
-We start by importing all the requirements and setting up the SageMaker environment.
-
 .. warning::
 
     To be able to run the code below, you need to have an active subscription to the CNN-KMeans SageMaker algorithm.
     You can subscribe to a free trial from the `AWS Marketplace <https://aws.amazon.com/marketplace/pp/prodview-3hdblqdz5nx4m>`__
     in order to get your Amazon Resource Name (ARN). In this post we use version 1.6 of the CNN-KMeans SageMaker algorithm,
     which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.
+
+==========================================
+Environment Set-Up
+==========================================
+
+We start by importing all the requirements and setting up the SageMaker environment.
 
 .. code:: python
 

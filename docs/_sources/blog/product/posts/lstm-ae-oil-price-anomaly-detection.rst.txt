@@ -162,12 +162,6 @@ on the 20\ :superscript:`th` of April 2020 was -12%, followed by a -47% decrease
 Code
 ******************************************
 
-==========================================
-Environment Set-Up
-==========================================
-
-We start by setting up the SageMaker environment.
-
 .. warning::
 
    To be able to run the code below, you need to have an active
@@ -176,6 +170,12 @@ We start by setting up the SageMaker environment.
    in order to get your Amazon Resource Name (ARN).
    In this post we use version 1.4 of the LSTM-AE SageMaker algorithm, which runs in the
    PyTorch 2.1.0 Python 3.10 deep learning container.
+
+==========================================
+Environment Set-Up
+==========================================
+
+We start by setting up the SageMaker environment.
 
 .. code:: python
 

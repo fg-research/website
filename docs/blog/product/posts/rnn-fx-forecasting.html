@@ -150,7 +150,6 @@ We will find that the model achieves a mean absolute error of 0.0012 and
 a mean directional accuracy of 83.33% over the considered time period.
 </p><section id="code">
 <h2>Code<a class="headerlink" href="#code" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#code'">¶</a></h2>
-<p>We start by importing all the dependencies and setting up the SageMaker environment.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>To be able to run the code below, you need to have an active subscription to the
@@ -160,6 +159,9 @@ in order to get your Amazon Resource Name (ARN).
 In this post we use version 1.0 of the RNN SageMaker algorithm, which runs in the
 PyTorch 2.1.0 Python 3.10 deep learning container.</p>
 </div>
+<section id="environment-set-up">
+<h3>Environment Set-Up<a class="headerlink" href="#environment-set-up" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#environment-set-up'">¶</a></h3>
+<p>We start by importing all the dependencies and setting up the SageMaker environment.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>We use the <code class="code docutils literal notranslate"><span class="pre">yfinance</span></code> library for downloading the EUR/USD daily time series and
@@ -212,6 +214,7 @@ the previous week to predict the value of the EUR/USD exchange rate on the next 
 </span><span id="line-5"><span class="n">prediction_length</span> <span class="o">=</span> <span class="mi">1</span>
 </span></code></pre></div>
 </div>
+</section>
 <section id="data">
 <h3>Data<a class="headerlink" href="#data" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data'">¶</a></h3>
 <p>
@@ -493,6 +496,7 @@ Forex market forecasting using machine learning: systematic literature review an
 <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
 <li><a :data-current="activeSection === '#code'" class="reference internal" href="#code">Code</a><ul>
+<li><a :data-current="activeSection === '#environment-set-up'" class="reference internal" href="#environment-set-up">Environment Set-Up</a></li>
 <li><a :data-current="activeSection === '#data'" class="reference internal" href="#data">Data</a></li>
 <li><a :data-current="activeSection === '#training'" class="reference internal" href="#training">Training</a></li>
 <li><a :data-current="activeSection === '#inference'" class="reference internal" href="#inference">Inference</a></li>

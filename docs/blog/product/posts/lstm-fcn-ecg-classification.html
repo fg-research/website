@@ -180,9 +180,6 @@ concatenated and passed to a final output layer with softmax activation.
 <p class="blog-post-image-caption"> MIT-BIH dataset class distribution.</p></section>
 <section id="code">
 <h2>Code<a class="headerlink" href="#code" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#code'">¶</a></h2>
-<section id="environment-set-up">
-<h3>Environment Set-Up<a class="headerlink" href="#environment-set-up" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#environment-set-up'">¶</a></h3>
-<p>We start by importing all the requirements and setting up the SageMaker environment.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>To be able to run the code below, you need to have an active subscription to the LSTM-FCN SageMaker algorithm.
@@ -190,6 +187,9 @@ You can subscribe to a free trial from the <a class="reference external" href="h
 in order to get your Amazon Resource Name (ARN). In this post we use version 1.14 of the LSTM-FCN SageMaker algorithm,
 which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.</p>
 </div>
+<section id="environment-set-up">
+<h3>Environment Set-Up<a class="headerlink" href="#environment-set-up" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#environment-set-up'">¶</a></h3>
+<p>We start by importing all the requirements and setting up the SageMaker environment.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span> <span class="nn">io</span>
 </span><span id="line-2"><span class="kn">import</span> <span class="nn">sagemaker</span>
 </span><span id="line-3"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
