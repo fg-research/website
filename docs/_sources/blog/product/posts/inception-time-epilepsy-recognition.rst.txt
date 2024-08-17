@@ -128,19 +128,18 @@ We start by importing all the requirements and setting up the SageMaker environm
 ==========================================
 Data Preparation
 ==========================================
-
-.. warning::
-
-    To be able to run the code below, you need to download the data
-    from the `UCR Time Series Classification Archive <http://www.timeseriesclassification.com/description.php?Dataset=ECG200>`__
-    and store the :code:`ARFF` files in the SageMaker notebook instance.
-
 After that we define a function for reading and preparing the data
 in the format required by the InceptionTime SageMaker algorithm.
 The algorithm expects the column names of the one-hot encoded class labels to start with :code:`"y"`
 and the column names of the time series values to start with :code:`"x"`.
 The algorithm also requires including unique sample identifiers in a column named :code:`"sample"` and
 unique feature identifiers in a column named :code:`"feature"`.
+
+.. warning::
+
+    To be able to run the code below, you need to download the data
+    from the `UCR Time Series Classification Archive <http://www.timeseriesclassification.com/description.php?Dataset=ECG200>`__
+    and store the :code:`ARFF` files in the SageMaker notebook instance.
 
 .. code:: python
 
