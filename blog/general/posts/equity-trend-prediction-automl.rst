@@ -26,7 +26,7 @@ Predicting stock market trends with Amazon SageMaker Autopilot
     </p>
 
     <p>
-    We will download the daily price and volume time series of the S&P500 from the
+    We will download the daily time series of the S&P500 from the
     1<sup>st</sup> of August 2021 to the 31<sup>st</sup> of July 2024 from
     <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>.
     We will train the model on the data up to the 3<sup>rd</sup> of May 2024 (training set),
