@@ -19,6 +19,8 @@ Predicting stock market trends with Amazon SageMaker Autopilot
     <p>
     In this post, we use <a href=https://aws.amazon.com/sagemaker/autopilot target=_blank>
     Amazon SageMaker Autopilot (AutoML)</a> for building a stock market trend prediction model.
+    We will use Amazon SageMaker Autopilot for optimizing an XGBoost classifier to predict the
+    direction of the S&P500 (up or down) one day ahead using as input a set of technical indicators.
     </p>
 
 ******************************************
