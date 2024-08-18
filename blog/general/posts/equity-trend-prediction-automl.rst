@@ -43,6 +43,22 @@ Predicting stock market trends with Amazon SageMaker Autopilot
     </p>
 
 ******************************************
+Code
+******************************************
+
+==========================================
+Environment Set-Up
+==========================================
+
+We start by importing all the dependencies and setting up the SageMaker environment.
+
+.. note::
+
+    We use the :code:`yfinance` library for downloading the EUR/USD daily time series and
+    the :code:`pyti` library for calculating the technical indicators.
+
+
+******************************************
 References
 ******************************************
 

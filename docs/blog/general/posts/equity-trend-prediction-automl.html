@@ -147,7 +147,19 @@ on the validation set, on the remaining 30 days of data up to the
 31<sup>st</sup> of July 2024 (test set).
 We will find that the model achieves a mean directional accuracy of %
 over the test set.
-</p><section id="references">
+</p><section id="code">
+<h2>Code<a class="headerlink" href="#code" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#code'">¶</a></h2>
+<section id="environment-set-up">
+<h3>Environment Set-Up<a class="headerlink" href="#environment-set-up" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#environment-set-up'">¶</a></h3>
+<p>We start by importing all the dependencies and setting up the SageMaker environment.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We use the <code class="code docutils literal notranslate"><span class="pre">yfinance</span></code> library for downloading the EUR/USD daily time series and
+the <code class="code docutils literal notranslate"><span class="pre">pyti</span></code> library for calculating the technical indicators.</p>
+</div>
+</section>
+</section>
+<section id="references">
 <h2>References<a class="headerlink" href="#references" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#references'">¶</a></h2>
 <p>[1] Kara, Y., Boyacioglu, M. A., &amp; Baykan, Ö. K. (2011).
 Predicting direction of stock price index movement using artificial neural networks and support vector machines:
@@ -158,6 +170,10 @@ The sample of the Istanbul Stock Exchange. <em>Expert Systems with Applications<
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
+<li><a :data-current="activeSection === '#code'" class="reference internal" href="#code">Code</a><ul>
+<li><a :data-current="activeSection === '#environment-set-up'" class="reference internal" href="#environment-set-up">Environment Set-Up</a></li>
+</ul>
+</li>
 <li><a :data-current="activeSection === '#references'" class="reference internal" href="#references">References</a></li>
 </ul>
 </div>
