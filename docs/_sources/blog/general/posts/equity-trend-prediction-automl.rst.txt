@@ -32,9 +32,6 @@ Predicting stock market trends with Amazon SageMaker Autopilot
     We will train the model on the data up to the 3<sup>rd</sup> of May 2024 (training set),
     and validate the model on the subsequent 30 days of data up to the
     17<sup>th</sup> of June 2024 (validation set).
-    </p>
-
-    <p>
     We will then test the identified best model, i.e. the one with the best performance
     on the validation set, on the remaining 30 days of data up to the
     31<sup>st</sup> of July 2024 (test set).
