@@ -35,7 +35,7 @@ Predicting stock market trends with Amazon SageMaker Autopilot
     We will then test the identified best model, i.e. the one with the best performance
     on the validation set, on the remaining 30 days of data up to the
     31<sup>st</sup> of July 2024 (test set).
-    We will find that the model achieves a mean directional accuracy of %
+    We will find that the model achieves a mean directional accuracy of 87%
     over the test set.
     </p>
 
