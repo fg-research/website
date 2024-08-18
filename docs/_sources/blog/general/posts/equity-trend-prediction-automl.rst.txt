@@ -17,7 +17,7 @@ Predicting stock market trends with Amazon SageMaker Autopilot
     </p>
 
     <p>
-    In this post, we use <a href=https://aws.amazon.com/sagemaker/autopilot/, target=_blank>
+    In this post, we use <a href=https://aws.amazon.com/sagemaker/autopilot target=_blank>
     Amazon SageMaker Autopilot (AutoML)</a> for building a stock market trend prediction model.
     </p>
 
