@@ -195,7 +195,7 @@ Product
     .. _lstm-fcn-ecg-classification-include:
 
     Arrhythmia classification based on electrocardiogram (ECG) data involves identifying and
-    categorizing abnormal patterns of cardiac electrical activity detected in the ECG signal.
+    categorizing atypical patterns of cardiac electrical activity detected in the ECG signal.
     Arrhythmia classification is important for diagnosing cardiac abnormalities, assessing the
     risk of adverse cardiovascular events and guiding appropriate treatment strategies...
 
