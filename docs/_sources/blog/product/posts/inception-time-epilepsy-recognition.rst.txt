@@ -18,7 +18,7 @@ Epileptic seizure detection with the InceptionTime SageMaker algorithm
     </p>
 
     <p>
-    Different wearable devices have been developed for remote, long-term, real-time monitoring of epileptic
+    Different wearable devices have been developed for long-term real-time monitoring of epileptic
     patients, offering a more practical and less invasive alternative to traditional electroencephalographic (EEG)
     systems. Deep learning models, such as convolutional neural networks (CNNs) and long short-term
     memory (LSTM) networks, have been found to be effective at detecting different types of epileptic
