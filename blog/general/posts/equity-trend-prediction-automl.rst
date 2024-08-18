@@ -19,7 +19,7 @@ Predicting stock market trends with Amazon SageMaker Autopilot
     <p>
     In this post, we use <a href=https://aws.amazon.com/sagemaker/autopilot target=_blank>
     Amazon SageMaker Autopilot</a> for building a stock market trend prediction model.
-    We will run an AutoML job for optimizing an XGBoost classifier to predict the
+    We will run an AutoML job for optimizing the hyperparameters of an XGBoost classifier to predict the
     direction of the S&P500 (up or down) one day ahead using as input a set of technical indicators.
     </p>
 
@@ -28,7 +28,8 @@ Predicting stock market trends with Amazon SageMaker Autopilot
     the 31<sup>st</sup> of July 2024 from <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>.
     We will train the model on the data up to the 3<sup>rd</sup> of May 2024, and validate the model on
     the subsequent 30 days of data up to the 17<sup>th</sup> of June 2024. We will then test the
-    identified best model on the remaining 30 days of data up to the 31<sup>st</sup> of July 2024.
+    identified best model (i.e. the one with the best performance on the validation data) on the
+    remaining 30 days of data up to the 31<sup>st</sup> of July 2024.
     We will find that the XGBoost model achieves a mean directional accuracy of %
     over the considered 30-days period.
     </p>
