@@ -11,7 +11,7 @@ Predicting stock market trends with Amazon SageMaker Autopilot
 
     <p>
     Building a well-performing machine learning model requires substantial time and resources.
-    AutoML automates the end-to-end process of building, training and tuning machine learning models.
+    Automated machine learning (AutoML) automates the end-to-end process of building, training and tuning machine learning models.
     This not only accelerates the development cycle, but also makes machine learning more accessible
     to those without specialized data science expertise.
     </p>
