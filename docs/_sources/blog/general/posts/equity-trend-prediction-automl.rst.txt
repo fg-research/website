@@ -1,12 +1,25 @@
 .. meta::
    :thumbnail: https://fg-research.com/_static/thumbnail.png
-   :description: Predicting Stock Market Trends with Amazon SageMaker Autopilot
+   :description: Predicting stock market trends with Amazon SageMaker Autopilot
    :keywords: Amazon SageMaker, Time Series, AutoML, Forecasting, Stock Market
 
 ######################################################################################
-Predicting Stock Market Trends with Amazon SageMaker Autopilot
+Predicting stock market trends with Amazon SageMaker Autopilot
 ######################################################################################
 
+.. raw:: html
+
+    <p>
+    Building a well-performing machine learning model requires substantial time and resources.
+    Automated machine learning (AutoML) automates the end-to-end process of building, training
+    and tuning machine learning models. This not only accelerates the development cycle, but
+    also makes machine learning more accessible to those without specialized data science expertise.
+    </p>
+
+    <p>
+    In this post, we use <a href=https://aws.amazon.com/sagemaker/autopilot/, target=_blank>
+    Amazon SageMaker Autopilot (AutoML)</a> for building a stock market trend prediction model.
+    </p>
 
 ******************************************
 References
