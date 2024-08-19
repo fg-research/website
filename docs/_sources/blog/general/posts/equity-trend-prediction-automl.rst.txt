@@ -62,8 +62,11 @@ which is derived as follows
 ==========================================
 Inputs
 ==========================================
-The model uses as input the following technical indicators,
-as in <a href="#references">[1]</a>:
+
+.. raw:: html
+
+    The model uses as input the following technical indicators,
+    as in <a href="#references">[1]</a>:
 
 * Simple moving average
 
