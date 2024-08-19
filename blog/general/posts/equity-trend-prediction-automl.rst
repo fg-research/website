@@ -83,7 +83,7 @@ Inputs
 
 * Larry William’s R%
 
-* Accumulation/Distribution (A/D) Oscillator
+* Accumulation / Distribution (A/D) Oscillator
 
 * Commodity Channel Index (CCI)
 
