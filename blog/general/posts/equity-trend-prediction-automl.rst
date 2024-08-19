@@ -51,7 +51,14 @@ which is derived as follows
 
 .. math::
 
-    y(t) = 1 if P(t + 1) - P(t) > 0 else 0
+    \begin{equation}
+      D_{it} =
+        \begin{cases}
+          1 & \text{if bank $i$ issues ABs at time $t$}\\
+          2 & \text{if bank $i$ issues CBs at time $t$}\\
+          0 & \text{otherwise}
+        \end{cases}
+    \end{equation}
 
 ==========================================
 Inputs

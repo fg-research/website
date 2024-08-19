@@ -152,7 +152,14 @@ over the test set.
 <p>The model output is the sign of the next day’s price move of the S&amp;P 500,
 which is derived as follows</p>
 <div class="math notranslate nohighlight">
-\[y(t) = 1 if P(t + 1) - P(t) &gt; 0 else 0\]</div>
+\[\begin{split}\begin{equation}
+  D_{it} =
+    \begin{cases}
+      1 &amp; \text{if bank $i$ issues ABs at time $t$}\\
+      2 &amp; \text{if bank $i$ issues CBs at time $t$}\\
+      0 &amp; \text{otherwise}
+    \end{cases}
+\end{equation}\end{split}\]</div>
 </section>
 <section id="inputs">
 <h3>Inputs<a class="headerlink" href="#inputs" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#inputs'">¶</a></h3>
