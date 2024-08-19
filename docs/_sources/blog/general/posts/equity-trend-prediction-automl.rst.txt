@@ -35,8 +35,8 @@ Predicting stock market trends with Amazon SageMaker Autopilot
     We will then test the identified best model, i.e. the one with the best performance
     on the validation set, on the remaining 30 days of data up to the
     30<sup>th</sup> of July 2024 (test set).
-    We will find that the model achieves a mean directional accuracy of 63%
-    over the test set.
+    We will find that the model achieves an accuracy score of 63%
+    and a ROC-AUC score of 80% over the test set.
     </p>
 
 ******************************************
@@ -413,6 +413,61 @@ probabilities list corresponds to class 0 (down move).
 
     # add the ground truth labels
     predictions["Actual Trend"] = test_dataset["Trend"]
+
+.. code:: python
+
+    predictions.shape
+
+.. code-block:: console
+
+    (30, 6)
+
+.. code:: python
+
+    predictions.head()
+
+.. code:: python
+
+    predictions.tail()
+
+We can finally calculate the classification metrics and the confusion matrix on the test set.
+
+.. code:: python
+
+    # calculate the classification metrics
+    metrics = pd.DataFrame(
+        data={
+            "Accuracy": accuracy_score(y_true=predictions["Actual Trend"], y_pred=predictions["Predicted Trend"]),
+            "ROC-AUC": roc_auc_score(y_true=predictions["Actual Trend"], y_score=predictions["Class 1 Probability"]),
+            "Precision": precision_score(y_true=predictions["Actual Trend"], y_pred=predictions["Predicted Trend"]),
+            "Recall": recall_score(y_true=predictions["Actual Trend"], y_pred=predictions["Predicted Trend"]),
+            "F1": f1_score(y_true=predictions["Actual Trend"], y_pred=predictions["Predicted Trend"]),
+        },
+        index=["Value"]
+    ).transpose().reset_index().rename(columns={"index": "Metric"})
+
+We find that the model achieves an accuracy score of 63% and a ROC-AUC score of 80% on the test set.
+
+.. code:: python
+
+    # calculate the confusion matrix
+    matrix = pd.crosstab(
+        index=predictions["Actual Trend"],
+        columns=predictions["Predicted Trend"],
+    )
+
+After the analysis has been completed, we can delete the model.
+
+.. code:: python
+
+    # delete the model
+    transformer.delete_model()
+
+.. tip::
+
+    A Python notebook with the full code is available in our
+    `GitHub <https://github.com/fg-research/blog/blob/master/equity-trend-prediction-automl>`__
+    repository.
 
 ******************************************
 References

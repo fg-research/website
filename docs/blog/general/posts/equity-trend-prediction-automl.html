@@ -143,8 +143,8 @@ and validate the model on the subsequent 30 days of data up to the
 We will then test the identified best model, i.e. the one with the best performance
 on the validation set, on the remaining 30 days of data up to the
 30<sup>th</sup> of July 2024 (test set).
-We will find that the model achieves a mean directional accuracy of 63%
-over the test set.
+We will find that the model achieves an accuracy score of 63%
+and a ROC-AUC score of 80% over the test set.
 </p><section id="data">
 <h2>Data<a class="headerlink" href="#data" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data'">¶</a></h2>
 <section id="outputs">
@@ -463,6 +463,51 @@ probabilities list corresponds to class 0 (down move).</p>
 </span><span id="line-18"><span class="c1"># add the ground truth labels</span>
 </span><span id="line-19"><span class="n">predictions</span><span class="p">[</span><span class="s2">"Actual Trend"</span><span class="p">]</span> <span class="o">=</span> <span class="n">test_dataset</span><span class="p">[</span><span class="s2">"Trend"</span><span class="p">]</span>
 </span></code></pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">predictions</span><span class="o">.</span><span class="n">shape</span>
+</span></code></pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp gp-VirtualEnv">(30, 6)</span>
+</span></code></pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">predictions</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">predictions</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+<p>We can finally calculate the classification metrics and the confusion matrix on the test set.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># calculate the classification metrics</span>
+</span><span id="line-2"><span class="n">metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+</span><span id="line-3">    <span class="n">data</span><span class="o">=</span><span class="p">{</span>
+</span><span id="line-4">        <span class="s2">"Accuracy"</span><span class="p">:</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="s2">"Actual Trend"</span><span class="p">],</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="s2">"Predicted Trend"</span><span class="p">]),</span>
+</span><span id="line-5">        <span class="s2">"ROC-AUC"</span><span class="p">:</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="s2">"Actual Trend"</span><span class="p">],</span> <span class="n">y_score</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="s2">"Class 1 Probability"</span><span class="p">]),</span>
+</span><span id="line-6">        <span class="s2">"Precision"</span><span class="p">:</span> <span class="n">precision_score</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="s2">"Actual Trend"</span><span class="p">],</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="s2">"Predicted Trend"</span><span class="p">]),</span>
+</span><span id="line-7">        <span class="s2">"Recall"</span><span class="p">:</span> <span class="n">recall_score</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="s2">"Actual Trend"</span><span class="p">],</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="s2">"Predicted Trend"</span><span class="p">]),</span>
+</span><span id="line-8">        <span class="s2">"F1"</span><span class="p">:</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="s2">"Actual Trend"</span><span class="p">],</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="s2">"Predicted Trend"</span><span class="p">]),</span>
+</span><span id="line-9">    <span class="p">},</span>
+</span><span id="line-10">    <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">"Value"</span><span class="p">]</span>
+</span><span id="line-11"><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">"index"</span><span class="p">:</span> <span class="s2">"Metric"</span><span class="p">})</span>
+</span></code></pre></div>
+</div>
+<p>We find that the model achieves an accuracy score of 63% and a ROC-AUC score of 80% on the test set.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># calculate the confusion matrix</span>
+</span><span id="line-2"><span class="n">matrix</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span>
+</span><span id="line-3">    <span class="n">index</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="s2">"Actual Trend"</span><span class="p">],</span>
+</span><span id="line-4">    <span class="n">columns</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="s2">"Predicted Trend"</span><span class="p">],</span>
+</span><span id="line-5"><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>After the analysis has been completed, we can delete the model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># delete the model</span>
+</span><span id="line-2"><span class="n">transformer</span><span class="o">.</span><span class="n">delete_model</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>A Python notebook with the full code is available in our
+<a class="reference external" href="https://github.com/fg-research/blog/blob/master/equity-trend-prediction-automl">GitHub</a>
+repository.</p>
 </div>
 </section>
 </section>
