@@ -128,13 +128,13 @@ to those without specialized data science expertise.
 </p>
 <p>
 In this post, we use <a href="https://aws.amazon.com/sagemaker/autopilot" target="_blank">
-Amazon SageMaker Autopilot</a> for building a stock market trend prediction model.
-We will run an AutoML job for building an ensemble of gradient boosting classifiers
-(XGBoost, LightGBM and CatBoost) to predict the direction of the S&amp;P500 (up or down)
+SageMaker Autopilot </a> for building a stock market trend prediction model.
+We will use AutoML for building an ensemble of gradient boosting classifiers
+(XGBoost, LightGBM and CatBoost) to predict the direction of the S&amp;P 500 (up or down)
 one day ahead using as input a set of technical indicators.
 </p>
 <p>
-We will download the S&amp;P500 daily time series from the
+We will download the S&amp;P 500 daily time series from the
 1<sup>st</sup> of August 2021 to the 31<sup>st</sup> of July 2024 from
 <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>.
 We will train the model on the data up to the 3<sup>rd</sup> of May 2024 (training set),
@@ -143,9 +143,22 @@ and validate the model on the subsequent 30 days of data up to the
 We will then test the identified best model, i.e. the one with the best performance
 on the validation set, on the remaining 30 days of data up to the
 31<sup>st</sup> of July 2024 (test set).
-We will find that the model achieves a mean directional accuracy of x%
+We will find that the model achieves a mean directional accuracy of 63%
 over the test set.
-</p><section id="code">
+</p><section id="data">
+<h2>Data<a class="headerlink" href="#data" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data'">¶</a></h2>
+<section id="outputs">
+<h3>Outputs<a class="headerlink" href="#outputs" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#outputs'">¶</a></h3>
+<p>The model output is the sign of the next day’s price move of the S&amp;P 500,
+which is derived as follows</p>
+<div class="math notranslate nohighlight">
+\[y(t) = 1 if P(t + 1) - P(t) &gt; 0 else 0\]</div>
+</section>
+<section id="inputs">
+<h3>Inputs<a class="headerlink" href="#inputs" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#inputs'">¶</a></h3>
+</section>
+</section>
+<section id="code">
 <h2>Code<a class="headerlink" href="#code" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#code'">¶</a></h2>
 <section id="environment-set-up">
 <h3>Environment Set-Up<a class="headerlink" href="#environment-set-up" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#environment-set-up'">¶</a></h3>
@@ -154,6 +167,49 @@ over the test set.
 <p class="admonition-title">Note</p>
 <p>We use the <code class="code docutils literal notranslate"><span class="pre">yfinance</span></code> library for downloading the S&amp;P500 daily time series and
 the <code class="code docutils literal notranslate"><span class="pre">pyti</span></code> library for calculating the technical indicators.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span> <span class="nn">warnings</span>
+</span><span id="line-2"><span class="kn">import</span> <span class="nn">io</span>
+</span><span id="line-3"><span class="kn">import</span> <span class="nn">boto3</span>
+</span><span id="line-4"><span class="kn">import</span> <span class="nn">json</span>
+</span><span id="line-5"><span class="kn">import</span> <span class="nn">sagemaker</span>
+</span><span id="line-6"><span class="kn">import</span> <span class="nn">yfinance</span> <span class="k">as</span> <span class="nn">yf</span>
+</span><span id="line-7"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span><span id="line-8"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</span><span id="line-9"><span class="kn">from</span> <span class="nn">pyti.simple_moving_average</span> <span class="kn">import</span> <span class="n">simple_moving_average</span>
+</span><span id="line-10"><span class="kn">from</span> <span class="nn">pyti.weighted_moving_average</span> <span class="kn">import</span> <span class="n">weighted_moving_average</span>
+</span><span id="line-11"><span class="kn">from</span> <span class="nn">pyti.momentum</span> <span class="kn">import</span> <span class="n">momentum</span>
+</span><span id="line-12"><span class="kn">from</span> <span class="nn">pyti.stochastic</span> <span class="kn">import</span> <span class="n">percent_k</span><span class="p">,</span> <span class="n">percent_d</span>
+</span><span id="line-13"><span class="kn">from</span> <span class="nn">pyti.williams_percent_r</span> <span class="kn">import</span> <span class="n">williams_percent_r</span>
+</span><span id="line-14"><span class="kn">from</span> <span class="nn">pyti.accumulation_distribution</span> <span class="kn">import</span> <span class="n">accumulation_distribution</span>
+</span><span id="line-15"><span class="kn">from</span> <span class="nn">pyti.moving_average_convergence_divergence</span> <span class="kn">import</span> <span class="n">moving_average_convergence_divergence</span>
+</span><span id="line-16"><span class="kn">from</span> <span class="nn">pyti.relative_strength_index</span> <span class="kn">import</span> <span class="n">relative_strength_index</span>
+</span><span id="line-17"><span class="kn">from</span> <span class="nn">pyti.commodity_channel_index</span> <span class="kn">import</span> <span class="n">commodity_channel_index</span>
+</span><span id="line-18"><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">recall_score</span><span class="p">,</span> <span class="n">f1_score</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">roc_auc_score</span>
+</span><span id="line-19"><span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">"ignore"</span><span class="p">)</span>
+</span><span id="line-20">
+</span><span id="line-21"><span class="c1"># SageMaker session</span>
+</span><span id="line-22"><span class="n">session</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+</span><span id="line-23">
+</span><span id="line-24"><span class="c1"># SageMaker role</span>
+</span><span id="line-25"><span class="n">role</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">get_execution_role</span><span class="p">()</span>
+</span><span id="line-26">
+</span><span id="line-27"><span class="c1"># S3 bucket</span>
+</span><span id="line-28"><span class="n">bucket</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">default_bucket</span><span class="p">()</span>
+</span><span id="line-29">
+</span><span id="line-30"><span class="c1"># Boto3 client</span>
+</span><span id="line-31"><span class="n">client</span> <span class="o">=</span> <span class="n">boto3</span><span class="o">.</span><span class="n">client</span><span class="p">(</span><span class="s2">"sagemaker-runtime"</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="data-preparation">
+<h3>Data Preparation<a class="headerlink" href="#data-preparation" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data-preparation'">¶</a></h3>
+<p>
+Next, we download the S&amp;P 500 time series from the 1<sup>st</sup> of August 2021 to the 31<sup>st</sup> of July 2024.
+The dataset contains 754 daily observations.
+</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># download the data</span>
+</span><span id="line-2"><span class="n">dataset</span> <span class="o">=</span> <span class="n">yf</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">tickers</span><span class="o">=</span><span class="s2">"^SPX"</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">"2021-08-01"</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">"2024-08-01"</span><span class="p">)</span>
+</span></code></pre></div>
 </div>
 </section>
 </section>
@@ -168,8 +224,14 @@ The sample of the Istanbul Stock Exchange. <em>Expert Systems with Applications<
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
 <div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
 <ul>
+<li><a :data-current="activeSection === '#data'" class="reference internal" href="#data">Data</a><ul>
+<li><a :data-current="activeSection === '#outputs'" class="reference internal" href="#outputs">Outputs</a></li>
+<li><a :data-current="activeSection === '#inputs'" class="reference internal" href="#inputs">Inputs</a></li>
+</ul>
+</li>
 <li><a :data-current="activeSection === '#code'" class="reference internal" href="#code">Code</a><ul>
 <li><a :data-current="activeSection === '#environment-set-up'" class="reference internal" href="#environment-set-up">Environment Set-Up</a></li>
+<li><a :data-current="activeSection === '#data-preparation'" class="reference internal" href="#data-preparation">Data Preparation</a></li>
 </ul>
 </li>
 <li><a :data-current="activeSection === '#references'" class="reference internal" href="#references">References</a></li>
@@ -194,6 +256,8 @@ Amazon Web Services, AWS, Amazon SageMaker, AWS Marketplace and the AWS Marketpl
 <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
 <script defer="defer" src="../../../_static/theme.js?v=e82a16a3"></script>
 <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+<script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+<script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="../../../_static/custom.js?v=efbdc598"></script>
 </body>
 </html>
