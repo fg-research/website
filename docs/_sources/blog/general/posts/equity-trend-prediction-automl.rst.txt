@@ -64,6 +64,7 @@ Inputs
 ==========================================
 
 .. raw:: html
+
     <p>
     The model inputs (features) are technical indicators.
     We use the same technical indicators as in <a href="#references">[1]</a>:
