@@ -54,7 +54,7 @@ which is derived as follows
     \begin{equation}
       y(t) =
         \begin{cases}
-          1 & \text{if} P(t + 1) > P(t) \\
+          1 & \text{if } P(t + 1) > P(t) \\
           0 & \text{otherwise}
         \end{cases}
     \end{equation}
