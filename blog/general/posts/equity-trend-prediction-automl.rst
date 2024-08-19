@@ -46,7 +46,7 @@ Data
 ==========================================
 Outputs
 ==========================================
-The model output is the sign of the next day's price move of the S&P 500,
+The model output (target) is the sign of the next day's price move of the S&P 500,
 which is derived as follows
 
 .. math::
@@ -64,9 +64,10 @@ Inputs
 ==========================================
 
 .. raw:: html
-
-    The model uses as input the following technical indicators,
-    as in <a href="#references">[1]</a>:
+    <p>
+    The model inputs (features) are technical indicators.
+    We use the same technical indicators as in <a href="#references">[1]</a>:
+    </p>
 
 * Simple moving average
 
