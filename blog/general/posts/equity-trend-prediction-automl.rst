@@ -62,7 +62,28 @@ which is derived as follows
 ==========================================
 Inputs
 ==========================================
+The model uses as input the following technical indicators,
+as in <a href="#references">[1]</a>:
 
+* Simple moving average
+
+* Weighted moving average
+
+* Momentum Stochastic K%
+
+* Stochastic D%
+
+* Relative Strength Index (RSI)
+
+* Moving Average Convergence Divergence (MACD)
+
+* Larry William’s R%
+
+* Accumulation/Distribution (A/D) Oscillator
+
+* Commodity Channel Index (CCI)
+
+For the MACD we use periods of 12 and 26, while for all the other indicators we use a period of 10.
 
 ******************************************
 Code
