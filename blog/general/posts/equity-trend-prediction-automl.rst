@@ -52,10 +52,9 @@ which is derived as follows
 .. math::
 
     \begin{equation}
-      D_{it} =
+      y(t) =
         \begin{cases}
-          1 & \text{if bank $i$ issues ABs at time $t$}\\
-          2 & \text{if bank $i$ issues CBs at time $t$}\\
+          1 & \text{if} P(t + 1) > P(t) \\
           0 & \text{otherwise}
         \end{cases}
     \end{equation}
