@@ -384,11 +384,13 @@ it outputs the predicted probabilities as opposed to the predicted labels.
 The results of the batch transform job are saved to a CSV file in S3 with the same name as the
 input CSV file but with the :code:`".out"` file extension. The output CSV files contain two columns:
 
-* the first column contains the predicted class probabilities, which are returned as lists of two items,
-one item for each class.
+* the first column contains the predicted class probabilities, which are returned as lists of two items, one item for each class.
 
-* the second column contains the label mappings, which are also returned as lists of two items;
-the first item represents the class label of the first probability
+* the second column contains the label mappings, which are also returned as lists of two items.
+
+The label mappings are the same for each row and indicate that the first item in each predicted
+probabilities list corresponds to class 1 (up move), while the second item in each predicted
+probabilities list corresponds to class 0 (down move).
 
 .. code:: python
 

@@ -437,13 +437,12 @@ it outputs the predicted probabilities as opposed to the predicted labels.</p>
 <p>The results of the batch transform job are saved to a CSV file in S3 with the same name as the
 input CSV file but with the <code class="code docutils literal notranslate"><span class="pre">".out"</span></code> file extension. The output CSV files contain two columns:</p>
 <ul class="simple">
-<li><p>the first column contains the predicted class probabilities, which are returned as lists of two items,</p></li>
+<li><p>the first column contains the predicted class probabilities, which are returned as lists of two items, one item for each class.</p></li>
+<li><p>the second column contains the label mappings, which are also returned as lists of two items.</p></li>
 </ul>
-<p>one item for each class.</p>
-<ul class="simple">
-<li><p>the second column contains the label mappings, which are also returned as lists of two items;</p></li>
-</ul>
-<p>the first item represents the class label of the first probability</p>
+<p>The label mappings are the same for each row and indicate that the first item in each predicted
+probabilities list corresponds to class 1 (up move), while the second item in each predicted
+probabilities list corresponds to class 0 (down move).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># download the predictions from S3</span>
 </span><span id="line-2"><span class="n">predictions</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">read_s3_file</span><span class="p">(</span>
 </span><span id="line-3">    <span class="n">bucket</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span>
