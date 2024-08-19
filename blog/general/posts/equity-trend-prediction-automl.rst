@@ -87,9 +87,12 @@ Inputs
 
 * Commodity Channel Index (CCI)
 
-For the MACD we use periods of 12 and 26, while for all the other indicators we use a period of 10.
+.. raw:: html
 
-Note that we use the same technical indicators as in <a href="#references">[1]</a>).
+    <p>
+    For the MACD we use periods of 12 and 26, while for all the other indicators we use a period of 10.
+    Note that we use the same technical indicators as in <a href="#references">[1]</a>).
+    </p>
 
 ******************************************
 Code
