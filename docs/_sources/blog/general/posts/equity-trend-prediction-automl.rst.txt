@@ -66,7 +66,7 @@ Inputs
 .. raw:: html
 
     <p>
-    The model inputs (features) are the following technical indicators, as in <a href="#references">[1]</a>:
+    The model inputs (features) are the following technical indicators:
     </p>
 
 * Simple moving average
@@ -88,6 +88,8 @@ Inputs
 * Commodity Channel Index (CCI)
 
 For the MACD we use periods of 12 and 26, while for all the other indicators we use a period of 10.
+
+Note that we use the same technical indicators as in <a href="#references">[1]</a>).
 
 ******************************************
 Code
