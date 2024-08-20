@@ -64,9 +64,9 @@ Inputs
 ==========================================
 The model inputs (features) are the following technical indicators:
 
-* Simple moving average
+* Simple Moving Average
 
-* Weighted moving average
+* Weighted Moving Average
 
 * Momentum Stochastic K%
 
