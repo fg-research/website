@@ -406,8 +406,8 @@ In the interest of time, we limit the number of candidate models to 10.</p>
 </span></code></pre></div>
 </div>
 <p>The AutoML V2 job generates numerous outputs, including an insight report for each
-model in the ensemble, and an explainability report with the feature importances
-(Shap values) for the overall ensemble, which are saved in S3.</p>
+model in the ensemble, and an explainability report with the feature importance
+for the overall ensemble, which are saved in S3.</p>
 <img alt="Feature importance." class="blog-post-image" id="equity-trend-prediction-automl-importances" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-trend-prediction-automl/importances_light.png"/>
 <p class="blog-post-image-caption">Feature importance.</p></section>
 <section id="model-evaluation">
@@ -500,7 +500,7 @@ input CSV file but with the <code class="code docutils literal notranslate"><spa
 </span><span id="line-11"><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">"index"</span><span class="p">:</span> <span class="s2">"Metric"</span><span class="p">})</span>
 </span></code></pre></div>
 </div>
-<img alt="Performance metrics of predicted S&amp;P 500 directional moves over the test set (from 2024-06-17 to 2024-07-30)" class="blog-post-image" id="equity-trend-prediction-automl-metrics" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-trend-prediction-automl/metrics_light.png"/>
+<img alt="Performance metrics of predicted S&amp;P 500 directional moves over the test set (from 2024-06-17 to 2024-07-30)" class="blog-post-image" id="equity-trend-prediction-automl-metrics" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-trend-prediction-automl/metrics_light.png" style="width:100%"/>
 <p class="blog-post-image-caption">Performance metrics of predicted S&amp;P 500 directional moves over the test set (from 2024-06-17 to 2024-07-30).</p><p>We find that the model achieves an accuracy score of 63% and a ROC-AUC score of 80% on the test set.</p>
 <img alt="ROC curve of predicted S&amp;P 500 directional moves over the test set (from 2024-06-17 to 2024-07-30)" class="blog-post-image" id="equity-trend-prediction-automl-roc-auc" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-trend-prediction-automl/roc_auc_light.png"/>
 <p class="blog-post-image-caption">ROC curve of predicted S&amp;P 500 directional moves over the test set (from 2024-06-17 to 2024-07-30).</p><p>We can additionally calculate the confusion metrics of the test set predictions.</p>
@@ -512,7 +512,7 @@ input CSV file but with the <code class="code docutils literal notranslate"><spa
 </span></code></pre></div>
 </div>
 <p>This shows that the model tends to underestimate the number of up moves over the considered time period.</p>
-<img alt="Confusion matrix of predicted S&amp;P 500 directional moves over the test set (from 2024-06-17 to 2024-07-30)" class="blog-post-image" id="equity-trend-prediction-automl-matrix" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-trend-prediction-automl/matrix_light.png"/>
+<img alt="Confusion matrix of predicted S&amp;P 500 directional moves over the test set (from 2024-06-17 to 2024-07-30)" class="blog-post-image" id="equity-trend-prediction-automl-matrix" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-trend-prediction-automl/matrix_light.png" style="width:100%"/>
 <p class="blog-post-image-caption">Confusion matrix of predicted S&amp;P 500 directional moves over the test set (from 2024-06-17 to 2024-07-30).</p><p>After the analysis has been completed, we can delete the model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># delete the model</span>
 </span><span id="line-2"><span class="n">transformer</span><span class="o">.</span><span class="n">delete_model</span><span class="p">()</span>

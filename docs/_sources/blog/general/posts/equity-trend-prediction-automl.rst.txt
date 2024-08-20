@@ -372,8 +372,8 @@ In the interest of time, we limit the number of candidate models to 10.
     )
 
 The AutoML V2 job generates numerous outputs, including an insight report for each
-model in the ensemble, and an explainability report with the feature importances
-(Shap values) for the overall ensemble, which are saved in S3.
+model in the ensemble, and an explainability report with the feature importance
+for the overall ensemble, which are saved in S3.
 
 .. raw:: html
 
@@ -540,6 +540,7 @@ We can finally calculate the classification metrics of the test set predictions.
         class="blog-post-image"
         alt="Performance metrics of predicted S&P 500 directional moves over the test set (from 2024-06-17 to 2024-07-30)"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-trend-prediction-automl/metrics_light.png
+        style="width:100%"
     />
 
     <p class="blog-post-image-caption">Performance metrics of predicted S&P 500 directional moves over the test set (from 2024-06-17 to 2024-07-30).</p>
@@ -576,6 +577,7 @@ This shows that the model tends to underestimate the number of up moves over the
         class="blog-post-image"
         alt="Confusion matrix of predicted S&P 500 directional moves over the test set (from 2024-06-17 to 2024-07-30)"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-trend-prediction-automl/matrix_light.png
+        style="width:100%"
     />
 
     <p class="blog-post-image-caption">Confusion matrix of predicted S&P 500 directional moves over the test set (from 2024-06-17 to 2024-07-30).</p>
