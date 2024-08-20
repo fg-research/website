@@ -1,10 +1,10 @@
 .. meta::
    :thumbnail: https://fg-research.com/_static/thumbnail.png
-   :description: Predicting stock market trends with Amazon SageMaker Autopilot
+   :description: Predicting stock market trends with SageMaker Autopilot
    :keywords: Amazon SageMaker, Time Series, AutoML, Forecasting, Stock Market
 
 ######################################################################################
-Predicting stock market trends with Amazon SageMaker Autopilot
+Predicting stock market trends with SageMaker Autopilot
 ######################################################################################
 
 .. raw:: html
@@ -52,7 +52,7 @@ which is derived as follows
 .. math::
 
     \begin{equation}
-      y(t) =
+      Trend(t) =
         \begin{cases}
           1 & \text{if } P(t + 1) > P(t) \\
           0 & \text{if } P(t + 1) \le P(t)
