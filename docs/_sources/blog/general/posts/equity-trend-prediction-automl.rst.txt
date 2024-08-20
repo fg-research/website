@@ -558,7 +558,7 @@ We find that the model achieves an accuracy score of 63% and a ROC-AUC score of 
 
     <p class="blog-post-image-caption">ROC curve of predicted S&P 500 directional moves over the test set (from 2024-06-17 to 2024-07-30).</p>
 
-We can additionally calculate the confusion metrics of the test set predictions.
+We can additionally calculate the confusion matrix of the test set predictions.
 
 .. code:: python
 
