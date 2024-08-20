@@ -59,6 +59,8 @@ which is derived as follows
         \end{cases}
     \end{equation}
 
+where :math:`P(t)` is the close price of the S&P 500 on day :math:`t`.
+
 ==========================================
 Inputs
 ==========================================
