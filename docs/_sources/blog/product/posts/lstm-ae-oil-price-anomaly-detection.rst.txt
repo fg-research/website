@@ -1,6 +1,6 @@
 .. meta::
    :thumbnail: https://fg-research.com/_static/thumbnail.png
-   :description: Detecting anomalies in financial time series with the LSTM-AE SageMaker Algorithm
+   :description: Detecting anomalies in financial time series with the LSTM-AE SageMaker algorithm
    :keywords: Amazon SageMaker, Time Series, LSTM, Anomaly Detection
 
 ######################################################################################

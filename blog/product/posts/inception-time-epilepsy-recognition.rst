@@ -1,6 +1,6 @@
 .. meta::
    :thumbnail: https://fg-research.com/_static/thumbnail.png
-   :description: Epileptic seizure detection with the InceptionTime SageMaker Algorithm
+   :description: Epileptic seizure detection with the InceptionTime SageMaker algorithm
    :keywords: Amazon SageMaker, Time Series, Classification, Convolutional Neural Network, Epilepsy
 
 ######################################################################################

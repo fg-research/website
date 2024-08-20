@@ -1,10 +1,10 @@
 .. meta::
    :thumbnail: https://fg-research.com/_static/thumbnail.png
-   :description: Forecasting Stock Returns with Liquid Neural Networks
+   :description: Forecasting exchange rates with long short-term memory networks using the RNN SageMaker algorithm
    :keywords: Amazon SageMaker, Time Series, Recurrent Neural Networks, Forecasting, Forex Market
 
 ############################################################################################################
-Forecasting exchange rates with long short-term memory (LSTM) networks using the RNN SageMaker algorithm
+Forecasting exchange rates with long short-term memory networks using the RNN SageMaker algorithm
 ############################################################################################################
 
 .. raw:: html

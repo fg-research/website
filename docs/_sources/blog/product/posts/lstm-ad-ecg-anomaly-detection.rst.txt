@@ -1,6 +1,6 @@
 .. meta::
    :thumbnail: https://fg-research.com/_static/thumbnail.png
-   :description: ECG anomaly detection with the LSTM-AD SageMaker Algorithm
+   :description: ECG anomaly detection with the LSTM-AD SageMaker algorithm
    :keywords: Amazon SageMaker, Time Series, LSTM, Anomaly Detection
 
 ######################################################################################
