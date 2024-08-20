@@ -517,7 +517,7 @@ input CSV file but with the :code:`".out"` file extension.
         style="width:100%"
     />
 
-We can finally calculate the classification metrics and the confusion matrix of the test set predictions.
+We can finally calculate the classification metrics of the test set predictions.
 
 .. code:: python
 
@@ -544,6 +544,10 @@ We can finally calculate the classification metrics and the confusion matrix of 
 
     <p class="blog-post-image-caption">Performance metrics of predicted S&P 500 directional moves over the test set (from 2024-06-17 to 2024-07-30).</p>
 
+We find that the model achieves an accuracy score of 63% and a ROC-AUC score of 80% on the test set.
+
+.. raw:: html
+
     <img
         id="equity-trend-prediction-automl-roc-auc"
         class="blog-post-image"
@@ -553,7 +557,7 @@ We can finally calculate the classification metrics and the confusion matrix of 
 
     <p class="blog-post-image-caption">ROC curve of predicted S&P 500 directional moves over the test set (from 2024-06-17 to 2024-07-30).</p>
 
-We find that the model achieves an accuracy score of 63% and a ROC-AUC score of 80% on the test set.
+We can additionally calculate the confusion metrics of the test set predictions.
 
 .. code:: python
 
@@ -562,6 +566,8 @@ We find that the model achieves an accuracy score of 63% and a ROC-AUC score of 
         index=predictions["Actual Trend"],
         columns=predictions["Predicted Trend"],
     )
+
+This shows that the model tends to underestimate the number of up moves over the considered time period.
 
 .. raw:: html
 
