@@ -30,7 +30,8 @@ window.setInterval(function(){
         'commodity-forecasting-forgan-toctree',
         'rnn-fx-forecasting-toctree',
         'cnn-kmeans-ecg-clustering-toctree',
-        'inception-time-epilepsy-recognition-toctree'
+        'inception-time-epilepsy-recognition-toctree',
+        'equity-trend-prediction-automl-toctree'
     ];
     for (var i = 0; i < elements.length; i++) {
         var f = document.getElementById(elements[i]);
@@ -94,7 +95,18 @@ window.setInterval(function(){
         'inception-time-epilepsy-recognition-test-outputs-head',
         'inception-time-epilepsy-recognition-test-outputs-tail',
         'inception-time-epilepsy-recognition-predictions-head',
-        'inception-time-epilepsy-recognition-predictions-tail'
+        'inception-time-epilepsy-recognition-predictions-tail',
+        'equity-trend-prediction-automl-dataset-head',
+        'equity-trend-prediction-automl-dataset-tail',
+        'equity-trend-prediction-automl-importances',
+        'equity-trend-prediction-automl-matrix',
+        'equity-trend-prediction-automl-metrics',
+        'equity-trend-prediction-automl-predictions-head',
+        'equity-trend-prediction-automl-predictions-tail',
+        'equity-trend-prediction-automl-raw-predictions-head',
+        'equity-trend-prediction-automl-raw-predictions-tail',
+        'equity-trend-prediction-automl-roc-auc',
+        'equity-trend-prediction-automl-time-series'
     ];
     for (var i = 0; i < elements.length; i++) {
         var f = document.getElementById(elements[i]);

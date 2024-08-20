@@ -12,6 +12,39 @@ General
 
    Learn about time series analysis
 
+.. card::
+    :width: 100%
+    :link: posts/equity-trend-prediction-automl
+    :link-type: doc
+
+    .. _equity-trend-prediction-automl-toctree:
+
+    .. toctree::
+        :titlesonly:
+
+        posts/equity-trend-prediction-automl
+
+    .. _equity-trend-prediction-automl-include:
+
+    Building a well-performing machine learning model requires substantial time and resources.
+    Automated machine learning (AutoML) automates the end-to-end process of building, training
+    and tuning machine learning models.
+    This not only accelerates the development cycle, but also makes machine learning more accessible
+    to those without specialized data science expertise...
+
+    .. grid:: 2
+        :margin: 0 3 auto auto
+
+        .. grid-item::
+            :class: blog-post-tag
+
+            :octicon:`graph;1rem;graph-icon` Classification
+
+        .. grid-item::
+            :class: sd-text-secondary
+
+            :octicon:`calendar;1rem;calendar-icon` August 20, 2024
+
 
 .. card::
     :width: 100%

@@ -35,8 +35,8 @@ Predicting stock market trends with Amazon SageMaker Autopilot
     We will then test the identified best model, i.e. the one with the best performance
     on the validation set, on the remaining 30 days of data up to the
     30<sup>th</sup> of July 2024 (test set).
-    We will find that the model achieves an accuracy score of 63%
-    and a ROC-AUC score of 80% over the test set.
+    We will find that the model achieves an accuracy score of 63% and a
+    ROC-AUC score of 80% over the test set.
     </p>
 
 ******************************************
@@ -46,7 +46,6 @@ Data
 ==========================================
 Outputs
 ==========================================
-
 The model output (target) is the sign of the next day's price move of the S&P 500,
 which is derived as follows
 
@@ -63,12 +62,7 @@ which is derived as follows
 ==========================================
 Inputs
 ==========================================
-
-.. raw:: html
-
-    <p>
-    The model inputs (features) are the following technical indicators:
-    </p>
+The model inputs (features) are the following technical indicators:
 
 * Simple moving average
 
@@ -91,8 +85,8 @@ Inputs
 .. raw:: html
 
     <p>
-    For the MACD we use periods of 12 and 26, while for all the other indicators we use a period of 10.
     Note that we use the same technical indicators as in <a href="#references">[1]</a>.
+    For the MACD we use periods of 12 days and 26 days, while for all the other indicators we use a period of 10 days.
     </p>
 
 ******************************************
@@ -107,14 +101,13 @@ We start by importing all the dependencies and setting up the SageMaker environm
 
 .. note::
 
-    We use the :code:`yfinance` library for downloading the S&P500 daily time series and
+    We use the :code:`yfinance` library for downloading the S&P 500 daily time series and
     the :code:`pyti` library for calculating the technical indicators.
 
 .. code:: python
 
     import warnings
     import io
-    import boto3
     import json
     import sagemaker
     import yfinance as yf
@@ -141,9 +134,6 @@ We start by importing all the dependencies and setting up the SageMaker environm
     # S3 bucket
     bucket = session.default_bucket()
 
-    # Boto3 client
-    client = boto3.client("sagemaker-runtime")
-
 ==========================================
 Data Preparation
 ==========================================
@@ -151,7 +141,6 @@ Data Preparation
 .. raw:: html
 
     <p>
-
     Next, we download the S&P 500 time series from the 2<sup>nd</sup> of August 2021 to the 31<sup>st</sup> of July 2024.
     The dataset contains 754 daily observations.
     </p>
@@ -230,7 +219,7 @@ We then calculate the technical indicators.
     )
 
 We also calculate the binary labels, which are equal to 1 when the price of the S&P 500 goes up on the next day,
-and equal to 0 when it goes down.
+and equal to 0 otherwise.
 
 .. code:: python
 
@@ -260,12 +249,43 @@ and of the binary labels, the number of daily observations is reduced to 728.
 
     dataset.head()
 
+.. raw:: html
+
+    <img
+        id="equity-trend-prediction-automl-dataset-head"
+        class="blog-post-image"
+        alt="First 3 rows of dataset"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-trend-prediction-automl/dataset_head_light.png
+        style="width:100%"
+    />
+
 .. code:: python
 
     dataset.tail()
 
+.. raw:: html
+
+    <img
+        id="equity-trend-prediction-automl-dataset-tail"
+        class="blog-post-image"
+        alt="Last 3 rows of dataset"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-trend-prediction-automl/dataset_tail_light.png
+        style="width:100%"
+    />
+
+.. raw:: html
+
+    <img
+        id="equity-trend-prediction-automl-time-series"
+        class="blog-post-image"
+        alt="S&P 500 with technical indicators from 2021-09-07 to 2024-07-30"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-trend-prediction-automl/time_series_light.png
+    />
+
+    <p class="blog-post-image-caption">S&P 500 with technical indicators from 2021-09-07 to 2024-07-30.</p>
+
 We use the last 30 days of data for testing, the prior 30 days of data for validation,
-and all the remaining data for training.
+and all the previous data for training.
 
 .. code:: python
 
@@ -281,8 +301,7 @@ and all the remaining data for training.
     # extract the test data
     test_dataset = dataset.iloc[- test_size:]
 
-We save the training, validation and test data to S3 in CSV format such that it can be used by the algorithm.
-Note that we remove the class labels and the column headers from the test data before saving it to S3.
+We save the training, validation and test data to S3 in CSV format.
 
 .. code:: python
 
@@ -352,13 +371,28 @@ In the interest of time, we limit the number of candidate models to 10.
         ]
     )
 
+The AutoML V2 job generates numerous outputs, including an insight report for each
+model in the ensemble, and an explainability report with the feature importances
+(Shap values) for the overall ensemble, which are saved in S3.
+
+.. raw:: html
+
+    <img
+        id="equity-trend-prediction-automl-importances"
+        class="blog-post-image"
+        alt="Feature importance."
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-trend-prediction-automl/importances_light.png
+    />
+
+    <p class="blog-post-image-caption">Feature importance.</p>
+
 ==========================================
 Model Evaluation
 ==========================================
 
 After the AutoML V2 job has been completed, we run a batch transform job on
 the test data using the best model. Note that we configure the model such that
-it outputs the predicted probabilities as opposed to the predicted labels.
+it outputs the predicted probabilities in addition to the predicted labels.
 
 .. code:: python
 
@@ -366,7 +400,7 @@ it outputs the predicted probabilities as opposed to the predicted labels.
     model = automl.create_model(
         name="equity-trend-model",
         sagemaker_session=session,
-        inference_response_keys=["probabilities", "labels"]
+        inference_response_keys=["probabilities", "labels", "predicted_label", "probability"]
     )
 
     # create the transformer
@@ -382,15 +416,7 @@ it outputs the predicted probabilities as opposed to the predicted labels.
     )
 
 The results of the batch transform job are saved to a CSV file in S3 with the same name as the
-input CSV file but with the :code:`".out"` file extension. The output CSV files contain two columns:
-
-* the first column contains the predicted class probabilities, which are returned as lists of two items, one item for each class.
-
-* the second column contains the label mappings, which are also returned as lists of two items.
-
-The label mappings are the same for each row and indicate that the first item in each predicted
-probabilities list corresponds to class 1 (up move), while the second item in each predicted
-probabilities list corresponds to class 0 (down move).
+input CSV file but with the :code:`".out"` file extension.
 
 .. code:: python
 
@@ -403,16 +429,57 @@ probabilities list corresponds to class 0 (down move).
     # cast the predictions to data frame
     predictions = pd.read_csv(io.StringIO(predictions), header=None)
 
+.. code:: python
+
+    predictions.shape
+
+.. code-block:: console
+
+    (30, 4)
+
+.. code:: python
+
+    predictions.head()
+
+.. raw:: html
+
+    <img
+        id="equity-trend-prediction-automl-raw-predictions-head"
+        class="blog-post-image"
+        alt="First 3 rows of raw predictions"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-trend-prediction-automl/raw_predictions_head_light.png
+        style="width:100%"
+    />
+
+.. code:: python
+
+    predictions.tail()
+
+.. raw:: html
+
+    <img
+        id="equity-trend-prediction-automl-raw-predictions-tail"
+        class="blog-post-image"
+        alt="Last 3 rows of raw predictions"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-trend-prediction-automl/raw_predictions_tail_light.png
+        style="width:100%"
+    />
+
+.. code:: python
+
     # extract the predicted probabilities
-    predictions["Class 0 Probability"] = predictions.iloc[:, 0].apply(lambda x: json.loads(x)[1])
-    predictions["Class 1 Probability"] = predictions.iloc[:, 0].apply(lambda x: json.loads(x)[0])
+    predictions["Class 0 Probability"] = predictions["probabilities"].apply(lambda x: json.loads(x)[1])
+    predictions["Class 1 Probability"] = predictions["probabilities"].apply(lambda x: json.loads(x)[0])
     predictions["Predicted Trend"] = predictions[["Class 0 Probability", "Class 1 Probability"]].apply(lambda x: np.argmax(x), axis=1)
 
     # add the dates
     predictions.index = test_dataset.index
 
     # add the ground truth labels
-    predictions["Actual Trend"] = test_dataset["Trend"]
+    predictions["Actual Trend"] = test_dataset["Trend"].astype(int)
+
+    # drop the unnecessary columns
+    predictions = predictions[["Class 0 Probability", "Class 1 Probability", "Predicted Trend", "Actual Trend"]]
 
 .. code:: python
 
@@ -426,11 +493,31 @@ probabilities list corresponds to class 0 (down move).
 
     predictions.head()
 
+.. raw:: html
+
+    <img
+        id="equity-trend-prediction-automl-predictions-head"
+        class="blog-post-image"
+        alt="First 3 rows of predictions"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-trend-prediction-automl/predictions_head_light.png
+        style="width:100%"
+    />
+
 .. code:: python
 
     predictions.tail()
 
-We can finally calculate the classification metrics and the confusion matrix on the test set.
+.. raw:: html
+
+    <img
+        id="equity-trend-prediction-automl-predictions-tail"
+        class="blog-post-image"
+        alt="Last 3 rows of predictions"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-trend-prediction-automl/predictions_tail_light.png
+        style="width:100%"
+    />
+
+We can finally calculate the classification metrics and the confusion matrix of the test set predictions.
 
 .. code:: python
 
@@ -446,6 +533,18 @@ We can finally calculate the classification metrics and the confusion matrix on 
         index=["Value"]
     ).transpose().reset_index().rename(columns={"index": "Metric"})
 
+.. raw:: html
+
+    <img
+        id="equity-trend-prediction-automl-metrics"
+        class="blog-post-image"
+        alt="Performance metrics of predicted S&P 500 directional moves over the test set (from 2024-06-17 to 2024-07-30)"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-trend-prediction-automl/metrics_light.png
+    />
+
+    <p class="blog-post-image-caption">Performance metrics of predicted S&P 500 directional moves over the test set (from 2024-06-17 to 2024-07-30).</p>
+
+
 We find that the model achieves an accuracy score of 63% and a ROC-AUC score of 80% on the test set.
 
 .. code:: python
@@ -455,6 +554,17 @@ We find that the model achieves an accuracy score of 63% and a ROC-AUC score of 
         index=predictions["Actual Trend"],
         columns=predictions["Predicted Trend"],
     )
+
+.. raw:: html
+
+    <img
+        id="equity-trend-prediction-automl-matrix"
+        class="blog-post-image"
+        alt="Confusion matrix of predicted S&P 500 directional moves over the test set (from 2024-06-17 to 2024-07-30)"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-trend-prediction-automl/matrix_light.png
+    />
+
+    <p class="blog-post-image-caption">Confusion matrix of predicted S&P 500 directional moves over the test set (from 2024-06-17 to 2024-07-30).</p>
 
 After the analysis has been completed, we can delete the model.
 
@@ -477,4 +587,3 @@ References
 Predicting direction of stock price index movement using artificial neural networks and support vector machines:
 The sample of the Istanbul Stock Exchange. *Expert Systems with Applications*, 38(5), 5311-5319.
 `doi: doi:10.1016/j.eswa.2010.10.027 <https://doi.org/doi:10.1016/j.eswa.2010.10.027>`__.
-
