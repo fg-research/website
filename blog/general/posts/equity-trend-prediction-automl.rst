@@ -544,6 +544,14 @@ We can finally calculate the classification metrics and the confusion matrix of 
 
     <p class="blog-post-image-caption">Performance metrics of predicted S&P 500 directional moves over the test set (from 2024-06-17 to 2024-07-30).</p>
 
+    <img
+        id="equity-trend-prediction-automl-roc-auc"
+        class="blog-post-image"
+        alt="ROC curve of predicted S&P 500 directional moves over the test set (from 2024-06-17 to 2024-07-30)"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-trend-prediction-automl/roc_auc_light.png
+    />
+
+    <p class="blog-post-image-caption">ROC curve of predicted S&P 500 directional moves over the test set (from 2024-06-17 to 2024-07-30).</p>
 
 We find that the model achieves an accuracy score of 63% and a ROC-AUC score of 80% on the test set.
 

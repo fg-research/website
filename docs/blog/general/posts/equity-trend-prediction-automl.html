@@ -501,7 +501,9 @@ input CSV file but with the <code class="code docutils literal notranslate"><spa
 </span></code></pre></div>
 </div>
 <img alt="Performance metrics of predicted S&amp;P 500 directional moves over the test set (from 2024-06-17 to 2024-07-30)" class="blog-post-image" id="equity-trend-prediction-automl-metrics" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-trend-prediction-automl/metrics_light.png"/>
-<p class="blog-post-image-caption">Performance metrics of predicted S&amp;P 500 directional moves over the test set (from 2024-06-17 to 2024-07-30).</p><p>We find that the model achieves an accuracy score of 63% and a ROC-AUC score of 80% on the test set.</p>
+<p class="blog-post-image-caption">Performance metrics of predicted S&amp;P 500 directional moves over the test set (from 2024-06-17 to 2024-07-30).</p>
+<img alt="ROC curve of predicted S&amp;P 500 directional moves over the test set (from 2024-06-17 to 2024-07-30)" class="blog-post-image" id="equity-trend-prediction-automl-roc-auc" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/equity-trend-prediction-automl/roc_auc_light.png"/>
+<p class="blog-post-image-caption">ROC curve of predicted S&amp;P 500 directional moves over the test set (from 2024-06-17 to 2024-07-30).</p><p>We find that the model achieves an accuracy score of 63% and a ROC-AUC score of 80% on the test set.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># calculate the confusion matrix</span>
 </span><span id="line-2"><span class="n">matrix</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span>
 </span><span id="line-3">    <span class="n">index</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="s2">"Actual Trend"</span><span class="p">],</span>
