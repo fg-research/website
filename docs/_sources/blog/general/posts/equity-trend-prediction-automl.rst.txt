@@ -469,6 +469,8 @@ input CSV file but with the :code:`".out"` file extension.
         style="width:100%"
     />
 
+For convenience, we include the ground truth class labels in the same data frame as the predicted class labels and class probabilities.
+
 .. code:: python
 
     # extract the predicted probabilities
