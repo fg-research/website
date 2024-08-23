@@ -334,7 +334,8 @@ We save the training, validation and test data to S3 in CSV format.
 Model Selection
 ==========================================
 
-We now run an AutoML V2 job to find the best ensemble of gradient boosting classifiers (XGBoost, LightGBM and CatBoost).
+We now run an AutoML V2 job to find the best ensemble of gradient boosting classifiers (XGBoost, LightGBM and CatBoost),
+that is the one with the best validation accuracy.
 In the interest of time, we limit the number of candidate models to 10.
 
 .. code:: python
