@@ -1,0 +1,255 @@
+.. meta::
+   :thumbnail: https://fg-research.com/_static/thumbnail.png
+   :description: Forecasting electricity prices with Chronos
+   :keywords: Large Language Models, Transformers, Time Series, Forecasting, Energy
+
+######################################################################################
+Forecasting electricity prices with Chronos
+######################################################################################
+
+******************************************
+Code
+******************************************
+
+We start by installing and importing all the dependencies.
+
+.. code:: python
+
+    pip install git+https://github.com/amazon-science/chronos-forecasting.git fredapi pmdarima
+
+.. code:: python
+
+    import warnings
+    import transformers
+    import torch
+    import numpy as np
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    from datetime import datetime
+    from chronos import ChronosPipeline
+    from pmdarima.arima import auto_arima
+    from statsmodels.tsa.statespace.sarimax import SARIMAX
+    from tqdm import tqdm
+    from fredapi import Fred
+    from sklearn.metrics import mean_absolute_percentage_error, mean_absolute_error, root_mean_squared_error
+
+.. raw:: html
+
+    <p>
+    Next, we download the US average electricity price time series from the <a href=https://fred.stlouisfed.org/ target="_blank">FRED database</a>.
+    We use the <a href="https://github.com/mortada/fredapi" target="_blank">Python API for FRED</a> for downloading the data.
+    </p>
+
+.. tip::
+    If you don’t have a FRED API key, you can request one for free at `this link <http://api.stlouisfed.org/api_key.html>`__.
+
+.. code:: python
+
+    # set up the FRED API
+    fred = Fred(api_key_file="api_key.txt")
+
+    # define the time series ID
+    series = "APU000072610"
+
+    # download the time series
+    data = fred.get_series(series).rename(series).ffill()
+
+.. raw:: html
+
+    <img
+        id="electricity-forecasting-chronos-time-series"
+        class="blog-post-image"
+        alt="US average electricity price from November 1978 to July 2024"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/time_series_light.png
+    />
+
+    <p class="blog-post-image-caption">US average electricity price from November 1978 to July 2024.</p>
+
+We then define the start and end dates of the forecasts.
+
+.. code:: python
+
+    # date of first forecast
+    start_date = "2014-08-01"
+
+    # date of last forecast
+    end_date = "2024-07-01"
+
+==========================================
+SARIMA
+==========================================
+We use the :code:`pmdarima` library for finding the best order of the SARIMA model.
+
+.. code:: python
+
+    # find the best order of the SARIMA model
+    best_sarima_model = auto_arima(
+        y=data[data.index < start_date],
+        start_p=0,
+        start_q=0,
+        start_P=0,
+        start_Q=0,
+        m=12,
+        seasonal=True,
+    )
+
+.. raw:: html
+
+    <img
+        id="electricity-forecasting-chronos-sarima-results"
+        class="blog-post-image"
+        alt="SARIMA estimation results."
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/sarima_results.png
+    />
+
+    <p class="blog-post-image-caption">SARIMA estimation results.</p>
+
+
+.. code:: python
+
+    # create a list for storing the forecasts
+    sarima_forecasts = []
+
+    # loop across the dates
+    for t in tqdm(range(data.index.get_loc(start_date), data.index.get_loc(end_date) + 1)):
+
+        # extract the training data
+        context = data.iloc[:t]
+
+        # train the model
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            sarima_model = SARIMAX(
+                endog=context,
+                order=best_sarima_model.order,
+                seasonal_order=best_sarima_model.seasonal_order,
+                trend="c" if best_sarima_model.with_intercept else None,
+            ).fit(disp=0)
+
+        # generate the one-step-ahead forecast
+        sarima_forecast = sarima_model.get_forecast(steps=1)
+
+        # save the forecast
+        sarima_forecasts.append({
+            "date": data.index[t],
+            "actual": data.values[t],
+            "mean": sarima_forecast.predicted_mean.item(),
+            "std": sarima_forecast.var_pred_mean.item() ** 0.5,
+        })
+
+    # cast the forecasts to data frame
+    sarima_forecasts = pd.DataFrame(sarima_forecasts)
+
+.. raw:: html
+
+    <img
+        id="electricity-forecasting-chronos-sarima-forecasts"
+        class="blog-post-image"
+        alt="SARIMA forecasts from August 2014 to July 202."
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/sarima_forecasts_light.png
+    />
+
+    <p class="blog-post-image-caption">SARIMA forecasts from August 2014 to July 2024.</p>
+
+
+.. code:: python
+
+    # calculate the error metrics
+    sarima_metrics = pd.DataFrame(
+        columns=["Metric", "Value"],
+        data=[
+            {"Metric": "RMSE", "Value": root_mean_squared_error(y_true=sarima_forecasts["actual"], y_pred=sarima_forecasts["mean"])},
+            {"Metric": "MAE", "Value": mean_absolute_error(y_true=sarima_forecasts["actual"], y_pred=sarima_forecasts["mean"])},
+        ]
+    ).set_index("Metric")
+
+
+.. raw:: html
+
+    <img
+        id="electricity-forecasting-chronos-sarima-metrics"
+        class="blog-post-image"
+        alt="SARIMA forecast errors from August 2014 to July 202."
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/sarima_metrics_light.png
+    />
+
+    <p class="blog-post-image-caption">SARIMA forecast errors from August 2014 to July 2024.</p>
+
+==========================================
+Chronos
+==========================================
+
+.. code:: python
+
+    # instantiate the model
+    chronos_model = ChronosPipeline.from_pretrained(
+        "amazon/chronos-t5-large",
+        device_map="cuda",
+        torch_dtype=torch.bfloat16,
+    )
+
+.. code:: python
+
+    # create a list for storing the forecasts
+    chronos_forecasts = []
+
+    # loop across the dates
+    for t in tqdm(range(data.index.get_loc(start_date), data.index.get_loc(end_date) + 1)):
+
+        # extract the context window
+        context = data.iloc[:t]
+
+        # generate the one-step-ahead forecast
+        transformers.set_seed(42)
+        chronos_forecast = chronos_model.predict(
+            context=torch.from_numpy(context.values),
+            prediction_length=1,
+            num_samples=100
+        ).detach().cpu().numpy().flatten()
+
+        # save the forecasts
+        chronos_forecasts.append({
+            "date": data.index[t],
+            "actual": data.values[t],
+            "mean": np.mean(chronos_forecast),
+            "std": np.std(chronos_forecast, ddof=1),
+        })
+
+    # cast the forecasts to data frame
+    chronos_forecasts = pd.DataFrame(chronos_forecasts)
+
+
+.. raw:: html
+
+    <img
+        id="electricity-forecasting-chronos-chronos-forecasts"
+        class="blog-post-image"
+        alt="Chronos forecasts from August 2014 to July 202."
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/chronos_forecasts_light.png
+    />
+
+    <p class="blog-post-image-caption">Chronos forecasts from August 2014 to July 2024.</p>
+
+.. code:: python
+
+    # calculate the error metrics
+    chronos_metrics = pd.DataFrame(
+        columns=["Metric", "Value"],
+        data=[
+            {"Metric": "RMSE", "Value": root_mean_squared_error(y_true=chronos_forecasts["actual"], y_pred=chronos_forecasts["mean"])},
+            {"Metric": "MAE", "Value": mean_absolute_error(y_true=chronos_forecasts["actual"], y_pred=chronos_forecasts["mean"])},
+        ]
+    ).set_index("Metric")
+
+
+.. raw:: html
+
+    <img
+        id="electricity-forecasting-chronos-chronos-metrics"
+        class="blog-post-image"
+        alt="Chronos forecast errors from August 2014 to July 202."
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/chronos_metrics_light.png
+    />
+
+    <p class="blog-post-image-caption">Chronos forecast errors from August 2014 to July 2024.</p>
+

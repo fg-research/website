@@ -31,7 +31,8 @@ window.setInterval(function(){
         'rnn-fx-forecasting-toctree',
         'cnn-kmeans-ecg-clustering-toctree',
         'inception-time-epilepsy-recognition-toctree',
-        'equity-trend-prediction-automl-toctree'
+        'equity-trend-prediction-automl-toctree',
+        'electricity-forecasting-chronos-toctree'
     ];
     for (var i = 0; i < elements.length; i++) {
         var f = document.getElementById(elements[i]);
@@ -106,7 +107,12 @@ window.setInterval(function(){
         'equity-trend-prediction-automl-raw-predictions-head',
         'equity-trend-prediction-automl-raw-predictions-tail',
         'equity-trend-prediction-automl-roc-auc',
-        'equity-trend-prediction-automl-time-series'
+        'equity-trend-prediction-automl-time-series',
+        'electricity-forecasting-chronos-time-series',
+        'electricity-forecasting-chronos-sarima-forecasts',
+        'electricity-forecasting-chronos-sarima-metrics',
+        'electricity-forecasting-chronos-chronos-forecasts',
+        'electricity-forecasting-chronos-chronos-metrics'
     ];
     for (var i = 0; i < elements.length; i++) {
         var f = document.getElementById(elements[i]);
