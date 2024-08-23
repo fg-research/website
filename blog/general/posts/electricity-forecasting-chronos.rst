@@ -99,7 +99,7 @@ We use the :code:`pmdarima` library for finding the best order of the SARIMA mod
         id="electricity-forecasting-chronos-sarima-results"
         class="blog-post-image"
         alt="SARIMA estimation results."
-        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/sarima_results.png
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/sarimax_results.png
     />
 
     <p class="blog-post-image-caption">SARIMA estimation results.</p>
