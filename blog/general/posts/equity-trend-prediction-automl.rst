@@ -22,7 +22,7 @@ Predicting stock market trends with SageMaker Autopilot
     SageMaker Autopilot </a> for building a stock market trend prediction model.
     We will use SageMaker AutoML V2 for building an ensemble of gradient boosting classifiers
     (XGBoost, LightGBM and CatBoost) to predict the direction of the S&P 500 (up or down)
-    one day ahead using as input a set of technical indicators.
+    one day ahead using as input a set of technical indicators, similar to <a href="#references">[1]</a>.
     </p>
 
     <p>
