@@ -10,6 +10,13 @@ Advanced Time Series Solutions in Amazon SageMaker
 
     Train, tune and deploy state-of-the-art machine learning models for time series in Amazon SageMaker
 
+.. _fg_research_logo:
+
+.. image:: /static/logo.png
+  :align: left
+  :width: 70%
+  :alt: fg-research logo
+
 .. _aws_marketplace_logo:
 
 .. image:: /static/AWSMP_NewLogo_RGB_BLK.png
