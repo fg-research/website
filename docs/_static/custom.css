@@ -113,6 +113,10 @@ h6 {
     font-style: italic;
 }
 
+.blog-post-tag{
+    color: #0069D9
+}
+
 .leading-loose{
     font-size: 70% !important;
     text-align: center !important;
@@ -123,10 +127,13 @@ h6 {
 #aws-marketplace-logo{
     width: 35%;
     margin-right: 5%;
+    margin-top: -2rem;
 }
 
-.blog-post-tag{
-    color: #0069D9
+@media (max-width:650px) {
+    #aws-marketplace-logo{
+        width: 55%;
+    }
 }
 
 @media (max-width:750px) {
@@ -176,10 +183,6 @@ h6 {
         text-align: center !important;
         margin: auto !important;
         max-width: 100% !important;
-    }
-
-    #aws-marketplace-logo{
-        width: 55%;
     }
 
 }
