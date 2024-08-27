@@ -12,10 +12,9 @@ Advanced Time Series Solutions in Amazon SageMaker
 
 .. _fg_research_logo:
 
-.. image:: /static/logo.png
+.. image:: /static/background.png
   :align: left
-  :width: 65%
-  :alt: fg-research logo
+  :alt: background image
 
 .. _aws_marketplace_logo:
 
