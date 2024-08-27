@@ -4,7 +4,7 @@
    :keywords: Amazon SageMaker, Time Series, Machine Learning, Forecasting, Anomaly Detection
 
 ########################################################
-Advanced Time Series Solutions on Amazon SageMaker
+ Amazon SageMaker Advanced Time Series Solutions
 ########################################################
 .. rst-class:: lead
 
