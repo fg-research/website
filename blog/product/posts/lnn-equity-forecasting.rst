@@ -46,7 +46,7 @@ Forecasting stock returns with liquid neural networks using the LNN SageMaker al
     </p>
 
     <p>
-    We will use the daily close prices of the S&P 500 from the 30<sup>th</sup> of June 2022 to
+    We will use the data from the 30<sup>th</sup> of June 2022 to
     the 28<sup>th</sup> of June 2024, which we will download from
     <a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>.
     We will train the model on the data up to the 8<sup>th</sup> of September 2023,
