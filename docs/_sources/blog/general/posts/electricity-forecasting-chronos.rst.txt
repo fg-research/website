@@ -36,7 +36,7 @@ We start by installing and importing all the dependencies.
 .. raw:: html
 
     <p>
-    Next, we download the US average electricity price time series from the <a href=https://fred.stlouisfed.org/ target="_blank">FRED database</a>.
+    Next, we download the time series from the <a href=https://fred.stlouisfed.org/ target="_blank">FRED database</a>.
     We use the <a href="https://github.com/mortada/fredapi" target="_blank">Python API for FRED</a> for downloading the data.
     </p>
 
@@ -65,7 +65,8 @@ We start by installing and importing all the dependencies.
 
     <p class="blog-post-image-caption">US average electricity price from November 1978 to July 2024.</p>
 
-We then define the start and end dates of the forecasts.
+After that, we define the start and end dates of the forecasts.
+We generate the forecasts over a 10-year period (120 months) period from August 2014 to July 2024.
 
 .. code:: python
 
@@ -78,7 +79,8 @@ We then define the start and end dates of the forecasts.
 ==========================================
 SARIMA
 ==========================================
-We use the :code:`pmdarima` library for finding the best order of the SARIMA model.
+We use the :code:`pmdarima` library for finding the best order of the SARIMA model
+using the data up to July 2014.
 
 .. code:: python
 
@@ -104,6 +106,7 @@ We use the :code:`pmdarima` library for finding the best order of the SARIMA mod
 
     <p class="blog-post-image-caption">SARIMA estimation results.</p>
 
+We then train the SARIMA model with the
 
 .. code:: python
 
@@ -207,7 +210,7 @@ Chronos
             num_samples=100
         ).detach().cpu().numpy().flatten()
 
-        # save the forecasts
+        # save the forecast
         chronos_forecasts.append({
             "date": data.index[t],
             "actual": data.values[t],
