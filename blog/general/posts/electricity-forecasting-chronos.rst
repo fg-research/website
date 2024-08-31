@@ -68,7 +68,6 @@ The time series had one missing value in September 1985, which we forward filled
 
     <p class="blog-post-image-caption">US average electricity price from November 1978 to July 2024.</p>
 
-After that, we define the start and end dates of the forecasts.
 We generate the forecasts over a 10-year period (120 months) from August 2014 to July 2024.
 
 .. code:: python
@@ -197,7 +196,7 @@ We use the t5-large version of Chronos, which includes approximately 710 million
     )
 
 For each month in the considered time window, we use as context window all the data up to that month,
-and generate the 100 samples from the predicted distribution for the next month.
+and generate 100 samples from the predicted distribution for the next month.
 We use the mean of the distribution as point forecast, as in the SARIMA model.
 
 .. note::
@@ -271,3 +270,15 @@ We use the mean of the distribution as point forecast, as in the SARIMA model.
     <p class="blog-post-image-caption">Chronos forecast errors from August 2014 to July 2024.</p>
 
 We find that the Chronos model achieves an RMSE of 0.001443 and a MAE of 0.001105.
+
+.. tip::
+
+    A Python notebook with the full code is available in our `GitHub <https://github.com/fg-research/blog/blob/master/electricity-forecasting-chronos>`__
+    repository.
+
+******************************************
+References
+******************************************
+
+[1] Ansari, A.F., Stella, L., Turkmen, C., Zhang, X., Mercado, P., Shen, H., Shchur, O., Rangapuram, S.S., Arango, S.P., Kapoor, S. and Zschiegner, J., (2024).
+Chronos: Learning the language of time series. *arXiv preprint*, `doi: 10.48550/arXiv.2403.07815 <https://doi.org/10.48550/arXiv.2403.07815>`__.

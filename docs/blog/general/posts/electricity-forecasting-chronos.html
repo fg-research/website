@@ -162,8 +162,7 @@ We use the <a href="https://github.com/mortada/fredapi" target="_blank">Python A
 <p>The time series includes 549 monthly observations from November 1978 to July 2024.
 The time series had one missing value in September 1985, which we forward filled with the previous value.</p>
 <img alt="US average electricity price from November 1978 to July 2024" class="blog-post-image" id="electricity-forecasting-chronos-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/time_series_light.png"/>
-<p class="blog-post-image-caption">US average electricity price from November 1978 to July 2024.</p><p>After that, we define the start and end dates of the forecasts.
-We generate the forecasts over a 10-year period (120 months) from August 2014 to July 2024.</p>
+<p class="blog-post-image-caption">US average electricity price from November 1978 to July 2024.</p><p>We generate the forecasts over a 10-year period (120 months) from August 2014 to July 2024.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># date of first forecast</span>
 </span><span id="line-2"><span class="n">start_date</span> <span class="o">=</span> <span class="s2">"2014-08-01"</span>
 </span><span id="line-3">
@@ -249,7 +248,7 @@ on all the data up to that month, and generate the forecast for the next month.<
 </span></code></pre></div>
 </div>
 <p>For each month in the considered time window, we use as context window all the data up to that month,
-and generate the 100 samples from the predicted distribution for the next month.
+and generate 100 samples from the predicted distribution for the next month.
 We use the mean of the distribution as point forecast, as in the SARIMA model.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -298,7 +297,17 @@ samples result in slightly different forecasts.</p>
 </div>
 <img alt="Chronos forecast errors from August 2014 to July 202." class="blog-post-image" id="electricity-forecasting-chronos-chronos-metrics" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/chronos_metrics_light.png"/>
 <p class="blog-post-image-caption">Chronos forecast errors from August 2014 to July 2024.</p><p>We find that the Chronos model achieves an RMSE of 0.001443 and a MAE of 0.001105.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>A Python notebook with the full code is available in our <a class="reference external" href="https://github.com/fg-research/blog/blob/master/electricity-forecasting-chronos">GitHub</a>
+repository.</p>
+</div>
 </section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#references'">¶</a></h2>
+<p>[1] Ansari, A.F., Stella, L., Turkmen, C., Zhang, X., Mercado, P., Shen, H., Shchur, O., Rangapuram, S.S., Arango, S.P., Kapoor, S. and Zschiegner, J., (2024).
+Chronos: Learning the language of time series. <em>arXiv preprint</em>, <a class="reference external" href="https://doi.org/10.48550/arXiv.2403.07815">doi: 10.48550/arXiv.2403.07815</a>.</p>
 </section>
 </section>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
@@ -309,6 +318,7 @@ samples result in slightly different forecasts.</p>
 <li><a :data-current="activeSection === '#chronos'" class="reference internal" href="#chronos">Chronos</a></li>
 </ul>
 </li>
+<li><a :data-current="activeSection === '#references'" class="reference internal" href="#references">References</a></li>
 </ul>
 </div>
 </aside>
