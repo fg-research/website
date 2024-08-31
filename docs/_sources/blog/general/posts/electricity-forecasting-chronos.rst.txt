@@ -185,7 +185,7 @@ We find that the SARIMA model achieves an RMSE of 0.001364 and a MAE of 0.001067
 ==========================================
 Chronos
 ==========================================
-We use the t5-large version of Chronos (710M parameters).
+We use the t5-large version of Chronos, which includes approximately 710 million parameters.
 
 .. code:: python
 

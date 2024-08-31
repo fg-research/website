@@ -239,7 +239,7 @@ on all the data up to that month, and generate the forecast for the next month.<
 <p class="blog-post-image-caption">SARIMA forecast errors from August 2014 to July 2024.</p></section>
 <section id="chronos">
 <h3>Chronos<a class="headerlink" href="#chronos" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#chronos'">¶</a></h3>
-<p>We use the t5-large version of Chronos (710M parameters).</p>
+<p>We use the t5-large version of Chronos, which includes approximately 710 million parameters.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># instantiate the model</span>
 </span><span id="line-2"><span class="n">chronos_model</span> <span class="o">=</span> <span class="n">ChronosPipeline</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span>
 </span><span id="line-3">    <span class="s2">"amazon/chronos-t5-large"</span><span class="p">,</span>
