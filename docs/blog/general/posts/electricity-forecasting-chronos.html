@@ -159,6 +159,8 @@ We use the <a href="https://github.com/mortada/fredapi" target="_blank">Python A
 </span><span id="line-8"><span class="n">data</span> <span class="o">=</span> <span class="n">fred</span><span class="o">.</span><span class="n">get_series</span><span class="p">(</span><span class="n">series</span><span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">series</span><span class="p">)</span><span class="o">.</span><span class="n">ffill</span><span class="p">()</span>
 </span></code></pre></div>
 </div>
+<p>The time series includes 549 monthly observations from November 1978 to July 2024.
+The time series had one missing value in September 1985, which we forward filled with the previous value.</p>
 <img alt="US average electricity price from November 1978 to July 2024" class="blog-post-image" id="electricity-forecasting-chronos-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/time_series_light.png"/>
 <p class="blog-post-image-caption">US average electricity price from November 1978 to July 2024.</p><p>After that, we define the start and end dates of the forecasts.
 We generate the forecasts over a 10-year period (120 months) period from August 2014 to July 2024.</p>

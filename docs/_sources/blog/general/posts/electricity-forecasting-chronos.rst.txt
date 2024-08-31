@@ -54,6 +54,9 @@ We start by installing and importing all the dependencies.
     # download the time series
     data = fred.get_series(series).rename(series).ffill()
 
+The time series includes 549 monthly observations from November 1978 to July 2024.
+The time series had one missing value in September 1985, which we forward filled with the previous value.
+
 .. raw:: html
 
     <img
