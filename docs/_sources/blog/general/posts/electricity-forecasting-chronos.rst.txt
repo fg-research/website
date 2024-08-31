@@ -108,8 +108,8 @@ We use the :code:`pmdarima` library for finding the best order of the SARIMA mod
 
     <p class="blog-post-image-caption">SARIMA estimation results.</p>
 
-After that we train the SARIMA model with the identified best order on expanding windows
-and generate the one-month-ahead forecasts from August 2014 to July 2024.
+For each month in the considered time window, we train the SARIMA model with the identified best order
+on all the data up to that month, and generate the forecast for the next month.
 
 .. code:: python
 
@@ -196,8 +196,8 @@ We use the t5-large version of Chronos (710M parameters).
         torch_dtype=torch.bfloat16,
     )
 
-On each month from August 2014 to July 2024, we use as context window all the data prior to that month,
-and generate the 100 samples from the predicted distribution for that month.
+For each month in the considered time window, we use as context window all the data up to that month,
+and generate the 100 samples from the predicted distribution for the next month.
 We use the mean of the distribution as point forecast, as in the SARIMA model.
 
 .. note::

@@ -187,8 +187,8 @@ We generate the forecasts over a 10-year period (120 months) from August 2014 to
 </span></code></pre></div>
 </div>
 <img alt="SARIMA estimation results." class="blog-post-image" id="electricity-forecasting-chronos-sarima-results" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/sarimax_results.png"/>
-<p class="blog-post-image-caption">SARIMA estimation results.</p><p>After that we train the SARIMA model with the identified best order on expanding windows
-and generate the one-month-ahead forecasts from August 2014 to July 2024.</p>
+<p class="blog-post-image-caption">SARIMA estimation results.</p><p>For each month in the considered time window, we train the SARIMA model with the identified best order
+on all the data up to that month, and generate the forecast for the next month.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># create a list for storing the forecasts</span>
 </span><span id="line-2"><span class="n">sarima_forecasts</span> <span class="o">=</span> <span class="p">[]</span>
 </span><span id="line-3">
@@ -248,8 +248,8 @@ and generate the one-month-ahead forecasts from August 2014 to July 2024.</p>
 </span><span id="line-6"><span class="p">)</span>
 </span></code></pre></div>
 </div>
-<p>On each month from August 2014 to July 2024, we use as context window all the data prior to that month,
-and generate the 100 samples from the predicted distribution for that month.
+<p>For each month in the considered time window, we use as context window all the data up to that month,
+and generate the 100 samples from the predicted distribution for the next month.
 We use the mean of the distribution as point forecast, as in the SARIMA model.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
