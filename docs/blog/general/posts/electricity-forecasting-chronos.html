@@ -163,7 +163,7 @@ We use the <a href="https://github.com/mortada/fredapi" target="_blank">Python A
 The time series had one missing value in September 1985, which we forward filled with the previous value.</p>
 <img alt="US average electricity price from November 1978 to July 2024" class="blog-post-image" id="electricity-forecasting-chronos-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/time_series_light.png"/>
 <p class="blog-post-image-caption">US average electricity price from November 1978 to July 2024.</p><p>After that, we define the start and end dates of the forecasts.
-We generate the forecasts over a 10-year period (120 months) period from August 2014 to July 2024.</p>
+We generate the forecasts over a 10-year period (120 months) from August 2014 to July 2024.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># date of first forecast</span>
 </span><span id="line-2"><span class="n">start_date</span> <span class="o">=</span> <span class="s2">"2014-08-01"</span>
 </span><span id="line-3">
@@ -173,8 +173,7 @@ We generate the forecasts over a 10-year period (120 months) period from August 
 </div>
 <section id="sarima">
 <h3>SARIMA<a class="headerlink" href="#sarima" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#sarima'">¶</a></h3>
-<p>We use the <code class="code docutils literal notranslate"><span class="pre">pmdarima</span></code> library for finding the best order of the SARIMA model
-using the data up to July 2014.</p>
+<p>We use the <code class="code docutils literal notranslate"><span class="pre">pmdarima</span></code> library for finding the best order of the SARIMA model using the data up to July 2014.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># find the best order of the SARIMA model</span>
 </span><span id="line-2"><span class="n">best_sarima_model</span> <span class="o">=</span> <span class="n">auto_arima</span><span class="p">(</span>
 </span><span id="line-3">    <span class="n">y</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">index</span> <span class="o">&lt;</span> <span class="n">start_date</span><span class="p">],</span>
@@ -188,7 +187,8 @@ using the data up to July 2014.</p>
 </span></code></pre></div>
 </div>
 <img alt="SARIMA estimation results." class="blog-post-image" id="electricity-forecasting-chronos-sarima-results" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/sarimax_results.png"/>
-<p class="blog-post-image-caption">SARIMA estimation results.</p><p>We then train the SARIMA model with the</p>
+<p class="blog-post-image-caption">SARIMA estimation results.</p><p>After that we train the SARIMA model with the identified best order on expanding windows
+and generate the one-month-ahead forecasts from August 2014 to July 2024.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># create a list for storing the forecasts</span>
 </span><span id="line-2"><span class="n">sarima_forecasts</span> <span class="o">=</span> <span class="p">[]</span>
 </span><span id="line-3">
@@ -224,7 +224,8 @@ using the data up to July 2014.</p>
 </span></code></pre></div>
 </div>
 <img alt="SARIMA forecasts from August 2014 to July 202." class="blog-post-image" id="electricity-forecasting-chronos-sarima-forecasts" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/sarima_forecasts_light.png"/>
-<p class="blog-post-image-caption">SARIMA forecasts from August 2014 to July 2024.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># calculate the error metrics</span>
+<p class="blog-post-image-caption">SARIMA forecasts from August 2014 to July 2024.</p><p>We find that the SARIMA model achieves an RMSE of 0.001364 and a MAE of 0.001067.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># calculate the error metrics</span>
 </span><span id="line-2"><span class="n">sarima_metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
 </span><span id="line-3">    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"Metric"</span><span class="p">,</span> <span class="s2">"Value"</span><span class="p">],</span>
 </span><span id="line-4">    <span class="n">data</span><span class="o">=</span><span class="p">[</span>
@@ -238,6 +239,7 @@ using the data up to July 2014.</p>
 <p class="blog-post-image-caption">SARIMA forecast errors from August 2014 to July 2024.</p></section>
 <section id="chronos">
 <h3>Chronos<a class="headerlink" href="#chronos" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#chronos'">¶</a></h3>
+<p>We use the t5-large version of Chronos (710M parameters).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># instantiate the model</span>
 </span><span id="line-2"><span class="n">chronos_model</span> <span class="o">=</span> <span class="n">ChronosPipeline</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span>
 </span><span id="line-3">    <span class="s2">"amazon/chronos-t5-large"</span><span class="p">,</span>
@@ -245,6 +247,14 @@ using the data up to July 2014.</p>
 </span><span id="line-5">    <span class="n">torch_dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">bfloat16</span><span class="p">,</span>
 </span><span id="line-6"><span class="p">)</span>
 </span></code></pre></div>
+</div>
+<p>On each month from August 2014 to July 2024, we use as context window all the data prior to that month,
+and generate the 100 samples from the predicted distribution for that month.
+We use the mean of the distribution as point forecast, as in the SARIMA model.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that, as Chronos is a generative model, different random seeds and different numbers of
+samples result in slightly different forecasts.</p>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># create a list for storing the forecasts</span>
 </span><span id="line-2"><span class="n">chronos_forecasts</span> <span class="o">=</span> <span class="p">[]</span>
@@ -287,7 +297,8 @@ using the data up to July 2014.</p>
 </span></code></pre></div>
 </div>
 <img alt="Chronos forecast errors from August 2014 to July 202." class="blog-post-image" id="electricity-forecasting-chronos-chronos-metrics" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/chronos_metrics_light.png"/>
-<p class="blog-post-image-caption">Chronos forecast errors from August 2014 to July 2024.</p></section>
+<p class="blog-post-image-caption">Chronos forecast errors from August 2014 to July 2024.</p><p>We find that the Chronos model achieves an RMSE of 0.001443 and a MAE of 0.001105.</p>
+</section>
 </section>
 </section>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">

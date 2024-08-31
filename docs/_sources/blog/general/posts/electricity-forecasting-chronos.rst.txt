@@ -69,7 +69,7 @@ The time series had one missing value in September 1985, which we forward filled
     <p class="blog-post-image-caption">US average electricity price from November 1978 to July 2024.</p>
 
 After that, we define the start and end dates of the forecasts.
-We generate the forecasts over a 10-year period (120 months) period from August 2014 to July 2024.
+We generate the forecasts over a 10-year period (120 months) from August 2014 to July 2024.
 
 .. code:: python
 
@@ -82,8 +82,7 @@ We generate the forecasts over a 10-year period (120 months) period from August 
 ==========================================
 SARIMA
 ==========================================
-We use the :code:`pmdarima` library for finding the best order of the SARIMA model
-using the data up to July 2014.
+We use the :code:`pmdarima` library for finding the best order of the SARIMA model using the data up to July 2014.
 
 .. code:: python
 
@@ -109,7 +108,8 @@ using the data up to July 2014.
 
     <p class="blog-post-image-caption">SARIMA estimation results.</p>
 
-We then train the SARIMA model with the
+After that we train the SARIMA model with the identified best order on expanding windows
+and generate the one-month-ahead forecasts from August 2014 to July 2024.
 
 .. code:: python
 
@@ -157,6 +157,7 @@ We then train the SARIMA model with the
 
     <p class="blog-post-image-caption">SARIMA forecasts from August 2014 to July 2024.</p>
 
+We find that the SARIMA model achieves an RMSE of 0.001364 and a MAE of 0.001067.
 
 .. code:: python
 
@@ -184,6 +185,7 @@ We then train the SARIMA model with the
 ==========================================
 Chronos
 ==========================================
+We use the t5-large version of Chronos (710M parameters).
 
 .. code:: python
 
@@ -193,6 +195,15 @@ Chronos
         device_map="cuda",
         torch_dtype=torch.bfloat16,
     )
+
+On each month from August 2014 to July 2024, we use as context window all the data prior to that month,
+and generate the 100 samples from the predicted distribution for that month.
+We use the mean of the distribution as point forecast, as in the SARIMA model.
+
+.. note::
+
+    Note that, as Chronos is a generative model, different random seeds and different numbers of
+    samples result in slightly different forecasts.
 
 .. code:: python
 
@@ -259,3 +270,4 @@ Chronos
 
     <p class="blog-post-image-caption">Chronos forecast errors from August 2014 to July 2024.</p>
 
+We find that the Chronos model achieves an RMSE of 0.001443 and a MAE of 0.001105.
