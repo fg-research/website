@@ -18,8 +18,8 @@ Forecasting electricity prices with Amazon Chronos
 
     <p>
     The tokenized time series is then used by a large language model (LLM).
-    The LLM takes as input a sequence of tokens and returns a random sample from the predicted
-    distribution of the next token. Subsequent future tokens are generated in an autoregressive manner
+    The LLM takes as input a sequence of tokens and returns the predicted next token.
+    Subsequent future tokens are generated in an autoregressive manner
     by extending the initial input sequence with the previously generated tokens.
     The generated tokens are then converted back to time series
     values by inverting the quantization and scaling transformations.
@@ -38,7 +38,7 @@ Forecasting electricity prices with Amazon Chronos
     We will use the US average electricity price monthly time series from November 1978 to July 2024,
     which we will download from the FRED database, and generate one-month-ahead forecasts from August 2014 to July 2024.
     We will use expanding context windows, that is on each month we will provide Chronos
-    all the data up to the month, and generate the forecast for the next month.
+    all the data up to that month, and generate the forecast for the next month.
     </p>
 
     <p>
