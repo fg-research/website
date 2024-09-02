@@ -7,33 +7,45 @@
 Forecasting electricity prices with Amazon Chronos
 ######################################################################################
 
-Chronos [1] is a foundational model for zero-shot probabilistic forecasting of univariate time series.
-The model converts a time series into a sequence of tokens through scaling and quantization.
-The scaling procedure divides the time series by its mean absolute value, while the quantization
-process maps the scaled time series values to a discrete set of tokens using uniform binning.
+.. raw:: html
 
-The tokenized time series is then used by a large language model (LLM).
-The LLM takes as input a sequence of tokens and returns a random sample from the predicted
-distribution of the next token. Subsequent future tokens are generated in an autoregressive manner
-by extending the initial input sequence with the previously generated tokens.
-The generated tokens are then converted back to time series
-values by inverting the quantization and scaling transformations.
+    <p>
+    Chronos <a href="#references">[1]</a> is a foundational model for zero-shot probabilistic forecasting of univariate time series.
+    The model converts a time series into a sequence of tokens through scaling and quantization.
+    The scaling procedure divides the time series by its mean absolute value, while the quantization
+    process maps the scaled time series values to a discrete set of tokens using uniform binning.
+    </p>
 
-Chronos was trained using the T5 [2] model architecture, even though it is compatible with any LLM.
-The training was performed in a self-supervised manner by minimizing the cross-entropy loss between
-the actual and predicted distributions of the next token, as it is standard when training LLMs.
-The data used for training included both real time series from publicly available datasets,
-as well as synthetic time series generated using different methods.
+    <p>
+    The tokenized time series is then used by a large language model (LLM).
+    The LLM takes as input a sequence of tokens and returns a random sample from the predicted
+    distribution of the next token. Subsequent future tokens are generated in an autoregressive manner
+    by extending the initial input sequence with the previously generated tokens.
+    The generated tokens are then converted back to time series
+    values by inverting the quantization and scaling transformations.
+    </p>
 
-In this post, we demonstrate how to use Chronos for one-step-ahead forecasting.
-We will use the US average electricity price monthly time series from November 1978 to July 2024,
-which we will download from the FRED database, and generate one-month-ahead forecasts from August 2014 to July 2024.
-We will use expanding context windows, that is on each month we will provide Chronos
-all the data up to the month, and generate the forecast for the next month.
+    <p>
+    Chronos was trained using the T5 <a href="#references">[2]</a> model architecture, even though it is compatible with any LLM.
+    The training was performed in a self-supervised manner by minimizing the cross-entropy loss between
+    the actual and predicted distributions of the next token, as it is standard when training LLMs.
+    The data used for training included both real time series from publicly available datasets,
+    as well as synthetic time series generated using different methods.
+    </p>
 
-We will compare Chronos' forecasts to the rolling forecasts of a SARIMA model which is
-re-trained each month on the same data that was provided to Chronos as context.
-We will find that the Chronos model and the SARIMA model have comparable performance.
+    <p>
+    In this post, we demonstrate how to use Chronos for one-step-ahead forecasting.
+    We will use the US average electricity price monthly time series from November 1978 to July 2024,
+    which we will download from the FRED database, and generate one-month-ahead forecasts from August 2014 to July 2024.
+    We will use expanding context windows, that is on each month we will provide Chronos
+    all the data up to the month, and generate the forecast for the next month.
+    </p>
+
+    <p>
+    We will compare Chronos' forecasts to the rolling forecasts of a SARIMA model which is
+    re-trained each month on the same data that was provided to Chronos as context.
+    We will find that the Chronos model and the SARIMA model have comparable performance.
+    </p>
 
 ******************************************
 Code
