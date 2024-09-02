@@ -22,14 +22,14 @@ At inference time, Chronos takes as input a sequence of tokens (a context window
 a random sample from the predicted distribution of the next token. The generated tokens are
 then converted back to time series values by inverting the quantization and scaling transformations.
 
-In this post, we demonstrate how to use Chronos for one-step-ahead forecasting.
+In this post, we demonstrate how to use Chronos for one-step-ahead one-shot forecasting.
 We will use the US average electricity price monthly time series from November 1978 to July 2024,
 which we will download from the FRED database, and generate one-month-ahead forecasts from August 2014 to July 2024.
 We will use expanding context windows, that is on each month we will provide Chronos
 all the data up to the month, and generate the forecast for the next month.
 
 We will compare Chronos' one-shot forecasts to the rolling forecasts of a SARIMA model which is
-re-trained on each month using the same expanding windows that were provided to Chronos as context.
+re-trained on each month using the same data that was provided to Chronos as context.
 We will find that the Chronos model and the SARIMA model have comparable performance.
 
 ******************************************
