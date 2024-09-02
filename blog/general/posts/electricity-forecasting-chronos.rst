@@ -9,21 +9,19 @@ Forecasting electricity prices with Amazon Chronos
 
 Chronos is a foundational model for one-shot probabilistic forecasting of univariate time series.
 The model converts time series data into a sequence of tokens through scaling and quantization.
-The scaling procedure divides each time series by its mean absolute value, while
-the quantization process maps the scaled time series values to a discrete set of tokens using uniform binning.
+The scaling procedure divides each time series by its mean absolute value, while the quantization
+process maps the scaled time series values to a discrete set of tokens using uniform binning.
 
-The tokenized time series is then used as input into a large language model (LLM).
+The tokenized time series is then used by a large language model (LLM).
 The LLM takes as input a sequence of tokens and returns a random sample from the predicted
 distribution of the next tokens. The generated tokens are then converted back to time series
 values by inverting the quantization and scaling transformations.
 
-Chronos is pre-trained using the T5 model, but it supports any other LLM architecture.
-The training was performed in a self-supervised manner by minimizing the cross-entropy loss between
-the actual and predicted next token, as it is standard for LLMs.
-
-
-
-
+Chronos was pre-trained using the T5 model, but it supports any other LLM architecture.
+The pre-training was performed in a self-supervised manner by minimizing the cross-entropy loss between
+the actual and predicted next token, as it is standard for LLMs. The data used for pre-training included
+both real time series from publicly-available datasets, as well as synthetic time series generated
+from Gaussian processes.
 
 In this post, we demonstrate how to use Chronos for one-step-ahead one-shot forecasting.
 We will use the US average electricity price monthly time series from November 1978 to July 2024,
@@ -32,7 +30,7 @@ We will use expanding context windows, that is on each month we will provide Chr
 all the data up to the month, and generate the forecast for the next month.
 
 We will compare Chronos' one-shot forecasts to the rolling forecasts of a SARIMA model which is
-re-trained on each month using the same data that was provided to Chronos as context.
+re-trained each month on the same data that was provided to Chronos as context.
 We will find that the Chronos model and the SARIMA model have comparable performance.
 
 ******************************************
