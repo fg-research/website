@@ -14,6 +14,39 @@ General
 
 .. card::
     :width: 100%
+    :link: posts/electricity-forecasting-chronos
+    :link-type: doc
+
+    .. _electricity-forecasting-chronos-toctree:
+
+    .. toctree::
+        :titlesonly:
+
+        posts/electricity-forecasting-chronos
+
+    .. _electricity-forecasting-chronos-include:
+
+    Chronos is a foundational model for one-shot probabilistic forecasting of univariate time series.
+    The model converts time series data into a sequence of tokens through scaling and quantization.
+    The scaling is performed by dividing each time series by its mean absolute value, while
+    the quantization process uses uniform binning for mapping the scaled time series values
+    to a discrete set of tokens...
+
+    .. grid:: 2
+        :margin: 0 3 auto auto
+
+        .. grid-item::
+            :class: blog-post-tag
+
+            :octicon:`graph;1rem;graph-icon` Forecasting
+
+        .. grid-item::
+            :class: sd-text-secondary
+
+            :octicon:`calendar;1rem;calendar-icon` September 2, 2024
+
+.. card::
+    :width: 100%
     :link: posts/equity-trend-prediction-automl
     :link-type: doc
 
