@@ -31,7 +31,7 @@ which we will download from the FRED database, and generate one-month-ahead fore
 We will use expanding context windows, that is on each month we will provide Chronos
 all the data up to the month, and generate the forecast for the next month.
 
-We will compare Chronos forecasts to the rolling forecasts of a SARIMA model which is
+We will compare Chronos' forecasts to the rolling forecasts of a SARIMA model which is
 re-trained each month on the same data that was provided to Chronos as context.
 We will find that the Chronos model and the SARIMA model have comparable performance.
 

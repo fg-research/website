@@ -144,7 +144,7 @@ We will use the US average electricity price monthly time series from November 1
 which we will download from the FRED database, and generate one-month-ahead forecasts from August 2014 to July 2024.
 We will use expanding context windows, that is on each month we will provide Chronos
 all the data up to the month, and generate the forecast for the next month.</p>
-<p>We will compare Chronos forecasts to the rolling forecasts of a SARIMA model which is
+<p>We will compare Chronos’ forecasts to the rolling forecasts of a SARIMA model which is
 re-trained each month on the same data that was provided to Chronos as context.
 We will find that the Chronos model and the SARIMA model have comparable performance.</p>
 <section id="code">
