@@ -14,14 +14,14 @@ process maps the scaled time series values to a discrete set of tokens using uni
 
 The tokenized time series is then used by a large language model (LLM).
 The LLM takes as input a sequence of tokens and returns a random sample from the predicted
-distribution of the next tokens. The generated tokens are then converted back to time series
+distribution of the next token. The generated tokens are then converted back to time series
 values by inverting the quantization and scaling transformations.
 
 Chronos was pre-trained using the T5 model, but it supports any other LLM architecture.
 The pre-training was performed in a self-supervised manner by minimizing the cross-entropy loss between
 the actual and predicted next token, as it is standard for LLMs. The data used for pre-training included
 both real time series from publicly-available datasets, as well as synthetic time series generated
-from Gaussian processes.
+using different methods.
 
 In this post, we demonstrate how to use Chronos for one-step-ahead one-shot forecasting.
 We will use the US average electricity price monthly time series from November 1978 to July 2024,
