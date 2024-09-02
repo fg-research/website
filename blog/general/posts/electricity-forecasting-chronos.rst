@@ -14,14 +14,22 @@ The scaled time series values are then mapped to a discrete set of tokens using 
 
 The tokenized time series is then used as input into a large language model (LLM).
 Chronos was pre-trained using the T5 model, but it supports any other LLM architecture.
-Training is performed by minimizing the cross-entropy loss between the actual and predicted next token,
-as it is standard for LLMs.
+During training, Chronos minimizes the cross-entropy loss between the actual and predicted
+next token, as it is standard for LLMs.
 
-At inference time, Chronos takes as input a series of tokens (a context window) and returns
-a random sample from the predicted distribution of the next token. The predicted tokens are
-then converted back to the original scale by inverting the quantization and scaling transformations.
+At inference time, Chronos takes as input a sequence of tokens (a context window) and returns
+a random sample from the predicted distribution of the next token. The generated tokens are
+then converted back to time series values by inverting the quantization and scaling transformations.
 
+In this post, we demonstrate how to use Chronos for one-step-ahead forecasting.
+We will use the US average electricity price monthly time series from November 1978 to July 2024,
+which we will download from the FRED database, and generate one-month-ahead forecasts from August 2014 to July 2024.
+We will use expanding context windows, that is on each month we will provide Chronos
+all the data up to the month, and generate the forecast for the next month.
 
+We will compare Chronos' one-shot forecasts to the rolling forecasts of a SARIMA model which is
+re-trained on each month using the same expanding windows that were provided to Chronos as context.
+We will find that the Chronos model and the SARIMA model have comparable performance.
 
 ******************************************
 Code
