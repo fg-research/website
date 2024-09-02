@@ -28,9 +28,8 @@ General
 
     Chronos is a foundational model for one-shot probabilistic forecasting of univariate time series.
     The model converts time series data into a sequence of tokens through scaling and quantization.
-    The scaling is performed by dividing each time series by its mean absolute value, while
-    the quantization process uses uniform binning for mapping the scaled time series values
-    to a discrete set of tokens...
+    The scaling procedure divides each time series by its mean absolute value, while the quantization
+    process maps the scaled time series values to a discrete set of tokens using uniform binning...
 
     .. grid:: 2
         :margin: 0 3 auto auto
