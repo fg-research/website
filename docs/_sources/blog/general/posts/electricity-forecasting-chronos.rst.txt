@@ -44,7 +44,7 @@ Forecasting electricity prices with Amazon Chronos
     <p>
     We will compare Chronos' forecasts to the rolling forecasts of a SARIMA model which is
     re-trained each month on the same data that was provided to Chronos as context.
-    We will find that the Chronos model and the SARIMA model have comparable performance.
+    We will find that Chronos and the SARIMA model have comparable performance.
     </p>
 
 ******************************************
@@ -286,7 +286,7 @@ We use the mean of the distribution as point forecast, as in the SARIMA model.
 
     <p class="blog-post-image-caption">Chronos forecasts from August 2014 to July 2024.</p>
 
-We find that the Chronos model achieves an RMSE of 0.001443 and a MAE of 0.001105.
+We find that Chronos achieves an RMSE of 0.001443 and a MAE of 0.001105.
 
 .. code:: python
 
