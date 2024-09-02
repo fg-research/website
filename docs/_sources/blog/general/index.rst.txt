@@ -26,7 +26,7 @@ General
 
     .. _electricity-forecasting-chronos-include:
 
-    Chronos is a foundational model for one-shot probabilistic forecasting of univariate time series.
+    Chronos is a foundational model for zero-shot probabilistic forecasting of univariate time series.
     The model converts time series data into a sequence of tokens through scaling and quantization.
     The scaling procedure divides each time series by its mean absolute value, while the quantization
     process maps the scaled time series values to a discrete set of tokens using uniform binning...
