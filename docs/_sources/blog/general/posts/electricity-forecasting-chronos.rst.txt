@@ -274,6 +274,8 @@ We use the mean of the distribution as point forecast, as in the SARIMA model.
 
     <p class="blog-post-image-caption">Chronos forecasts from August 2014 to July 2024.</p>
 
+We find that the Chronos model achieves an RMSE of 0.001443 and a MAE of 0.001105.
+
 .. code:: python
 
     # calculate the error metrics
@@ -296,8 +298,6 @@ We use the mean of the distribution as point forecast, as in the SARIMA model.
     />
 
     <p class="blog-post-image-caption">Chronos forecast errors from August 2014 to July 2024.</p>
-
-We find that the Chronos model achieves an RMSE of 0.001443 and a MAE of 0.001105.
 
 .. tip::
 

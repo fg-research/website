@@ -311,7 +311,8 @@ samples result in slightly different forecasts.</p>
 </span></code></pre></div>
 </div>
 <img alt="Chronos forecasts from August 2014 to July 202." class="blog-post-image" id="electricity-forecasting-chronos-chronos-forecasts" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/chronos_forecasts_light.png"/>
-<p class="blog-post-image-caption">Chronos forecasts from August 2014 to July 2024.</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># calculate the error metrics</span>
+<p class="blog-post-image-caption">Chronos forecasts from August 2014 to July 2024.</p><p>We find that the Chronos model achieves an RMSE of 0.001443 and a MAE of 0.001105.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># calculate the error metrics</span>
 </span><span id="line-2"><span class="n">chronos_metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
 </span><span id="line-3">    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"Metric"</span><span class="p">,</span> <span class="s2">"Value"</span><span class="p">],</span>
 </span><span id="line-4">    <span class="n">data</span><span class="o">=</span><span class="p">[</span>
@@ -322,8 +323,7 @@ samples result in slightly different forecasts.</p>
 </span></code></pre></div>
 </div>
 <img alt="Chronos forecast errors from August 2014 to July 202." class="blog-post-image" id="electricity-forecasting-chronos-chronos-metrics" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/chronos_metrics_light.png"/>
-<p class="blog-post-image-caption">Chronos forecast errors from August 2014 to July 2024.</p><p>We find that the Chronos model achieves an RMSE of 0.001443 and a MAE of 0.001105.</p>
-<div class="admonition tip">
+<p class="blog-post-image-caption">Chronos forecast errors from August 2014 to July 2024.</p><div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>A Python notebook with the full code is available in our <a class="reference external" href="https://github.com/fg-research/blog/blob/master/electricity-forecasting-chronos">GitHub</a>
 repository.</p>
