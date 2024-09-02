@@ -9,7 +9,7 @@ Forecasting electricity prices with Amazon Chronos
 
 Chronos is a foundational model for zero-shot probabilistic forecasting of univariate time series.
 The model converts a time series into a sequence of tokens through scaling and quantization.
-The scaling procedure divides each time series by its mean absolute value, while the quantization
+The scaling procedure divides the time series by its mean absolute value, while the quantization
 process maps the scaled time series values to a discrete set of tokens using uniform binning.
 
 The tokenized time series is then used by a large language model (LLM).
