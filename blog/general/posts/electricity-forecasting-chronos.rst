@@ -7,21 +7,23 @@
 Forecasting electricity prices with Amazon Chronos
 ######################################################################################
 
-Chronos is a foundational model for zero-shot probabilistic forecasting of univariate time series.
+Chronos [1] is a foundational model for zero-shot probabilistic forecasting of univariate time series.
 The model converts a time series into a sequence of tokens through scaling and quantization.
 The scaling procedure divides the time series by its mean absolute value, while the quantization
 process maps the scaled time series values to a discrete set of tokens using uniform binning.
 
 The tokenized time series is then used by a large language model (LLM).
 The LLM takes as input a sequence of tokens and returns a random sample from the predicted
-distribution of the next token. The generated tokens are then converted back to time series
+distribution of the next token. Subsequent future tokens are generated in an autoregressive manner
+by extending the initial input sequence with the previously generated tokens.
+The generated tokens are then converted back to time series
 values by inverting the quantization and scaling transformations.
 
-Chronos was trained using the T5 model architecture, even though it is compatible with any LLM.
+Chronos was trained using the T5 [2] model architecture, even though it is compatible with any LLM.
 The training was performed in a self-supervised manner by minimizing the cross-entropy loss between
-the actual and predicted next token, as it is standard when training LLMs. The data used for training
-included both real time series from publicly available datasets, as well as synthetic time series
-generated using different methods.
+the actual and predicted distributions of the next token, as it is standard when training LLMs.
+The data used for training included both real time series from publicly available datasets,
+as well as synthetic time series generated using different methods.
 
 In this post, we demonstrate how to use Chronos for one-step-ahead forecasting.
 We will use the US average electricity price monthly time series from November 1978 to July 2024,
@@ -29,7 +31,7 @@ which we will download from the FRED database, and generate one-month-ahead fore
 We will use expanding context windows, that is on each month we will provide Chronos
 all the data up to the month, and generate the forecast for the next month.
 
-We will compare Chronos' zero-shot forecasts to the rolling forecasts of a SARIMA model which is
+We will compare Chronos forecasts to the rolling forecasts of a SARIMA model which is
 re-trained each month on the same data that was provided to Chronos as context.
 We will find that the Chronos model and the SARIMA model have comparable performance.
 
@@ -308,3 +310,7 @@ References
 
 [1] Ansari, A.F., Stella, L., Turkmen, C., Zhang, X., Mercado, P., Shen, H., Shchur, O., Rangapuram, S.S., Arango, S.P., Kapoor, S. and Zschiegner, J., (2024).
 Chronos: Learning the language of time series. *arXiv preprint*, `doi: 10.48550/arXiv.2403.07815 <https://doi.org/10.48550/arXiv.2403.07815>`__.
+
+[2] Raffel, C., Shazeer, N., Roberts, A., Lee, K., Narang, S., Matena, M., Zhou, Y., Li, W. and Liu, P.J., (2020).
+Exploring the limits of transfer learning with a unified text-to-text transformer.
+*Journal of machine learning research*, 21(140), pp.1-67.

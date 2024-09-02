@@ -124,25 +124,27 @@
 <div id="content" role="main">
 <section id="forecasting-electricity-prices-with-amazon-chronos">
 <h1>Forecasting electricity prices with Amazon Chronos<a class="headerlink" href="#forecasting-electricity-prices-with-amazon-chronos" title="Link to this heading">¶</a></h1>
-<p>Chronos is a foundational model for zero-shot probabilistic forecasting of univariate time series.
+<p>Chronos [1] is a foundational model for zero-shot probabilistic forecasting of univariate time series.
 The model converts a time series into a sequence of tokens through scaling and quantization.
 The scaling procedure divides the time series by its mean absolute value, while the quantization
 process maps the scaled time series values to a discrete set of tokens using uniform binning.</p>
 <p>The tokenized time series is then used by a large language model (LLM).
 The LLM takes as input a sequence of tokens and returns a random sample from the predicted
-distribution of the next token. The generated tokens are then converted back to time series
+distribution of the next token. Subsequent future tokens are generated in an autoregressive manner
+by extending the initial input sequence with the previously generated tokens.
+The generated tokens are then converted back to time series
 values by inverting the quantization and scaling transformations.</p>
-<p>Chronos was trained using the T5 model architecture, even though it is compatible with any LLM.
+<p>Chronos was trained using the T5 [2] model architecture, even though it is compatible with any LLM.
 The training was performed in a self-supervised manner by minimizing the cross-entropy loss between
-the actual and predicted next token, as it is standard when training LLMs. The data used for training
-included both real time series from publicly available datasets, as well as synthetic time series
-generated using different methods.</p>
+the actual and predicted distributions of the next token, as it is standard when training LLMs.
+The data used for training included both real time series from publicly available datasets,
+as well as synthetic time series generated using different methods.</p>
 <p>In this post, we demonstrate how to use Chronos for one-step-ahead forecasting.
 We will use the US average electricity price monthly time series from November 1978 to July 2024,
 which we will download from the FRED database, and generate one-month-ahead forecasts from August 2014 to July 2024.
 We will use expanding context windows, that is on each month we will provide Chronos
 all the data up to the month, and generate the forecast for the next month.</p>
-<p>We will compare Chronos’ zero-shot forecasts to the rolling forecasts of a SARIMA model which is
+<p>We will compare Chronos forecasts to the rolling forecasts of a SARIMA model which is
 re-trained each month on the same data that was provided to Chronos as context.
 We will find that the Chronos model and the SARIMA model have comparable performance.</p>
 <section id="code">
@@ -332,6 +334,9 @@ repository.</p>
 <h2>References<a class="headerlink" href="#references" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#references'">¶</a></h2>
 <p>[1] Ansari, A.F., Stella, L., Turkmen, C., Zhang, X., Mercado, P., Shen, H., Shchur, O., Rangapuram, S.S., Arango, S.P., Kapoor, S. and Zschiegner, J., (2024).
 Chronos: Learning the language of time series. <em>arXiv preprint</em>, <a class="reference external" href="https://doi.org/10.48550/arXiv.2403.07815">doi: 10.48550/arXiv.2403.07815</a>.</p>
+<p>[2] Raffel, C., Shazeer, N., Roberts, A., Lee, K., Narang, S., Matena, M., Zhou, Y., Li, W. and Liu, P.J., (2020).
+Exploring the limits of transfer learning with a unified text-to-text transformer.
+<em>Journal of machine learning research</em>, 21(140), pp.1-67.</p>
 </section>
 </section>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
