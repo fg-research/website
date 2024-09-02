@@ -17,7 +17,7 @@ The LLM takes as input a sequence of tokens and returns a random sample from the
 distribution of the next token. The generated tokens are then converted back to time series
 values by inverting the quantization and scaling transformations.
 
-Chronos was trained using the T5 model architecture, even though its framework can support any LLM.
+Chronos was trained using the T5 model architecture, even though it is compatible with any LLM.
 The training was performed in a self-supervised manner by minimizing the cross-entropy loss between
 the actual and predicted next token, as it is standard when training LLMs. The data used for training
 included both real time series from publicly available datasets, as well as synthetic time series
