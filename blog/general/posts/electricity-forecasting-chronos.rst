@@ -20,7 +20,8 @@ Forecasting electricity prices with Amazon Chronos
     The tokenized time series is then used by a large language model (LLM).
     The LLM takes as input a sequence of tokens and returns the predicted next token.
     Subsequent future tokens are generated in an autoregressive manner
-    by extending the initial input sequence with the previously generated tokens.
+    by extending the initial input sequence with the previously generated tokens
+    and feeding it back to the model.
     The generated tokens are then converted back to time series
     values by inverting the quantization and scaling transformations.
     </p>
