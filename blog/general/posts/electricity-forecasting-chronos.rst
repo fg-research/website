@@ -186,6 +186,42 @@ on all the data up to that month, and generate the forecast for the next month.
     # cast the forecasts to data frame
     sarima_forecasts = pd.DataFrame(sarima_forecasts)
 
+.. code:: python
+
+    sarima_forecasts.shape
+
+.. code-block:: console
+
+    (120, 4)
+
+.. code:: python
+
+    sarima_forecasts.head()
+
+.. raw:: html
+
+    <img
+        id="electricity-forecasting-chronos-sarima-forecasts-head"
+        class="blog-post-image"
+        alt="First 3 rows of SARIMA forecasts"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/sarima_forecasts_head_light.png
+        style="width:100%"
+    />
+
+.. code:: python
+
+    sarima_forecasts.tail()
+
+.. raw:: html
+
+    <img
+        id="electricity-forecasting-chronos-sarima-forecasts-tail"
+        class="blog-post-image"
+        alt="Last 3 rows of SARIMA forecasts"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/sarima_forecasts_tail_light.png
+        style="width:100%"
+    />
+
 .. raw:: html
 
     <img
@@ -275,6 +311,41 @@ We use the mean of the distribution as point forecast, as in the SARIMA model.
     # cast the forecasts to data frame
     chronos_forecasts = pd.DataFrame(chronos_forecasts)
 
+.. code:: python
+
+    chronos_forecasts.shape
+
+.. code-block:: console
+
+    (120, 4)
+
+.. code:: python
+
+    chronos_forecasts.head()
+
+.. raw:: html
+
+    <img
+        id="electricity-forecasting-chronos-chronos-forecasts-head"
+        class="blog-post-image"
+        alt="First 3 rows of Chronos forecasts"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/chronos_forecasts_head_light.png
+        style="width:100%"
+    />
+
+.. code:: python
+
+    chronos_forecasts.tail()
+
+.. raw:: html
+
+    <img
+        id="electricity-forecasting-chronos-chronos-forecasts-tail"
+        class="blog-post-image"
+        alt="Last 3 rows of Chronos forecasts"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/chronos_forecasts_tail_light.png
+        style="width:100%"
+    />
 
 .. raw:: html
 
