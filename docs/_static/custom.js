@@ -110,8 +110,12 @@ window.setInterval(function(){
         'equity-trend-prediction-automl-time-series',
         'electricity-forecasting-chronos-time-series',
         'electricity-forecasting-chronos-sarima-forecasts',
+        'electricity-forecasting-chronos-sarima-forecasts-head',
+        'electricity-forecasting-chronos-sarima-forecasts-tail',
         'electricity-forecasting-chronos-sarima-metrics',
         'electricity-forecasting-chronos-chronos-forecasts',
+        'electricity-forecasting-chronos-chronos-forecasts-head',
+        'electricity-forecasting-chronos-chronos-forecasts-tail',
         'electricity-forecasting-chronos-chronos-metrics'
     ];
     for (var i = 0; i < elements.length; i++) {
