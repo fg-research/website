@@ -205,7 +205,6 @@ on all the data up to that month, and generate the forecast for the next month.
         class="blog-post-image"
         alt="First 3 rows of SARIMA forecasts"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/sarima_forecasts_head_light.png
-        style="width:100%"
     />
 
 .. code:: python
@@ -219,7 +218,6 @@ on all the data up to that month, and generate the forecast for the next month.
         class="blog-post-image"
         alt="Last 3 rows of SARIMA forecasts"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/sarima_forecasts_tail_light.png
-        style="width:100%"
     />
 
 .. raw:: html
@@ -330,7 +328,6 @@ We use the mean of the distribution as point forecast, as in the SARIMA model.
         class="blog-post-image"
         alt="First 3 rows of Chronos forecasts"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/chronos_forecasts_head_light.png
-        style="width:100%"
     />
 
 .. code:: python
@@ -344,7 +341,6 @@ We use the mean of the distribution as point forecast, as in the SARIMA model.
         class="blog-post-image"
         alt="Last 3 rows of Chronos forecasts"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/chronos_forecasts_tail_light.png
-        style="width:100%"
     />
 
 .. raw:: html
