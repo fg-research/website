@@ -163,11 +163,13 @@ as required by the LSTM-FCN SageMaker algorithm.
 
 .. code:: python
 
-    # one-hot encode the class labels
+    # fit the one-hot encoder to the training labels
     encoder = OneHotEncoder(sparse_output=False)
     encoder.fit(training_dataset.iloc[:, -1:])
 
-    # rename the columns
+.. code:: python
+
+    # one-hot encode the class labels and rename the columns
     training_dataset = pd.concat([
         pd.DataFrame(data=encoder.transform(training_dataset.iloc[:, -1:]), columns=[f"y_{i + 1}" for i in range(training_dataset.iloc[:, -1].nunique())]),
         pd.DataFrame(data=training_dataset.iloc[:, :-1].values, columns=[f"x_{i + 1}" for i in range(training_dataset.shape[1] - 1)])
