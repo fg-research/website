@@ -34,8 +34,8 @@ LSTM-FCN SageMaker Algorithm
         The LSTM-FCN SageMaker Algorithm performs time series classification with the <a href="https://arxiv.org/pdf/1709.05206.pdf" target="_blank">Long Short-Term Memory Fully Convolutional Network (LSTM-FCN)</a>.
         The LSTM-FCN model consists of two blocks: a recurrent block and a convolutional block.
         The two blocks process the input time series in parallel.
-        After that their output representations are concatenated and passed to a final linear output layer.
-        The algorithm can be used for binary and multiclass classification of univariate time series.
+        After that their output representations are concatenated and passed to a final linear layer.
+        The algorithm can be used for binary, multiclass and multilabel classification of univariate time series.
         For additional information, see the algorithm's
         <a href="https://aws.amazon.com/marketplace/pp/prodview-vzxmyw25oqtx6" target="_blank">AWS Marketplace</a>
         listing page and
