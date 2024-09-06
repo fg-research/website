@@ -27,7 +27,7 @@ Arrhythmia classification with the LSTM-FCN SageMaker algorithm
     Different neural network architectures have been proposed in the literature
     on ECG arrhythmia classification <a href="#references">[1]</a>. In this post,
     we will focus on the <a href="https://doi.org/10.1109/ACCESS.2017.2779939"
-    target="_blank"> Long Short-Term Memory Fully Convolutional Network</a>
+    target="_blank">Long Short-Term Memory Fully Convolutional Network</a>
     <a href="#references">[2]</a>, which we will refer to as the LSTM-FCN model.
     We will demonstrate how to use our Amazon SageMaker implementation of the LSTM-FCN model,
     the <a href="https://fg-research.com/algorithms/time-series-classification/index.html#lstm-fcn-sagemaker-algorithm"
@@ -104,7 +104,7 @@ Code
 
     To be able to run the code below, you need to have an active subscription to the LSTM-FCN SageMaker algorithm.
     You can subscribe to a free trial from the `AWS Marketplace <https://aws.amazon.com/marketplace/pp/prodview-vzxmyw25oqtx6>`__
-    in order to get your Amazon Resource Name (ARN). In this post we use version 1.14 of the LSTM-FCN SageMaker algorithm,
+    in order to get your Amazon Resource Name (ARN). In this post we use version 1.15 of the LSTM-FCN SageMaker algorithm,
     which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.
 
 ==========================================
@@ -121,10 +121,8 @@ We start by importing all the requirements and setting up the SageMaker environm
     import numpy as np
     import matplotlib.pyplot as plt
     from imblearn.under_sampling import RandomUnderSampler
-    from sklearn.metrics import accuracy_score, confusion_matrix
-
-    # SageMaker algorithm ARN, replace the placeholder below with your AWS Marketplace ARN
-    algo_arn = "arn:aws:sagemaker:<...>"
+    from sklearn.preprocessing import OneHotEncoder
+    from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score, roc_auc_score
 
     # SageMaker session
     sagemaker_session = sagemaker.Session()
@@ -157,12 +155,20 @@ After resampling, the training data contains 641 instances of each class.
     sampler = RandomUnderSampler(random_state=42)
     training_dataset = pd.concat(sampler.fit_resample(X=training_dataset.iloc[:, :-1], y=training_dataset.iloc[:, -1:]), axis=1)
 
-We then proceed to moving the class labels from the last column to the first column, as required by the LSTM-FCN SageMaker algorithm.
+We then proceed to one-hot encoding the class labels and renaming the dataset columns,
+as required by the LSTM-FCN SageMaker algorithm.
 
 .. code:: python
 
-    # move the class labels to the first column
-    training_dataset = pd.concat([training_dataset.iloc[:, -1:], training_dataset.iloc[:, 1:]], axis=1)
+    # one-hot encode the class labels
+    encoder = OneHotEncoder(sparse_output=False)
+    encoder.fit(training_dataset.iloc[:, -1:])
+
+    # rename the columns
+    training_dataset = pd.concat([
+        pd.DataFrame(data=encoder.transform(training_dataset.iloc[:, -1:]), columns=[f"y_{i + 1}" for i in range(training_dataset.iloc[:, -1].nunique())]),
+        pd.DataFrame(data=training_dataset.iloc[:, :-1].values, columns=[f"x_{i + 1}" for i in range(training_dataset.shape[1] - 1)])
+    ], axis=1)
 
 Once this is done, we can save the training data in the S3 bucket in CSV format.
 
@@ -170,7 +176,7 @@ Once this is done, we can save the training data in the S3 bucket in CSV format.
 
     # save the training data in S3
     training_data = sagemaker_session.upload_string_as_file_body(
-        body=training_dataset.to_csv(index=False, header=False),
+        body=training_dataset.to_csv(index=False),
         bucket=bucket,
         key="MITBIH_train.csv"
     )
@@ -203,6 +209,7 @@ We can now run the training job.
             "batch-size": 256,
             "lr": 0.001,
             "epochs": 100,
+            "task": "multiclass"
         },
     )
 
@@ -220,14 +227,12 @@ Once the training job has completed, we can deploy the model to a real-time endp
     serializer = sagemaker.serializers.CSVSerializer(content_type="text/csv")
 
     # define the endpoint outputs deserializer
-    deserializer = sagemaker.deserializers.CSVDeserializer(accept="text/csv")
+    deserializer = sagemaker.base_deserializers.PandasDeserializer(accept="text/csv")
 
     # create the endpoint
     predictor = estimator.deploy(
         initial_instance_count=1,
         instance_type=instance_type,
-        serializer=serializer,
-        deserializer=deserializer,
     )
 
 After that we load the test data from the CSV file.
@@ -237,12 +242,16 @@ After that we load the test data from the CSV file.
     # load the test data
     test_dataset = pd.read_csv("mitbih_test.csv", header=None)
 
-To avoid confusion, we move the class labels from the last column to the first column, even though they are not used for inference.
+We again proceed to one-hot encoding the class labels and renaming the dataset columns,
+as required by the LSTM-FCN SageMaker algorithm.
 
 .. code:: python
 
-    # move the class labels to the first column
-    test_dataset = pd.concat([test_dataset.iloc[:, -1:], test_dataset.iloc[:, 1:]], axis=1)
+    # one-hot encode the class labels and rename the columns
+    test_dataset = pd.concat([
+        pd.DataFrame(data=encoder.transform(test_dataset.iloc[:, -1:]), columns=[f"y_{i + 1}" for i in range(test_dataset.iloc[:, -1].nunique())]),
+        pd.DataFrame(data=test_dataset.iloc[:, :-1].values, columns=[f"x_{i + 1}" for i in range(test_dataset.shape[1] - 1)])
+    ], axis=1)
 
 Given that the test dataset is relatively large, we invoke the endpoint with batches of time series as opposed to using the entire test dataset as a single payload.
 
@@ -257,44 +266,47 @@ Given that the test dataset is relatively large, we invoke the endpoint with bat
     # loop across the test dataset
     for i in range(0, len(test_dataset), batch_size):
 
-        # invoke the endpoint with a batch of time series, make sure to drop the first column with the class labels
+        # invoke the endpoint with a batch of time series
         response = sagemaker_session.sagemaker_runtime_client.invoke_endpoint(
             EndpointName=predictor.endpoint_name,
             ContentType="text/csv",
-            Body=serializer.serialize(test_dataset.iloc[i:i + batch_size, 1:])
+            Body=test_dataset.iloc[i:i + batch_size, 5:].to_csv(index=False)
         )
 
         # save the predicted class labels in the data frame
         predictions = pd.concat([
             predictions,
-            pd.DataFrame(
-                data=deserializer.deserialize(response["Body"], content_type="text/csv"),
-                dtype=float
-            )
-        ], axis=0)
+            deserializer.deserialize(response["Body"], content_type="text/csv"),
+        ], axis=0, ignore_index=True)
 
 After generating the model predictions, we can calculate the classification metrics.
 
 .. code:: python
 
-    # calculate the accuracy
-    accuracy_score(y_true=test_dataset.iloc[:, 0], y_pred=predictions.iloc[:, 0])
+    # calculate the classification metrics
+    metrics = pd.DataFrame(columns=[c.replace("y_", "") for c in test_dataset.columns if c.startswith("y")])
+    for c in metrics.columns:
+        metrics[c] = {
+            "Accuracy": accuracy_score(y_true=test_dataset[f"y_{c}"], y_pred=predictions[f"y_{c}"]),
+            "ROC-AUC": roc_auc_score(y_true=test_dataset[f"y_{c}"], y_score=predictions[f"p_{c}"]),
+            "Precision": precision_score(y_true=test_dataset[f"y_{c}"], y_pred=predictions[f"y_{c}"]),
+            "Recall": recall_score(y_true=test_dataset[f"y_{c}"], y_pred=predictions[f"y_{c}"]),
+            "F1": f1_score(y_true=test_dataset[f"y_{c}"], y_pred=predictions[f"y_{c}"]),
+        }
+    metrics.columns = test_dataset.columns[:5]
 
-    # calculate the confusion matrix
-    confusion_matrix(y_true=test_dataset.iloc[:, 0], y_pred=predictions.iloc[:, 0])
-
-We find that the model achieves 99.79% accuracy on the test data.
+We find that the model achieves more than 90% test accuracy across all classes.
 
 .. raw:: html
 
     <img
-        id="lstm-fcn-ecg-classification-confusion-matrix"
+        id="lstm-fcn-ecg-classification-metrics"
         class="blog-post-image"
-        alt="LSTM-FCN confusion matrix on MIT-BIH test dataset"
-        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/lstm-fcn-ecg-classification/confusion_matrix_light.png
+        alt="LSTM-FCN classification metrics on MIT-BIH test dataset"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/lstm-fcn-ecg-classification/metrics_light.png
     />
 
-    <p class="blog-post-image-caption"> LSTM-FCN confusion matrix on MIT-BIH test dataset.</p>
+    <p class="blog-post-image-caption"> LSTM-FCN classification metrics on MIT-BIH test dataset.</p>
 
 After the analysis has been completed, we can delete the model and the endpoint.
 

@@ -139,7 +139,7 @@ potential for fast, accurate and cost-effective diagnosis.
 <p>
 Different neural network architectures have been proposed in the literature
 on ECG arrhythmia classification <a href="#references">[1]</a>. In this post,
-we will focus on the <a href="https://doi.org/10.1109/ACCESS.2017.2779939" target="_blank"> Long Short-Term Memory Fully Convolutional Network</a>
+we will focus on the <a href="https://doi.org/10.1109/ACCESS.2017.2779939" target="_blank">Long Short-Term Memory Fully Convolutional Network</a>
 <a href="#references">[2]</a>, which we will refer to as the LSTM-FCN model.
 We will demonstrate how to use our Amazon SageMaker implementation of the LSTM-FCN model,
 the <a href="https://fg-research.com/algorithms/time-series-classification/index.html#lstm-fcn-sagemaker-algorithm" target="_blank">LSTM-FCN SageMaker algorithm</a>, for categorizing the ECG traces in the
@@ -186,7 +186,7 @@ concatenated and passed to a final output layer with softmax activation.
 <p class="admonition-title">Warning</p>
 <p>To be able to run the code below, you need to have an active subscription to the LSTM-FCN SageMaker algorithm.
 You can subscribe to a free trial from the <a class="reference external" href="https://aws.amazon.com/marketplace/pp/prodview-vzxmyw25oqtx6">AWS Marketplace</a>
-in order to get your Amazon Resource Name (ARN). In this post we use version 1.14 of the LSTM-FCN SageMaker algorithm,
+in order to get your Amazon Resource Name (ARN). In this post we use version 1.15 of the LSTM-FCN SageMaker algorithm,
 which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.</p>
 </div>
 <section id="environment-set-up">
@@ -198,22 +198,20 @@ which runs in the PyTorch 2.1.0 Python 3.10 deep learning container.</p>
 </span><span id="line-4"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 </span><span id="line-5"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 </span><span id="line-6"><span class="kn">from</span> <span class="nn">imblearn.under_sampling</span> <span class="kn">import</span> <span class="n">RandomUnderSampler</span>
-</span><span id="line-7"><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">confusion_matrix</span>
-</span><span id="line-8">
-</span><span id="line-9"><span class="c1"># SageMaker algorithm ARN, replace the placeholder below with your AWS Marketplace ARN</span>
-</span><span id="line-10"><span class="n">algo_arn</span> <span class="o">=</span> <span class="s2">"arn:aws:sagemaker:&lt;...&gt;"</span>
-</span><span id="line-11">
-</span><span id="line-12"><span class="c1"># SageMaker session</span>
-</span><span id="line-13"><span class="n">sagemaker_session</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
-</span><span id="line-14">
-</span><span id="line-15"><span class="c1"># SageMaker role</span>
-</span><span id="line-16"><span class="n">role</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">get_execution_role</span><span class="p">()</span>
-</span><span id="line-17">
-</span><span id="line-18"><span class="c1"># S3 bucket</span>
-</span><span id="line-19"><span class="n">bucket</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">default_bucket</span><span class="p">()</span>
-</span><span id="line-20">
-</span><span id="line-21"><span class="c1"># EC2 instance</span>
-</span><span id="line-22"><span class="n">instance_type</span> <span class="o">=</span> <span class="s2">"ml.m5.2xlarge"</span>
+</span><span id="line-7"><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span>
+</span><span id="line-8"><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">recall_score</span><span class="p">,</span> <span class="n">f1_score</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">roc_auc_score</span>
+</span><span id="line-9">
+</span><span id="line-10"><span class="c1"># SageMaker session</span>
+</span><span id="line-11"><span class="n">sagemaker_session</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+</span><span id="line-12">
+</span><span id="line-13"><span class="c1"># SageMaker role</span>
+</span><span id="line-14"><span class="n">role</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">get_execution_role</span><span class="p">()</span>
+</span><span id="line-15">
+</span><span id="line-16"><span class="c1"># S3 bucket</span>
+</span><span id="line-17"><span class="n">bucket</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">default_bucket</span><span class="p">()</span>
+</span><span id="line-18">
+</span><span id="line-19"><span class="c1"># EC2 instance</span>
+</span><span id="line-20"><span class="n">instance_type</span> <span class="o">=</span> <span class="s2">"ml.m5.2xlarge"</span>
 </span></code></pre></div>
 </div>
 </section>
@@ -231,15 +229,23 @@ After resampling, the training data contains 641 instances of each class.</p>
 </span><span id="line-3"><span class="n">training_dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">sampler</span><span class="o">.</span><span class="n">fit_resample</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">training_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">training_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
-<p>We then proceed to moving the class labels from the last column to the first column, as required by the LSTM-FCN SageMaker algorithm.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># move the class labels to the first column</span>
-</span><span id="line-2"><span class="n">training_dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">training_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:],</span> <span class="n">training_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<p>We then proceed to one-hot encoding the class labels and renaming the dataset columns,
+as required by the LSTM-FCN SageMaker algorithm.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># one-hot encode the class labels</span>
+</span><span id="line-2"><span class="n">encoder</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">sparse_output</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span><span id="line-3"><span class="n">encoder</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">training_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:])</span>
+</span><span id="line-4">
+</span><span id="line-5"><span class="c1"># rename the columns</span>
+</span><span id="line-6"><span class="n">training_dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span>
+</span><span id="line-7">    <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">encoder</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">training_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:]),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">"y_</span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">training_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">())]),</span>
+</span><span id="line-8">    <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">training_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">"x_</span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">training_dataset</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)])</span>
+</span><span id="line-9"><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
 <p>Once this is done, we can save the training data in the S3 bucket in CSV format.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># save the training data in S3</span>
 </span><span id="line-2"><span class="n">training_data</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">upload_string_as_file_body</span><span class="p">(</span>
-</span><span id="line-3">    <span class="n">body</span><span class="o">=</span><span class="n">training_dataset</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+</span><span id="line-3">    <span class="n">body</span><span class="o">=</span><span class="n">training_dataset</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
 </span><span id="line-4">    <span class="n">bucket</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span>
 </span><span id="line-5">    <span class="n">key</span><span class="o">=</span><span class="s2">"MITBIH_train.csv"</span>
 </span><span id="line-6"><span class="p">)</span>
@@ -270,11 +276,12 @@ After resampling, the training data contains 641 instances of each class.</p>
 </span><span id="line-19">        <span class="s2">"batch-size"</span><span class="p">:</span> <span class="mi">256</span><span class="p">,</span>
 </span><span id="line-20">        <span class="s2">"lr"</span><span class="p">:</span> <span class="mf">0.001</span><span class="p">,</span>
 </span><span id="line-21">        <span class="s2">"epochs"</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
-</span><span id="line-22">    <span class="p">},</span>
-</span><span id="line-23"><span class="p">)</span>
-</span><span id="line-24">
-</span><span id="line-25"><span class="c1"># run the training job</span>
-</span><span id="line-26"><span class="n">estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">({</span><span class="s2">"training"</span><span class="p">:</span> <span class="n">training_data</span><span class="p">})</span>
+</span><span id="line-22">        <span class="s2">"task"</span><span class="p">:</span> <span class="s2">"multiclass"</span>
+</span><span id="line-23">    <span class="p">},</span>
+</span><span id="line-24"><span class="p">)</span>
+</span><span id="line-25">
+</span><span id="line-26"><span class="c1"># run the training job</span>
+</span><span id="line-27"><span class="n">estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">({</span><span class="s2">"training"</span><span class="p">:</span> <span class="n">training_data</span><span class="p">})</span>
 </span></code></pre></div>
 </div>
 </section>
@@ -285,15 +292,13 @@ After resampling, the training data contains 641 instances of each class.</p>
 </span><span id="line-2"><span class="n">serializer</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">serializers</span><span class="o">.</span><span class="n">CSVSerializer</span><span class="p">(</span><span class="n">content_type</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">)</span>
 </span><span id="line-3">
 </span><span id="line-4"><span class="c1"># define the endpoint outputs deserializer</span>
-</span><span id="line-5"><span class="n">deserializer</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">deserializers</span><span class="o">.</span><span class="n">CSVDeserializer</span><span class="p">(</span><span class="n">accept</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">)</span>
+</span><span id="line-5"><span class="n">deserializer</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">base_deserializers</span><span class="o">.</span><span class="n">PandasDeserializer</span><span class="p">(</span><span class="n">accept</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">)</span>
 </span><span id="line-6">
 </span><span id="line-7"><span class="c1"># create the endpoint</span>
 </span><span id="line-8"><span class="n">predictor</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">deploy</span><span class="p">(</span>
 </span><span id="line-9">    <span class="n">initial_instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
 </span><span id="line-10">    <span class="n">instance_type</span><span class="o">=</span><span class="n">instance_type</span><span class="p">,</span>
-</span><span id="line-11">    <span class="n">serializer</span><span class="o">=</span><span class="n">serializer</span><span class="p">,</span>
-</span><span id="line-12">    <span class="n">deserializer</span><span class="o">=</span><span class="n">deserializer</span><span class="p">,</span>
-</span><span id="line-13"><span class="p">)</span>
+</span><span id="line-11"><span class="p">)</span>
 </span></code></pre></div>
 </div>
 <p>After that we load the test data from the CSV file.</p>
@@ -301,9 +306,13 @@ After resampling, the training data contains 641 instances of each class.</p>
 </span><span id="line-2"><span class="n">test_dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"mitbih_test.csv"</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
-<p>To avoid confusion, we move the class labels from the last column to the first column, even though they are not used for inference.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># move the class labels to the first column</span>
-</span><span id="line-2"><span class="n">test_dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">test_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:],</span> <span class="n">test_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<p>We again proceed to one-hot encoding the class labels and renaming the dataset columns,
+as required by the LSTM-FCN SageMaker algorithm.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># one-hot encode the class labels and rename the columns</span>
+</span><span id="line-2"><span class="n">test_dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span>
+</span><span id="line-3">    <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">encoder</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">test_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:]),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">"y_</span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">test_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">())]),</span>
+</span><span id="line-4">    <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">test_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">"x_</span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">test_dataset</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)])</span>
+</span><span id="line-5"><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
 <p>Given that the test dataset is relatively large, we invoke the endpoint with batches of time series as opposed to using the entire test dataset as a single payload.</p>
@@ -316,34 +325,37 @@ After resampling, the training data contains 641 instances of each class.</p>
 </span><span id="line-7"><span class="c1"># loop across the test dataset</span>
 </span><span id="line-8"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_dataset</span><span class="p">),</span> <span class="n">batch_size</span><span class="p">):</span>
 </span><span id="line-9">
-</span><span id="line-10">    <span class="c1"># invoke the endpoint with a batch of time series, make sure to drop the first column with the class labels</span>
+</span><span id="line-10">    <span class="c1"># invoke the endpoint with a batch of time series</span>
 </span><span id="line-11">    <span class="n">response</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">sagemaker_runtime_client</span><span class="o">.</span><span class="n">invoke_endpoint</span><span class="p">(</span>
 </span><span id="line-12">        <span class="n">EndpointName</span><span class="o">=</span><span class="n">predictor</span><span class="o">.</span><span class="n">endpoint_name</span><span class="p">,</span>
 </span><span id="line-13">        <span class="n">ContentType</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">,</span>
-</span><span id="line-14">        <span class="n">Body</span><span class="o">=</span><span class="n">serializer</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">test_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">batch_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">:])</span>
+</span><span id="line-14">        <span class="n">Body</span><span class="o">=</span><span class="n">test_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">batch_size</span><span class="p">,</span> <span class="mi">5</span><span class="p">:]</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </span><span id="line-15">    <span class="p">)</span>
 </span><span id="line-16">
 </span><span id="line-17">    <span class="c1"># save the predicted class labels in the data frame</span>
 </span><span id="line-18">    <span class="n">predictions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span>
 </span><span id="line-19">        <span class="n">predictions</span><span class="p">,</span>
-</span><span id="line-20">        <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-</span><span id="line-21">            <span class="n">data</span><span class="o">=</span><span class="n">deserializer</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s2">"Body"</span><span class="p">],</span> <span class="n">content_type</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">),</span>
-</span><span id="line-22">            <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span>
-</span><span id="line-23">        <span class="p">)</span>
-</span><span id="line-24">    <span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="line-20">        <span class="n">deserializer</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="s2">"Body"</span><span class="p">],</span> <span class="n">content_type</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">),</span>
+</span><span id="line-21">    <span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
 <p>After generating the model predictions, we can calculate the classification metrics.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># calculate the accuracy</span>
-</span><span id="line-2"><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">test_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">predictions</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
-</span><span id="line-3">
-</span><span id="line-4"><span class="c1"># calculate the confusion matrix</span>
-</span><span id="line-5"><span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">test_dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">predictions</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># calculate the classification metrics</span>
+</span><span id="line-2"><span class="n">metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">c</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"y_"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">test_dataset</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"y"</span><span class="p">)])</span>
+</span><span id="line-3"><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">metrics</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+</span><span id="line-4">    <span class="n">metrics</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="line-5">        <span class="s2">"Accuracy"</span><span class="p">:</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">test_dataset</span><span class="p">[</span><span class="sa">f</span><span class="s2">"y_</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">"</span><span class="p">],</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="sa">f</span><span class="s2">"y_</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">"</span><span class="p">]),</span>
+</span><span id="line-6">        <span class="s2">"ROC-AUC"</span><span class="p">:</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">test_dataset</span><span class="p">[</span><span class="sa">f</span><span class="s2">"y_</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">"</span><span class="p">],</span> <span class="n">y_score</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="sa">f</span><span class="s2">"p_</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">"</span><span class="p">]),</span>
+</span><span id="line-7">        <span class="s2">"Precision"</span><span class="p">:</span> <span class="n">precision_score</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">test_dataset</span><span class="p">[</span><span class="sa">f</span><span class="s2">"y_</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">"</span><span class="p">],</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="sa">f</span><span class="s2">"y_</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">"</span><span class="p">]),</span>
+</span><span id="line-8">        <span class="s2">"Recall"</span><span class="p">:</span> <span class="n">recall_score</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">test_dataset</span><span class="p">[</span><span class="sa">f</span><span class="s2">"y_</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">"</span><span class="p">],</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="sa">f</span><span class="s2">"y_</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">"</span><span class="p">]),</span>
+</span><span id="line-9">        <span class="s2">"F1"</span><span class="p">:</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">test_dataset</span><span class="p">[</span><span class="sa">f</span><span class="s2">"y_</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">"</span><span class="p">],</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="sa">f</span><span class="s2">"y_</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s2">"</span><span class="p">]),</span>
+</span><span id="line-10">    <span class="p">}</span>
+</span><span id="line-11"><span class="n">metrics</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">test_dataset</span><span class="o">.</span><span class="n">columns</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
 </span></code></pre></div>
 </div>
-<p>We find that the model achieves 99.79% accuracy on the test data.</p>
-<img alt="LSTM-FCN confusion matrix on MIT-BIH test dataset" class="blog-post-image" id="lstm-fcn-ecg-classification-confusion-matrix" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/lstm-fcn-ecg-classification/confusion_matrix_light.png"/>
-<p class="blog-post-image-caption"> LSTM-FCN confusion matrix on MIT-BIH test dataset.</p><p>After the analysis has been completed, we can delete the model and the endpoint.</p>
+<p>We find that the model achieves more than 90% test accuracy across all classes.</p>
+<img alt="LSTM-FCN classification metrics on MIT-BIH test dataset" class="blog-post-image" id="lstm-fcn-ecg-classification-metrics" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/lstm-fcn-ecg-classification/metrics_light.png"/>
+<p class="blog-post-image-caption"> LSTM-FCN classification metrics on MIT-BIH test dataset.</p><p>After the analysis has been completed, we can delete the model and the endpoint.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># delete the model</span>
 </span><span id="line-2"><span class="n">predictor</span><span class="o">.</span><span class="n">delete_model</span><span class="p">()</span>
 </span><span id="line-3">
@@ -415,6 +427,6 @@ Amazon Web Services, AWS, Amazon SageMaker, AWS Marketplace and the AWS Marketpl
 <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
 <script defer="defer" src="../../../_static/theme.js?v=e82a16a3"></script>
 <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
-<script src="../../../_static/custom.js?v=a83cbdbe"></script>
+<script src="../../../_static/custom.js?v=51e3ec04"></script>
 </body>
 </html>
