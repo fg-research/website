@@ -124,6 +124,9 @@ We start by importing all the requirements and setting up the SageMaker environm
     from sklearn.preprocessing import OneHotEncoder
     from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score, roc_auc_score
 
+    # SageMaker algorithm ARN, replace the placeholder below with your AWS Marketplace ARN
+    algo_arn = "arn:aws:sagemaker:<...>"
+
     # SageMaker session
     sagemaker_session = sagemaker.Session()
 
