@@ -94,7 +94,7 @@ Data
     in the <a href=http://www.timeseriesclassification.com>UCR Time Series Classification Archive</a>
     <a href="#references">[4]</a>.
     The data was collected from 6 study participants who conducted 4 different activities
-    while wearing a tri-axial accelerometer sensor on their wrist: walking, running, sewing and
+    while wearing a triaxial accelerometer sensor on their wrist: walking, running, sewing and
     simulating epileptic seizures.
     The epileptic seizures were simulated following a protocol defined by a medical expert.
     </p>
