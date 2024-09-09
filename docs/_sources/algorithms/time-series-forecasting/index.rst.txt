@@ -56,6 +56,8 @@ LNN SageMaker Algorithm
         The algorithm uses the <a href="https://doi.org/10.1038/s42256-022-00556-7" target="_blank">closed-form continuous-depth (CfC)</a>
         implementation of LNNs. CfCs use an approximate closed-form solution of the Liquid Time Constant (LTC)
         Ordinary Differential Equation (ODE) and, as a result, provide faster training and inference performance than other LNNs.
+        The model is trained by minimizing the negative Gaussian log-likelihood and outputs the predicted mean
+        and standard deviation at each future time step.
         The algorithm can be used for both univariate and multivariate time series and supports the inclusion of external features.
         For additional information, see the algorithm's
         <a href="https://aws.amazon.com/marketplace/pp/prodview-7s4giphluwgta" target="_blank">AWS Marketplace</a>
