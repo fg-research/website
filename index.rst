@@ -15,6 +15,7 @@ Advanced Time Series Solutions in Amazon SageMaker
 .. image:: /static/background.png
   :align: left
   :alt: background image
+  :width: 90%
 
 .. _aws_marketplace_logo:
 
