@@ -46,7 +46,7 @@ def google_analytics(app, pagename, templatename, context, doctree):
             "backgroundColor":"#FFFFFF",
             "closeButtonDisplay":true,
             "customizeButtonColor":"#64748B",
-            "customizeButtonDisplay":true,
+            "customizeButtonDisplay":false,
             "explicitWithdrawal":true,
             "fontSizeBody":"12px",
             "listPurposes":true,
