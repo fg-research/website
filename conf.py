@@ -17,6 +17,10 @@ Amazon Web Services, AWS, Amazon SageMaker, AWS Marketplace and the AWS Marketpl
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
+import sys
+from pathlib import Path
+
+sys.path.append(str(Path('extensions').resolve()))
 
 extensions = [
     'sphinx.ext.githubpages',
@@ -28,6 +32,7 @@ extensions = [
     'sphinx_design',
     'myst_parser',
     'sphinx.ext.mathjax',
+    'extensions'
 ]
 
 templates_path = []
