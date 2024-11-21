@@ -1,6 +1,0 @@
-User-agent: *
-
-Sitemap: https://fg-research.com/sitemap.xml
-
-Disallow: /terms/
-Disallow: /search.html

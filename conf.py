@@ -27,7 +27,8 @@ extensions = [
     'sphinx_sitemap',
     'sphinx_design',
     'myst_parser',
-    'sphinx.ext.mathjax'
+    'sphinx.ext.mathjax',
+    'sphinxcontrib.googleanalytics'
 ]
 
 templates_path = []
@@ -56,7 +57,6 @@ html_theme_options = dict(
     show_prev_next=False,
     awesome_external_links=False,
     show_scrolltop=True,
-    analytics={"google_analytics_id": "G-2L0F07XRQM"},
     extra_header_link_icons={
         'GitHub': {
             'link': 'https://github.com/fg-research',
