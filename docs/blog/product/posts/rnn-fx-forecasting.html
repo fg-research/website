@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+
+<html :class="{'dark': darkMode === 'dark' || (darkMode === 'system' &amp;&amp; window.matchMedia('(prefers-color-scheme: dark)').matches)}" class="scroll-smooth" data-content_root="../../../" lang="en" x-data="{ darkMode: localStorage.getItem('darkMode') || localStorage.setItem('darkMode', 'system'), activeSection: '' }" x-init="$watch('darkMode', val =&gt; localStorage.setItem('darkMode', val))">
+<head>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta charset="utf-8"/>
+<meta content="white" media="(prefers-color-scheme: light)" name="theme-color"/>
+<meta content="black" media="(prefers-color-scheme: dark)" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="https://fg-research.com/_static/thumbnail.png" name="thumbnail"/>
+<meta content="Forecasting exchange rates with long short-term memory networks using the RNN SageMaker algorithm" name="description"/>
+<meta content="Amazon SageMaker, Time Series, Recurrent Neural Networks, Forecasting, Forex Market" name="keywords"/>
+
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2L0F07XRQM"></script>
+<script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-2L0F07XRQM');
+    </script>
+<title>Forecasting exchange rates with long short-term memory networks using the RNN SageMaker algorithm | fg-research</title>
+<meta content="Forecasting exchange rates with long short-term memory networks using the RNN SageMaker algorithm | fg-research" property="og:title"/>
+<meta content="Forecasting exchange rates with long short-term memory networks using the RNN SageMaker algorithm | fg-research" name="twitter:title"/>
+<link href="../../../_static/pygments.css?v=8d216cef" rel="stylesheet" type="text/css"/>
+<link href="../../../_static/theme.css?v=ecdfb4fc" rel="stylesheet" type="text/css"/>
+<link href="../../../_static/sphinx-design.min.css?v=87e54e7c" rel="stylesheet" type="text/css"/>
+<link href="../../../_static/custom.css?v=136dbd94" rel="stylesheet" type="text/css"/>
+<link href="../../../_static/awesome-sphinx-design.css?v=a54cf077" rel="stylesheet" type="text/css"/>
+<link href="https://fg-research.com/blog/product/posts/rnn-fx-forecasting.html" rel="canonical"/>
+<link href="../../../_static/favicon.ico" rel="icon"/>
+<link href="../../../search.html" rel="search" title="Search"/>
+<link href="../../../genindex.html" rel="index" title="Index"/>
+<link href="lnn-equity-forecasting.html" rel="next" title="Forecasting stock returns with liquid neural networks using the LNN SageMaker algorithm"/>
+<link href="../index.html" rel="prev" title="Product"/>
+<script>
+    <!-- Prevent Flash of wrong theme -->
+      const userPreference = localStorage.getItem('darkMode');
+      let mode;
+      if (userPreference === 'dark' || window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        mode = 'dark';
+        document.documentElement.classList.add('dark');
+      } else {
+        mode = 'light';
+      }
+      if (!userPreference) {localStorage.setItem('darkMode', mode)}
+    </script>
+</head>
+<body :class="{ 'overflow-hidden': showSidebar }" class="min-h-screen font-sans antialiased bg-background text-foreground" x-data="{ showSidebar: false }">
+<div @click.self="showSidebar = false" class="fixed inset-0 z-50 overflow-hidden bg-background/80 backdrop-blur-sm md:hidden" x-cloak="" x-show="showSidebar"></div><div class="relative flex flex-col min-h-screen" id="page"><a class="absolute top-0 left-0 z-[100] block bg-background p-4 text-xl transition -translate-x-full opacity-0 focus:translate-x-0 focus:opacity-100" href="#content">
+      Skip to content
+    </a><header class="sticky top-0 z-40 w-full border-b shadow-sm border-border supports-backdrop-blur:bg-background/60 bg-background/95 backdrop-blur"><div class="container flex items-center h-14">
+<div class="hidden mr-4 md:flex">
+<a class="flex items-center mr-6" href="../../../index.html">
+<img alt="Logo" class="mr-2 dark:invert" height="24" src="../../../_static/logo.png" width="24"/><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">fg-research</span>
+</a></div><button @click="showSidebar = true" class="inline-flex items-center justify-center h-10 px-0 py-2 mr-2 text-base font-medium transition-colors rounded-md hover:text-accent-foreground hover:bg-transparent md:hidden" type="button">
+<svg aria-hidden="true" fill="currentColor" height="24" viewbox="0 96 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M152.587 825.087q-19.152 0-32.326-13.174t-13.174-32.326q0-19.152 13.174-32.326t32.326-13.174h440q19.152 0 32.326 13.174t13.174 32.326q0 19.152-13.174 32.326t-32.326 13.174h-440Zm0-203.587q-19.152 0-32.326-13.174T107.087 576q0-19.152 13.174-32.326t32.326-13.174h320q19.152 0 32.326 13.174T518.087 576q0 19.152-13.174 32.326T472.587 621.5h-320Zm0-203.587q-19.152 0-32.326-13.174t-13.174-32.326q0-19.152 13.174-32.326t32.326-13.174h440q19.152 0 32.326 13.174t13.174 32.326q0 19.152-13.174 32.326t-32.326 13.174h-440ZM708.913 576l112.174 112.174q12.674 12.674 12.674 31.826t-12.674 31.826Q808.413 764.5 789.261 764.5t-31.826-12.674l-144-144Q600 594.391 600 576t13.435-31.826l144-144q12.674-12.674 31.826-12.674t31.826 12.674q12.674 12.674 12.674 31.826t-12.674 31.826L708.913 576Z"></path>
+</svg>
+<span class="sr-only">Toggle navigation menu</span>
+</button>
+<div class="flex items-center justify-between flex-1 space-x-2 sm:space-x-4 md:justify-end">
+<div class="flex-1 w-full md:w-auto md:flex-none"><form @keydown.k.window.meta="$refs.search.focus()" action="../../../search.html" class="relative flex items-center group" id="searchbox" method="get">
+<input aria-label="Search the docs" class="inline-flex items-center font-medium transition-colors bg-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background border border-input hover:bg-accent focus:bg-accent hover:text-accent-foreground focus:text-accent-foreground hover:placeholder-accent-foreground py-2 px-4 relative h-9 w-full justify-start rounded-[0.5rem] text-sm text-muted-foreground sm:pr-12 md:w-40 lg:w-64" id="search-input" name="q" placeholder="Search ..." type="search" x-ref="search"/>
+<kbd class="pointer-events-none absolute right-1.5 top-2 hidden h-5 select-none text-muted-foreground items-center gap-1 rounded border border-border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex group-hover:bg-accent group-hover:text-accent-foreground">
+<span class="text-xs">⌘</span>
+    K
+  </kbd>
+</form>
+</div>
+<nav class="flex items-center space-x-1">
+<a href="https://github.com/fg-research" rel="noopener nofollow" title="Visit GitHub">
+<div class="inline-flex items-center justify-center px-0 text-sm font-medium transition-colors rounded-md disabled:opacity-50 disabled:pointer-events-none hover:bg-accent hover:text-accent-foreground h-9 w-9">
+<svg fill="currentColor" height="26px" style="margin-top:-2px;display:inline" viewbox="0 0 45 44" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M22.477.927C10.485.927.76 10.65.76 22.647c0 9.596 6.223 17.736 14.853 20.608 1.087.2 1.483-.47 1.483-1.047 0-.516-.019-1.881-.03-3.693-6.04 1.312-7.315-2.912-7.315-2.912-.988-2.51-2.412-3.178-2.412-3.178-1.972-1.346.149-1.32.149-1.32 2.18.154 3.327 2.24 3.327 2.24 1.937 3.318 5.084 2.36 6.321 1.803.197-1.403.759-2.36 1.379-2.903-4.823-.548-9.894-2.412-9.894-10.734 0-2.37.847-4.31 2.236-5.828-.224-.55-.969-2.759.214-5.748 0 0 1.822-.584 5.972 2.226 1.732-.482 3.59-.722 5.437-.732 1.845.01 3.703.25 5.437.732 4.147-2.81 5.967-2.226 5.967-2.226 1.185 2.99.44 5.198.217 5.748 1.392 1.517 2.232 3.457 2.232 5.828 0 8.344-5.078 10.18-9.916 10.717.779.67 1.474 1.996 1.474 4.021 0 2.904-.027 5.247-.027 5.96 0 .58.392 1.256 1.493 1.044C37.981 40.375 44.2 32.24 44.2 22.647c0-11.996-9.726-21.72-21.722-21.72" fill="currentColor" fill-rule="evenodd"></path></svg>
+</div>
+</a>
+<button @click="darkMode = darkMode === 'light' ? 'dark' : 'light'" aria-label="Color theme switcher" class="relative inline-flex items-center justify-center px-0 text-sm font-medium transition-colors rounded-md hover:bg-accent hover:text-accent-foreground h-9 w-9" type="button">
+<svg class="absolute transition-all scale-100 rotate-0 dark:-rotate-90 dark:scale-0" fill="currentColor" height="24" viewbox="0 96 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M480 685q45.456 0 77.228-31.772Q589 621.456 589 576q0-45.456-31.772-77.228Q525.456 467 480 467q-45.456 0-77.228 31.772Q371 530.544 371 576q0 45.456 31.772 77.228Q434.544 685 480 685Zm0 91q-83 0-141.5-58.5T280 576q0-83 58.5-141.5T480 376q83 0 141.5 58.5T680 576q0 83-58.5 141.5T480 776ZM80 621.5q-19.152 0-32.326-13.174T34.5 576q0-19.152 13.174-32.326T80 530.5h80q19.152 0 32.326 13.174T205.5 576q0 19.152-13.174 32.326T160 621.5H80Zm720 0q-19.152 0-32.326-13.174T754.5 576q0-19.152 13.174-32.326T800 530.5h80q19.152 0 32.326 13.174T925.5 576q0 19.152-13.174 32.326T880 621.5h-80Zm-320-320q-19.152 0-32.326-13.174T434.5 256v-80q0-19.152 13.174-32.326T480 130.5q19.152 0 32.326 13.174T525.5 176v80q0 19.152-13.174 32.326T480 301.5Zm0 720q-19.152 0-32.326-13.17Q434.5 995.152 434.5 976v-80q0-19.152 13.174-32.326T480 850.5q19.152 0 32.326 13.174T525.5 896v80q0 19.152-13.174 32.33-13.174 13.17-32.326 13.17ZM222.174 382.065l-43-42Q165.5 327.391 166 308.239t13.174-33.065q13.435-13.674 32.587-13.674t32.065 13.674l42.239 43q12.674 13.435 12.555 31.706-.12 18.272-12.555 31.946-12.674 13.674-31.445 13.413-18.772-.261-32.446-13.174Zm494 494.761-42.239-43q-12.674-13.435-12.674-32.087t12.674-31.565Q686.609 756.5 705.38 757q18.772.5 32.446 13.174l43 41.761Q794.5 824.609 794 843.761t-13.174 33.065Q767.391 890.5 748.239 890.5t-32.065-13.674Zm-42-494.761Q660.5 369.391 661 350.62q.5-18.772 13.174-32.446l41.761-43Q728.609 261.5 747.761 262t33.065 13.174q13.674 13.435 13.674 32.587t-13.674 32.065l-43 42.239q-13.435 12.674-31.706 12.555-18.272-.12-31.946-12.555Zm-495 494.761Q165.5 863.391 165.5 844.239t13.674-32.065l43-42.239q13.435-12.674 32.087-12.674t31.565 12.674Q299.5 782.609 299 801.38q-.5 18.772-13.174 32.446l-41.761 43Q231.391 890.5 212.239 890t-33.065-13.174ZM480 576Z"></path>
+</svg>
+<svg class="absolute transition-all scale-0 rotate-90 dark:rotate-0 dark:scale-100" fill="currentColor" height="24" viewbox="0 96 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M480 936q-151 0-255.5-104.5T120 576q0-138 90-239.5T440 218q25-3 39 18t-1 44q-17 26-25.5 55t-8.5 61q0 90 63 153t153 63q31 0 61.5-9t54.5-25q21-14 43-1.5t19 39.5q-14 138-117.5 229T480 936Zm0-80q88 0 158-48.5T740 681q-20 5-40 8t-40 3q-123 0-209.5-86.5T364 396q0-20 3-40t8-40q-78 32-126.5 102T200 576q0 116 82 198t198 82Zm-10-270Z"></path>
+</svg>
+</button>
+</nav>
+</div>
+</div>
+</header>
+<div class="flex-1"><div class="container flex-1 items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10"><aside :aria-hidden="!showSidebar" :class="{ 'translate-x-0': showSidebar }" class="fixed inset-y-0 left-0 md:top-14 z-50 md:z-30 bg-background md:bg-transparent transition-all duration-100 -translate-x-full md:translate-x-0 ml-0 p-6 md:p-0 md:-ml-2 md:h-[calc(100vh-3.5rem)] w-5/6 md:w-full shrink-0 overflow-y-auto border-r border-border md:sticky" id="left-sidebar">
+<a class="!justify-start text-sm md:!hidden bg-background" href="../../../index.html">
+<img alt="Logo" class="mr-2 dark:invert" height="16" src="../../../_static/logo.png" width="16"/><span class="font-bold text-clip whitespace-nowrap">fg-research</span>
+</a>
+<div class="relative overflow-hidden md:overflow-auto my-4 md:my-0 h-[calc(100vh-8rem)] md:h-auto">
+<div class="overflow-y-auto h-full w-full relative pr-6"><nav class="table w-full min-w-full my-6 lg:my-8">
+<p class="caption" role="heading"><span class="caption-text">Algorithms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../algorithms/time-series-forecasting/index.html">Time Series Forecasting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../algorithms/time-series-anomaly-detection/index.html">Time Series Anomaly Detection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../algorithms/time-series-classification/index.html">Time Series Classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../algorithms/time-series-clustering/index.html">Time Series Clustering</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Blog</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Product</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Terms and Conditions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../terms/disclaimer/index.html">Disclaimer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../terms/eula/index.html">EULA</a></li>
+</ul>
+</nav>
+</div>
+</div>
+<button @click="showSidebar = false" class="absolute md:hidden right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100" type="button">
+<svg class="h-4 w-4" fill="currentColor" height="24" stroke="none" viewbox="0 96 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M480 632 284 828q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536 576l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480 632Z"></path>
+</svg>
+</button>
+</aside>
+<main class="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr_300px]">
+<div class="w-full min-w-0 mx-auto">
+<nav aria-label="breadcrumbs" class="flex items-center mb-4 space-x-1 text-sm text-muted-foreground">
+<a class="overflow-hidden text-ellipsis whitespace-nowrap hover:text-foreground" href="../../../index.html">
+<span class="hidden md:inline">fg-research</span>
+<svg aria-label="Home" class="md:hidden" fill="currentColor" height="18" stroke="none" viewbox="0 96 960 960" width="18" xmlns="http://www.w3.org/2000/svg">
+<path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z"></path>
+</svg>
+</a>
+<div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="../index.html">Product</a>
+<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Forecasting exchange rates with long short-term memory networks using the RNN SageMaker algorithm</span>
+</nav>
+<div id="content" role="main">
+<section id="forecasting-exchange-rates-with-long-short-term-memory-networks-using-the-rnn-sagemaker-algorithm">
+<h1>Forecasting exchange rates with long short-term memory networks using the RNN SageMaker algorithm<a class="headerlink" href="#forecasting-exchange-rates-with-long-short-term-memory-networks-using-the-rnn-sagemaker-algorithm" title="Link to this heading">¶</a></h1>
+<p>
+Forecasting exchange rates is a critical task for traders, investors, and financial institutions.
+Even though different machine learning models have been studied for this purpose, Long Short-Term Memory
+(LSTM) <a href="#references">[1]</a> networks have become the most widely adopted <a href="#references">[2]</a>.
+</p>
+<p>
+LSTMs belong to the class of recurrent neural networks (RNNs), which are designed to process and predict
+sequences of data. Differently from vanilla RNNs, which often fail to capture long-term dependencies due to issues like
+vanishing gradients, LSTMs implement a number of gating mechanisms which allow the network to retain memory
+of relevant features over longer time intervals.
+</p>
+<p>
+In this post, we will use our Amazon SageMaker implementation of RNNs for
+probabilistic time series forecasting, the <a href="https://fg-research.com/algorithms/time-series-forecasting/index.html#rnn-sagemaker-algorithm" target="_blank">RNN SageMaker algorithm</a>.
+We will implement a stacked LSTM model with two layers with LeCun's hyperbolic tangent activation <a href="#references">[3]</a>.
+We will use the model for forecasting the EUR/USD exchange rate one day ahead using as input a set of technical indicators,
+similar to <a href="#references">[4]</a>.
+</p>
+<p>
+We will use the daily EUR/USD exchange rate time series from the 1<sup>st</sup> of August 2022 to
+the 31<sup>st</sup> of July 2024, which we will download from
+<a href="https://finance.yahoo.com" target="_blank">Yahoo! Finance</a>.
+We will train the model on the data up to the 18<sup>th</sup> of June 2024,
+and use the trained model to predict the subsequent data up to the 31<sup>st</sup> of July 2024.
+We will find that the model achieves a mean absolute error of 0.0012 and
+a mean directional accuracy of 83.33% over the considered time period.
+</p><section id="code">
+<h2>Code<a class="headerlink" href="#code" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#code'">¶</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>To be able to run the code below, you need to have an active subscription to the
+RNN SageMaker algorithm. You can subscribe to a free trial from the
+<a class="reference external" href="https://aws.amazon.com/marketplace/pp/prodview-p5cr7ncmdcziw">AWS Marketplace</a>
+in order to get your Amazon Resource Name (ARN).
+In this post we use version 1.0 of the RNN SageMaker algorithm, which runs in the
+PyTorch 2.1.0 Python 3.10 deep learning container.</p>
+</div>
+<section id="environment-set-up">
+<h3>Environment Set-Up<a class="headerlink" href="#environment-set-up" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#environment-set-up'">¶</a></h3>
+<p>We start by importing all the dependencies and setting up the SageMaker environment.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We use the <code class="code docutils literal notranslate"><span class="pre">yfinance</span></code> library for downloading the EUR/USD daily time series and
+the <code class="code docutils literal notranslate"><span class="pre">pyti</span></code> library for calculating the technical indicators.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span> <span class="nn">io</span>
+</span><span id="line-2"><span class="kn">import</span> <span class="nn">sagemaker</span>
+</span><span id="line-3"><span class="kn">import</span> <span class="nn">warnings</span>
+</span><span id="line-4"><span class="kn">import</span> <span class="nn">yfinance</span> <span class="k">as</span> <span class="nn">yf</span>
+</span><span id="line-5"><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</span><span id="line-6"><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</span><span id="line-7"><span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
+</span><span id="line-8"><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</span><span id="line-9"><span class="kn">from</span> <span class="nn">pyti.momentum</span> <span class="kn">import</span> <span class="n">momentum</span>
+</span><span id="line-10"><span class="kn">from</span> <span class="nn">pyti.rate_of_change</span> <span class="kn">import</span> <span class="n">rate_of_change</span>
+</span><span id="line-11"><span class="kn">from</span> <span class="nn">pyti.moving_average_convergence_divergence</span> <span class="kn">import</span> <span class="n">moving_average_convergence_divergence</span>
+</span><span id="line-12"><span class="kn">from</span> <span class="nn">pyti.simple_moving_average</span> <span class="kn">import</span> <span class="n">simple_moving_average</span>
+</span><span id="line-13"><span class="kn">from</span> <span class="nn">pyti.relative_strength_index</span> <span class="kn">import</span> <span class="n">relative_strength_index</span>
+</span><span id="line-14"><span class="kn">from</span> <span class="nn">pyti.bollinger_bands</span> <span class="kn">import</span> <span class="n">middle_bollinger_band</span><span class="p">,</span> <span class="n">upper_bollinger_band</span><span class="p">,</span> <span class="n">lower_bollinger_band</span>
+</span><span id="line-15"><span class="kn">from</span> <span class="nn">pyti.commodity_channel_index</span> <span class="kn">import</span> <span class="n">commodity_channel_index</span>
+</span><span id="line-16"><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">root_mean_squared_error</span><span class="p">,</span> <span class="n">mean_absolute_error</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">f1_score</span>
+</span><span id="line-17"><span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">'ignore'</span><span class="p">)</span>
+</span><span id="line-18">
+</span><span id="line-19"><span class="c1"># SageMaker algorithm ARN, replace the placeholder below with your AWS Marketplace ARN</span>
+</span><span id="line-20"><span class="n">algo_arn</span> <span class="o">=</span> <span class="s2">"arn:aws:sagemaker:&lt;...&gt;"</span>
+</span><span id="line-21">
+</span><span id="line-22"><span class="c1"># SageMaker session</span>
+</span><span id="line-23"><span class="n">sagemaker_session</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+</span><span id="line-24">
+</span><span id="line-25"><span class="c1"># SageMaker role</span>
+</span><span id="line-26"><span class="n">role</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">get_execution_role</span><span class="p">()</span>
+</span><span id="line-27">
+</span><span id="line-28"><span class="c1"># S3 bucket</span>
+</span><span id="line-29"><span class="n">bucket</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">default_bucket</span><span class="p">()</span>
+</span><span id="line-30">
+</span><span id="line-31"><span class="c1"># EC2 instance</span>
+</span><span id="line-32"><span class="n">instance_type</span> <span class="o">=</span> <span class="s2">"ml.m5.4xlarge"</span>
+</span></code></pre></div>
+</div>
+<p>After that we define the neural network’s <em>context length</em> and <em>prediction length</em>.
+The context length is the number of past time steps used as input,
+while the prediction length is the number of future time steps to be predicted.
+We set the context length equal to 5 and the prediction length equal to 1, that is
+we use the values of the EUR/USD exchange rate and of the technical indicators on
+the previous week to predict the value of the EUR/USD exchange rate on the next day.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># number of time steps used as input</span>
+</span><span id="line-2"><span class="n">context_length</span> <span class="o">=</span> <span class="mi">5</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="c1"># number of time steps to output</span>
+</span><span id="line-5"><span class="n">prediction_length</span> <span class="o">=</span> <span class="mi">1</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="data">
+<h3>Data<a class="headerlink" href="#data" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data'">¶</a></h3>
+<p>
+Next, we download the EUR/USD exchange rate time series from the 1<sup>st</sup> of August 2022 to
+the 31<sup>st</sup> of July 2024. The dataset contains 522 daily observations.
+</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">dataset</span> <span class="o">=</span> <span class="n">yf</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">tickers</span><span class="o">=</span><span class="s2">"EURUSD=X"</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s2">"2022-08-01"</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">"2024-08-01"</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>
+We then calculate the following technical indicators, as in <a href="#references">[4]</a>:
+</p><ul class="simple">
+<li><p><em>Moving average (MA)</em> with a period of 10.</p></li>
+<li><p><em>Moving average convergence/divergence (MACD)</em> with periods of 12 and 26.</p></li>
+<li><p><em>Rate of change (ROC)</em> with a period of 2.</p></li>
+<li><p><em>Momentum</em> with a period of 4.</p></li>
+<li><p><em>Relative strength index (RSI)</em> with a period of 10.</p></li>
+<li><p><em>Bollinger bands (BB)</em> with period of 20.</p></li>
+<li><p><em>Commodity channel index (CCI)</em> with a period of 20.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># MA with a period of 10</span>
+</span><span id="line-2"><span class="n">dataset</span><span class="p">[</span><span class="s2">"MA"</span><span class="p">]</span> <span class="o">=</span> <span class="n">simple_moving_average</span><span class="p">(</span>
+</span><span id="line-3">    <span class="n">data</span><span class="o">=</span><span class="n">dataset</span><span class="p">[</span><span class="s2">"Close"</span><span class="p">],</span>
+</span><span id="line-4">    <span class="n">period</span><span class="o">=</span><span class="mi">10</span>
+</span><span id="line-5"><span class="p">)</span>
+</span><span id="line-6">
+</span><span id="line-7"><span class="c1"># MACD with short- and long-term periods of 12 and 26</span>
+</span><span id="line-8"><span class="n">dataset</span><span class="p">[</span><span class="s2">"MACD"</span><span class="p">]</span> <span class="o">=</span> <span class="n">moving_average_convergence_divergence</span><span class="p">(</span>
+</span><span id="line-9">    <span class="n">data</span><span class="o">=</span><span class="n">dataset</span><span class="p">[</span><span class="s2">"Close"</span><span class="p">],</span>
+</span><span id="line-10">    <span class="n">short_period</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
+</span><span id="line-11">    <span class="n">long_period</span><span class="o">=</span><span class="mi">26</span>
+</span><span id="line-12"><span class="p">)</span>
+</span><span id="line-13">
+</span><span id="line-14"><span class="c1"># ROC with a period of 2</span>
+</span><span id="line-15"><span class="n">dataset</span><span class="p">[</span><span class="s2">"ROC"</span><span class="p">]</span> <span class="o">=</span> <span class="n">rate_of_change</span><span class="p">(</span>
+</span><span id="line-16">    <span class="n">data</span><span class="o">=</span><span class="n">dataset</span><span class="p">[</span><span class="s2">"Close"</span><span class="p">],</span>
+</span><span id="line-17">    <span class="n">period</span><span class="o">=</span><span class="mi">2</span>
+</span><span id="line-18"><span class="p">)</span>
+</span><span id="line-19">
+</span><span id="line-20"><span class="c1"># Momentum with a period of 4</span>
+</span><span id="line-21"><span class="n">dataset</span><span class="p">[</span><span class="s2">"Momentum"</span><span class="p">]</span> <span class="o">=</span> <span class="n">momentum</span><span class="p">(</span>
+</span><span id="line-22">    <span class="n">data</span><span class="o">=</span><span class="n">dataset</span><span class="p">[</span><span class="s2">"Close"</span><span class="p">],</span>
+</span><span id="line-23">    <span class="n">period</span><span class="o">=</span><span class="mi">4</span>
+</span><span id="line-24"><span class="p">)</span>
+</span><span id="line-25">
+</span><span id="line-26"><span class="c1"># RSI with a period of 10</span>
+</span><span id="line-27"><span class="n">dataset</span><span class="p">[</span><span class="s2">"RSI"</span><span class="p">]</span> <span class="o">=</span> <span class="n">relative_strength_index</span><span class="p">(</span>
+</span><span id="line-28">    <span class="n">data</span><span class="o">=</span><span class="n">dataset</span><span class="p">[</span><span class="s2">"Close"</span><span class="p">],</span>
+</span><span id="line-29">    <span class="n">period</span><span class="o">=</span><span class="mi">10</span>
+</span><span id="line-30"><span class="p">)</span>
+</span><span id="line-31">
+</span><span id="line-32"><span class="c1"># BB with period of 20</span>
+</span><span id="line-33"><span class="n">dataset</span><span class="p">[</span><span class="s2">"MiddleBB"</span><span class="p">]</span> <span class="o">=</span> <span class="n">middle_bollinger_band</span><span class="p">(</span>
+</span><span id="line-34">    <span class="n">data</span><span class="o">=</span><span class="n">dataset</span><span class="p">[</span><span class="s2">"Close"</span><span class="p">],</span>
+</span><span id="line-35">    <span class="n">period</span><span class="o">=</span><span class="mi">20</span>
+</span><span id="line-36"><span class="p">)</span>
+</span><span id="line-37">
+</span><span id="line-38"><span class="n">dataset</span><span class="p">[</span><span class="s2">"LowerBB"</span><span class="p">]</span> <span class="o">=</span> <span class="n">upper_bollinger_band</span><span class="p">(</span>
+</span><span id="line-39">    <span class="n">data</span><span class="o">=</span><span class="n">dataset</span><span class="p">[</span><span class="s2">"Close"</span><span class="p">],</span>
+</span><span id="line-40">    <span class="n">period</span><span class="o">=</span><span class="mi">20</span>
+</span><span id="line-41"><span class="p">)</span>
+</span><span id="line-42">
+</span><span id="line-43"><span class="n">dataset</span><span class="p">[</span><span class="s2">"UpperBB"</span><span class="p">]</span> <span class="o">=</span> <span class="n">lower_bollinger_band</span><span class="p">(</span>
+</span><span id="line-44">    <span class="n">data</span><span class="o">=</span><span class="n">dataset</span><span class="p">[</span><span class="s2">"Close"</span><span class="p">],</span>
+</span><span id="line-45">    <span class="n">period</span><span class="o">=</span><span class="mi">20</span>
+</span><span id="line-46"><span class="p">)</span>
+</span><span id="line-47">
+</span><span id="line-48"><span class="c1"># CCI with a period of 20</span>
+</span><span id="line-49"><span class="n">dataset</span><span class="p">[</span><span class="s2">"CCI"</span><span class="p">]</span> <span class="o">=</span> <span class="n">commodity_channel_index</span><span class="p">(</span>
+</span><span id="line-50">    <span class="n">close_data</span><span class="o">=</span><span class="n">dataset</span><span class="p">[</span><span class="s2">"Close"</span><span class="p">],</span>
+</span><span id="line-51">    <span class="n">low_data</span><span class="o">=</span><span class="n">dataset</span><span class="p">[</span><span class="s2">"Low"</span><span class="p">],</span>
+</span><span id="line-52">    <span class="n">high_data</span><span class="o">=</span><span class="n">dataset</span><span class="p">[</span><span class="s2">"High"</span><span class="p">],</span>
+</span><span id="line-53">    <span class="n">period</span><span class="o">=</span><span class="mi">20</span>
+</span><span id="line-54"><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>After dropping the missing values resulting from the calculation of the technical indicators,
+the number of daily observations is reduced to 497.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># drop the missing values</span>
+</span><span id="line-2"><span class="n">dataset</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="c1"># drop the unnecessary columns</span>
+</span><span id="line-5"><span class="n">dataset</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s2">"Adj Close"</span><span class="p">,</span> <span class="s2">"Volume"</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="line-6">
+</span><span id="line-7"><span class="c1"># move the target to the first column</span>
+</span><span id="line-8"><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[[</span><span class="s2">"Close"</span><span class="p">]</span> <span class="o">+</span> <span class="n">dataset</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">"Close"</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()]</span>
+</span></code></pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">dataset</span><span class="o">.</span><span class="n">shape</span>
+</span></code></pre></div>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="gp gp-VirtualEnv">(497, 13)</span>
+</span></code></pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">dataset</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+<img alt="First 3 rows of dataset" class="blog-post-image" id="rnn-fx-forecasting-dataset-head" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/rnn-fx-forecasting/dataset_head_light.png" style="width:100%"/><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">dataset</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+<img alt="Last 3 rows of dataset" class="blog-post-image" id="rnn-fx-forecasting-dataset-tail" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/rnn-fx-forecasting/dataset_tail_light.png" style="width:100%"/><img alt="EUR/USD daily exchange rate with technical indicators from 2022-09-05 to 2024-07-31" class="blog-post-image" id="rnn-fx-forecasting-time-series" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/rnn-fx-forecasting/time_series_light.png"/>
+<p class="blog-post-image-caption">EUR/USD daily exchange rate with technical indicators from 2022-09-05 to 2024-07-31.</p><p>We now proceed to renaming the columns in the format expected by the RNN SageMaker algorithm,
+where the output names should start with <code class="code docutils literal notranslate"><span class="pre">"y"</span></code> and the input names should start with <code class="code docutils literal notranslate"><span class="pre">"x"</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># rename the columns</span>
+</span><span id="line-2"><span class="n">dataset</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"y"</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="sa">f</span><span class="s2">"x</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>
+</span></code></pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">dataset</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+<img alt="First 3 rows of renamed dataset" class="blog-post-image" id="rnn-fx-forecasting-renamed-dataset-head" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/rnn-fx-forecasting/renamed_dataset_head_light.png" style="width:100%"/><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">dataset</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+<img alt="Last 3 rows of renamed dataset" class="blog-post-image" id="rnn-fx-forecasting-renamed-dataset-tail" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/rnn-fx-forecasting/renamed_dataset_tail_light.png" style="width:100%"/><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that the algorithm’s code always includes the past values of the outputs
+among the inputs and, therefore, there is no need to add the lagged values of
+the outputs when preparing the data for the model.</p>
+</div>
+<p>We then split the data into a training set and a test set.
+We use the last 30 days for testing, and the previous 467 days for training.
+We save both the training data and the test data to CSV files in S3 such that they can be used by the algorithm.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># define the size of the test set</span>
+</span><span id="line-2"><span class="n">test_size</span> <span class="o">=</span> <span class="mi">30</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="c1"># extract the training data</span>
+</span><span id="line-5"><span class="n">training_dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="o">-</span> <span class="n">test_size</span><span class="p">]</span>
+</span><span id="line-6">
+</span><span id="line-7"><span class="c1"># extract the test data</span>
+</span><span id="line-8"><span class="n">test_dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span> <span class="n">test_size</span> <span class="o">-</span> <span class="n">context_length</span><span class="p">:]</span>
+</span><span id="line-9">
+</span><span id="line-10"><span class="c1"># upload the training data to S3</span>
+</span><span id="line-11"><span class="n">training_data</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">upload_string_as_file_body</span><span class="p">(</span>
+</span><span id="line-12">    <span class="n">body</span><span class="o">=</span><span class="n">training_dataset</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+</span><span id="line-13">    <span class="n">bucket</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span>
+</span><span id="line-14">    <span class="n">key</span><span class="o">=</span><span class="s2">"training_data.csv"</span>
+</span><span id="line-15"><span class="p">)</span>
+</span><span id="line-16">
+</span><span id="line-17"><span class="c1"># upload the test data to S3</span>
+</span><span id="line-18"><span class="n">test_data</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">upload_string_as_file_body</span><span class="p">(</span>
+</span><span id="line-19">    <span class="n">body</span><span class="o">=</span><span class="n">test_dataset</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+</span><span id="line-20">    <span class="n">bucket</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span>
+</span><span id="line-21">    <span class="n">key</span><span class="o">=</span><span class="s2">"test_data.csv"</span>
+</span><span id="line-22"><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Note that the data is scaled internally by the algorithm, there is no need to scale the data beforehand.</p>
+</div>
+</section>
+<section id="training">
+<h3>Training<a class="headerlink" href="#training" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#training'">¶</a></h3>
+<p>
+We can now train the model using the training data in S3.
+We use two LSTM layers with respectively 100 and 50 hidden units and apply a
+LeCun's hyperbolic tangent activation <a href="#references">[3]</a> after each layer.
+We train the model for 200 epochs with a batch size of 16 and a learning rate of 0.001,
+where the learning rate is decayed exponentially at a rate of 0.99.
+</p><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># create the estimator</span>
+</span><span id="line-2"><span class="n">estimator</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">AlgorithmEstimator</span><span class="p">(</span>
+</span><span id="line-3">    <span class="n">algorithm_arn</span><span class="o">=</span><span class="n">algo_arn</span><span class="p">,</span>
+</span><span id="line-4">    <span class="n">role</span><span class="o">=</span><span class="n">role</span><span class="p">,</span>
+</span><span id="line-5">    <span class="n">instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+</span><span id="line-6">    <span class="n">instance_type</span><span class="o">=</span><span class="n">instance_type</span><span class="p">,</span>
+</span><span id="line-7">    <span class="n">input_mode</span><span class="o">=</span><span class="s2">"File"</span><span class="p">,</span>
+</span><span id="line-8">    <span class="n">sagemaker_session</span><span class="o">=</span><span class="n">sagemaker_session</span><span class="p">,</span>
+</span><span id="line-9">    <span class="n">hyperparameters</span><span class="o">=</span><span class="p">{</span>
+</span><span id="line-10">        <span class="s2">"context-length"</span><span class="p">:</span> <span class="n">context_length</span><span class="p">,</span>
+</span><span id="line-11">        <span class="s2">"prediction-length"</span><span class="p">:</span> <span class="n">prediction_length</span><span class="p">,</span>
+</span><span id="line-12">        <span class="s2">"sequence-stride"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+</span><span id="line-13">        <span class="s2">"cell-type"</span><span class="p">:</span> <span class="s2">"lstm"</span><span class="p">,</span>
+</span><span id="line-14">        <span class="s2">"hidden-size-1"</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+</span><span id="line-15">        <span class="s2">"hidden-size-2"</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+</span><span id="line-16">        <span class="s2">"hidden-size-3"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span id="line-17">        <span class="s2">"activation"</span><span class="p">:</span> <span class="s2">"lecun"</span><span class="p">,</span>
+</span><span id="line-18">        <span class="s2">"dropout"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+</span><span id="line-19">        <span class="s2">"batch-size"</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
+</span><span id="line-20">        <span class="s2">"lr"</span><span class="p">:</span> <span class="mf">0.001</span><span class="p">,</span>
+</span><span id="line-21">        <span class="s2">"lr-decay"</span><span class="p">:</span> <span class="mf">0.99</span><span class="p">,</span>
+</span><span id="line-22">        <span class="s2">"epochs"</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+</span><span id="line-23">    <span class="p">}</span>
+</span><span id="line-24"><span class="p">)</span>
+</span><span id="line-25">
+</span><span id="line-26"><span class="c1"># run the training job</span>
+</span><span id="line-27"><span class="n">estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">({</span><span class="s2">"training"</span><span class="p">:</span> <span class="n">training_data</span><span class="p">})</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="inference">
+<h3>Inference<a class="headerlink" href="#inference" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#inference'">¶</a></h3>
+<p>After the training job has been completed, we run a batch transform job on the test data in S3.
+The results of the batch transform job are saved to a CSV file in S3 with the same name as the
+input CSV file but with the <code class="code docutils literal notranslate"><span class="pre">".out"</span></code> file extension.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># create the transformer</span>
+</span><span id="line-2"><span class="n">transformer</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">transformer</span><span class="p">(</span>
+</span><span id="line-3">    <span class="n">instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+</span><span id="line-4">    <span class="n">instance_type</span><span class="o">=</span><span class="n">instance_type</span><span class="p">,</span>
+</span><span id="line-5"><span class="p">)</span>
+</span><span id="line-6">
+</span><span id="line-7"><span class="c1"># run the transform job</span>
+</span><span id="line-8"><span class="n">transformer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
+</span><span id="line-9">    <span class="n">data</span><span class="o">=</span><span class="n">test_data</span><span class="p">,</span>
+</span><span id="line-10">    <span class="n">content_type</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">,</span>
+</span><span id="line-11"><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>After the batch transform job has been completed, we can load the results from S3.
+For the purpose of evaluating the model’s directional accuracy, we also include
+the actual and predicted percentage changes in the results.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># get the forecasts from S3</span>
+</span><span id="line-2"><span class="n">predictions</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">read_s3_file</span><span class="p">(</span>
+</span><span id="line-3">    <span class="n">bucket</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span>
+</span><span id="line-4">    <span class="n">key_prefix</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">transformer</span><span class="o">.</span><span class="n">latest_transform_job</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">/test_data.csv.out"</span>
+</span><span id="line-5"><span class="p">)</span>
+</span><span id="line-6">
+</span><span id="line-7"><span class="c1"># cast the forecasts to data frame</span>
+</span><span id="line-8"><span class="n">predictions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">predictions</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+</span><span id="line-9">
+</span><span id="line-10"><span class="c1"># drop the out-of-sample forecast</span>
+</span><span id="line-11"><span class="n">predictions</span> <span class="o">=</span> <span class="n">predictions</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span><span id="line-12">
+</span><span id="line-13"><span class="c1"># add the dates</span>
+</span><span id="line-14"><span class="n">predictions</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">test_dataset</span><span class="o">.</span><span class="n">index</span>
+</span><span id="line-15">
+</span><span id="line-16"><span class="c1"># add the actual values</span>
+</span><span id="line-17"><span class="n">predictions</span><span class="p">[</span><span class="s2">"y"</span><span class="p">]</span> <span class="o">=</span> <span class="n">test_dataset</span><span class="p">[</span><span class="s2">"y"</span><span class="p">]</span>
+</span><span id="line-18">
+</span><span id="line-19"><span class="c1"># add the actual and predicted percentage changes</span>
+</span><span id="line-20"><span class="n">predictions</span><span class="p">[</span><span class="s2">"r"</span><span class="p">]</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">[</span><span class="s2">"y"</span><span class="p">]</span> <span class="o">/</span> <span class="n">predictions</span><span class="p">[</span><span class="s2">"y"</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="n">periods</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+</span><span id="line-21"><span class="n">predictions</span><span class="p">[</span><span class="s2">"r_mean"</span><span class="p">]</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">[</span><span class="s2">"y_mean"</span><span class="p">]</span> <span class="o">/</span> <span class="n">predictions</span><span class="p">[</span><span class="s2">"y"</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="n">periods</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+</span><span id="line-22">
+</span><span id="line-23"><span class="c1"># drop the missing values</span>
+</span><span id="line-24"><span class="n">predictions</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<img alt="Actual and predicted EUR/USD daily exchange rate over the test set (from 2024-06-19 to 2024-07-31)." class="blog-post-image" id="rnn-fx-forecasting-predictions" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/rnn-fx-forecasting/predictions_light.png"/>
+<p class="blog-post-image-caption">Actual and predicted EUR/USD daily exchange rate over the test set (from 2024-06-19 to 2024-07-31).</p><img alt="Actual and predicted EUR/USD daily percentage changes over the test set (from 2024-06-19 to 2024-07-31)." class="blog-post-image" id="rnn-fx-forecasting-returns" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/rnn-fx-forecasting/returns_light.png"/>
+<p class="blog-post-image-caption">Actual and predicted EUR/USD daily percentage changes over the test set (from 2024-06-19 to 2024-07-31).</p></section>
+<section id="evaluation">
+<h3>Evaluation<a class="headerlink" href="#evaluation" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#evaluation'">¶</a></h3>
+<p>We evaluate the test set predictions using the following metrics:</p>
+<ul class="simple">
+<li><p>The root mean squared error (<em>RMSE</em>) of the predicted values.</p></li>
+<li><p>The mean absolute error (<em>MAE</em>) of the predicted values.</p></li>
+<li><p>The <em>accuracy</em> of the signs of the predicted percentage changes.</p></li>
+<li><p>The <em>F1</em> score of the signs of the predicted percentage changes.</p></li>
+</ul>
+<img alt="Performance metrics of predicted EUR/USD daily exchange rate over the test set (from 2024-06-19 to 2024-07-31)" class="blog-post-image" id="rnn-fx-forecasting-metrics" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/rnn-fx-forecasting/metrics_light.png"/>
+<p class="blog-post-image-caption">Performance metrics of predicted EUR/USD daily exchange rate over the test set (from 2024-06-19 to 2024-07-31).</p><p>We find that the model achieves a mean absolute error of 0.0012 and a mean directional accuracy of 83.33% on the test set.</p>
+<p>We can now delete the model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># delete the model</span>
+</span><span id="line-2"><span class="n">transformer</span><span class="o">.</span><span class="n">delete_model</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can download the
+<a class="reference external" href="https://github.com/fg-research/rnn-sagemaker/blob/master/examples/EURUSD.ipynb">notebook</a>
+with the full code from our
+<a class="reference external" href="https://github.com/fg-research/rnn-sagemaker">GitHub</a>
+repository.</p>
+</div>
+</section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#references'">¶</a></h2>
+<p>[1] Hochreiter, S., &amp; Schmidhuber, J. (1997). Long short-term memory. <em>Neural computation</em>, 9(8), pp. 1735-1780.
+<a class="reference external" href="https://doi.org/10.1162/neco.1997.9.8.1735">doi: 10.1162/neco.1997.9.8.1735</a>.</p>
+<p>[2] Ayitey Junior, M., Appiahene, P., Appiah, O., &amp; Bombie, C. N. (2023).
+Forex market forecasting using machine learning: systematic literature review and meta-analysis. <em>Journal of Big Data</em>, 10(1), 9.
+<a class="reference external" href="https://doi.org/10.1186/s40537-022-00676-2">doi: 10.1186/s40537-022-00676-2</a>.</p>
+<p>[3] LeCun, Y., Bottou, L., Orr, G. B., &amp; Müller, K. R. (2002). Efficient backprop. In <em>Neural networks: Tricks of the trade.</em>, pp. 9-50, Springer.
+<a class="reference external" href="https://doi.org/10.1007/3-540-49430-8_2">doi: 10.1007/3-540-49430-8_2</a>.</p>
+<p>[4] Yıldırım, D. C., Toroslu, I. H., &amp; Fiore, U. (2021). Forecasting directional movement of Forex data using LSTM with technical and macroeconomic indicators.
+<em>Financial Innovation</em>, 7, pp. 1-36. <a class="reference external" href="https://doi.org/10.1186/s40854-020-00220-2">doi: 10.1186/s40854-020-00220-2</a>.</p>
+</section>
+</section>
+</div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
+<div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
+<ul>
+<li><a :data-current="activeSection === '#code'" class="reference internal" href="#code">Code</a><ul>
+<li><a :data-current="activeSection === '#environment-set-up'" class="reference internal" href="#environment-set-up">Environment Set-Up</a></li>
+<li><a :data-current="activeSection === '#data'" class="reference internal" href="#data">Data</a></li>
+<li><a :data-current="activeSection === '#training'" class="reference internal" href="#training">Training</a></li>
+<li><a :data-current="activeSection === '#inference'" class="reference internal" href="#inference">Inference</a></li>
+<li><a :data-current="activeSection === '#evaluation'" class="reference internal" href="#evaluation">Evaluation</a></li>
+</ul>
+</li>
+<li><a :data-current="activeSection === '#references'" class="reference internal" href="#references">References</a></li>
+</ul>
+</div>
+</aside>
+</main>
+</div>
+</div><footer class="py-6 border-t border-border md:py-0">
+<div class="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
+<div class="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
+<p class="text-sm leading-loose text-center text-muted-foreground md:text-left">© 
+2023 fg-research. fg-research is an independent software vendor that provides machine learning solutions on the AWS Marketplace.
+Amazon Web Services, AWS, Amazon SageMaker, AWS Marketplace and the AWS Marketplace logo are trademarks of Amazon.com, Inc. or its affiliates.
+ Built with <a class="font-medium underline underline-offset-4" href="https://www.sphinx-doc.org" rel="noreferrer">Sphinx 7.3.7</a></p>
+</div>
+</div>
+</footer>
+</div>
+<script src="../../../_static/documentation_options.js?v=953f42dc"></script>
+<script src="../../../_static/doctools.js?v=9a2dae69"></script>
+<script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+<script defer="defer" src="../../../_static/theme.js?v=e82a16a3"></script>
+<script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+<script src="../../../_static/custom.js?v=51e3ec04"></script>
+</body>
+</html>

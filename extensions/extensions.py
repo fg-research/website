@@ -1,5 +1,5 @@
 
-def google_analytics(context):
+def google_analytics(app, pagename, templatename, context, doctree):
     metatags = context.get('metatags', '')
     metatags += """
     <!-- Google tag (gtag.js) -->
