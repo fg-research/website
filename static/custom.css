@@ -124,10 +124,11 @@ h6 {
     max-width: 70% !important;
 }
 
-@media (max-width:750px) {
+@media (max-width:650px) {
     #aws-marketplace-logo{
         width: 60%;
         margin-left: 40%;
+        margin-top: 0;
     }
 }
 
