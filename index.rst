@@ -16,10 +16,12 @@ Advanced Time Series Solutions in Amazon SageMaker
 
 .. raw:: html
 
-    <img
-        src="_static/AWSMP_NewLogo_RGB_BLK.png"
+    <a
+        <img
+            src="_static/AWSMP_NewLogo_RGB_BLK.png"
+            alt="AWS Marketplace Logo"
+        >
         href="https://aws.amazon.com/marketplace/seller-profile?id=seller-nkd47o2qbdvb2"
-        alt="AWS Marketplace Logo"
     >
 
 
