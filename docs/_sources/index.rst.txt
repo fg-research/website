@@ -21,6 +21,7 @@ Advanced Time Series Solutions in Amazon SageMaker
             src="_static/AWSMP_NewLogo_RGB_BLK.png"
             alt="AWS Marketplace Logo"
             style="width: 35%; margin-left: 60%; margin-top: -2rem;"
+            id="aws-marketplace-logo"
         >
     </a>
 
