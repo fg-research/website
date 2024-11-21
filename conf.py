@@ -52,6 +52,7 @@ html_theme = 'sphinxawesome_theme'
 highlight_language = 'python3'
 sitemap_url_scheme = "{link}"
 myst_heading_anchors = 6
+googleanalytics_id = 'G-2L0F07XRQM'
 
 html_theme_options = dict(
     show_prev_next=False,
