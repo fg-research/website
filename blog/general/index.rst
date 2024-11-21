@@ -1,7 +1,6 @@
 .. meta::
    :thumbnail: https://fg-research.com/_static/thumbnail.png
    :description: fg-research general blog
-   :google-adsense-account: ca-pub-6940858559883413
 
 .. _general-blog:
 

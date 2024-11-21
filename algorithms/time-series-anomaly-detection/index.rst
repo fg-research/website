@@ -2,7 +2,6 @@
    :thumbnail: https://fg-research.com/_static/thumbnail.png
    :description: Perform time series anomaly detection in Amazon SageMaker
    :keywords: Amazon SageMaker, Time Series, Anomaly Detection
-   :google-adsense-account: ca-pub-6940858559883413
 
 .. _time-series-anomaly-detection-algorithms:
 

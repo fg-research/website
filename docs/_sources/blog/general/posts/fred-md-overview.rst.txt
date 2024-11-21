@@ -1,8 +1,8 @@
 .. meta::
-   :thumbnail: https://fg-research.com/_static/thumbnail.png
-   :description: An overview of the FRED-MD database
-   :keywords: Time Series, Macroeconomics
-   :google-adsense-account: ca-pub-6940858559883413
+    :thumbnail: https://fg-research.com/_static/thumbnail.png
+    :description: An overview of the FRED-MD database
+    :keywords: Time Series, Macroeconomics
+    :google-adsense-account: ca-pub-6940858559883413
 
 ######################################################################################
 An overview of the FRED-MD database

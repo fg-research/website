@@ -1,8 +1,8 @@
 .. meta::
-   :thumbnail: https://fg-research.com/_static/thumbnail.png
-   :description: Forecasting US inflation with random forests
-   :keywords: Time Series, Forecasting, Machine Learning, Macroeconomics, Inflation
-   :google-adsense-account: ca-pub-6940858559883413
+    :thumbnail: https://fg-research.com/_static/thumbnail.png
+    :description: Forecasting US inflation with random forests
+    :keywords: Time Series, Forecasting, Machine Learning, Macroeconomics, Inflation
+    :google-adsense-account: ca-pub-6940858559883413
 
 ######################################################################################
 Forecasting US inflation with random forests

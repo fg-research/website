@@ -2,7 +2,6 @@
    :thumbnail: https://fg-research.com/_static/thumbnail.png
    :description: Forecasting exchange rates with long short-term memory networks using the RNN SageMaker algorithm
    :keywords: Amazon SageMaker, Time Series, Recurrent Neural Networks, Forecasting, Forex Market
-   :google-adsense-account: ca-pub-6940858559883413
 
 ############################################################################################################
 Forecasting exchange rates with long short-term memory networks using the RNN SageMaker algorithm

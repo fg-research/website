@@ -1,8 +1,8 @@
 .. meta::
-   :thumbnail: https://fg-research.com/_static/thumbnail.png
-   :description: Forecasting electricity prices with Amazon Chronos
-   :keywords: Large Language Models, Transformers, Time Series, Forecasting, Energy
-   :google-adsense-account: ca-pub-6940858559883413
+    :thumbnail: https://fg-research.com/_static/thumbnail.png
+    :description: Forecasting electricity prices with Amazon Chronos
+    :keywords: Large Language Models, Transformers, Time Series, Forecasting, Energy
+    :google-adsense-account: ca-pub-6940858559883413
 
 ######################################################################################
 Forecasting electricity prices with Amazon Chronos

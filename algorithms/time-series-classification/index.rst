@@ -2,7 +2,6 @@
    :thumbnail: https://fg-research.com/_static/thumbnail.png
    :description: Perform time series classification in Amazon SageMaker
    :keywords: Amazon SageMaker, Time Series, Classification
-   :google-adsense-account: ca-pub-6940858559883413
 
 .. _time-series-classification-algorithms:
 
