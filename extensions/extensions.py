@@ -31,7 +31,7 @@ def google_analytics(app, pagename, templatename, context, doctree):
         },
         "enableFadp":true,
         "enableLgpd":true,
-        "enableTcf":true,
+        "enableTcf":false,
         "enableUspr":true,
         "googleAdditionalConsentMode":true,
         "lang":"en",
