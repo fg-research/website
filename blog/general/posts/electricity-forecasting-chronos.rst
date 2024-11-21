@@ -26,6 +26,15 @@ Forecasting electricity prices with Amazon Chronos
     values by inverting the quantization and scaling transformations.
     </p>
 
+    <img
+        id="electricity-forecasting-chronos-diagram"
+        class="blog-post-image"
+        alt="Chronos overview"
+        src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/diagram.png
+    />
+
+    <p class="blog-post-image-caption">Chronos overview (from <a href="#references">[1]</a>).</p>
+
     <p>
     Chronos was trained using the T5 model architecture <a href="#references">[2]</a>, even though it is compatible with any LLM.
     The training was performed in a self-supervised manner by minimizing the cross-entropy loss between
