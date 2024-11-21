@@ -2,6 +2,7 @@
    :thumbnail: https://fg-research.com/_static/thumbnail.png
    :description: Perform time series clustering in Amazon SageMaker
    :keywords: Amazon SageMaker, Time Series, Clustering
+   :google-adsense-account: ca-pub-6940858559883413
 
 .. _time-series-clustering-algorithms:
 

@@ -2,6 +2,7 @@
    :thumbnail: https://fg-research.com/_static/thumbnail.png
    :description: Perform time series forecasting in Amazon SageMaker
    :keywords: Amazon SageMaker, Time Series, Forecasting
+   :google-adsense-account: ca-pub-6940858559883413
 
 .. _time-series-forecasting-algorithms:
 

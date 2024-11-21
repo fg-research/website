@@ -2,6 +2,7 @@
    :thumbnail: https://fg-research.com/_static/thumbnail.png
    :description: Clustering ECG signals with the CNN-KMeans SageMaker Algorithm
    :keywords: Amazon SageMaker, Time Series, Clustering, Convolutional Neural Network, K-Means
+   :google-adsense-account: ca-pub-6940858559883413
 
 ######################################################################################
 Clustering ECG signals with the CNN-KMeans SageMaker algorithm

@@ -2,6 +2,7 @@
    :thumbnail: https://fg-research.com/_static/thumbnail.png
    :description: Forecasting Stock Returns with Liquid Neural Networks
    :keywords: Amazon SageMaker, Time Series, Liquid Neural Networks, Forecasting, Stock Market
+   :google-adsense-account: ca-pub-6940858559883413
 
 ###########################################################################################
 Forecasting stock returns with liquid neural networks using the LNN SageMaker algorithm
