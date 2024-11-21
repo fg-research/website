@@ -29,7 +29,7 @@ Forecasting electricity prices with Amazon Chronos
     <img
         id="electricity-forecasting-chronos-diagram"
         class="blog-post-image"
-        style="width: 100%;"
+        style="width: 100%; margin-top: 1rem;"
         alt="Chronos overview"
         src=https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/diagram.png
     />
