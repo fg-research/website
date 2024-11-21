@@ -19,7 +19,6 @@ def google_analytics(app, pagename, templatename, context, doctree):
         "floatingPreferencesButtonDisplay": false,
         "askConsentAtCookiePolicyUpdate":true,
         "countryDetection":true,
-        "emailMarketing":{"styles":{"backgroundColor":"#FFFFFF","buttonsBackgroundColor":"#0F172A","buttonsTextColor":"#FFFFFF","footerBackgroundColor":"#64748B","footerTextColor":"#FFFFFF","textColor":"#0F172A"}},
         "enableFadp":true,
         "enableLgpd":true,
         "enableUspr":true,

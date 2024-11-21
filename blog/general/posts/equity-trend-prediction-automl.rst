@@ -2,7 +2,6 @@
    :thumbnail: https://fg-research.com/_static/thumbnail.png
    :description: Predicting stock market trends with SageMaker Autopilot
    :keywords: Amazon SageMaker, Time Series, AutoML, Forecasting, Stock Market
-   :google-adsense-account: ca-pub-6940858559883413
 
 ######################################################################################
 Predicting stock market trends with SageMaker Autopilot
