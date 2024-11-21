@@ -373,7 +373,7 @@ as required by the LSTM-FCN SageMaker algorithm.</p>
 </span><span id="line-11"><span class="n">metrics</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">test_dataset</span><span class="o">.</span><span class="n">columns</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
 </span></code></pre></div>
 </div>
-<p>We find that the model achieves more than 90% test accuracy across all classes.</p>
+<p>We find that the model achieves over 90% test accuracy across all classes.</p>
 <img alt="LSTM-FCN classification metrics on MIT-BIH test dataset" class="blog-post-image" id="lstm-fcn-ecg-classification-metrics" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/lstm-fcn-ecg-classification/metrics_light.png"/>
 <p class="blog-post-image-caption"> LSTM-FCN classification metrics on MIT-BIH test dataset.</p><p>After the analysis has been completed, we can delete the model and the endpoint.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># delete the model</span>

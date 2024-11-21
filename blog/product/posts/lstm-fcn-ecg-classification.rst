@@ -300,7 +300,7 @@ After generating the model predictions, we can calculate the classification metr
         }
     metrics.columns = test_dataset.columns[:5]
 
-We find that the model achieves more than 90% test accuracy across all classes.
+We find that the model achieves over 90% test accuracy across all classes.
 
 .. raw:: html
 
