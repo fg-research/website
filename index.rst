@@ -24,7 +24,7 @@ Advanced Time Series Solutions in Amazon SageMaker
         href="https://aws.amazon.com/marketplace/seller-profile?id=seller-nkd47o2qbdvb2"
         target="_blank"
 
-    >
+    </a>
 
 
 ******************************************
