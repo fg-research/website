@@ -10,8 +10,6 @@ Advanced Time Series Solutions in Amazon SageMaker
 
     Train, tune and deploy state-of-the-art machine learning models for time series in Amazon SageMaker
 
-.. _fg_research_logo:
-
 .. image:: /static/background.png
   :align: left
   :alt: background image
@@ -21,6 +19,7 @@ Advanced Time Series Solutions in Amazon SageMaker
 .. image:: /static/AWSMP_NewLogo_RGB_BLK.png
    :align: right
    :alt: AWS Marketplace Logo
+   :target: https://aws.amazon.com/marketplace/seller-profile?id=seller-nkd47o2qbdvb2
 
 ******************************************
 Overview
