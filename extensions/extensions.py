@@ -19,16 +19,6 @@ def google_analytics(app, pagename, templatename, context, doctree):
     "floatingPreferencesButtonDisplay": false,
     "askConsentAtCookiePolicyUpdate":true,
     "countryDetection":true,
-    "emailMarketing":{
-        "styles":{
-            "backgroundColor":"#FFFFFF",
-            "buttonsBackgroundColor":"#3B82F6",
-            "buttonsTextColor":"#FFFFFF",
-            "footerBackgroundColor":"#64748B",
-            "footerTextColor":"#FFFFFF",
-            "textColor":"#0F172A"
-        }
-    },
     "enableFadp":true,
     "enableLgpd":true,
     "enableUspr":true,
@@ -40,10 +30,10 @@ def google_analytics(app, pagename, templatename, context, doctree):
     "storage":{"useSiteId":true},
     "cookiePolicyId":49690203,
     "banner":{
-        "acceptButtonColor":"#3B82F6",
+        "acceptButtonColor":"#2175BF",
         "acceptButtonDisplay":true,
         "backgroundColor":"#FFFFFF",
-        "closeButtonDisplay":false,
+        "closeButtonDisplay":true,
         "customizeButtonColor":"#64748B",
         "customizeButtonDisplay":true,
         "explicitWithdrawal":true,
@@ -52,7 +42,7 @@ def google_analytics(app, pagename, templatename, context, doctree):
         "linksColor":"#0F172A",
         "ownerName":"fg-research.com",
         "position":"float-bottom-center",
-        "rejectButtonColor":"#3B82F6",
+        "rejectButtonColor":"#2175BF",
         "rejectButtonDisplay":true,
         "showTitle":false,
         "showTotalNumberOfProviders":true,
