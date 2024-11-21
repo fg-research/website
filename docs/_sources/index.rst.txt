@@ -1,7 +1,8 @@
 .. meta::
-   :thumbnail: https://fg-research.com/_static/thumbnail.png
-   :description: Train, tune and deploy state-of-the-art machine learning models for time series in Amazon SageMaker
-   :keywords: Amazon SageMaker, Time Series, Machine Learning, Forecasting, Anomaly Detection
+    :thumbnail: https://fg-research.com/_static/thumbnail.png
+    :description: Train, tune and deploy state-of-the-art machine learning models for time series in Amazon SageMaker
+    :keywords: Amazon SageMaker, Time Series, Machine Learning, Forecasting, Anomaly Detection
+    :google-adsense-account: ca-pub-6940858559883413
 
 ########################################################
 Advanced Time Series Solutions in Amazon SageMaker
@@ -15,7 +16,7 @@ Advanced Time Series Solutions in Amazon SageMaker
     <a href="https://aws.amazon.com/marketplace/seller-profile?id=seller-nkd47o2qbdvb2" target="_blank">
         <img
             src="_static/background.png"
-            style="width: 100%;"
+            id="background"
         >
         <img
             src="_static/AWSMP_NewLogo_RGB_BLK.png"
