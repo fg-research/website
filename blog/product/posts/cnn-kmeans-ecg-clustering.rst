@@ -257,6 +257,7 @@ After loading the model outputs from S3, we can compare the predicted cluster la
 
 .. code:: python
 
+    # calculate the confusion matrix
     results = pd.crosstab(
         index=pd.Series(data=test_dataset.iloc[:, 0].values, name="class label"),
         columns=pd.Series(data=predictions.iloc[:, 0].values, name="cluster label"),
