@@ -25,7 +25,6 @@ Advanced Time Series Solutions in Amazon SageMaker
         >
     </a>
 
-
 ******************************************
 Overview
 ******************************************
