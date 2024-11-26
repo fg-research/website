@@ -131,7 +131,7 @@ h6 {
 
 @keyframes fadeInOpacity {
 	0% {
-		opacity: 0;
+		opacity: 0.05;
 	}
 	100% {
 		opacity: 1;
