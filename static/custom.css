@@ -140,7 +140,7 @@ h6 {
 
 #background{
     width: 100%;
-    margin-top: -2rem !important;
+    margin-top: -1rem !important;
     z-index: -100 !important;
     opacity: 1;
 	animation-name: fadeInOpacity;
@@ -152,14 +152,14 @@ h6 {
 #aws-marketplace-logo{
     width: 40%;
     margin-left: 59%;
-    margin-top: 2rem !important;
+    margin-top: 1rem !important;
 }
 
 @media (max-width:650px) {
     #aws-marketplace-logo{
         width: 60%;
         margin-left: 39%;
-        margin-top: 2rem !important;
+        margin-top: 1rem !important;
     }
 }
 
