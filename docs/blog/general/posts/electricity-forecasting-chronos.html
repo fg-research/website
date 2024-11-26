@@ -141,7 +141,7 @@
 <section id="forecasting-electricity-prices-with-amazon-chronos">
 <h1>Forecasting electricity prices with Amazon Chronos<a class="headerlink" href="#forecasting-electricity-prices-with-amazon-chronos" title="Link to this heading">¶</a></h1>
 <p>
-Chronos is a foundational model for zero-shot probabilistic forecasting of univariate time series <a href="#references">[1]</a>.
+Amazon Chronos is a foundational model for zero-shot probabilistic forecasting of univariate time series <a href="#references">[1]</a>.
 The model converts a time series into a sequence of tokens through scaling and quantization.
 The scaling procedure divides the time series by its mean absolute value, while the quantization
 process maps the scaled time series values to a discrete set of tokens using uniform binning.
@@ -155,26 +155,26 @@ and feeding it back to the model.
 The generated tokens are then converted back to time series
 values by inverting the quantization and scaling transformations.
 </p>
-<img alt="Chronos overview" class="blog-post-image" id="electricity-forecasting-chronos-diagram" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/diagram.png" style="width: 100%; margin-top: 1rem;"/>
-<p class="blog-post-image-caption">Chronos overview (from <a href="#references">[1]</a>).</p>
+<img alt="Amazon Chronos overview" class="blog-post-image" id="electricity-forecasting-chronos-diagram" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/diagram.png" style="width: 100%; margin-top: 1rem;"/>
+<p class="blog-post-image-caption">Amazon Chronos overview (from <a href="#references">[1]</a>).</p>
 <p>
-Chronos was trained using the T5 model architecture <a href="#references">[2]</a>, even though it is compatible with any LLM.
+Amazon Chronos was trained using the T5 model architecture <a href="#references">[2]</a>, even though it is compatible with any LLM.
 The training was performed in a self-supervised manner by minimizing the cross-entropy loss between
 the actual and predicted distributions of the next token, as it is standard when training LLMs.
 The data used for training included both real time series from publicly available datasets,
 as well as synthetic time series generated using different methods.
 </p>
 <p>
-In this post, we demonstrate how to use Chronos for one-step-ahead forecasting.
+In this post, we demonstrate how to use Amazon Chronos for one-step-ahead forecasting.
 We will use the US average electricity price monthly time series from November 1978 to July 2024,
 which we will download from the FRED database, and generate one-month-ahead forecasts from August 2014 to July 2024.
-We will use expanding context windows, that is on each month we will provide Chronos
+We will use expanding context windows, that is on each month we will provide Amazon Chronos
 all the data up to that month, and generate the forecast for the next month.
 </p>
 <p>
-We will compare Chronos' forecasts to the rolling forecasts of a SARIMA model which is
-re-trained each month on the same data that was provided to Chronos as context.
-We will find that Chronos and the SARIMA model have comparable performance.
+We will compare Amazon Chronos' forecasts to the rolling forecasts of a SARIMA model which is
+re-trained each month on the same data that was provided to Amazon Chronos as context.
+We will find that Amazon Chronos and the SARIMA model have comparable performance.
 </p><section id="code">
 <h2>Code<a class="headerlink" href="#code" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#code'">¶</a></h2>
 <p>We start by installing and importing all the dependencies.</p>
@@ -302,9 +302,9 @@ on all the data up to that month, and generate the forecast for the next month.<
 </div>
 <img alt="SARIMA forecast errors from August 2014 to July 202." class="blog-post-image" id="electricity-forecasting-chronos-sarima-metrics" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/sarima_metrics_light.png"/>
 <p class="blog-post-image-caption">SARIMA forecast errors from August 2014 to July 2024.</p></section>
-<section id="chronos">
-<h3>Chronos<a class="headerlink" href="#chronos" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#chronos'">¶</a></h3>
-<p>We use the t5-large version of Chronos, which includes approximately 710 million parameters.</p>
+<section id="amazon-chronos">
+<h3>Amazon Chronos<a class="headerlink" href="#amazon-chronos" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#amazon-chronos'">¶</a></h3>
+<p>We use the t5-large version of Amazon Chronos, which includes approximately 710 million parameters.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># instantiate the model</span>
 </span><span id="line-2"><span class="n">chronos_model</span> <span class="o">=</span> <span class="n">ChronosPipeline</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span>
 </span><span id="line-3">    <span class="s2">"amazon/chronos-t5-large"</span><span class="p">,</span>
@@ -318,7 +318,7 @@ and generate 100 samples from the predicted distribution for the next month.
 We use the mean of the distribution as point forecast, as in the SARIMA model.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Note that, as Chronos is a generative model, different random seeds and different numbers of
+<p>Note that, as Amazon Chronos is a generative model, different random seeds and different numbers of
 samples result in slightly different forecasts.</p>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># create a list for storing the forecasts</span>
@@ -359,11 +359,11 @@ samples result in slightly different forecasts.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">chronos_forecasts</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </span></code></pre></div>
 </div>
-<img alt="First 3 rows of Chronos forecasts" class="blog-post-image" id="electricity-forecasting-chronos-chronos-forecasts-head" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/chronos_forecasts_head_light.png"/><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">chronos_forecasts</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+<img alt="First 3 rows of Amazon Chronos forecasts" class="blog-post-image" id="electricity-forecasting-chronos-chronos-forecasts-head" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/chronos_forecasts_head_light.png"/><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="n">chronos_forecasts</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
 </span></code></pre></div>
 </div>
-<img alt="Last 3 rows of Chronos forecasts" class="blog-post-image" id="electricity-forecasting-chronos-chronos-forecasts-tail" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/chronos_forecasts_tail_light.png"/><img alt="Chronos forecasts from August 2014 to July 202." class="blog-post-image" id="electricity-forecasting-chronos-chronos-forecasts" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/chronos_forecasts_light.png"/>
-<p class="blog-post-image-caption">Chronos forecasts from August 2014 to July 2024.</p><p>We find that Chronos achieves an RMSE of 0.001443 and a MAE of 0.001105.</p>
+<img alt="Last 3 rows of Amazon Chronos forecasts" class="blog-post-image" id="electricity-forecasting-chronos-chronos-forecasts-tail" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/chronos_forecasts_tail_light.png"/><img alt="Amazon Chronos forecasts from August 2014 to July 202." class="blog-post-image" id="electricity-forecasting-chronos-chronos-forecasts" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/chronos_forecasts_light.png"/>
+<p class="blog-post-image-caption">Amazon Chronos forecasts from August 2014 to July 2024.</p><p>We find that Amazon Chronos achieves an RMSE of 0.001443 and a MAE of 0.001105.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># calculate the error metrics</span>
 </span><span id="line-2"><span class="n">chronos_metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
 </span><span id="line-3">    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"Metric"</span><span class="p">,</span> <span class="s2">"Value"</span><span class="p">],</span>
@@ -374,8 +374,8 @@ samples result in slightly different forecasts.</p>
 </span><span id="line-8"><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">"Metric"</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
-<img alt="Chronos forecast errors from August 2014 to July 202." class="blog-post-image" id="electricity-forecasting-chronos-chronos-metrics" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/chronos_metrics_light.png"/>
-<p class="blog-post-image-caption">Chronos forecast errors from August 2014 to July 2024.</p><div class="admonition tip">
+<img alt="Amazon Chronos forecast errors from August 2014 to July 202." class="blog-post-image" id="electricity-forecasting-chronos-chronos-metrics" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/electricity-forecasting-chronos/chronos_metrics_light.png"/>
+<p class="blog-post-image-caption">Amazon Chronos forecast errors from August 2014 to July 2024.</p><div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>A Python notebook with the full code is available in our <a class="reference external" href="https://github.com/fg-research/blog/blob/master/electricity-forecasting-chronos">GitHub</a>
 repository.</p>
@@ -396,7 +396,7 @@ Exploring the limits of transfer learning with a unified text-to-text transforme
 <ul>
 <li><a :data-current="activeSection === '#code'" class="reference internal" href="#code">Code</a><ul>
 <li><a :data-current="activeSection === '#sarima'" class="reference internal" href="#sarima">SARIMA</a></li>
-<li><a :data-current="activeSection === '#chronos'" class="reference internal" href="#chronos">Chronos</a></li>
+<li><a :data-current="activeSection === '#amazon-chronos'" class="reference internal" href="#amazon-chronos">Amazon Chronos</a></li>
 </ul>
 </li>
 <li><a :data-current="activeSection === '#references'" class="reference internal" href="#references">References</a></li>
