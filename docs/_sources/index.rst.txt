@@ -14,13 +14,13 @@ Advanced Time Series Solutions in Amazon SageMaker
 
     <a href="https://aws.amazon.com/marketplace/seller-profile?id=seller-nkd47o2qbdvb2" target="_blank">
         <img
-            src="_static/background.png"
-            id="background"
-        >
-        <img
             src="_static/AWSMP_NewLogo_RGB_BLK.png"
             alt="AWS Marketplace Logo"
             id="aws-marketplace-logo"
+        >
+        <img
+            src="_static/background.png"
+            id="background"
         >
     </a>
 
