@@ -1,3 +1,7 @@
+img mr2-dark:invert{
+    background:red !important;
+}
+
 .headerlink{
     display: none !important;
 }
