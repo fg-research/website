@@ -140,8 +140,7 @@ h6 {
 
 #background{
     display: block !important;
-    height: 360px;
-    width: 640px;
+    width: 100%;
     margin-top: -1rem !important;
     z-index: -100 !important;
     opacity: 1;
