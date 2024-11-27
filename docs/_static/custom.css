@@ -139,7 +139,7 @@ h6 {
 }
 
 #background{
-    display: block !important;
+    display: block;
     width: 100%;
     opacity: 1;
 	animation-name: fadeInOpacity;
@@ -149,16 +149,18 @@ h6 {
 }
 
 #aws-marketplace-logo{
-    display: block !important;
+    display: block;
     width: 40%;
     margin-left: 59%;
+    margin-top: 1rem;
 }
 
 @media (max-width:650px) {
     #aws-marketplace-logo{
+        display: block;
         width: 60%;
         margin-left: 39%;
-        margin-top: 1rem !important;
+        margin-top: 1rem;
     }
 
     h1 {
