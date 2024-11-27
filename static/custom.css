@@ -141,8 +141,6 @@ h6 {
 #background{
     display: block !important;
     width: 100%;
-    margin-top: -1rem !important;
-    z-index: -100 !important;
     opacity: 1;
 	animation-name: fadeInOpacity;
 	animation-iteration-count: 1;
@@ -154,7 +152,6 @@ h6 {
     display: block !important;
     width: 40%;
     margin-left: 59%;
-    margin-top: 1rem !important;
 }
 
 @media (max-width:650px) {
