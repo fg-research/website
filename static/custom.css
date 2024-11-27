@@ -124,6 +124,10 @@ h6 {
     max-width: 70% !important;
 }
 
+header{
+    height: 3rem !important;
+}
+
 .mr-2{
     height: 40px !important;
     width: 40px !important;
