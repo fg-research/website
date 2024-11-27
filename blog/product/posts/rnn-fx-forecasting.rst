@@ -1,10 +1,10 @@
 .. meta::
    :thumbnail: https://fg-research.com/_static/thumbnail.png
-   :description: Forecasting exchange rates with LSTM networks using the RNN SageMaker algorithm
+   :description: Forecasting FX rates with LSTM networks using the RNN SageMaker algorithm
    :keywords: Amazon SageMaker, Time Series, Forecasting, Recurrent Neural Network, Forex
 
 ############################################################################################################
-Forecasting exchange rates with LSTM networks using the RNN SageMaker algorithm
+Forecasting FX rates with LSTM networks using the RNN SageMaker algorithm
 ############################################################################################################
 
 .. raw:: html
