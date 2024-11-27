@@ -131,7 +131,7 @@ h6 {
 .mr-2{
     height: 60px !important;
     width: 60px !important;
-    margin-right: 0.5rem !important;
+    margin-right: 2rem !important;
 }
 
 @keyframes fadeInOpacity {
