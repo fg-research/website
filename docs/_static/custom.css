@@ -146,6 +146,7 @@ h6 {
 #background{
     display: block;
     width: 100%;
+    min-height: 10rem;
     opacity: 1;
 	animation-name: fadeInOpacity;
 	animation-iteration-count: 1;
