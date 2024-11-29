@@ -20,9 +20,7 @@ ECG anomaly detection with the LSTM-AD SageMaker algorithm
     <p>
     Different supervised and unsupervised machine learning algorithms have been studied
     in the literature on ECG anomaly detection <a href="#references">[1]</a>.
-    In this post, we will focus on the
-    <a href="https://www.esann.org/sites/default/files/proceedings/legacy/es2015-56.pdf" target="_blank">
-    Long Short-Term Memory Network for Anomaly Detection (LSTM-AD)</a> <a href="#references">[2]</a>,
+    In this post, we will focus on the Long Short-Term Memory Network for Anomaly Detection (LSTM-AD) <a href="#references">[2]</a>,
     a standard deep learning framework for detecting anomalies in time series data.
     We will demonstrate how to use our Amazon SageMaker implementation of the LSTM-AD model, the
     <a href="https://fg-research.com/algorithms/time-series-anomaly-detection/index.html#lstm-ad-sagemaker-algorithm"
