@@ -26,8 +26,7 @@ Arrhythmia classification with the LSTM-FCN SageMaker algorithm
     <p>
     Different neural network architectures have been proposed in the literature
     on ECG arrhythmia classification <a href="#references">[1]</a>. In this post,
-    we will focus on the <a href="https://doi.org/10.1109/ACCESS.2017.2779939"
-    target="_blank">Long Short-Term Memory Fully Convolutional Network</a>
+    we will focus on the Long Short-Term Memory Fully Convolutional Network
     <a href="#references">[2]</a>, which we will refer to as the LSTM-FCN model.
     We will demonstrate how to use our Amazon SageMaker implementation of the LSTM-FCN model,
     the <a href="https://fg-research.com/algorithms/time-series-classification/index.html#lstm-fcn-sagemaker-algorithm"
