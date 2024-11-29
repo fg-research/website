@@ -35,8 +35,7 @@ Detecting anomalies in financial time series with the LSTM-AE SageMaker algorith
     <p>
     Different autoencoder architectures have been proposed in the literature
     on time series anomaly detection <a href="#references">[2]</a>. In this post, we
-    will focus on the <a href="https://doi.org/10.48550/arXiv.1607.00148" target="_blank">
-    Long Short Term Memory Networks based Encoder-Decoder scheme for Anomaly Detection</a>
+    will focus on the Long Short Term Memory Networks based Encoder-Decoder scheme for Anomaly Detection
     <a href="#references">[3]</a>, which we will refer to as the LSTM-AE model.
     We will demonstrate how to use our Amazon SageMaker implementation of the LSTM-AE model, the
     <a href="https://fg-research.com/algorithms/time-series-anomaly-detection/index.html#lstm-ae-sagemaker-algorithm"
