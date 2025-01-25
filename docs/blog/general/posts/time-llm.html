@@ -168,7 +168,7 @@ We used a g5.xlarge AWS EC2 instance.</p>
 </span><span id="line-15"><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">"cuda:0"</span><span class="p">)</span>
 </span></code></pre></div>
 </div>
-<p>After that we fix all random seed, to ensure reproducibility.</p>
+<p>After that we fix all random seeds, to ensure reproducibility.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># fix all random seeds</span>
 </span><span id="line-2"><span class="n">random_seed</span> <span class="o">=</span> <span class="mi">0</span>
 </span><span id="line-3"><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">random_seed</span><span class="p">)</span>
@@ -180,9 +180,9 @@ We used a g5.xlarge AWS EC2 instance.</p>
 </span></code></pre></div>
 </div>
 </section>
-<section id="data-preparation">
-<h3>Data Preparation<a class="headerlink" href="#data-preparation" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data-preparation'">¶</a></h3>
-<p>We then load the Airline Passengers dataset in the
+<section id="data">
+<h3>Data<a class="headerlink" href="#data" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data'">¶</a></h3>
+<p>We load the Airline Passengers dataset in the
 <a class="reference external" href="https://github.com/jbrownlee/Datasets">Machine Learning Mastery GitHub repository</a>
 directly into a data frame.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># load the data</span>
@@ -193,7 +193,131 @@ directly into a data frame.</p>
 </span><span id="line-6"><span class="p">)</span>
 </span></code></pre></div>
 </div>
-<img alt="Airline Passengers dataset" class="blog-post-image" id="time-llm-data" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/time-llm/data_light.png" style="width:100%"/></section>
+<img alt="Airline Passengers dataset" class="blog-post-image" id="time-llm-data" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/time-llm/data_light.png"/><p>We now define the context length and prediction length. We use the previous 24 months to predict the subsequent 12 months.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># define the context length</span>
+</span><span id="line-2"><span class="n">seq_len</span> <span class="o">=</span> <span class="mi">24</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="c1"># define the prediction length</span>
+</span><span id="line-5"><span class="n">pred_len</span> <span class="o">=</span> <span class="mi">12</span>
+</span></code></pre></div>
+</div>
+<p>We set aside the last 12 months for testing, and use all the prior data for training.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># extract the training data</span>
+</span><span id="line-2"><span class="n">df_train</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s2">"Passengers"</span><span class="p">]]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="o">-</span> <span class="n">pred_len</span><span class="p">]</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="c1"># extract the test data</span>
+</span><span id="line-5"><span class="n">df_test</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s2">"Passengers"</span><span class="p">]]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span> <span class="p">(</span><span class="n">seq_len</span> <span class="o">+</span> <span class="n">pred_len</span><span class="p">):]</span>
+</span></code></pre></div>
+</div>
+<p>We scale the data by subtracting the mean and dividing by the standard deviation.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># calculate the scaling parameters on the training data</span>
+</span><span id="line-2"><span class="n">mu</span> <span class="o">=</span> <span class="n">df_train</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+</span><span id="line-3"><span class="n">sigma</span> <span class="o">=</span> <span class="n">df_train</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+</span><span id="line-4">
+</span><span id="line-5"><span class="c1"># scale the training and test data</span>
+</span><span id="line-6"><span class="n">df_train</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_train</span> <span class="o">-</span> <span class="n">mu</span><span class="p">)</span> <span class="o">/</span> <span class="n">sigma</span>
+</span><span id="line-7"><span class="n">df_test</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_test</span> <span class="o">-</span> <span class="n">mu</span><span class="p">)</span> <span class="o">/</span> <span class="n">sigma</span>
+</span></code></pre></div>
+</div>
+<p>Finally, we split the data into sequences.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># define a function for splitting the data into sequences</span>
+</span><span id="line-2"><span class="k">def</span> <span class="nf">get_sequences</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">pred_len</span><span class="p">):</span>
+</span><span id="line-3">    <span class="n">x</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="line-4">    <span class="n">y</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="line-5">    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">seq_len</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">-</span> <span class="n">pred_len</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+</span><span id="line-6">        <span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">t</span> <span class="o">-</span> <span class="n">seq_len</span><span class="p">:</span> <span class="n">t</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+</span><span id="line-7">        <span class="n">y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">t</span><span class="p">:</span> <span class="n">t</span> <span class="o">+</span> <span class="n">pred_len</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+</span><span id="line-8">    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span><span id="line-9">    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</span><span id="line-10">    <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+</span><span id="line-11">
+</span><span id="line-12"><span class="c1"># generate the training sequences</span>
+</span><span id="line-13"><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span> <span class="o">=</span> <span class="n">get_sequences</span><span class="p">(</span><span class="n">df_train</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">pred_len</span><span class="p">)</span>
+</span><span id="line-14">
+</span><span id="line-15"><span class="c1"># generate the test sequences</span>
+</span><span id="line-16"><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">get_sequences</span><span class="p">(</span><span class="n">df_test</span><span class="p">,</span> <span class="n">seq_len</span><span class="p">,</span> <span class="n">pred_len</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="model">
+<h3>Model<a class="headerlink" href="#model" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#model'">¶</a></h3>
+<section id="training">
+<h4>Training<a class="headerlink" href="#training" title="Link to this heading">¶</a></h4>
+<p>We start by creating the model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># create the model</span>
+</span><span id="line-2"><span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span>
+</span><span id="line-3">    <span class="n">configs</span><span class="o">=</span><span class="n">types</span><span class="o">.</span><span class="n">SimpleNamespace</span><span class="p">(</span>
+</span><span id="line-4">        <span class="n">prompt_domain</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span><span id="line-5">        <span class="n">content</span><span class="o">=</span><span class="s2">"Monthly totals of a airline passengers from USA, from January 1949 through December 1960."</span><span class="p">,</span>
+</span><span id="line-6">        <span class="n">task_name</span><span class="o">=</span><span class="s2">"short_term_forecast"</span><span class="p">,</span>  <span class="c1"># not used</span>
+</span><span id="line-7">        <span class="n">enc_in</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># not used</span>
+</span><span id="line-8">        <span class="n">pred_len</span><span class="o">=</span><span class="n">pred_len</span><span class="p">,</span>
+</span><span id="line-9">        <span class="n">seq_len</span><span class="o">=</span><span class="n">seq_len</span><span class="p">,</span>
+</span><span id="line-10">        <span class="n">llm_model</span><span class="o">=</span><span class="s2">"LLAMA"</span><span class="p">,</span>
+</span><span id="line-11">        <span class="n">llm_dim</span><span class="o">=</span><span class="mi">4096</span><span class="p">,</span>
+</span><span id="line-12">        <span class="n">llm_layers</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+</span><span id="line-13">        <span class="n">d_model</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
+</span><span id="line-14">        <span class="n">d_ff</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
+</span><span id="line-15">        <span class="n">patch_len</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+</span><span id="line-16">        <span class="n">stride</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+</span><span id="line-17">        <span class="n">n_heads</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+</span><span id="line-18">        <span class="n">dropout</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+</span><span id="line-19">    <span class="p">)</span>
+</span><span id="line-20"><span class="p">)</span>
+</span><span id="line-21"><span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">bfloat16</span><span class="p">)</span>
+</span><span id="line-22"><span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>After that, we train the model for 40 epochs with a batch size of 8 and a learning rate of 0.001.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># define the training parameters</span>
+</span><span id="line-2"><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">8</span>
+</span><span id="line-3"><span class="n">lr</span> <span class="o">=</span> <span class="mf">0.001</span>
+</span><span id="line-4"><span class="n">epochs</span> <span class="o">=</span> <span class="mi">40</span>
+</span><span id="line-5">
+</span><span id="line-6"><span class="c1"># create the training dataset</span>
+</span><span id="line-7"><span class="n">dataset</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">TensorDataset</span><span class="p">(</span>
+</span><span id="line-8">    <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">x_train</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">(),</span>
+</span><span id="line-9">    <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+</span><span id="line-10"><span class="p">)</span>
+</span><span id="line-11">
+</span><span id="line-12"><span class="c1"># create the training dataloader</span>
+</span><span id="line-13"><span class="n">dataloader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span>
+</span><span id="line-14">    <span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span>
+</span><span id="line-15">    <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
+</span><span id="line-16">    <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span><span id="line-17"><span class="p">)</span>
+</span><span id="line-18">
+</span><span id="line-19"><span class="c1"># instantiate the optimizer</span>
+</span><span id="line-20"><span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span>
+</span><span id="line-21">    <span class="n">params</span><span class="o">=</span><span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">()</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">requires_grad</span><span class="p">],</span>
+</span><span id="line-22">    <span class="n">lr</span><span class="o">=</span><span class="n">lr</span>
+</span><span id="line-23"><span class="p">)</span>
+</span><span id="line-24">
+</span><span id="line-25"><span class="c1"># train the model</span>
+</span><span id="line-26"><span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+</span><span id="line-27"><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+</span><span id="line-28">    <span class="n">losses</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="line-29">    <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">dataloader</span><span class="p">:</span>
+</span><span id="line-30">        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span> <span class="n">y</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+</span><span id="line-31">        <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+</span><span id="line-32">        <span class="n">yhat</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span>
+</span><span id="line-33">            <span class="n">x_enc</span><span class="o">=</span><span class="n">x</span><span class="p">,</span>
+</span><span id="line-34">            <span class="n">x_mark_enc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+</span><span id="line-35">            <span class="n">x_dec</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+</span><span id="line-36">            <span class="n">x_mark_dec</span><span class="o">=</span><span class="kc">None</span>
+</span><span id="line-37">        <span class="p">)</span>
+</span><span id="line-38">        <span class="n">loss</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">mse_loss</span><span class="p">(</span><span class="n">yhat</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</span><span id="line-39">        <span class="n">losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">())</span>
+</span><span id="line-40">        <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+</span><span id="line-41">        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</span><span id="line-42">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'epoch: </span><span class="si">{</span><span class="nb">format</span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">epoch</span><span class="p">,</span><span class="w"> </span><span class="s2">".0f"</span><span class="p">)</span><span class="si">}</span><span class="s1"> loss: </span><span class="si">{</span><span class="nb">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">losses</span><span class="p">),</span><span class="w"> </span><span class="s2">",.8f"</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="inference">
+<h4>Inference<a class="headerlink" href="#inference" title="Link to this heading">¶</a></h4>
+</section>
+</section>
 </section>
 </section>
 </div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
@@ -201,7 +325,12 @@ directly into a data frame.</p>
 <ul>
 <li><a :data-current="activeSection === '#code'" class="reference internal" href="#code">Code</a><ul>
 <li><a :data-current="activeSection === '#environment-set-up'" class="reference internal" href="#environment-set-up">Environment Set-Up</a></li>
-<li><a :data-current="activeSection === '#data-preparation'" class="reference internal" href="#data-preparation">Data Preparation</a></li>
+<li><a :data-current="activeSection === '#data'" class="reference internal" href="#data">Data</a></li>
+<li><a :data-current="activeSection === '#model'" class="reference internal" href="#model">Model</a><ul>
+<li><a :data-current="activeSection === '#training'" class="reference internal" href="#training">Training</a></li>
+<li><a :data-current="activeSection === '#inference'" class="reference internal" href="#inference">Inference</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
