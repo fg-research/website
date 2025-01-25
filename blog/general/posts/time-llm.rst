@@ -11,7 +11,7 @@ Time series forecasting with Time-LLM
 Code
 ******************************************
 To be able to run the code below, you will need to clone the
-`Time-LLM original GitHub repository <https://github.com/KimMeen/Time-LLM>`__.
+`Time-LLM GitHub repository <https://github.com/KimMeen/Time-LLM>`__.
 After that, you can run the code in a notebook or script inside
 the folder where the repository was cloned.
 
@@ -93,7 +93,7 @@ We now define the context length and prediction length. We use the previous 24 m
     # define the prediction length
     pred_len = 12
 
-We set aside the last 12 months for testing, and use all the prior data for training.
+We set aside the last 12 months for testing, and use all the remaining data for training.
 
 .. code:: python
 
@@ -220,3 +220,18 @@ After that, we train the model for 40 epochs with a batch size of 8 and a learni
 ---------------------------
 Inference
 ---------------------------
+After the model has been trained, we can use it for generating the forecasts over the test set.
+
+.. code:: python
+
+    # generate the forecasts
+    model.eval()
+    yhat_test = model(
+        x_enc=torch.from_numpy(x_test).float().to(device),
+        x_mark_enc=None,
+        x_dec=None,
+        x_mark_dec=None
+    ).detach().cpu().numpy().flatten()
+
+    # transform the forecasts back to the original scale
+    yhat_test = mu + sigma * yhat_test

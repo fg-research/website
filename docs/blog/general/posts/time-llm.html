@@ -140,7 +140,7 @@
 <section id="code">
 <h2>Code<a class="headerlink" href="#code" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#code'">¶</a></h2>
 <p>To be able to run the code below, you will need to clone the
-<a class="reference external" href="https://github.com/KimMeen/Time-LLM">Time-LLM original GitHub repository</a>.
+<a class="reference external" href="https://github.com/KimMeen/Time-LLM">Time-LLM GitHub repository</a>.
 After that, you can run the code in a notebook or script inside
 the folder where the repository was cloned.</p>
 <div class="admonition note">
@@ -201,7 +201,7 @@ directly into a data frame.</p>
 </span><span id="line-5"><span class="n">pred_len</span> <span class="o">=</span> <span class="mi">12</span>
 </span></code></pre></div>
 </div>
-<p>We set aside the last 12 months for testing, and use all the prior data for training.</p>
+<p>We set aside the last 12 months for testing, and use all the remaining data for training.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># extract the training data</span>
 </span><span id="line-2"><span class="n">df_train</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s2">"Passengers"</span><span class="p">]]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="o">-</span> <span class="n">pred_len</span><span class="p">]</span>
 </span><span id="line-3">
@@ -316,6 +316,20 @@ directly into a data frame.</p>
 </section>
 <section id="inference">
 <h4>Inference<a class="headerlink" href="#inference" title="Link to this heading">¶</a></h4>
+<p>After the model has been trained, we can use it for generating the forecasts over the test set.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># generate the forecasts</span>
+</span><span id="line-2"><span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+</span><span id="line-3"><span class="n">yhat_test</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span>
+</span><span id="line-4">    <span class="n">x_enc</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">),</span>
+</span><span id="line-5">    <span class="n">x_mark_enc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+</span><span id="line-6">    <span class="n">x_dec</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+</span><span id="line-7">    <span class="n">x_mark_dec</span><span class="o">=</span><span class="kc">None</span>
+</span><span id="line-8"><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+</span><span id="line-9">
+</span><span id="line-10"><span class="c1"># transform the forecasts back to the original scale</span>
+</span><span id="line-11"><span class="n">yhat_test</span> <span class="o">=</span> <span class="n">mu</span> <span class="o">+</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">yhat_test</span>
+</span></code></pre></div>
+</div>
 </section>
 </section>
 </section>
