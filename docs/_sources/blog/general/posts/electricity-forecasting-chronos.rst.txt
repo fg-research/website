@@ -10,7 +10,14 @@ Forecasting electricity prices with Amazon Chronos
 .. raw:: html
 
     <p>
-    Amazon Chronos is a foundational model for zero-shot probabilistic forecasting of univariate time series <a href="#references">[1]</a>.
+    Time series forecasting has long relied on statistical methods and specialized machine learning algorithms.
+    Recently, however, large language models (LLMs) have shown surprising versatility in this domain, thanks
+    to their strong sequence modeling capabilities. In this post, we explore Amazon Chronos <a href="#references">[1]</a>,
+    a framework that leverages LLMs for time series tasks.
+    </p>
+
+    <p>
+    Amazon Chronos is a foundational model for zero-shot probabilistic forecasting of univariate time series.
     The model converts a time series into a sequence of tokens through scaling and quantization.
     The scaling procedure divides the time series by its mean absolute value, while the quantization
     process maps the scaled time series values to a discrete set of tokens using uniform binning.
