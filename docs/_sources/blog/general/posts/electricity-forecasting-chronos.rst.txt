@@ -1,10 +1,10 @@
 .. meta::
     :thumbnail: https://fg-research.com/_static/thumbnail.png
-    :description: Forecasting electricity prices with Amazon Chronos
-    :keywords: Time Series, Forecasting, Large Language Model, Foundational Model, Amazon Chronos
+    :description: Time series forecasting with Amazon Chronos
+    :keywords: Time Series, Forecasting, Large Language Model, Foundation Model, Amazon Chronos
 
 ######################################################################################
-Forecasting electricity prices with Amazon Chronos
+Time series forecasting with Amazon Chronos
 ######################################################################################
 
 .. raw:: html
