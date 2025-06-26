@@ -31,7 +31,8 @@ extensions = [
     'sphinx_sitemap',
     'sphinx_design',
     'myst_parser',
-    'sphinx.ext.mathjax'
+    'sphinx.ext.mathjax',
+    'extensions'
 ]
 
 templates_path = []
