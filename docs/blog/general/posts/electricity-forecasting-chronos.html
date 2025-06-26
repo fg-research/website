@@ -10,7 +10,7 @@
 <meta content="https://fg-research.com/_static/thumbnail.png" name="thumbnail"/>
 <meta content="Forecasting electricity prices with Amazon Chronos" name="description"/>
 <meta content="Time Series, Forecasting, Large Language Model, Foundational Model, Amazon Chronos" name="keywords"/>
-<meta content="2025-06-26T09:33:34+02:00" property="article:modified_time"/>
+<meta content="2025-06-26T09:38:39+02:00" property="article:modified_time"/>
 
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2L0F07XRQM"></script>
 <script>
@@ -137,11 +137,10 @@
 <p>
 Time series forecasting has long relied on statistical methods and specialized machine learning algorithms.
 Recently, however, large language models (LLMs) have shown surprising versatility in this domain, thanks
-to their strong sequence modeling capabilities.
+to their strong sequence modeling capabilities. In this post, we demonstrate how to use Amazon Chronos <a href="#references">[1]</a>,
+a framework that leverages LLMs for time series tasks, for one-step-ahead forecasting.
 </p>
 <p>
-In this post, we demonstrate how to use Amazon Chronos <a href="#references">[1]</a>,
-a framework that leverages LLMs for time series tasks, for one-step-ahead forecasting.
 We will use the US average electricity price monthly time series from November 1978 to July 2024,
 which we will download from the FRED database, and generate one-month-ahead forecasts from August 2014 to July 2024.
 We will use expanding context windows, that is on each month we will provide Amazon Chronos
