@@ -28,8 +28,8 @@ General
 
     Time series forecasting has long relied on statistical methods and specialized machine learning algorithms.
     Recently, however, large language models (LLMs) have shown surprising versatility in this domain, thanks
-    to their strong sequence modeling capabilities. In this post, we explore Amazon Chronos,
-    a framework that leverages LLMs for time series tasks...
+    to their strong sequence modeling capabilities. In this post, we demonstrate how to use Amazon Chronos,
+    a framework that leverages LLMs for time series tasks, for one-step-ahead forecasting...
 
     .. grid:: 2
         :margin: 0 3 auto auto

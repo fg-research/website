@@ -12,12 +12,32 @@ Forecasting electricity prices with Amazon Chronos
     <p>
     Time series forecasting has long relied on statistical methods and specialized machine learning algorithms.
     Recently, however, large language models (LLMs) have shown surprising versatility in this domain, thanks
-    to their strong sequence modeling capabilities. In this post, we explore Amazon Chronos <a href="#references">[1]</a>,
-    a framework that leverages LLMs for time series tasks.
+    to their strong sequence modeling capabilities.
     </p>
 
     <p>
-    Amazon Chronos is a foundational model for zero-shot probabilistic forecasting of univariate time series.
+    In this post, we demonstrate how to use Amazon Chronos <a href="#references">[1]</a>,
+    a framework that leverages LLMs for time series tasks, for one-step-ahead forecasting.
+    We will use the US average electricity price monthly time series from November 1978 to July 2024,
+    which we will download from the FRED database, and generate one-month-ahead forecasts from August 2014 to July 2024.
+    We will use expanding context windows, that is on each month we will provide Amazon Chronos
+    all the data up to that month, and generate the forecast for the next month.
+    </p>
+
+    <p>
+    We will compare Amazon Chronos' forecasts to the rolling forecasts of a SARIMA model which is
+    re-trained each month on the same data that was provided to Amazon Chronos as context.
+    We will find that Amazon Chronos and the SARIMA model have comparable performance.
+    </p>
+
+******************************************
+Model
+******************************************
+
+.. raw:: html
+
+    <p>
+    Amazon Chronos <a href="#references">[1]</a> is a foundational model for zero-shot probabilistic forecasting of univariate time series.
     The model converts a time series into a sequence of tokens through scaling and quantization.
     The scaling procedure divides the time series by its mean absolute value, while the quantization
     process maps the scaled time series values to a discrete set of tokens using uniform binning.
@@ -49,20 +69,6 @@ Forecasting electricity prices with Amazon Chronos
     the actual and predicted distributions of the next token, as it is standard when training LLMs.
     The data used for training included both real time series from publicly available datasets,
     as well as synthetic time series generated using different methods.
-    </p>
-
-    <p>
-    In this post, we demonstrate how to use Amazon Chronos for one-step-ahead forecasting.
-    We will use the US average electricity price monthly time series from November 1978 to July 2024,
-    which we will download from the FRED database, and generate one-month-ahead forecasts from August 2014 to July 2024.
-    We will use expanding context windows, that is on each month we will provide Amazon Chronos
-    all the data up to that month, and generate the forecast for the next month.
-    </p>
-
-    <p>
-    We will compare Amazon Chronos' forecasts to the rolling forecasts of a SARIMA model which is
-    re-trained each month on the same data that was provided to Amazon Chronos as context.
-    We will find that Amazon Chronos and the SARIMA model have comparable performance.
     </p>
 
 ******************************************
