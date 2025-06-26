@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+
+<html :class="{'dark': darkMode === 'dark' || (darkMode === 'system' &amp;&amp; window.matchMedia('(prefers-color-scheme: dark)').matches)}" class="scroll-smooth" data-content_root="../../../" lang="en" x-data="{ darkMode: localStorage.getItem('darkMode') || localStorage.setItem('darkMode', 'system'), activeSection: '' }" x-init="$watch('darkMode', val =&gt; localStorage.setItem('darkMode', val))">
+<head>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta charset="utf-8"/>
+<meta content="white" media="(prefers-color-scheme: light)" name="theme-color"/>
+<meta content="black" media="(prefers-color-scheme: dark)" name="theme-color"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="https://fg-research.com/_static/thumbnail.png" name="thumbnail"/>
+<meta content="Detecting anomalies in financial time series with the LSTM-AE SageMaker algorithm" name="description"/>
+<meta content="Amazon SageMaker, Time Series, Anomaly Detection, LSTM, Autoencoder" name="keywords"/>
+<meta content="2024-11-29T10:42:36+01:00" property="article:modified_time"/>
+
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-2L0F07XRQM"></script>
+<script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-2L0F07XRQM');
+    </script>
+<title>Detecting anomalies in financial time series with the LSTM-AE SageMaker algorithm | fg-research</title>
+<meta content="Detecting anomalies in financial time series with the LSTM-AE SageMaker algorithm | fg-research" property="og:title"/>
+<meta content="Detecting anomalies in financial time series with the LSTM-AE SageMaker algorithm | fg-research" name="twitter:title"/>
+<link href="../../../_static/pygments.css?v=e72c8e07" rel="stylesheet" type="text/css"/>
+<link href="../../../_static/theme.css?v=42baaae4" rel="stylesheet" type="text/css"/>
+<link href="../../../_static/sphinx-design.min.css?v=95c83b7e" rel="stylesheet" type="text/css"/>
+<link href="../../../_static/custom.css?v=1ba14605" rel="stylesheet" type="text/css"/>
+<link href="../../../_static/awesome-sphinx-design.css?v=15e0fffa" rel="stylesheet" type="text/css"/>
+<link href="https://fg-research.com/blog/product/posts/lstm-ae-oil-price-anomaly-detection.html" rel="canonical"/>
+<link href="../../../_static/favicon.ico" rel="icon"/>
+<link href="../../../search.html" rel="search" title="Search"/>
+<link href="../../../genindex.html" rel="index" title="Index"/>
+<link href="lstm-ad-ecg-anomaly-detection.html" rel="next" title="ECG anomaly detection with the LSTM-AD SageMaker algorithm"/>
+<link href="lnn-equity-forecasting.html" rel="prev" title="Forecasting stock returns with liquid neural networks using the LNN SageMaker algorithm"/>
+<script>
+    <!-- Prevent Flash of wrong theme -->
+      const userPreference = localStorage.getItem('darkMode');
+      let mode;
+      if (userPreference === 'dark' || window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        mode = 'dark';
+        document.documentElement.classList.add('dark');
+      } else {
+        mode = 'light';
+      }
+      if (!userPreference) {localStorage.setItem('darkMode', mode)}
+    </script>
+</head>
+<body :class="{ 'overflow-hidden': showSidebar }" @scroll.window="showScrollTop = pageYOffset &gt; 100" class="min-h-screen font-sans antialiased bg-background text-foreground" x-data="{ showSidebar: false, showScrollTop: false }">
+<div @click.self="showSidebar = false" class="fixed inset-0 z-50 overflow-hidden bg-background/80 backdrop-blur-sm md:hidden" x-cloak="" x-show="showSidebar"></div><div class="relative flex flex-col min-h-screen" id="page"><a class="absolute top-0 left-0 z-[100] block bg-background p-4 text-xl transition -translate-x-full opacity-0 focus:translate-x-0 focus:opacity-100" href="#content">
+      Skip to content
+    </a><header class="sticky top-0 z-40 w-full border-b shadow-sm border-border supports-backdrop-blur:bg-background/60 bg-background/95 backdrop-blur"><div class="container flex items-center h-14">
+<div class="hidden mr-4 md:flex">
+<a class="flex items-center mr-6" href="../../../index.html">
+<img alt="Logo" class="mr-2 dark:invert" height="24" src="../../../_static/logo.png" width="24"/><span class="hidden font-bold sm:inline-block text-clip whitespace-nowrap">fg-research</span>
+</a></div><button @click="showSidebar = true" class="inline-flex items-center justify-center h-10 px-0 py-2 mr-2 text-base font-medium transition-colors rounded-md hover:text-accent-foreground hover:bg-transparent md:hidden" type="button">
+<svg aria-hidden="true" fill="currentColor" height="24" viewbox="0 96 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M152.587 825.087q-19.152 0-32.326-13.174t-13.174-32.326q0-19.152 13.174-32.326t32.326-13.174h440q19.152 0 32.326 13.174t13.174 32.326q0 19.152-13.174 32.326t-32.326 13.174h-440Zm0-203.587q-19.152 0-32.326-13.174T107.087 576q0-19.152 13.174-32.326t32.326-13.174h320q19.152 0 32.326 13.174T518.087 576q0 19.152-13.174 32.326T472.587 621.5h-320Zm0-203.587q-19.152 0-32.326-13.174t-13.174-32.326q0-19.152 13.174-32.326t32.326-13.174h440q19.152 0 32.326 13.174t13.174 32.326q0 19.152-13.174 32.326t-32.326 13.174h-440ZM708.913 576l112.174 112.174q12.674 12.674 12.674 31.826t-12.674 31.826Q808.413 764.5 789.261 764.5t-31.826-12.674l-144-144Q600 594.391 600 576t13.435-31.826l144-144q12.674-12.674 31.826-12.674t31.826 12.674q12.674 12.674 12.674 31.826t-12.674 31.826L708.913 576Z"></path>
+</svg>
+<span class="sr-only">Toggle navigation menu</span>
+</button>
+<div class="flex items-center justify-between flex-1 space-x-2 sm:space-x-4 md:justify-end">
+<div class="flex-1 w-full md:w-auto md:flex-none"><form @keydown.k.window.meta="$refs.search.focus()" action="../../../search.html" class="relative flex items-center group" id="searchbox" method="get">
+<input aria-label="Search the docs" class="inline-flex items-center font-medium transition-colors bg-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background border border-input hover:bg-accent focus:bg-accent hover:text-accent-foreground focus:text-accent-foreground hover:placeholder-accent-foreground py-2 px-4 relative h-9 w-full justify-start rounded-[0.5rem] text-sm text-muted-foreground sm:pr-12 md:w-40 lg:w-64" id="search-input" name="q" placeholder="Search ..." type="search" x-ref="search"/>
+<kbd class="pointer-events-none absolute right-1.5 top-2 hidden h-5 select-none text-muted-foreground items-center gap-1 rounded border border-border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex group-hover:bg-accent group-hover:text-accent-foreground">
+<span class="text-xs">⌘</span>
+    K
+  </kbd>
+</form>
+</div>
+<nav class="flex items-center space-x-1">
+<a href="https://github.com/fg-research" rel="noopener nofollow" title="Visit GitHub">
+<div class="inline-flex items-center justify-center px-0 text-sm font-medium transition-colors rounded-md disabled:opacity-50 disabled:pointer-events-none hover:bg-accent hover:text-accent-foreground h-9 w-9">
+<svg fill="currentColor" height="26px" style="margin-top:-2px;display:inline" viewbox="0 0 45 44" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M22.477.927C10.485.927.76 10.65.76 22.647c0 9.596 6.223 17.736 14.853 20.608 1.087.2 1.483-.47 1.483-1.047 0-.516-.019-1.881-.03-3.693-6.04 1.312-7.315-2.912-7.315-2.912-.988-2.51-2.412-3.178-2.412-3.178-1.972-1.346.149-1.32.149-1.32 2.18.154 3.327 2.24 3.327 2.24 1.937 3.318 5.084 2.36 6.321 1.803.197-1.403.759-2.36 1.379-2.903-4.823-.548-9.894-2.412-9.894-10.734 0-2.37.847-4.31 2.236-5.828-.224-.55-.969-2.759.214-5.748 0 0 1.822-.584 5.972 2.226 1.732-.482 3.59-.722 5.437-.732 1.845.01 3.703.25 5.437.732 4.147-2.81 5.967-2.226 5.967-2.226 1.185 2.99.44 5.198.217 5.748 1.392 1.517 2.232 3.457 2.232 5.828 0 8.344-5.078 10.18-9.916 10.717.779.67 1.474 1.996 1.474 4.021 0 2.904-.027 5.247-.027 5.96 0 .58.392 1.256 1.493 1.044C37.981 40.375 44.2 32.24 44.2 22.647c0-11.996-9.726-21.72-21.722-21.72" fill="currentColor" fill-rule="evenodd"></path></svg>
+</div>
+</a>
+<button @click="darkMode = darkMode === 'light' ? 'dark' : 'light'" aria-label="Color theme switcher" class="relative inline-flex items-center justify-center px-0 text-sm font-medium transition-colors rounded-md hover:bg-accent hover:text-accent-foreground h-9 w-9" type="button">
+<svg class="absolute transition-all scale-100 rotate-0 dark:-rotate-90 dark:scale-0" fill="currentColor" height="24" viewbox="0 96 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M480 685q45.456 0 77.228-31.772Q589 621.456 589 576q0-45.456-31.772-77.228Q525.456 467 480 467q-45.456 0-77.228 31.772Q371 530.544 371 576q0 45.456 31.772 77.228Q434.544 685 480 685Zm0 91q-83 0-141.5-58.5T280 576q0-83 58.5-141.5T480 376q83 0 141.5 58.5T680 576q0 83-58.5 141.5T480 776ZM80 621.5q-19.152 0-32.326-13.174T34.5 576q0-19.152 13.174-32.326T80 530.5h80q19.152 0 32.326 13.174T205.5 576q0 19.152-13.174 32.326T160 621.5H80Zm720 0q-19.152 0-32.326-13.174T754.5 576q0-19.152 13.174-32.326T800 530.5h80q19.152 0 32.326 13.174T925.5 576q0 19.152-13.174 32.326T880 621.5h-80Zm-320-320q-19.152 0-32.326-13.174T434.5 256v-80q0-19.152 13.174-32.326T480 130.5q19.152 0 32.326 13.174T525.5 176v80q0 19.152-13.174 32.326T480 301.5Zm0 720q-19.152 0-32.326-13.17Q434.5 995.152 434.5 976v-80q0-19.152 13.174-32.326T480 850.5q19.152 0 32.326 13.174T525.5 896v80q0 19.152-13.174 32.33-13.174 13.17-32.326 13.17ZM222.174 382.065l-43-42Q165.5 327.391 166 308.239t13.174-33.065q13.435-13.674 32.587-13.674t32.065 13.674l42.239 43q12.674 13.435 12.555 31.706-.12 18.272-12.555 31.946-12.674 13.674-31.445 13.413-18.772-.261-32.446-13.174Zm494 494.761-42.239-43q-12.674-13.435-12.674-32.087t12.674-31.565Q686.609 756.5 705.38 757q18.772.5 32.446 13.174l43 41.761Q794.5 824.609 794 843.761t-13.174 33.065Q767.391 890.5 748.239 890.5t-32.065-13.674Zm-42-494.761Q660.5 369.391 661 350.62q.5-18.772 13.174-32.446l41.761-43Q728.609 261.5 747.761 262t33.065 13.174q13.674 13.435 13.674 32.587t-13.674 32.065l-43 42.239q-13.435 12.674-31.706 12.555-18.272-.12-31.946-12.555Zm-495 494.761Q165.5 863.391 165.5 844.239t13.674-32.065l43-42.239q13.435-12.674 32.087-12.674t31.565 12.674Q299.5 782.609 299 801.38q-.5 18.772-13.174 32.446l-41.761 43Q231.391 890.5 212.239 890t-33.065-13.174ZM480 576Z"></path>
+</svg>
+<svg class="absolute transition-all scale-0 rotate-90 dark:rotate-0 dark:scale-100" fill="currentColor" height="24" viewbox="0 96 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M480 936q-151 0-255.5-104.5T120 576q0-138 90-239.5T440 218q25-3 39 18t-1 44q-17 26-25.5 55t-8.5 61q0 90 63 153t153 63q31 0 61.5-9t54.5-25q21-14 43-1.5t19 39.5q-14 138-117.5 229T480 936Zm0-80q88 0 158-48.5T740 681q-20 5-40 8t-40 3q-123 0-209.5-86.5T364 396q0-20 3-40t8-40q-78 32-126.5 102T200 576q0 116 82 198t198 82Zm-10-270Z"></path>
+</svg>
+</button>
+</nav>
+</div>
+</div>
+</header>
+<div class="flex-1"><div class="container flex-1 items-start md:grid md:grid-cols-[220px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10"><aside :aria-hidden="!showSidebar" :class="{ 'translate-x-0': showSidebar }" class="fixed inset-y-0 left-0 md:top-14 z-50 md:z-30 bg-background md:bg-transparent transition-all duration-100 -translate-x-full md:translate-x-0 ml-0 p-6 md:p-0 md:-ml-2 md:h-[calc(100vh-3.5rem)] w-5/6 md:w-full shrink-0 overflow-y-auto border-r border-border md:sticky" id="left-sidebar">
+<a class="!justify-start text-sm md:!hidden bg-background" href="../../../index.html">
+<img alt="Logo" class="mr-2 dark:invert" height="16" src="../../../_static/logo.png" width="16"/><span class="font-bold text-clip whitespace-nowrap">fg-research</span>
+</a>
+<div class="relative overflow-hidden md:overflow-auto my-4 md:my-0 h-[calc(100vh-8rem)] md:h-auto">
+<div class="overflow-y-auto h-full w-full relative pr-6"><nav class="table w-full min-w-full my-6 lg:my-8">
+<p class="caption" role="heading"><span class="caption-text">Algorithms</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../algorithms/time-series-forecasting/index.html">Time Series Forecasting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../algorithms/time-series-anomaly-detection/index.html">Time Series Anomaly Detection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../algorithms/time-series-classification/index.html">Time Series Classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../algorithms/time-series-clustering/index.html">Time Series Clustering</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Blog</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Product</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../general/index.html">General</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Terms and Conditions</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../terms/disclaimer/index.html">Disclaimer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../terms/eula/index.html">EULA</a></li>
+</ul>
+</nav>
+</div>
+</div>
+<button @click="showSidebar = false" class="absolute md:hidden right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100" type="button">
+<svg class="h-4 w-4" fill="currentColor" height="24" stroke="none" viewbox="0 96 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M480 632 284 828q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536 576l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480 632Z"></path>
+</svg>
+</button>
+</aside>
+<main class="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr_300px]">
+<div class="w-full min-w-0 mx-auto">
+<nav aria-label="breadcrumbs" class="flex items-center mb-4 space-x-1 text-sm text-muted-foreground">
+<a class="overflow-hidden text-ellipsis whitespace-nowrap hover:text-foreground" href="../../../index.html">
+<span class="hidden md:inline">fg-research</span>
+<svg aria-label="Home" class="md:hidden" fill="currentColor" height="18" stroke="none" viewbox="0 96 960 960" width="18" xmlns="http://www.w3.org/2000/svg">
+<path d="M240 856h120V616h240v240h120V496L480 316 240 496v360Zm-80 80V456l320-240 320 240v480H520V696h-80v240H160Zm320-350Z"></path>
+</svg>
+</a>
+<div class="mr-1">/</div><a class="hover:text-foreground overflow-hidden text-ellipsis whitespace-nowrap" href="../index.html">Product</a>
+<div class="mr-1">/</div><span aria-current="page" class="font-medium text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Detecting anomalies in financial time series with the LSTM-AE SageMaker algorithm</span>
+</nav>
+<div id="content" role="main">
+<section id="detecting-anomalies-in-financial-time-series-with-the-lstm-ae-sagemaker-algorithm">
+<h1>Detecting anomalies in financial time series with the LSTM-AE SageMaker algorithm<a class="headerlink" href="#detecting-anomalies-in-financial-time-series-with-the-lstm-ae-sagemaker-algorithm" title="Link to this heading">¶</a></h1>
+<p>
+Anomaly detection in financial time series plays a crucial role in
+identifying unusual market conditions that could affect trading
+strategies and pose risks to investors. Anomaly detection can help
+identify abnormal price movements or trading volumes associated with
+specific events, such as earnings announcements, release of economic
+indicators, or geopolitical tensions. Anomaly detection algorithms are
+also useful for automatically detecting and correcting data quality
+issues in the market data time series used for calculating portfolio
+risk measures <a href="#references">[1]</a>.
+</p>
+<p>
+Recurrent autoencoders are standard deep learning architectures for
+detecting anomalies in sequential data. The autoencoder is trained in an
+unsupervised manner to learn a low-dimensional latent representation of
+the data (through the encoder), and to reconstruct the normal behavior
+of the data from this latent representation (through the decoder). The
+trained autoencoder is then applied to new unseen data, and an anomaly
+is detected whenever the observed data deviates significantly from the
+autoencoder’s reconstruction.
+</p>
+<p>
+Different autoencoder architectures have been proposed in the literature
+on time series anomaly detection <a href="#references">[2]</a>. In this post, we
+will focus on the Long Short Term Memory Networks based Encoder-Decoder scheme for Anomaly Detection
+<a href="#references">[3]</a>, which we will refer to as the LSTM-AE model.
+We will demonstrate how to use our Amazon SageMaker implementation of the LSTM-AE model, the
+<a href="https://fg-research.com/algorithms/time-series-anomaly-detection/index.html#lstm-ae-sagemaker-algorithm" target="_blank"> LSTM-AE SageMaker algorithm</a>, for detecting anomalies in oil price time series.
+</p>
+<p>
+We will download the West Texas Intermediate (WTI) and Brent daily price time series from the
+<a href="https://fred.stlouisfed.org/" target="_blank">Federal Reserve Economic Data (FRED)</a> database.
+After that we will train the LSTM-AE model on the data up to the 1<sup>st</sup> of August 2019,
+and use the trained model to reconstruct the subsequent data up to the 31<sup>st</sup> of
+December 2020. We will then show how the LSTM-AE model detects the abnormal oil prices observed
+at the end of April 2020 during the COVID-19 pandemic.
+</p><section id="model">
+<h2>Model<a class="headerlink" href="#model" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#model'">¶</a></h2>
+<p>
+The encoder and decoder of the LSTM-AE model consist of a single LSTM
+layer and have the same number of hidden units. The encoder takes as
+input the time series and returns the hidden states. The hidden states
+of the encoder are used for initializing the hidden states of the
+decoder, which reconstructs the time series in reversed order.
+</p>
+<p>
+The autoencoder parameters are learned on a training set containing only
+normal data (i.e. without anomalies) by minimizing the mean squared
+error (MSE) between the actual and reconstructed values of the time
+series. After the model has been trained, a Gaussian distribution is
+fitted to the model’s reconstruction errors on an independent validation
+set (also without anomalies) using Maximum Likelihood Estimation (MLE).
+</p>
+<p>
+At inference time, the model reconstructs the values of all the time
+series (which can now include anomalies) and calculates the squared
+Mahalanobis distance between the reconstruction errors and the Gaussian
+distribution previously estimated on normal data. The computed squared
+Mahalanobis distance is then used as an anomaly score: the larger the
+squared Mahalanobis distance at a given a time step, the more likely the
+time step is to be an anomaly.
+</p></section>
+<section id="data">
+<h2>Data<a class="headerlink" href="#data" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data'">¶</a></h2>
+<p>
+We use the <a href="https://github.com/mortada/fredapi" target="_blank">Python API for FRED</a> for downloading the data.
+</p><div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you don’t have a FRED API key, you can request one for free at <a class="reference external" href="http://api.stlouisfed.org/api_key.html">this link</a>.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">from</span><span class="w"> </span><span class="nn">fredapi</span><span class="w"> </span><span class="kn">import</span> <span class="n">Fred</span>
+</span><span id="line-2">
+</span><span id="line-3"><span class="c1"># set up the FRED API</span>
+</span><span id="line-4"><span class="n">fred</span> <span class="o">=</span> <span class="n">Fred</span><span class="p">(</span><span class="n">api_key_file</span><span class="o">=</span><span class="s2">"api_key.txt"</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>We download the data from the 20<sup>th</sup> of May 1987, which is the start date
+of the Brent time series, to the 31<sup>st</sup> of December 2020. The downloaded
+dataset contains 8,772 daily price observations.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+</span><span id="line-2">
+</span><span id="line-3"><span class="c1"># get the prices from the FRED API</span>
+</span><span id="line-4"><span class="n">dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+</span><span id="line-5">    <span class="s2">"WTI"</span><span class="p">:</span> <span class="n">fred</span><span class="o">.</span><span class="n">get_series</span><span class="p">(</span><span class="s2">"DCOILWTICO"</span><span class="p">,</span> <span class="n">observation_start</span><span class="o">=</span><span class="s2">"1987-05-20"</span><span class="p">,</span> <span class="n">observation_end</span><span class="o">=</span><span class="s2">"2020-12-31"</span><span class="p">),</span>
+</span><span id="line-6">    <span class="s2">"BRENT"</span><span class="p">:</span> <span class="n">fred</span><span class="o">.</span><span class="n">get_series</span><span class="p">(</span><span class="s2">"DCOILBRENTEU"</span><span class="p">,</span> <span class="n">observation_start</span><span class="o">=</span><span class="s2">"1987-05-20"</span><span class="p">,</span> <span class="n">observation_end</span><span class="o">=</span><span class="s2">"2020-12-31"</span><span class="p">)</span>
+</span><span id="line-7"><span class="p">})</span>
+</span></code></pre></div>
+</div>
+<p>On the 20<sup>th</sup> of April 2020, the WTI price decreased from $18.31 to
+-$36.98, going negative for the first time in its history, while on the
+next day the 21<sup>st</sup> of April 2020, the Brent price decreased from $17.36
+to $9.12.</p>
+<img alt="WTI and Brent daily prices from 1987-05-20 to 2020-12-31" class="blog-post-image" id="lstm-ae-oil-price-anomaly-detection-prices" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/lstm-ae-oil-price-anomaly-detection/prices_light.png"/>
+<p class="blog-post-image-caption">WTI and Brent daily prices from 1987-05-20 to 2020-12-31.</p><p>We use the percentage changes in the daily prices (or daily returns) for
+training the LSTM-AE model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># calculate the returns</span>
+</span><span id="line-2"><span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">pct_change</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>The percentage change in WTI price on the 20<sup>th</sup> of April 2020 was -302%,
+followed by a -124% decrease on the 21<sup>st</sup> of April 2020 and a 53%
+increase on the 22<sup>nd</sup> of April 2020. The percentage change in Brent price
+on the 20<sup>th</sup> of April 2020 was -12%, followed by a -47% decrease on the
+21<sup>st</sup> of April 2020 and a 51% increase on the 22<sup>nd</sup> of April 2020.</p>
+<img alt="WTI and Brent daily returns from 1987-05-20 to 2020-12-31" class="blog-post-image" id="lstm-ae-oil-price-anomaly-detection-returns" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/lstm-ae-oil-price-anomaly-detection/returns_light.png"/>
+<p class="blog-post-image-caption">WTI and Brent daily returns from 1987-05-20 to 2020-12-31.</p></section>
+<section id="code">
+<h2>Code<a class="headerlink" href="#code" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#code'">¶</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>To be able to run the code below, you need to have an active
+subscription to the LSTM-AE SageMaker algorithm. You can subscribe to a free trial from
+the <a class="reference external" href="https://aws.amazon.com/marketplace/pp/prodview-up2haipz3j472">AWS Marketplace</a>
+in order to get your Amazon Resource Name (ARN).
+In this post we use version 1.4 of the LSTM-AE SageMaker algorithm, which runs in the
+PyTorch 2.1.0 Python 3.10 deep learning container.</p>
+</div>
+<section id="environment-set-up">
+<h3>Environment Set-Up<a class="headerlink" href="#environment-set-up" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#environment-set-up'">¶</a></h3>
+<p>We start by setting up the SageMaker environment.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span><span class="w"> </span><span class="nn">sagemaker</span>
+</span><span id="line-2">
+</span><span id="line-3"><span class="c1"># SageMaker algorithm ARN, replace the placeholder below with your AWS Marketplace ARN</span>
+</span><span id="line-4"><span class="n">algo_arn</span> <span class="o">=</span> <span class="s2">"arn:aws:sagemaker:&lt;...&gt;"</span>
+</span><span id="line-5">
+</span><span id="line-6"><span class="c1"># SageMaker session</span>
+</span><span id="line-7"><span class="n">sagemaker_session</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+</span><span id="line-8">
+</span><span id="line-9"><span class="c1"># SageMaker role</span>
+</span><span id="line-10"><span class="n">role</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">get_execution_role</span><span class="p">()</span>
+</span><span id="line-11">
+</span><span id="line-12"><span class="c1"># S3 bucket</span>
+</span><span id="line-13"><span class="n">bucket</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">default_bucket</span><span class="p">()</span>
+</span><span id="line-14">
+</span><span id="line-15"><span class="c1"># EC2 instance</span>
+</span><span id="line-16"><span class="n">instance_type</span> <span class="o">=</span> <span class="s2">"ml.m5.2xlarge"</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="data-preparation">
+<h3>Data Preparation<a class="headerlink" href="#data-preparation" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#data-preparation'">¶</a></h3>
+<p>After that we split the data into training and test sets, which we save
+to S3 in CSV format. We use the first 8,402 observations for training,
+and the remaining 370 observations for testing. The training set covers
+the time window from 20<sup>th</sup> of May 1987 to the 1<sup>st</sup>
+of August 2019, while the test set covers the time window from the 2<sup>nd</sup>
+of August 2019 to the 31<sup>st</sup> of December 2020.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># define the train-test split cutoff</span>
+</span><span id="line-2"><span class="n">cutoff</span> <span class="o">=</span> <span class="mi">8402</span>
+</span><span id="line-3">
+</span><span id="line-4"><span class="c1"># split the data</span>
+</span><span id="line-5"><span class="n">training_dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="n">cutoff</span><span class="p">]</span>
+</span><span id="line-6"><span class="n">test_dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">cutoff</span><span class="p">:]</span>
+</span><span id="line-7">
+</span><span id="line-8"><span class="c1"># save the training data in S3</span>
+</span><span id="line-9"><span class="n">training_data</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">upload_string_as_file_body</span><span class="p">(</span>
+</span><span id="line-10">    <span class="n">body</span><span class="o">=</span><span class="n">training_dataset</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+</span><span id="line-11">    <span class="n">bucket</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span>
+</span><span id="line-12">    <span class="n">key</span><span class="o">=</span><span class="s2">"oil_price_train.csv"</span>
+</span><span id="line-13"><span class="p">)</span>
+</span><span id="line-14">
+</span><span id="line-15"><span class="c1"># save the test data in S3</span>
+</span><span id="line-16"><span class="n">test_data</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">upload_string_as_file_body</span><span class="p">(</span>
+</span><span id="line-17">    <span class="n">body</span><span class="o">=</span><span class="n">test_dataset</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+</span><span id="line-18">    <span class="n">bucket</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span>
+</span><span id="line-19">    <span class="n">key</span><span class="o">=</span><span class="s2">"oil_price_test.csv"</span>
+</span><span id="line-20"><span class="p">)</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="training">
+<h3>Training<a class="headerlink" href="#training" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#training'">¶</a></h3>
+<p>We can now run a training job on the training dataset.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The algorithm uses the first 80% of the training dataset for learning
+the LSTM parameters, and the remaining 20% of the training dataset
+for estimating the Gaussian distribution parameters.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># create the estimator</span>
+</span><span id="line-2"><span class="n">estimator</span> <span class="o">=</span> <span class="n">sagemaker</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">AlgorithmEstimator</span><span class="p">(</span>
+</span><span id="line-3">    <span class="n">algorithm_arn</span><span class="o">=</span><span class="n">algo_arn</span><span class="p">,</span>
+</span><span id="line-4">    <span class="n">role</span><span class="o">=</span><span class="n">role</span><span class="p">,</span>
+</span><span id="line-5">    <span class="n">instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+</span><span id="line-6">    <span class="n">instance_type</span><span class="o">=</span><span class="n">instance_type</span><span class="p">,</span>
+</span><span id="line-7">    <span class="n">input_mode</span><span class="o">=</span><span class="s2">"File"</span><span class="p">,</span>
+</span><span id="line-8">    <span class="n">sagemaker_session</span><span class="o">=</span><span class="n">sagemaker_session</span><span class="p">,</span>
+</span><span id="line-9">    <span class="n">hyperparameters</span><span class="o">=</span><span class="p">{</span>
+</span><span id="line-10">        <span class="s2">"sequence-length"</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+</span><span id="line-11">        <span class="s2">"sequence-stride"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+</span><span id="line-12">        <span class="s2">"hidden-size"</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+</span><span id="line-13">        <span class="s2">"lr"</span><span class="p">:</span> <span class="mf">0.001</span><span class="p">,</span>
+</span><span id="line-14">        <span class="s2">"batch-size"</span><span class="p">:</span> <span class="mi">32</span><span class="p">,</span>
+</span><span id="line-15">        <span class="s2">"epochs"</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span>
+</span><span id="line-16">    <span class="p">},</span>
+</span><span id="line-17"><span class="p">)</span>
+</span><span id="line-18">
+</span><span id="line-19"><span class="c1"># run the training job</span>
+</span><span id="line-20"><span class="n">estimator</span><span class="o">.</span><span class="n">fit</span><span class="p">({</span><span class="s2">"training"</span><span class="p">:</span> <span class="n">training_data</span><span class="p">})</span>
+</span></code></pre></div>
+</div>
+</section>
+<section id="inference">
+<h3>Inference<a class="headerlink" href="#inference" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#inference'">¶</a></h3>
+<p>Once the training job has completed, we can run a batch transform job on the test dataset.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># create the transformer</span>
+</span><span id="line-2"><span class="n">transformer</span> <span class="o">=</span> <span class="n">estimator</span><span class="o">.</span><span class="n">transformer</span><span class="p">(</span>
+</span><span id="line-3">    <span class="n">instance_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+</span><span id="line-4">    <span class="n">instance_type</span><span class="o">=</span><span class="n">instance_type</span><span class="p">,</span>
+</span><span id="line-5">    <span class="n">max_payload</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+</span><span id="line-6"><span class="p">)</span>
+</span><span id="line-7">
+</span><span id="line-8"><span class="c1"># run the transform job</span>
+</span><span id="line-9"><span class="n">transformer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
+</span><span id="line-10">    <span class="n">data</span><span class="o">=</span><span class="n">test_data</span><span class="p">,</span>
+</span><span id="line-11">    <span class="n">content_type</span><span class="o">=</span><span class="s2">"text/csv"</span><span class="p">,</span>
+</span><span id="line-12"><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>The results of the batch transform job are saved in an output file in S3
+with the same name as the input file and with the <code class="code docutils literal notranslate"><span class="pre">".out"</span></code> file
+extension. The output file contains the anomaly scores in the first
+column, and the reconstructed values of the time series in the
+subsequent columns.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The LSTM-AE is a multivariate time series anomaly detection model
+and, therefore, it generates only one anomaly score for all time
+series at each time step.</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
+</span><span id="line-2">
+</span><span id="line-3"><span class="c1"># load the model outputs from S3</span>
+</span><span id="line-4"><span class="n">reconstructions</span> <span class="o">=</span> <span class="n">sagemaker_session</span><span class="o">.</span><span class="n">read_s3_file</span><span class="p">(</span>
+</span><span id="line-5">    <span class="n">bucket</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span>
+</span><span id="line-6">    <span class="n">key_prefix</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">transformer</span><span class="o">.</span><span class="n">latest_transform_job</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">/oil_price_test.csv.out"</span>
+</span><span id="line-7"><span class="p">)</span>
+</span><span id="line-8">
+</span><span id="line-9"><span class="c1"># convert the model outputs to data frame</span>
+</span><span id="line-10"><span class="n">reconstructions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">(</span><span class="n">reconstructions</span><span class="p">),</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<p>After loading the anomaly scores and the reconstructions from S3, we can
+visualize the results.</p>
+<img alt="LSTM-AE reconstructions and anomaly score from 2019-08-02 to 2020-12-31" class="blog-post-image" id="lstm-ae-oil-price-anomaly-detection-results-plot" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/lstm-ae-oil-price-anomaly-detection/results_light.png"/>
+<p class="blog-post-image-caption"> LSTM-AE reconstructions and anomaly score from 2019-08-02 to 2020-12-31.</p><p>We find that, as expected, the anomaly score exhibits the largest upward
+spikes on the 20<sup>th</sup> (anomaly score = 810,274), 21<sup>st</sup> (anomaly score =
+64,522) and 22<sup>nd</sup> (anomaly score = 15,533) of April 2020.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># extract the largest anomaly scores</span>
+</span><span id="line-2"><span class="n">reconstructions</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</span></code></pre></div>
+</div>
+<img alt="LSTM-AE largest anomaly scores from 2019-08-02 to 2020-12-31" class="blog-post-image" id="lstm-ae-oil-price-anomaly-detection-results-table" src="https://fg-research-blog.s3.eu-west-1.amazonaws.com/lstm-ae-oil-price-anomaly-detection/anomalies_light.png"/>
+<p class="blog-post-image-caption"> LSTM-AE largest anomaly scores from 2019-08-02 to 2020-12-31.</p><p>After the analysis has been completed, we can delete the model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><code><span id="line-1"><span class="c1"># delete the model</span>
+</span><span id="line-2"><span class="n">transformer</span><span class="o">.</span><span class="n">delete_model</span><span class="p">()</span>
+</span></code></pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You can download the
+<a class="reference external" href="https://github.com/fg-research/lstm-ae-sagemaker/blob/master/examples/oil_price_anomaly_detection.ipynb">notebook</a>
+with the full code from our
+<a class="reference external" href="https://github.com/fg-research/lstm-ae-sagemaker">GitHub</a>
+repository.</p>
+</div>
+</section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading" x-intersect.margin.0%.0%.-70%.0%="activeSection = '#references'">¶</a></h2>
+<p>[1] Crépey, S., Lehdili, N., Madhar, N., &amp; Thomas, M. (2022). Anomaly
+Detection in Financial Time Series by Principal Component Analysis and
+Neural Networks. <em>Algorithms</em>, 15(10), 385, <a class="reference external" href="https://doi.org/10.3390/a15100385">doi:
+10.3390/a15100385</a>.</p>
+<p>[2] Darban, Z. Z., Webb, G. I., Pan, S., Aggarwal, C. C., &amp; Salehi, M.
+(2022). Deep learning for time series anomaly detection: A survey.
+<em>arXiv preprint</em>, <a class="reference external" href="https://doi.org/10.48550/arXiv.2211.05244">doi:
+10.48550/arXiv.2211.05244</a>.</p>
+<p>[3] Malhotra, P., Ramakrishnan, A., Anand, G., Vig, L., Agarwal, P., &amp;
+Shroff, G. (2016). LSTM-based encoder-decoder for multi-sensor anomaly
+detection. <em>arXiv preprint</em>, <a class="reference external" href="https://doi.org/10.48550/arXiv.1607.00148">doi:
+10.48550/arXiv.1607.00148</a>.</p>
+</section>
+</section>
+</div></div><aside class="hidden text-sm xl:block" id="right-sidebar">
+<div class="sticky top-16 -mt-10 max-h-[calc(100vh-5rem)] overflow-y-auto pt-6 space-y-2"><p class="font-medium">On this page</p>
+<ul>
+<li><a :data-current="activeSection === '#model'" class="reference internal" href="#model">Model</a></li>
+<li><a :data-current="activeSection === '#data'" class="reference internal" href="#data">Data</a></li>
+<li><a :data-current="activeSection === '#code'" class="reference internal" href="#code">Code</a><ul>
+<li><a :data-current="activeSection === '#environment-set-up'" class="reference internal" href="#environment-set-up">Environment Set-Up</a></li>
+<li><a :data-current="activeSection === '#data-preparation'" class="reference internal" href="#data-preparation">Data Preparation</a></li>
+<li><a :data-current="activeSection === '#training'" class="reference internal" href="#training">Training</a></li>
+<li><a :data-current="activeSection === '#inference'" class="reference internal" href="#inference">Inference</a></li>
+</ul>
+</li>
+<li><a :data-current="activeSection === '#references'" class="reference internal" href="#references">References</a></li>
+</ul>
+</div>
+</aside>
+</main>
+</div>
+</div><footer class="py-6 border-t border-border md:py-0">
+<div class="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
+<div class="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
+<p class="text-sm leading-loose text-center text-muted-foreground md:text-left">© 
+2023 fg-research. fg-research is an independent software vendor that provides machine learning solutions on the AWS Marketplace.
+Amazon Web Services, AWS, Amazon SageMaker, AWS Marketplace and the AWS Marketplace logo are trademarks of Amazon.com, Inc. or its affiliates.
+ Last updated: Nov 29, 2024. Built with <a class="font-medium underline underline-offset-4" href="https://www.sphinx-doc.org" rel="noreferrer">Sphinx 8.2.3</a></p>
+</div>
+</div>
+</footer>
+</div><button :class="{'opacity-0 invisible' : !showScrollTop}" @click="window.scrollTo({top: 0, behavior: 'smooth'})" class="fixed bottom-8 right-8 p-2 z-10 rounded-sm bg-gray-700 text-xs text-white transition-all duration-1000 hover:bg-gray-950 focus:bg-gray-950" id="scrolltop" x-cloak="">
+<svg aria-hidden="true" class="inline fill-current mb-[2px]" height="14" viewbox="0 96 960 960" width="14" xmlns="http://www.w3.org/2000/svg">
+<path d="M450 896V370L202 618l-42-42 320-320 320 320-42 42-248-248v526h-60Z"></path>
+</svg>
+  Back to top
+</button>
+<script src="../../../_static/documentation_options.js?v=953f42dc"></script>
+<script src="../../../_static/doctools.js?v=9bcbadda"></script>
+<script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+<script defer="defer" src="../../../_static/theme.js?v=073f68d9"></script>
+<script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+<script src="../../../_static/custom.js?v=51e3ec04"></script>
+</body>
+</html>
